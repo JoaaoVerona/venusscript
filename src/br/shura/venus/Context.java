@@ -111,4 +111,8 @@ public class Context {
   public boolean hasParent() {
     return getParent() != null;
   }
+
+  public void setVar(String name, Value value) {
+    getVariables().set(name, value);
+  }
 }
