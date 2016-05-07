@@ -155,8 +155,17 @@ public class ScriptParser {
           bye("Unexpected token \"" + token + "\"");
         }
       }
+      else if (token.getType() == Type.CLOSE_BRACE) {
+        if (container != script) {
+          XLogger.debugln("Found close brace, changing container from " + container + " to " + container.getParent());
+          container = container.getParent();
+        }
+        else {
+          bye("Invalid token \"" + token + "\"; no container to close");
+        }
+      }
       else {
-        bye("Invalid token \"" + token + "\"; expected a function, keyword or variable");
+        bye("Invalid token \"" + token + "\"; expected a name definition or close brace");
       }
     }
   }
