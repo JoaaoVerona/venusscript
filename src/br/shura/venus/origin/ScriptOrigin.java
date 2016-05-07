@@ -17,7 +17,9 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus;
+package br.shura.venus.origin;
+
+import java.io.IOException;
 
 /**
  * ScriptOrigin.java
@@ -27,14 +29,10 @@ package br.shura.venus;
  * @date 07/05/16 - 18:35
  * @since GAMMA - 0x3
  */
-public class ScriptOrigin {
-  private final String scriptName;
+public interface ScriptOrigin {
+  ScriptOrigin findInclude(String includeName);
 
-  public ScriptOrigin(String scriptName) {
-    this.scriptName = scriptName;
-  }
+  String getScriptName();
 
-  public String getScriptName() {
-    return scriptName;
-  }
+  String read() throws IOException;
 }
