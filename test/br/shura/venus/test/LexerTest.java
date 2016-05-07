@@ -102,14 +102,10 @@ public class LexerTest {
     assertToken(lexer, Type.CLOSE_PARENTHESE, ')');
     assertToken(lexer, Type.NEW_LINE, null);
     assertToken(lexer, Type.CLOSE_BRACE, '}');
-    Token token;
-
-    while ((token = lexer.nextToken()) != null) {
-      XLogger.println("[" + token.getType() + "] " + token.getValue());
-    }
+    XLogger.println("Assertion passed.");
   }
 
-  private void assertToken(ScriptLexer lexer, Type type, Object content) throws AssertionError, UnexpectedInputException {
+  private static void assertToken(ScriptLexer lexer, Type type, Object content) throws AssertionError, UnexpectedInputException {
     Token token = lexer.nextToken();
 
     if (token == null) {
