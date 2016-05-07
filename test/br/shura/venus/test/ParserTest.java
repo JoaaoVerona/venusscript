@@ -21,10 +21,11 @@ package br.shura.venus.test;
 
 import br.shura.venus.ApplicationContext;
 import br.shura.venus.Script;
-import br.shura.venus.ScriptOrigin;
 import br.shura.venus.compiler.ScriptLexer;
 import br.shura.venus.compiler.ScriptParser;
 import br.shura.venus.exception.ScriptCompileException;
+import br.shura.venus.origin.ScriptOrigin;
+import br.shura.venus.origin.SimpleScriptOrigin;
 import br.shura.x.worker.StringWorker;
 import org.junit.Test;
 
@@ -46,8 +47,8 @@ public class ParserTest {
       "  print(\"Hello, I'm \" + name + \"!)",
       "}"
     };
-    ScriptOrigin origin = new ScriptOrigin("test.xs");
-    ScriptLexer lexer = new ScriptLexer(origin, StringWorker.join('\n', content));
+    ScriptOrigin origin = new SimpleScriptOrigin("test.xs", StringWorker.join('\n', content));
+    ScriptLexer lexer = new ScriptLexer(origin);
     ScriptParser parser = new ScriptParser(lexer);
     Script script = new Script(new ApplicationContext(), origin);
 

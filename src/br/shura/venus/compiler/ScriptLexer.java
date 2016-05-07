@@ -19,9 +19,9 @@
 
 package br.shura.venus.compiler;
 
-import br.shura.venus.ScriptOrigin;
 import br.shura.venus.compiler.Token.Type;
 import br.shura.venus.exception.UnexpectedInputException;
+import br.shura.venus.origin.ScriptOrigin;
 import br.shura.x.charset.build.TextBuilder;
 import br.shura.x.util.Pool;
 
@@ -45,10 +45,10 @@ public class ScriptLexer {
   private State state;
   private final String string;
 
-  public ScriptLexer(ScriptOrigin origin, String string) {
+  public ScriptLexer(ScriptOrigin origin) throws IOException {
     this.buildingToken = Pool.newBuilder();
     this.origin = origin;
-    this.string = string;
+    this.string = origin.read();
   }
 
   public int currentLine() {

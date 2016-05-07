@@ -19,10 +19,11 @@
 
 package br.shura.venus.test;
 
-import br.shura.venus.ScriptOrigin;
 import br.shura.venus.compiler.ScriptLexer;
 import br.shura.venus.compiler.Token;
 import br.shura.venus.exception.UnexpectedInputException;
+import br.shura.venus.origin.ScriptOrigin;
+import br.shura.venus.origin.SimpleScriptOrigin;
 import br.shura.x.logging.XLogger;
 import br.shura.x.worker.StringWorker;
 import org.junit.Test;
@@ -52,8 +53,8 @@ public class LexerTest {
       "  setvar(502.55)",
       "}"
     };
-    ScriptOrigin origin = new ScriptOrigin("test.xs");
-    ScriptLexer lexer = new ScriptLexer(origin, StringWorker.join('\n', script));
+    ScriptOrigin origin = new SimpleScriptOrigin("test.xs", StringWorker.join('\n', script));
+    ScriptLexer lexer = new ScriptLexer(origin);
     Token token;
 
     while ((token = lexer.nextToken()) != null) {
