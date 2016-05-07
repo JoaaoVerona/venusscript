@@ -170,8 +170,13 @@ public class ScriptLexer {
         }
       }
       else if (state != IN_CHAR_LITERAL && state != IN_STRING_LITERAL) {
-        if (state == IN_OPERATOR && (isLetter || isDigit)) {
-          back();
+        if (ch == ' ' || ch == '\t') {
+          continue; // return new Token(Type.WHITESPACE, ch);
+        }
+
+        if (state == IN_OPERATOR && (isLetter || isDigit ||
+          (ch == ',' || ch == ':' || ch == '@' || ch == '{' || ch == '[' || ch == '(' || ch == '}' || ch == ']' || ch == ')'))) {
+          back(); // TODO The above check. Please, change hierarchy.
 
           this.state = null;
 
@@ -184,10 +189,6 @@ public class ScriptLexer {
           this.state = null;
 
           return new Token(Type.NAME_DEFINITION, buildingToken.toStringAndClear());
-        }
-
-        if (ch == ' ' || ch == '\t') {
-          continue; // return new Token(Type.WHITESPACE, ch);
         }
 
         if (ch == ',') {
