@@ -56,7 +56,7 @@ public abstract class Component {
   }
 
   @Internal
-  protected void setParent(Container parent) {
+  public void setParent(Container parent) {
     this.parent = parent;
   }
 }

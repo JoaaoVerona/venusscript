@@ -86,8 +86,9 @@ public class Script extends Container {
     return this;
   }
 
+  @Deprecated
   @Override
-  protected void setParent(Container parent) {
+  public void setParent(Container parent) {
     throw new IllegalStateException("Cannot define a script's parent");
   }
 }

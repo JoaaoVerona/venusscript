@@ -46,6 +46,7 @@ public abstract class Container extends Component {
     this.definitions = new ArrayList<>();
 
     getChildren().addInsertionListener(component -> component.setParent(this));
+    getDefinitions().addInsertionListener(component -> component.setParent(this));
   }
 
   public List<Definition> getDefinitions() {
@@ -83,7 +84,7 @@ public abstract class Container extends Component {
   public abstract String getDisplayName();
 
   @Override
-  protected void setParent(Container parent) {
+  public void setParent(Container parent) {
     super.setParent(parent);
     this.context = parent.getContext();
   }

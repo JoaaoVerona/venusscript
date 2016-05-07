@@ -80,13 +80,13 @@ public final class Definition extends Container implements Function {
   }
 
   @Override
-  public String toString() {
-    return "definition(" + getName() + ')';
+  public void setParent(Container parent) {
+    super.setParent(parent);
+    this.context = new Context(this, parent.getContext());
   }
 
   @Override
-  protected void setParent(Container parent) {
-    super.setParent(parent);
-    this.context = new Context(this, parent.getContext());
+  public String toString() {
+    return "definition(" + getName() + ')';
   }
 }
