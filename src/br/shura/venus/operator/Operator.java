@@ -22,6 +22,8 @@ package br.shura.venus.operator;
 import br.shura.venus.Context;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.value.Value;
+import br.shura.x.lang.function.ExceptionalTriFunction;
+import br.shura.x.object.Base;
 
 /**
  * Operator.java
@@ -31,23 +33,36 @@ import br.shura.venus.value.Value;
  * @date 06/05/16 - 01:51
  * @since GAMMA - 0x3
  */
-public abstract class Operator {
+public class Operator extends Base {
+  private final ExceptionalTriFunction<Context, Value, Value, Value, ScriptRuntimeException> function;
   private final String identifier;
   private final String name;
 
-  public Operator(String name, String identifier) {
+  public Operator(String name, String identifier, ExceptionalTriFunction<Context, Value, Value, Value, ScriptRuntimeException> function) {
+    this.function = function;
     this.identifier = identifier;
     this.name = name;
+  }
+
+  public ExceptionalTriFunction<Context, Value, Value, Value, ScriptRuntimeException>getFunction() {
+    return function;
   }
 
   public String getIdentifier() {
     return identifier;
   }
 
-  public abstract Value operate(Context context, Value left, Value right) throws ScriptRuntimeException;
+  public final Value operate(Context context, Value left, Value right) throws ScriptRuntimeException {
+    return function.apply(context, left, right);
+  }
 
   @Override
   public String toString() {
     return name;
+  }
+
+  @Override
+  protected Object[] stringValues() {
+    return new Object[] { toString(), getIdentifier() };
   }
 }
