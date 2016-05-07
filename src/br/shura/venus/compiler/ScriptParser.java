@@ -22,10 +22,16 @@ package br.shura.venus.compiler;
 import br.shura.venus.Script;
 import br.shura.venus.compiler.Token.Type;
 import br.shura.venus.component.Container;
+import br.shura.venus.component.function.Argument;
+import br.shura.venus.component.function.Definition;
 import br.shura.venus.exception.ScriptCompileException;
 import br.shura.venus.exception.UnexpectedInputException;
 import br.shura.venus.exception.UnexpectedTokenException;
+import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
+import br.shura.x.collection.list.List;
+import br.shura.x.collection.list.impl.ArrayList;
+import br.shura.x.logging.XLogger;
 
 import java.io.IOException;
 
@@ -39,6 +45,7 @@ import java.io.IOException;
  */
 public class ScriptParser {
   private final ScriptLexer lexer;
+  private String scriptName;
 
   public ScriptParser(ScriptLexer lexer) {
     this.lexer = lexer;
@@ -51,31 +58,69 @@ public class ScriptParser {
     script.getIncludes().clear();
 
     String[] nameDefsUnscoped = { "def", "export", "include" };
-    String scriptName = script.getDisplayName();
+
+    this.scriptName = script.getDisplayName();
 
     Token token;
-    Container container = null;
+    Container container = script;
 
     while ((token = lexer.nextToken()) != null) {
-      int currentLine = lexer.currentLine();
-
       if (token.getType() == Type.NAME_DEFINITION) {
         if (token.getValue().equals(nameDefsUnscoped[0])) {
-          Token typeToken = requireToken(scriptName, currentLine);
+          Token typeToken = requireToken();
 
           if (typeToken.getType() == Type.NAME_DEFINITION) {
-            ValueType type = ValueType.forIdentifier((String) typeToken.getValue());
+            String definitionName = (String) typeToken.getValue();
+            List<Argument> arguments = new ArrayList<>();
+            Token openParentheseToken = requireToken();
 
-            if (type != null) {
-              // TODO New definition start (already got return type)
+            if (openParentheseToken.getType() == Type.OPEN_PARENTHESE) {
+              Token reading;
+
+              while ((reading = requireToken()).getType() != Type.CLOSE_PARENTHESE) {
+                if (reading.getType() == Type.NAME_DEFINITION) {
+                  ValueType argumentType = ValueType.forIdentifier((String) reading.getValue());
+
+                  if (argumentType != null) {
+                    Token argumentToken = requireToken();
+                    String argumentName = (String) argumentToken.getValue();
+
+                    if (!KeywordDefinitions.isKeyword(argumentName)) {
+                      arguments.add(new Argument(argumentName, argumentType));
+
+                      Token commaOrClose = requireToken();
+
+                      if (commaOrClose.getType() == Type.CLOSE_PARENTHESE) {
+                        break;
+                      }
+
+                      if (commaOrClose.getType() != Type.COMMA) {
+                        bye("Invalid token \"" + commaOrClose + "\"; expected an argument separator (comma) or close parenthese");
+                      }
+                    }
+                    else {
+                      bye("Invalid token \"" + reading + "\"; argument name cannot be a keyword");
+                    }
+                  }
+                  else {
+                    bye("Invalid token \"" + reading + "\"; expected an argument type (" +
+                      new ArrayList<>(ValueType.values()).toString(", ") + ')');
+                  }
+                }
+                else {
+                  bye("Invalid token \"" + reading + "\"; expected an argument name");
+                }
+              }
+
+              container.getDefinitions().add(new Definition(definitionName, arguments));
+              XLogger.debugln("Added definition::" + definitionName + ", " + arguments);
             }
             else {
-              throw new UnexpectedTokenException(scriptName, currentLine, "Unrecognized function return type \"" +
-                token.getValue() + "\"");
+              bye("Invalid token \"" + openParentheseToken + "\"; expected an open parenthese");
             }
           }
           else {
-            throw new UnexpectedTokenException(scriptName, currentLine, "Invalid token \"" + token + "\"; expected a return type");
+            bye("Invalid token \"" + token + "\"; expected a return type");
           }
         }
         else if (container == null) {
@@ -83,35 +128,42 @@ public class ScriptParser {
             // TODO Exporting var
           }
           else if (token.getValue().equals(nameDefsUnscoped[2])) {
-            Token next = requireToken(scriptName, currentLine);
+            Token next = requireToken();
 
             if (next.getType() == Type.STRING_LITERAL) {
               // TODO Found include script...
             }
             else {
-              throw new UnexpectedTokenException(scriptName, currentLine, "Invalid token \"" + next + "\"; expected a string literal");
+              bye("Invalid token \"" + next + "\"; expected a string literal");
             }
           }
           else {
-            throw new UnexpectedTokenException(scriptName, currentLine, "Invalid keyword \"" + token.getValue() +
-              "\"; expected 'define', 'export' or 'include']");
+            bye("Invalid keyword \"" + token.getValue() + "\"; expected 'define', 'export' or 'include']");
           }
         }
         else {
-          throw new UnexpectedTokenException(scriptName, currentLine, "Unexpected token \"" + token + "\"");
+          bye("Unexpected token \"" + token + "\"");
         }
       }
       else {
-        throw new UnexpectedTokenException(scriptName, currentLine, "Invalid token \"" + token + "\"; expected a function, keyword or variable");
+        bye("Invalid token \"" + token + "\"; expected a function, keyword or variable");
       }
     }
   }
 
-  protected Token requireToken(String scriptName, int currentLine) throws IOException, UnexpectedInputException, UnexpectedTokenException {
+  protected Value readValue() throws IOException, UnexpectedInputException, UnexpectedTokenException {
+    return null; // TODO
+  }
+
+  protected void bye(String message) throws UnexpectedTokenException {
+    throw new UnexpectedTokenException(scriptName, lexer.currentLine(), message);
+  }
+
+  protected Token requireToken() throws IOException, UnexpectedInputException, UnexpectedTokenException {
     Token token = lexer.nextToken();
 
     if (token == null) {
-      throw new UnexpectedTokenException(scriptName, currentLine, "Unexpected end of file");
+      throw new UnexpectedTokenException(scriptName, lexer.currentLine(), "Unexpected end of file");
     }
 
     return token;
