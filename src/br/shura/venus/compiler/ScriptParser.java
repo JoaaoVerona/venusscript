@@ -33,8 +33,6 @@ import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.logging.XLogger;
 
-import java.io.IOException;
-
 /**
  * ScriptParser.java
  *
@@ -51,7 +49,7 @@ public class ScriptParser {
     this.lexer = lexer;
   }
 
-  public void parse(Script script) throws IOException, ScriptCompileException {
+  public void parse(Script script) throws ScriptCompileException {
     script.getChildren().clear();
     script.getContext().getVariables().clear();
     script.getDefinitions().clear();
@@ -176,11 +174,11 @@ public class ScriptParser {
     bye("Invalid token \"" + token + "\"; " + message);
   }
 
-  protected Value readValue() throws IOException, UnexpectedInputException, UnexpectedTokenException {
+  protected Value readValue() throws UnexpectedInputException, UnexpectedTokenException {
     return null; // TODO
   }
 
-  protected void requireNewLine() throws IOException, UnexpectedInputException, UnexpectedTokenException {
+  protected void requireNewLine() throws UnexpectedInputException, UnexpectedTokenException {
     Token token = lexer.nextToken();
 
     if (token != null && token.getType() != Type.NEW_LINE) {
@@ -188,7 +186,7 @@ public class ScriptParser {
     }
   }
 
-  protected Token requireToken() throws IOException, UnexpectedInputException, UnexpectedTokenException {
+  protected Token requireToken() throws UnexpectedInputException, UnexpectedTokenException {
     Token token = lexer.nextToken();
 
     if (token == null) {
@@ -198,7 +196,7 @@ public class ScriptParser {
     return token;
   }
 
-  protected Token requireToken(Type type, String errorMessage) throws IOException, UnexpectedInputException, UnexpectedTokenException {
+  protected Token requireToken(Type type, String errorMessage) throws UnexpectedInputException, UnexpectedTokenException {
     Token token = requireToken();
 
     if (token.getType() != type) {

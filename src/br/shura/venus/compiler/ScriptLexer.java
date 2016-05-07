@@ -55,7 +55,7 @@ public class ScriptLexer {
     return line;
   }
 
-  public Token nextToken() throws IOException, UnexpectedInputException {
+  public Token nextToken() throws UnexpectedInputException {
     while (canRead()) {
       char ch = read();
       char lastChar = !buildingToken.isEmpty() ? buildingToken.charAt(buildingToken.length() - 1) : 0;
