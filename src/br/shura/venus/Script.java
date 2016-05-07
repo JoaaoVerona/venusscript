@@ -36,13 +36,13 @@ import br.shura.x.collection.list.impl.ArrayList;
 public class Script extends Container {
   private final ApplicationContext appContext;
   private final List<Script> includes;
-  private final String name;
+  private final ScriptOrigin origin;
 
-  public Script(ApplicationContext appContext, String name) {
+  public Script(ApplicationContext appContext, ScriptOrigin origin) {
     this.appContext = appContext;
     this.context = new Context(this, null);
     this.includes = new ArrayList<>();
-    this.name = name;
+    this.origin = origin;
   }
 
   @Override
@@ -70,11 +70,15 @@ public class Script extends Container {
 
   @Override
   public String getDisplayName() {
-    return name;
+    return getOrigin().getScriptName();
   }
 
   public List<Script> getIncludes() {
     return includes;
+  }
+
+  public ScriptOrigin getOrigin() {
+    return origin;
   }
 
   @Override
