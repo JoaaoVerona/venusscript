@@ -17,23 +17,29 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus;
+package br.shura.venus.test;
 
+import br.shura.venus.ScriptOrigin;
 import br.shura.venus.compiler.ScriptLexer;
 import br.shura.venus.compiler.Token;
+import br.shura.venus.exception.UnexpectedInputException;
 import br.shura.x.logging.XLogger;
 import br.shura.x.worker.StringWorker;
+import org.junit.Test;
+
+import java.io.IOException;
 
 /**
- * ScriptTest.java
+ * LexerTest.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 17:16
+ * @date 07/05/16 - 18:33
  * @since GAMMA - 0x3
  */
-public class ScriptTest {
-  public static void main(String[] args) throws Exception {
+public class LexerTest {
+  @Test
+  public void simplePrint() throws IOException, UnexpectedInputException {
     String[] script = {
       "i = 0",
       "j = 1024",
@@ -46,7 +52,8 @@ public class ScriptTest {
       "  setvar(502.55)",
       "}"
     };
-    ScriptLexer lexer = new ScriptLexer("test.xs", StringWorker.join('\n', script));
+    ScriptOrigin origin = new ScriptOrigin("test.xs");
+    ScriptLexer lexer = new ScriptLexer(origin, StringWorker.join('\n', script));
     Token token;
 
     while ((token = lexer.nextToken()) != null) {
