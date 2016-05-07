@@ -112,8 +112,18 @@ public class ScriptParser {
                 }
               }
 
-              container.getDefinitions().add(new Definition(definitionName, arguments));
-              XLogger.debugln("Added definition::" + definitionName + ", " + arguments);
+              Token openBraceToken = requireToken();
+
+              if (openBraceToken.getType() == Type.OPEN_BRACE) {
+                Definition definition = new Definition(definitionName, arguments);
+
+                container.getDefinitions().add(definition);
+                XLogger.debugln("Added definition::" + definitionName + ", " + arguments);
+                container = definition;
+              }
+              else {
+                bye("Invalid token \"" + openBraceToken + "\"; expected an open brace");
+              }
             }
             else {
               bye("Invalid token \"" + openParentheseToken + "\"; expected an open parenthese");
