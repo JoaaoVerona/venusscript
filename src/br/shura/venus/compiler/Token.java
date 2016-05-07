@@ -19,6 +19,8 @@
 
 package br.shura.venus.compiler;
 
+import br.shura.x.object.Base;
+
 /**
  * Token.java
  *
@@ -27,7 +29,7 @@ package br.shura.venus.compiler;
  * @date 06/05/16 - 04:25
  * @since GAMMA - 0x3
  */
-public class Token {
+public class Token extends Base {
   private final Type type;
   private final Object value;
 
@@ -42,6 +44,11 @@ public class Token {
 
   public Object getValue() {
     return value;
+  }
+
+  @Override
+  protected Object[] stringValues() {
+    return new Object[] { getType(), getValue() };
   }
 
   public enum Type {
