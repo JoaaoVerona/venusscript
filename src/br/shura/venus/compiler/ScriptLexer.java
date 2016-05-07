@@ -19,6 +19,7 @@
 
 package br.shura.venus.compiler;
 
+import br.shura.venus.ScriptOrigin;
 import br.shura.venus.compiler.Token.Type;
 import br.shura.venus.exception.UnexpectedInputException;
 import br.shura.x.charset.build.TextBuilder;
@@ -39,14 +40,14 @@ import static br.shura.venus.compiler.ScriptLexer.State.*;
 public class ScriptLexer {
   private final TextBuilder buildingToken;
   private int line;
+  private final ScriptOrigin origin;
   private int position;
-  private final String scriptName;
   private State state;
   private final String string;
 
-  public ScriptLexer(String scriptName, String string) {
+  public ScriptLexer(ScriptOrigin origin, String string) {
     this.buildingToken = Pool.newBuilder();
-    this.scriptName = scriptName;
+    this.origin = origin;
     this.string = string;
   }
 
@@ -63,11 +64,11 @@ public class ScriptLexer {
 
       if (ch == '\n') {
         if (state == IN_CHAR_LITERAL) {
-          throw new UnexpectedInputException(scriptName, line, "End of line found, but unclosed character literal");
+          bye("End of line found, but unclosed character literal");
         }
 
         if (state == IN_STRING_LITERAL) {
-          throw new UnexpectedInputException(scriptName, line, "End of line found, but unclosed string literal");
+          bye("End of line found, but unclosed string literal");
         }
 
         if (state == IN_NAME_DEFINITION) {
@@ -107,11 +108,11 @@ public class ScriptLexer {
         }
 
         if (state == IN_NUMBER_LITERAL) {
-          throw new UnexpectedInputException(scriptName, line, "Double quotes found while parsing a number literal");
+          bye("Double quotes found while parsing a number literal");
         }
 
         if (state == IN_NAME_DEFINITION) {
-          throw new UnexpectedInputException(scriptName, line, "Double quotes found while parsing a name definition");
+          bye("Double quotes found while parsing a name definition");
         }
 
         if (state == IN_OPERATOR) {
@@ -135,11 +136,11 @@ public class ScriptLexer {
         }
 
         if (state == IN_NUMBER_LITERAL) {
-          throw new UnexpectedInputException(scriptName, line, "Single quote found while parsing a number literal");
+          bye("Single quote found while parsing a number literal");
         }
 
         if (state == IN_NAME_DEFINITION) {
-          throw new UnexpectedInputException(scriptName, line, "Single quote found while parsing a name definition");
+          bye("Single quote found while parsing a name definition");
         }
 
         if (state == IN_OPERATOR) {
@@ -157,7 +158,7 @@ public class ScriptLexer {
 
       if (state == IN_NUMBER_LITERAL) {
         if (isLetter) {
-          throw new UnexpectedInputException(scriptName, line, "Letter found while parsing a number literal");
+          bye("Letter found while parsing a number literal");
         }
 
         if (!isDigit && ch != '.') {
@@ -248,6 +249,10 @@ public class ScriptLexer {
     }
 
     this.position--;
+  }
+
+  protected void bye(String message) throws UnexpectedInputException {
+    throw new UnexpectedInputException(origin.getScriptName(), currentLine(), message);
   }
 
   protected boolean canRead() {
