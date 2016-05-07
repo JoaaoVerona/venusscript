@@ -24,7 +24,8 @@ import br.shura.venus.component.Container;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
-import br.shura.x.collection.view.ArrayView;
+import br.shura.x.collection.list.List;
+import br.shura.x.collection.view.BasicView;
 import br.shura.x.collection.view.View;
 
 /**
@@ -36,22 +37,31 @@ import br.shura.x.collection.view.View;
  * @since GAMMA - 0x3
  */
 public final class Definition extends Container implements Function {
-  private final ValueType[] argumentTypes;
+  private final List<Argument> arguments;
   private final String name;
 
-  public Definition(String name, ValueType... argumentTypes) {
-    this.argumentTypes = argumentTypes;
+  public Definition(String name, List<Argument> arguments) {
+    this.arguments = arguments;
     this.name = name;
   }
 
   @Override
   public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
-    return null;
+    return null; // TODO
+  }
+
+  @Override
+  public int getArgumentCount() { // Default impl. of getArgumentCount() calls getArgumentTypes(), but our impl. is expensive
+    return arguments.size();
   }
 
   @Override
   public View<ValueType> getArgumentTypes() {
-    return new ArrayView<>(argumentTypes);
+    return getArguments().reduce(Argument::getType);
+  }
+
+  public View<Argument> getArguments() {
+    return new BasicView<>(arguments);
   }
 
   @Override
