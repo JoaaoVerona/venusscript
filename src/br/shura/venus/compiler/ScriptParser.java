@@ -29,7 +29,8 @@ import br.shura.venus.exception.UnexpectedInputException;
 import br.shura.venus.exception.UnexpectedTokenException;
 import br.shura.venus.origin.ScriptOrigin;
 import br.shura.venus.resultor.Resultor;
-import br.shura.venus.resultor.ValueType;
+import br.shura.venus.value.Value;
+import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.logging.XLogger;
@@ -129,7 +130,7 @@ public class ScriptParser {
               Token attributionToken = requireToken();
 
               if (attributionToken.getType() == Type.OPERATOR && attributionToken.getValue().equals("=")) {
-                Resultor value = readValue();
+                Value value = readValue();
 
                 script.getApplicationContext().setVar(variableName, value);
                 XLogger.debugln("Added exported var::" + variableName + ", val::" + value);
@@ -219,7 +220,11 @@ public class ScriptParser {
     throw new UnexpectedTokenException(scriptName, lexer.currentLine(), "Invalid token \"" + token + "\"; " + message);
   }
 
-  protected Resultor readValue() throws UnexpectedInputException, UnexpectedTokenException {
+  protected Resultor readResultor() throws UnexpectedInputException, UnexpectedTokenException {
+    return null; // TODO
+  }
+
+  protected Value readValue() throws UnexpectedInputException, UnexpectedTokenException {
     return null; // TODO
   }
 
