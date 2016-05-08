@@ -20,9 +20,8 @@
 package br.shura.venus;
 
 import br.shura.venus.component.Container;
-import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.exception.UndefinedVariableException;
-import br.shura.venus.resultor.Resultor;
+import br.shura.venus.value.Value;
 import br.shura.x.collection.map.Map;
 import br.shura.x.collection.map.impl.LinkedMap;
 import br.shura.x.util.layer.XApi;
@@ -38,7 +37,7 @@ import br.shura.x.util.layer.XApi;
 public class Context {
   private final Container owner;
   private final Context parent;
-  private final Map<String, Resultor> variables;
+  private final Map<String, Value> variables;
 
   public Context(Container owner, Context parent) {
     this.owner = owner;
@@ -58,10 +57,10 @@ public class Context {
     return parent;
   }
 
-  public Resultor getVar(String name) throws UndefinedVariableException {
+  public Value getVar(String name) throws UndefinedVariableException {
     XApi.requireNonNull(name, "name");
 
-    Resultor object = getVariables().get(name);
+    Value object = getVariables().get(name);
 
     if (object != null) {
       return object;
@@ -94,17 +93,7 @@ public class Context {
     throw new UndefinedVariableException(this, name);
   }
 
-  public Object getVarValue(String name) throws ScriptRuntimeException {
-    Object value = getVar(name);
-
-    while (value instanceof Resultor) {
-      value = ((Resultor) value).resolve(this);
-    }
-
-    return this;
-  }
-
-  public Map<String, Resultor> getVariables() {
+  public Map<String, Value> getVariables() {
     return variables;
   }
 
@@ -112,7 +101,7 @@ public class Context {
     return getParent() != null;
   }
 
-  public void setVar(String name, Resultor value) {
+  public void setVar(String name, Value value) {
     getVariables().set(name, value);
   }
 }
