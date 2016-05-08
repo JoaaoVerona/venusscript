@@ -22,6 +22,7 @@ package br.shura.venus.resultor;
 import br.shura.venus.Context;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.operator.Operator;
+import br.shura.venus.value.Value;
 
 /**
  * Operation.java
@@ -55,8 +56,11 @@ public class Operation extends Resultor {
   }
 
   @Override
-  public Object resolve(Context context) throws ScriptRuntimeException {
-    return getOperator().operate(context, getLeft(), getRight());
+  public Value resolve(Context context) throws ScriptRuntimeException {
+    Value left = getLeft().resolve(context);
+    Value right = getRight().resolve(context);
+
+    return getOperator().operate(context, left, right);
   }
 
   @Override

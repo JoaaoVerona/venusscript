@@ -20,10 +20,9 @@
 package br.shura.venus.resultor;
 
 import br.shura.venus.Context;
-import br.shura.venus.exception.InvalidValueTypeException;
 import br.shura.venus.exception.ScriptRuntimeException;
-
-import java.math.BigDecimal;
+import br.shura.venus.value.Value;
+import br.shura.venus.value.ValueType;
 
 /**
  * Resultor.java
@@ -34,31 +33,10 @@ import java.math.BigDecimal;
  * @since GAMMA - 0x3
  */
 public abstract class Resultor {
-  public final boolean equals(Context context, Resultor object) throws ScriptRuntimeException {
-    return resolve(context).equals(object.resolve(context));
-  }
-
-  public abstract Object resolve(Context context) throws ScriptRuntimeException;
+  public abstract Value resolve(Context context) throws ScriptRuntimeException;
 
   public final ValueType resolveType(Context context) throws ScriptRuntimeException {
-    return ValueType.forClass(resolve(context).getClass());
-  }
-
-  public final boolean toBooleanState(Context context) throws ScriptRuntimeException {
-    Object value = resolve(context);
-
-    return (value instanceof Boolean && (Boolean) value) ||
-      (value instanceof Number && ((Number) value).longValue() > 0);
-  }
-
-  public final BigDecimal toNumericState(Context context) throws ScriptRuntimeException {
-    Object value = resolve(context);
-
-    if (value instanceof BigDecimal) {
-      return (BigDecimal) value;
-    }
-
-    throw new InvalidValueTypeException(context, "//TODOmsg// toNumericState nope");
+    return ValueType.forValue(resolve(context));
   }
 
   @Override

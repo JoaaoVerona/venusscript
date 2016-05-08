@@ -20,9 +20,8 @@
 package br.shura.venus.resultor;
 
 import br.shura.venus.Context;
+import br.shura.venus.value.Value;
 import br.shura.x.util.layer.XApi;
-
-import java.math.BigDecimal;
 
 /**
  * Constant.java
@@ -33,35 +32,21 @@ import java.math.BigDecimal;
  * @since GAMMA - 0x3
  */
 public class Constant extends Resultor {
-  private final Object object;
+  private final Value value;
 
-  public Constant(boolean bool) {
-    this.object = bool;
+  public Constant(Value value) {
+    XApi.requireNonNull(value, "value");
+
+    this.value = value;
   }
 
-  public Constant(BigDecimal number) {
-    XApi.requireNonNull(number, "number");
-
-    this.object = number;
-  }
-
-  public Constant(char ch) {
-    this.object = ch;
-  }
-
-  public Constant(String string) {
-    XApi.requireNonNull(string, "string");
-
-    this.object = string;
-  }
-
-  public Object getValue() {
-    return object;
+  public Value getValue() {
+    return value;
   }
 
   @Override
-  public Object resolve(Context context) {
-    return object;
+  public Value resolve(Context context) {
+    return value;
   }
 
   @Override
