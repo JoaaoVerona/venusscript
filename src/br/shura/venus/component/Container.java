@@ -37,9 +37,9 @@ import br.shura.x.util.layer.XApi;
  * @since GAMMA - 0x3
  */
 public abstract class Container extends Component {
+  protected Context context;
   private final List<Component> children;
   private final List<Definition> definitions;
-  protected Context context;
 
   public Container() {
     this.children = new ArrayList<>();
@@ -47,10 +47,6 @@ public abstract class Container extends Component {
 
     getChildren().addInsertionListener(component -> component.setParent(this));
     getDefinitions().addInsertionListener(component -> component.setParent(this));
-  }
-
-  public List<Definition> getDefinitions() {
-    return definitions;
   }
 
   public Function findFunction(Context context, String name, int argumentCount) throws ScriptRuntimeException {
@@ -79,6 +75,10 @@ public abstract class Container extends Component {
 
   public Context getContext() {
     return context;
+  }
+
+  public List<Definition> getDefinitions() {
+    return definitions;
   }
 
   public abstract String getDisplayName();

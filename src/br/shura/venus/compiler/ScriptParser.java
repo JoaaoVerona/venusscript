@@ -29,6 +29,7 @@ import br.shura.venus.exception.UnexpectedInputException;
 import br.shura.venus.exception.UnexpectedTokenException;
 import br.shura.venus.origin.ScriptOrigin;
 import br.shura.venus.resultor.Resultor;
+import br.shura.venus.value.NumericValue;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.List;
@@ -225,7 +226,13 @@ public class ScriptParser {
   }
 
   protected Value readValue() throws UnexpectedInputException, UnexpectedTokenException {
-    return null; // TODO
+    Token token = requireToken();
+
+    if (token.getType() == Type.CHAR_LITERAL) {
+      return new NumericValue(0);
+    }
+
+    return null;
   }
 
   protected void requireNewLine() throws UnexpectedInputException, UnexpectedTokenException {

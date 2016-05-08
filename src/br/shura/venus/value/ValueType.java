@@ -32,7 +32,7 @@ import br.shura.x.worker.StringWorker;
 public enum ValueType {
   ANY("any", Value.class),
   BOOLEAN("bool", BoolValue.class),
-  NUMBER("number", NumberValue.class);
+  NUMBER("number", NumericValue.class);
 
   private final String identifier;
   private final String name;

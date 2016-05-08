@@ -46,7 +46,7 @@ public class BoolValue implements Value {
   }
 
   @Override
-  public NumberValue divide(Value value) {
+  public NumericValue divide(Value value) {
     return null;
   }
 
@@ -56,12 +56,12 @@ public class BoolValue implements Value {
   }
 
   @Override
-  public NumberValue minus(Value value) {
+  public NumericValue minus(Value value) {
     return null;
   }
 
   @Override
-  public NumberValue multiply(Value value) {
+  public NumericValue multiply(Value value) {
     return null;
   }
 
@@ -77,7 +77,7 @@ public class BoolValue implements Value {
   }
 
   @Override
-  public NumberValue plus(Value value) {
+  public NumericValue plus(Value value) {
     return null;
   }
 

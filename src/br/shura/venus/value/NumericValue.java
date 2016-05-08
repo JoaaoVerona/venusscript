@@ -23,18 +23,26 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /**
- * NumberValue.java
+ * NumericValue.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
  * @date 08/05/16 - 18:41
  * @since GAMMA - 0x3
  */
-public class NumberValue implements Value {
+public class NumericValue implements Value {
   private final BigDecimal value;
 
-  public NumberValue(BigDecimal value) {
+  public NumericValue(BigDecimal value) {
     this.value = value;
+  }
+
+  public NumericValue(double value) {
+    this(BigDecimal.valueOf(value));
+  }
+
+  public NumericValue(long value) {
+    this(BigDecimal.valueOf(value));
   }
 
   @Override
@@ -43,11 +51,11 @@ public class NumberValue implements Value {
   }
 
   @Override
-  public NumberValue divide(Value value) {
-    if (value instanceof NumberValue) {
-      NumberValue numeric = (NumberValue) value;
+  public NumericValue divide(Value value) {
+    if (value instanceof NumericValue) {
+      NumericValue numeric = (NumericValue) value;
 
-      return new NumberValue(numeric.value().divide(value(), RoundingMode.FLOOR));
+      return new NumericValue(numeric.value().divide(value(), RoundingMode.FLOOR));
     }
 
     return null;
@@ -55,26 +63,26 @@ public class NumberValue implements Value {
 
   @Override
   public BoolValue equals(Value value) {
-    return new BoolValue(value instanceof NumberValue && ((NumberValue) value).value().equals(value()));
+    return new BoolValue(value instanceof NumericValue && ((NumericValue) value).value().equals(value()));
   }
 
   @Override
-  public NumberValue minus(Value value) {
-    if (value instanceof NumberValue) {
-      NumberValue numeric = (NumberValue) value;
+  public NumericValue minus(Value value) {
+    if (value instanceof NumericValue) {
+      NumericValue numeric = (NumericValue) value;
 
-      return new NumberValue(numeric.value().subtract(value()));
+      return new NumericValue(numeric.value().subtract(value()));
     }
 
     return null;
   }
 
   @Override
-  public NumberValue multiply(Value value) {
-    if (value instanceof NumberValue) {
-      NumberValue numeric = (NumberValue) value;
+  public NumericValue multiply(Value value) {
+    if (value instanceof NumericValue) {
+      NumericValue numeric = (NumericValue) value;
 
-      return new NumberValue(numeric.value().multiply(value()));
+      return new NumericValue(numeric.value().multiply(value()));
     }
 
     return null;
@@ -86,11 +94,11 @@ public class NumberValue implements Value {
   }
 
   @Override
-  public NumberValue plus(Value value) {
-    if (value instanceof NumberValue) {
-      NumberValue numeric = (NumberValue) value;
+  public NumericValue plus(Value value) {
+    if (value instanceof NumericValue) {
+      NumericValue numeric = (NumericValue) value;
 
-      return new NumberValue(numeric.value().add(value()));
+      return new NumericValue(numeric.value().add(value()));
     }
 
     return null;
