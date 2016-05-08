@@ -17,11 +17,9 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.resultor;
+package br.shura.venus.value;
 
 import br.shura.x.worker.StringWorker;
-
-import java.math.BigDecimal;
 
 /**
  * ValueType.java
@@ -32,17 +30,15 @@ import java.math.BigDecimal;
  * @since GAMMA - 0x3
  */
 public enum ValueType {
-  ANY("any", Object.class),
-  BOOLEAN("bool", Boolean.class),
-  CHAR("char", Character.class),
-  NUMBER("number", BigDecimal.class),
-  STRING("string", String.class);
+  ANY("any", Value.class),
+  BOOLEAN("bool", BoolValue.class),
+  NUMBER("number", NumericValue.class);
 
   private final String identifier;
   private final String name;
-  private final Class<?> type;
+  private final Class<? extends Value> type;
 
-  private ValueType(String identifier, Class<?> type) {
+  private ValueType(String identifier, Class<? extends Value> type) {
     this.identifier = identifier;
     this.name = StringWorker.capitalize(StringWorker.replace(name(), '_', ' '));
     this.type = type;
@@ -60,7 +56,7 @@ public enum ValueType {
     return identifier;
   }
 
-  public Class<?> getType() {
+  public Class<? extends Value> getType() {
     return type;
   }
 
@@ -87,5 +83,9 @@ public enum ValueType {
     }
 
     return null;
+  }
+
+  public static ValueType forValue(Value value) {
+    return forClass(value.getClass());
   }
 }
