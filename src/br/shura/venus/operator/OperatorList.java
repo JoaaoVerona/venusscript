@@ -19,11 +19,9 @@
 
 package br.shura.venus.operator;
 
-import br.shura.venus.resultor.Constant;
+import br.shura.venus.value.Value;
 import br.shura.x.collection.view.View;
 import br.shura.x.worker.enumeration.Enumerations;
-
-import java.math.RoundingMode;
 
 /**
  * OperatorList.java
@@ -34,18 +32,12 @@ import java.math.RoundingMode;
  * @since GAMMA - 0x3
  */
 public class OperatorList {
-  public static final Operator AND = new Operator("and", "&&",
-    (context, left, right) -> new Constant(left.toBooleanState(context) && right.toBooleanState(context)));
-  public static final Operator DIVIDE = new Operator("divide", "/", // TODO See RoundingMode and test
-    (context, left, right) -> new Constant(left.toNumericState(context).divide(right.toNumericState(context), RoundingMode.FLOOR)));
-  public static final Operator MINUS = new Operator("minus", "-",
-    (context, left, right) -> new Constant(left.toNumericState(context).subtract(right.toNumericState(context))));
-  public static final Operator MULTIPLY = new Operator("multiply", "*",
-    (context, left, right) -> new Constant(left.toNumericState(context).multiply(right.toNumericState(context))));
-  public static final Operator OR = new Operator("or", "||",
-    (context, left, right) -> new Constant(left.toBooleanState(context) || right.toBooleanState(context)));
-  public static final Operator PLUS = new Operator("plus", "+",
-    (context, left, right) -> new Constant(left.toNumericState(context).add(right.toNumericState(context))));
+  public static final Operator AND = new Operator("and", "&&", Value::and);
+  public static final Operator DIVIDE = new Operator("divide", "/", Value::divide);
+  public static final Operator MINUS = new Operator("minus", "-", Value::minus);
+  public static final Operator MULTIPLY = new Operator("multiply", "*", Value::multiply);
+  public static final Operator OR = new Operator("or", "||", Value::or);
+  public static final Operator PLUS = new Operator("plus", "+", Value::plus);
 
   public static View<Operator> values() {
     return Enumerations.values(OperatorList.class, Operator.class);

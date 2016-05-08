@@ -20,10 +20,10 @@
 package br.shura.venus.operator;
 
 import br.shura.venus.Context;
-import br.shura.venus.exception.ScriptRuntimeException;
-import br.shura.venus.resultor.Resultor;
-import br.shura.x.lang.function.ExceptionalTriFunction;
+import br.shura.venus.value.Value;
 import br.shura.x.object.Base;
+
+import java.util.function.BiFunction;
 
 /**
  * Operator.java
@@ -34,17 +34,17 @@ import br.shura.x.object.Base;
  * @since GAMMA - 0x3
  */
 public class Operator extends Base {
-  private final ExceptionalTriFunction<Context, Resultor, Resultor, Resultor, ScriptRuntimeException> function;
+  private final BiFunction<Value, Value, Value> function;
   private final String identifier;
   private final String name;
 
-  public Operator(String name, String identifier, ExceptionalTriFunction<Context, Resultor, Resultor, Resultor, ScriptRuntimeException> function) {
+  public Operator(String name, String identifier, BiFunction<Value, Value, Value> function) {
     this.function = function;
     this.identifier = identifier;
     this.name = name;
   }
 
-  public ExceptionalTriFunction<Context, Resultor, Resultor, Resultor, ScriptRuntimeException> getFunction() {
+  public BiFunction<Value, Value, Value> getFunction() {
     return function;
   }
 
@@ -52,8 +52,8 @@ public class Operator extends Base {
     return identifier;
   }
 
-  public final Resultor operate(Context context, Resultor left, Resultor right) throws ScriptRuntimeException {
-    return function.apply(context, left, right);
+  public final Value operate(Context context, Value left, Value right) {
+    return getFunction().apply(left, right);
   }
 
   @Override
