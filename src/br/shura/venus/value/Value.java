@@ -30,15 +30,15 @@ package br.shura.venus.value;
 public interface Value {
   BoolValue and(Value value);
 
-  NumericValue divide(Value value);
+  NumberValue divide(Value value);
 
   BoolValue equals(Value value);
 
-  NumericValue minus(Value value);
+  NumberValue minus(Value value);
 
-  NumericValue multiply(Value value);
+  NumberValue multiply(Value value);
 
   BoolValue or(Value value);
 
-  NumericValue plus(Value value);
+  NumberValue plus(Value value);
 }
