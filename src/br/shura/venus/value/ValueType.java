@@ -19,6 +19,7 @@
 
 package br.shura.venus.value;
 
+import br.shura.x.util.layer.XApi;
 import br.shura.x.worker.StringWorker;
 
 /**
@@ -66,6 +67,8 @@ public enum ValueType {
   }
 
   public static ValueType forClass(Class<?> type) {
+    XApi.requireNonNull(type, "type");
+
     for (ValueType value : values()) {
       if (value.accepts(type)) {
         return value;
@@ -76,6 +79,8 @@ public enum ValueType {
   }
 
   public static ValueType forIdentifier(String identifier) {
+    XApi.requireNonNull(identifier, "identifier");
+
     for (ValueType value : values()) {
       if (value.getIdentifier().equals(identifier)) {
         return value;
@@ -86,6 +91,8 @@ public enum ValueType {
   }
 
   public static ValueType forValue(Value value) {
+    XApi.requireNonNull(value, "value");
+
     return forClass(value.getClass());
   }
 }

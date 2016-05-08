@@ -19,6 +19,8 @@
 
 package br.shura.venus.value;
 
+import br.shura.x.util.layer.XApi;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -34,6 +36,8 @@ public class NumericValue implements Value {
   private final BigDecimal value;
 
   public NumericValue(BigDecimal value) {
+    XApi.requireNonNull(value, "value");
+
     this.value = value;
   }
 
