@@ -42,29 +42,6 @@ import java.io.IOException;
  */
 public class LexerTest {
   @Test
-  public void simplePrint() throws IOException, UnexpectedInputException {
-    String[] script = {
-      "i = 0",
-      "j = (i + 1024)",
-      "while (true) {",
-      "  print(i + j)",
-      "  i = i + 1",
-      "  j = j - 1",
-      "  i++",
-      "  ++j",
-      "  setvar(502.55)",
-      "}"
-    };
-    ScriptOrigin origin = new SimpleScriptOrigin("test.xs", StringWorker.join('\n', script));
-    ScriptLexer lexer = new ScriptLexer(origin);
-    Token token;
-
-    while ((token = lexer.nextToken()) != null) {
-      XLogger.println("[" + token.getType() + "] " + token.getValue());
-    }
-  }
-
-  @Test
   public void simpleAssertion() throws IOException, UnexpectedInputException {
     String[] script = {
       "i = 0",
@@ -103,6 +80,46 @@ public class LexerTest {
     assertToken(lexer, Type.NEW_LINE, null);
     assertToken(lexer, Type.CLOSE_BRACE, '}');
     XLogger.println("Assertion passed.");
+  }
+
+  @Test
+  public void simplePrint() throws IOException, UnexpectedInputException {
+    String[] script = {
+      "i = 0",
+      "j = (i + 1024)",
+      "while (true) {",
+      "  print(i + j)",
+      "  i = i + 1",
+      "  j = j - 1",
+      "  i++",
+      "  ++j",
+      "  setvar(502.55)",
+      "}"
+    };
+    ScriptOrigin origin = new SimpleScriptOrigin("test.xs", StringWorker.join('\n', script));
+    ScriptLexer lexer = new ScriptLexer(origin);
+    Token token;
+
+    while ((token = lexer.nextToken()) != null) {
+      XLogger.println("[" + token.getType() + "] " + token.getValue());
+    }
+  }
+
+  @Test
+  public void testCharLiterals() throws IOException, UnexpectedInputException {
+    String[] script = {
+      "'\\n'",
+      "'\\\\n'",
+      "'\"'"
+    };
+    ScriptOrigin origin = new SimpleScriptOrigin("test.xs", StringWorker.join('\n', script));
+    ScriptLexer lexer = new ScriptLexer(origin);
+
+    assertToken(lexer, Type.CHAR_LITERAL, "\\n");
+    assertToken(lexer, Type.NEW_LINE, null);
+    assertToken(lexer, Type.CHAR_LITERAL, "\\\\n");
+    assertToken(lexer, Type.NEW_LINE, null);
+    assertToken(lexer, Type.CHAR_LITERAL, "\"");
   }
 
   private static void assertToken(ScriptLexer lexer, Type type, Object content) throws AssertionError, UnexpectedInputException {
