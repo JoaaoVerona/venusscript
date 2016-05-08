@@ -60,7 +60,7 @@ public class ScriptLexer {
       char ch = read();
       char lastChar = !buildingToken.isEmpty() ? buildingToken.charAt(buildingToken.length() - 1) : 0;
       boolean isDigit = Character.isDigit(ch);
-      boolean isLetter = Character.isLetter(ch);
+      boolean isLetter = Character.isLetter(ch) || ch == '_';
 
       if (ch == '\n') {
         if (state == IN_CHAR_LITERAL) {
@@ -171,6 +171,12 @@ public class ScriptLexer {
       }
       else if (state != IN_CHAR_LITERAL && state != IN_STRING_LITERAL) {
         if (ch == ' ' || ch == '\t') {
+          if (state == IN_NAME_DEFINITION) {
+            this.state = null;
+
+            return new Token(Type.NAME_DEFINITION, buildingToken.toStringAndClear());
+          }
+
           continue; // return new Token(Type.WHITESPACE, ch);
         }
 
@@ -245,9 +251,9 @@ public class ScriptLexer {
   }
 
   protected void back() {
-    if (string.charAt(position) == '\n') {
+    /*if (string.charAt(position - 1) == '\n') {
       this.line--;
-    }
+    }*/
 
     this.position--;
   }
