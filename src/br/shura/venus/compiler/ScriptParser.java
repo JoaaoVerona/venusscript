@@ -29,7 +29,9 @@ import br.shura.venus.exception.UnexpectedInputException;
 import br.shura.venus.exception.UnexpectedTokenException;
 import br.shura.venus.origin.ScriptOrigin;
 import br.shura.venus.resultor.Resultor;
+import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.NumericValue;
+import br.shura.venus.value.StringValue;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.List;
@@ -37,6 +39,7 @@ import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.logging.XLogger;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 /**
  * ScriptParser.java
@@ -227,12 +230,36 @@ public class ScriptParser {
 
   protected Value readValue() throws UnexpectedInputException, UnexpectedTokenException {
     Token token = requireToken();
+    String value = (String) token.getValue();
 
-    if (token.getType() == Type.CHAR_LITERAL) {
-      return new NumericValue(0);
+    if (token.getType() == Type.CHAR_LITERAL || token.getType() == Type.STRING_LITERAL) {
+      return new StringValue(value);
     }
 
-    return null;
+    if (token.getType() == Type.NAME_DEFINITION) {
+      if (value.equals(KeywordDefinitions.TRUE)) {
+        return new BoolValue(true);
+      }
+
+      if (value.equals(KeywordDefinitions.FALSE)) {
+        return new BoolValue(false);
+      }
+    }
+
+    if (token.getType() == Type.NUMBER_LITERAL) {
+      try {
+        BigDecimal number = new BigDecimal(value);
+
+        return new NumericValue(number);
+      }
+      catch (NumberFormatException exception) {
+        bye(token, "illegal numeric value \"" + value + "\"");
+      }
+    }
+
+    bye(token, "expected a value literal (boolean/char/number/string)");
+
+    return null; // Will not happen since bye() will always throw an exception, but fck-u compiler
   }
 
   protected void requireNewLine() throws UnexpectedInputException, UnexpectedTokenException {
