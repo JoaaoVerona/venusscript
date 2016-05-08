@@ -19,6 +19,8 @@
 
 package br.shura.venus.value;
 
+import br.shura.venus.compiler.KeywordDefinitions;
+
 /**
  * BoolValue.java
  *
@@ -83,7 +85,7 @@ public class BoolValue implements Value {
 
   @Override
   public String toString() {
-    return String.valueOf(value());
+    return value() ? KeywordDefinitions.TRUE : KeywordDefinitions.FALSE;
   }
 
   public boolean value() {
