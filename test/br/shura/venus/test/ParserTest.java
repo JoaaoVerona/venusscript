@@ -43,6 +43,8 @@ public class ParserTest {
   @Test
   public void simplePrint() throws IOException, ScriptCompileException {
     String[] content = {
+      "export MY_VAR = 0",
+      "export MY_STRING = \"oi\"",
       "def printMyName(string name) {",
       "  print(\"Hello, I'm \" + name + \"!)",
       "}"
