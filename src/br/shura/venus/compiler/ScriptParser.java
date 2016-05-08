@@ -214,8 +214,9 @@ public class ScriptParser {
     throw new UnexpectedTokenException(scriptName, lexer.currentLine(), message);
   }
 
+  // Do not call other bye() method, for better stacktrace
   protected void bye(Token token, String message) throws UnexpectedTokenException {
-    bye("Invalid token \"" + token + "\"; " + message);
+    throw new UnexpectedTokenException(scriptName, lexer.currentLine(), "Invalid token \"" + token + "\"; " + message);
   }
 
   protected Value readValue() throws UnexpectedInputException, UnexpectedTokenException {
@@ -226,7 +227,7 @@ public class ScriptParser {
     Token token = lexer.nextToken();
 
     if (token != null && token.getType() != Type.NEW_LINE) {
-      bye("Expected a new line");
+      bye(token, "expected a new line");
     }
   }
 
