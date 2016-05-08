@@ -238,7 +238,11 @@ public class ScriptParser {
   protected void requireNewLine() throws UnexpectedInputException, UnexpectedTokenException {
     Token token = lexer.nextToken();
 
-    if (token != null && token.getType() != Type.NEW_LINE) {
+    if (token == null) {
+      bye("Expected a new line, but no token found");
+    }
+
+    if (token.getType() != Type.NEW_LINE) {
       bye(token, "expected a new line");
     }
   }

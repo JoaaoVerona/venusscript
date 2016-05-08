@@ -100,7 +100,7 @@ public class ScriptLexer {
         return new Token(Type.NEW_LINE, null);
       }
 
-      if (ch == '"' && lastChar != '\\') {
+      if (ch == '"' && lastChar != '\\' && state != IN_CHAR_LITERAL) {
         if (state == IN_STRING_LITERAL) {
           this.state = null;
 
@@ -128,7 +128,7 @@ public class ScriptLexer {
         continue;
       }
 
-      if (ch == '\'' && lastChar != '\\') {
+      if (ch == '\'' && lastChar != '\\' && state != IN_STRING_LITERAL) {
         if (state == IN_CHAR_LITERAL) {
           this.state = null;
 
@@ -263,11 +263,17 @@ public class ScriptLexer {
   }
 
   protected boolean canRead() {
-    return position < string.length();
+    return position <= string.length();
   }
 
   protected char read() {
-    return string.charAt(this.position++);
+    if (position == string.length()) {
+      this.position++;
+
+      return '\n';
+    }
+
+    return string.charAt(position++);
   }
 
   public enum State {
