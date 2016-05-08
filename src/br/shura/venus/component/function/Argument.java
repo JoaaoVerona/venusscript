@@ -19,7 +19,7 @@
 
 package br.shura.venus.component.function;
 
-import br.shura.venus.value.ValueType;
+import br.shura.venus.resultor.ValueType;
 import br.shura.x.object.Base;
 
 /**

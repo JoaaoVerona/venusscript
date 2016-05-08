@@ -19,7 +19,7 @@
 
 package br.shura.venus.component;
 
-import br.shura.venus.value.Value;
+import br.shura.venus.resultor.Resultor;
 
 /**
  * Attribution.java
@@ -31,9 +31,9 @@ import br.shura.venus.value.Value;
  */
 public class Attribution extends Component {
   private final String name;
-  private final Value value;
+  private final Resultor value;
 
-  public Attribution(String name, Value value) {
+  public Attribution(String name, Resultor value) {
     this.name = name;
     this.value = value;
   }
@@ -42,7 +42,7 @@ public class Attribution extends Component {
     return name;
   }
 
-  public Value getValue() {
+  public Resultor getValue() {
     return value;
   }
 }

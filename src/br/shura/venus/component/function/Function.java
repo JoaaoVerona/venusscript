@@ -22,8 +22,8 @@ package br.shura.venus.component.function;
 import br.shura.venus.Context;
 import br.shura.venus.exception.InvalidFunctionParameterException;
 import br.shura.venus.exception.ScriptRuntimeException;
-import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
+import br.shura.venus.resultor.Resultor;
+import br.shura.venus.resultor.ValueType;
 import br.shura.x.collection.view.View;
 import br.shura.x.lang.INameable;
 
@@ -36,7 +36,7 @@ import br.shura.x.lang.INameable;
  * @since GAMMA - 0x3
  */
 public interface Function extends INameable {
-  Value call(Context context, Value... arguments) throws ScriptRuntimeException;
+  Resultor call(Context context, Resultor... arguments) throws ScriptRuntimeException;
 
   default int getArgumentCount() {
     return getArgumentTypes().size();
@@ -46,7 +46,7 @@ public interface Function extends INameable {
 
   boolean isVarArgs();
 
-  default void validateArguments(Context context, Value... arguments) throws ScriptRuntimeException {
+  default void validateArguments(Context context, Resultor... arguments) throws ScriptRuntimeException {
     if (isVarArgs()) {
       return;
     }

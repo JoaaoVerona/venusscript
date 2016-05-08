@@ -19,7 +19,7 @@
 
 package br.shura.venus.operator;
 
-import br.shura.venus.value.Constant;
+import br.shura.venus.resultor.Constant;
 import br.shura.x.collection.view.View;
 import br.shura.x.worker.enumeration.Enumerations;
 

@@ -17,50 +17,40 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.value;
+package br.shura.venus.resultor;
 
 import br.shura.venus.Context;
-import br.shura.venus.component.function.Function;
 import br.shura.venus.exception.ScriptRuntimeException;
-import br.shura.x.collection.view.ArrayView;
-import br.shura.x.collection.view.View;
+import br.shura.x.util.layer.XApi;
 
 /**
- * FunctionResult.java
+ * Variable.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 03:28
+ * @date 06/05/16 - 01:34
  * @since GAMMA - 0x3
  */
-public class FunctionResult extends Value {
-  private final Value[] arguments;
-  private final String functionName;
+public class Variable extends Resultor {
+  private final String name;
 
-  public FunctionResult(String functionName, Value... arguments) {
-    this.arguments = arguments;
-    this.functionName = functionName;
+  public Variable(String name) {
+    XApi.requireNonNull(name, "name");
+
+    this.name = name;
   }
 
-  public View<Value> getArguments() {
-    return new ArrayView<>(arguments);
-  }
-
-  public String getFunctionName() {
-    return functionName;
+  public String getName() {
+    return name;
   }
 
   @Override
   public Object resolve(Context context) throws ScriptRuntimeException {
-    Function function = context.getOwner().findFunction(context, getFunctionName(), getArguments().size());
-
-    function.validateArguments(context, arguments);
-
-    return function.call(context, arguments);
+    return context.getVarValue(getName());
   }
 
   @Override
   public String toString() {
-    return "functionresult(" + getFunctionName() + " <-- [" + getArguments().toString(", ") + "])";
+    return "var(" + getName() + ')';
   }
 }

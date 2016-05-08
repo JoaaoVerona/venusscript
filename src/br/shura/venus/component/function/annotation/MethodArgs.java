@@ -19,7 +19,7 @@
 
 package br.shura.venus.component.function.annotation;
 
-import br.shura.venus.value.ValueType;
+import br.shura.venus.resultor.ValueType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

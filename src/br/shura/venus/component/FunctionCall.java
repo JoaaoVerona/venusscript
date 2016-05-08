@@ -22,7 +22,7 @@ package br.shura.venus.component;
 import br.shura.venus.Context;
 import br.shura.venus.component.function.Function;
 import br.shura.venus.exception.ScriptRuntimeException;
-import br.shura.venus.value.Value;
+import br.shura.venus.resultor.Resultor;
 import br.shura.x.collection.view.ArrayView;
 import br.shura.x.collection.view.View;
 
@@ -35,10 +35,10 @@ import br.shura.x.collection.view.View;
  * @since GAMMA - 0x3
  */
 public class FunctionCall extends Component {
-  private final Value[] arguments;
+  private final Resultor[] arguments;
   private final String functionName;
 
-  public FunctionCall(String functionName, Value... arguments) {
+  public FunctionCall(String functionName, Resultor... arguments) {
     this.arguments = arguments;
     this.functionName = functionName;
   }
@@ -51,7 +51,7 @@ public class FunctionCall extends Component {
     return function.call(context, arguments);
   }
 
-  public View<Value> getArguments() {
+  public View<Resultor> getArguments() {
     return new ArrayView<>(arguments);
   }
 

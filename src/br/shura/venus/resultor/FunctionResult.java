@@ -17,50 +17,50 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.value;
+package br.shura.venus.resultor;
 
 import br.shura.venus.Context;
+import br.shura.venus.component.function.Function;
 import br.shura.venus.exception.ScriptRuntimeException;
-import br.shura.venus.operator.Operator;
+import br.shura.x.collection.view.ArrayView;
+import br.shura.x.collection.view.View;
 
 /**
- * Operation.java
+ * FunctionResult.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 02:18
+ * @date 06/05/16 - 03:28
  * @since GAMMA - 0x3
  */
-public class Operation extends Value {
-  private final Value left;
-  private final Operator operator;
-  private final Value right;
+public class FunctionResult extends Resultor {
+  private final Resultor[] arguments;
+  private final String functionName;
 
-  public Operation(Operator operator, Value left, Value right) {
-    this.left = left;
-    this.operator = operator;
-    this.right = right;
+  public FunctionResult(String functionName, Resultor... arguments) {
+    this.arguments = arguments;
+    this.functionName = functionName;
   }
 
-  public Value getLeft() {
-    return left;
+  public View<Resultor> getArguments() {
+    return new ArrayView<>(arguments);
   }
 
-  public Operator getOperator() {
-    return operator;
-  }
-
-  public Value getRight() {
-    return right;
+  public String getFunctionName() {
+    return functionName;
   }
 
   @Override
   public Object resolve(Context context) throws ScriptRuntimeException {
-    return getOperator().operate(context, getLeft(), getRight());
+    Function function = context.getOwner().findFunction(context, getFunctionName(), getArguments().size());
+
+    function.validateArguments(context, arguments);
+
+    return function.call(context, arguments);
   }
 
   @Override
   public String toString() {
-    return "operation([" + getLeft() + "] " + getOperator() + " [" + getRight() + "])";
+    return "functionresult(" + getFunctionName() + " <-- [" + getArguments().toString(", ") + "])";
   }
 }

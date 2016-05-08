@@ -17,55 +17,50 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.value;
+package br.shura.venus.resultor;
 
 import br.shura.venus.Context;
-import br.shura.x.util.layer.XApi;
+import br.shura.venus.exception.InvalidValueTypeException;
+import br.shura.venus.exception.ScriptRuntimeException;
 
 import java.math.BigDecimal;
 
 /**
- * Constant.java
+ * Resultor.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 01:31
+ * @date 05/05/16 - 14:42
  * @since GAMMA - 0x3
  */
-public class Constant extends Value {
-  private final Object object;
-
-  public Constant(boolean bool) {
-    this.object = bool;
+public abstract class Resultor {
+  public final boolean equals(Context context, Resultor object) throws ScriptRuntimeException {
+    return resolve(context).equals(object.resolve(context));
   }
 
-  public Constant(BigDecimal number) {
-    XApi.requireNonNull(number, "number");
+  public abstract Object resolve(Context context) throws ScriptRuntimeException;
 
-    this.object = number;
+  public final ValueType resolveType(Context context) throws ScriptRuntimeException {
+    return ValueType.forClass(resolve(context).getClass());
   }
 
-  public Constant(char ch) {
-    this.object = ch;
+  public final boolean toBooleanState(Context context) throws ScriptRuntimeException {
+    Object value = resolve(context);
+
+    return (value instanceof Boolean && (Boolean) value) ||
+      (value instanceof Number && ((Number) value).longValue() > 0);
   }
 
-  public Constant(String string) {
-    XApi.requireNonNull(string, "string");
+  public final BigDecimal toNumericState(Context context) throws ScriptRuntimeException {
+    Object value = resolve(context);
 
-    this.object = string;
-  }
+    if (value instanceof BigDecimal) {
+      return (BigDecimal) value;
+    }
 
-  public Object getValue() {
-    return object;
-  }
-
-  @Override
-  public Object resolve(Context context) {
-    return object;
+    throw new InvalidValueTypeException(context, "//TODOmsg// toNumericState nope");
   }
 
   @Override
-  public String toString() {
-    return "const(" + getValue() + ')';
-  }
+  public abstract String toString();
 }

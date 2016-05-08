@@ -22,7 +22,7 @@ package br.shura.venus.component.function;
 import br.shura.venus.component.function.annotation.MethodArgs;
 import br.shura.venus.component.function.annotation.MethodName;
 import br.shura.venus.component.function.annotation.MethodVarArgs;
-import br.shura.venus.value.ValueType;
+import br.shura.venus.resultor.ValueType;
 import br.shura.x.collection.view.ArrayView;
 import br.shura.x.collection.view.View;
 import br.shura.x.util.layer.XApi;
@@ -54,7 +54,7 @@ public abstract class Method implements Function {
   }
 
   @Override
-  public View<ValueType> getArgumentTypes() {
+  public final View<ValueType> getArgumentTypes() {
     return new ArrayView<>(arguments);
   }
 

@@ -17,40 +17,55 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.value;
+package br.shura.venus.resultor;
 
 import br.shura.venus.Context;
-import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.x.util.layer.XApi;
 
+import java.math.BigDecimal;
+
 /**
- * Variable.java
+ * Constant.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 01:34
+ * @date 06/05/16 - 01:31
  * @since GAMMA - 0x3
  */
-public class Variable extends Value {
-  private final String name;
+public class Constant extends Resultor {
+  private final Object object;
 
-  public Variable(String name) {
-    XApi.requireNonNull(name, "name");
-
-    this.name = name;
+  public Constant(boolean bool) {
+    this.object = bool;
   }
 
-  public String getName() {
-    return name;
+  public Constant(BigDecimal number) {
+    XApi.requireNonNull(number, "number");
+
+    this.object = number;
+  }
+
+  public Constant(char ch) {
+    this.object = ch;
+  }
+
+  public Constant(String string) {
+    XApi.requireNonNull(string, "string");
+
+    this.object = string;
+  }
+
+  public Object getValue() {
+    return object;
   }
 
   @Override
-  public Object resolve(Context context) throws ScriptRuntimeException {
-    return context.getVarValue(getName());
+  public Object resolve(Context context) {
+    return object;
   }
 
   @Override
   public String toString() {
-    return "var(" + getName() + ')';
+    return "const(" + getValue() + ')';
   }
 }
