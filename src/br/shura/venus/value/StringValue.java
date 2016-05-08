@@ -53,6 +53,10 @@ public class StringValue implements Value {
     return new BoolValue(value instanceof StringValue && ((StringValue) value).value().equals(value()));
   }
 
+  public boolean isCharacter() {
+    return value().length() == 1;
+  }
+
   @Override
   public NumericValue minus(Value value) {
     return null;
@@ -71,6 +75,12 @@ public class StringValue implements Value {
   @Override
   public NumericValue plus(Value value) {
     return null;
+  }
+
+  public char toCharacter() {
+    XApi.requireState(isCharacter(), "Cannot convert multi character StringValue to single character");
+
+    return value().charAt(0);
   }
 
   public String value() {
