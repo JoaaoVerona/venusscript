@@ -23,6 +23,9 @@ import br.shura.venus.Context;
 import br.shura.venus.component.function.Function;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.resultor.Resultor;
+import br.shura.venus.value.Value;
+import br.shura.x.collection.list.List;
+import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.collection.view.ArrayView;
 import br.shura.x.collection.view.View;
 
@@ -43,12 +46,19 @@ public class FunctionCall extends Component {
     this.functionName = functionName;
   }
 
-  public Object call(Context context) throws ScriptRuntimeException {
+  public Value call(Context context) throws ScriptRuntimeException {
     Function function = context.getOwner().findFunction(context, getFunctionName(), getArguments().size());
+    List<Value> list = new ArrayList<>();
 
-    function.validateArguments(context, arguments);
+    for (Resultor argument : getArguments()) {
+      list.add(argument.resolve(context));
+    }
 
-    return function.call(context, arguments);
+    Value[] values = list.toArray();
+
+    function.validateArguments(context, values);
+
+    return function.call(context, values);
   }
 
   public View<Resultor> getArguments() {
