@@ -19,7 +19,7 @@
 
 package br.shura.venus.operator;
 
-import br.shura.venus.Context;
+import br.shura.venus.executor.Context;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.view.ArrayView;
 import br.shura.x.collection.view.View;

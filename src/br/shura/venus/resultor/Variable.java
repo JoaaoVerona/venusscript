@@ -19,8 +19,8 @@
 
 package br.shura.venus.resultor;
 
-import br.shura.venus.Context;
 import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
 import br.shura.venus.value.Value;
 import br.shura.x.util.layer.XApi;
 

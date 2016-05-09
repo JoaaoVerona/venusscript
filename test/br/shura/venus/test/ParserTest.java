@@ -19,11 +19,11 @@
 
 package br.shura.venus.test;
 
-import br.shura.venus.ApplicationContext;
-import br.shura.venus.Script;
 import br.shura.venus.compiler.ScriptLexer;
 import br.shura.venus.compiler.ScriptParser;
+import br.shura.venus.component.Script;
 import br.shura.venus.exception.ScriptCompileException;
+import br.shura.venus.executor.ApplicationContext;
 import br.shura.venus.origin.ScriptOrigin;
 import br.shura.venus.origin.SimpleScriptOrigin;
 import br.shura.x.worker.StringWorker;

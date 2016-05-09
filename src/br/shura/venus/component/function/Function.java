@@ -19,9 +19,9 @@
 
 package br.shura.venus.component.function;
 
-import br.shura.venus.Context;
 import br.shura.venus.exception.InvalidFunctionParameterException;
 import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
 import br.shura.x.collection.view.View;

@@ -19,8 +19,8 @@
 
 package br.shura.venus.exception;
 
-import br.shura.venus.Context;
 import br.shura.venus.component.function.Function;
+import br.shura.venus.executor.Context;
 
 /**
  * InvalidFunctionParameterException.java

@@ -19,11 +19,11 @@
 
 package br.shura.venus.compiler;
 
-import br.shura.venus.Script;
 import br.shura.venus.compiler.Token.Type;
 import br.shura.venus.component.Attribution;
 import br.shura.venus.component.Container;
 import br.shura.venus.component.FunctionCall;
+import br.shura.venus.component.Script;
 import br.shura.venus.component.function.Argument;
 import br.shura.venus.component.function.Definition;
 import br.shura.venus.exception.ScriptCompileException;

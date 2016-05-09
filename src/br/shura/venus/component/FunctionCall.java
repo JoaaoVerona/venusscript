@@ -19,9 +19,9 @@
 
 package br.shura.venus.component;
 
-import br.shura.venus.Context;
 import br.shura.venus.component.function.Function;
 import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
 import br.shura.venus.resultor.Resultor;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.list.List;

@@ -17,7 +17,7 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus;
+package br.shura.venus.executor;
 
 import br.shura.venus.component.Container;
 import br.shura.venus.exception.UndefinedVariableException;

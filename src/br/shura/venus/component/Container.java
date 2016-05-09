@@ -19,11 +19,11 @@
 
 package br.shura.venus.component;
 
-import br.shura.venus.Context;
 import br.shura.venus.component.function.Definition;
 import br.shura.venus.component.function.Function;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.exception.UndefinedFunctionException;
+import br.shura.venus.executor.Context;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.util.layer.XApi;

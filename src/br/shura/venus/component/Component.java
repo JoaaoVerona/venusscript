@@ -19,8 +19,7 @@
 
 package br.shura.venus.component;
 
-import br.shura.venus.Context;
-import br.shura.venus.Script;
+import br.shura.venus.executor.Context;
 import br.shura.x.lang.annotation.Internal;
 import br.shura.x.util.layer.XApi;
 
