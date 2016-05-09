@@ -71,133 +71,22 @@ public class ScriptParser {
     while ((token = lexer.nextToken()) != null) {
       if (token.getType() == Type.NAME_DEFINITION) { // Lines should start with namedef or closebrace
         if (token.getValue().equals(KeywordDefinitions.DEFINE)) { // New function definition
-          Token typeToken = requireToken(Type.NAME_DEFINITION, "expected a return type");
-          String definitionName = (String) typeToken.getValue();
-          List<Argument> arguments = new ArrayList<>();
-
-          requireToken(Type.OPEN_PARENTHESE, "expected an open parenthese");
-
-          Token reading;
-
-          while ((reading = requireToken()).getType() != Type.CLOSE_PARENTHESE) { // Reads definition arguments
-            if (reading.getType() == Type.NAME_DEFINITION) {
-              ValueType argumentType = ValueType.forIdentifier((String) reading.getValue());
-
-              if (argumentType != null) {
-                Token argumentToken = requireToken(Type.NAME_DEFINITION, "expected an argument name");
-                String argumentName = (String) argumentToken.getValue();
-
-                if (!KeywordDefinitions.isKeyword(argumentName)) {
-                  arguments.add(new Argument(argumentName, argumentType));
-
-                  Token commaOrClose = requireToken();
-
-                  if (commaOrClose.getType() == Type.CLOSE_PARENTHESE) {
-                    break;
-                  }
-
-                  if (commaOrClose.getType() != Type.COMMA) {
-                    bye(commaOrClose, "expected an argument separator (comma) or close parenthese");
-                  }
-                }
-                else {
-                  bye(reading, "argument name cannot be a keyword");
-                }
-              }
-              else {
-                bye(reading, "expected an argument type (" +
-                  new ArrayList<>(ValueType.values()).toString(", ") + ')');
-              }
-            }
-            else {
-              bye(reading, "expected an argument name");
-            }
-          }
-
-          requireToken(Type.OPEN_BRACE, "expected an open brace");
-
-          Definition definition = new Definition(definitionName, arguments);
-
-          container.getDefinitions().add(definition);
-          XLogger.debugln("Added definition::" + definitionName + ", " + arguments);
-          container = definition;
+          container = parseDefinition(container);
         }
-        else if (container != script) { // Container != script, then is variable attribution or function call
-
-        }
-        else { // Container == script, then should be export or include
+        else if (container == script) { // Container == script, then should be export or include
           if (token.getValue().equals(KeywordDefinitions.EXPORT)) {
-            Token nameToken = requireToken(Type.NAME_DEFINITION, "expected a variable name");
-            String variableName = (String) nameToken.getValue();
-
-            if (!KeywordDefinitions.isKeyword(variableName)) {
-              Token attributionToken = requireToken();
-
-              if (attributionToken.getType() == Type.OPERATOR && attributionToken.getValue().equals("=")) {
-                Value value = readValue();
-
-                script.getApplicationContext().setVar(variableName, value);
-                XLogger.debugln("Added exported var::" + variableName + ", val::" + value);
-                requireNewLine();
-              }
-              else {
-                bye(attributionToken, "expected an attribution character '='");
-              }
-            }
-            else {
-              bye(nameToken, "variable name cannot be a keyword");
-            }
+            parseExport(script);
           }
           else if (token.getValue().equals(KeywordDefinitions.INCLUDE)) {
-            Token next = requireToken(Type.STRING_LITERAL, "expected a string literal as including script");
-            String includePath = (String) next.getValue();
-            boolean maybe = false;
-            Token maybeOrNewLine = requireToken();
-
-            if (maybeOrNewLine.getType() == Type.NAME_DEFINITION) {
-              if (maybeOrNewLine.getValue().equals("maybe")) {
-                maybe = true;
-                requireToken(Type.NEW_LINE, "expected new line");
-              }
-              else {
-                bye(maybeOrNewLine, "expected 'maybe' or new line");
-              }
-            }
-            else if (maybeOrNewLine.getType() != Type.NEW_LINE) {
-              bye(maybeOrNewLine, "expected 'maybe' or new line");
-            }
-
-            ScriptOrigin includeOrigin = script.getOrigin().findInclude(includePath);
-
-            if (includeOrigin != null) {
-              ScriptLexer lexer = null;
-
-              try {
-                lexer = new ScriptLexer(includeOrigin);
-              }
-              catch (IOException exception) {
-                bye("Could not read script \"" + includeOrigin.getScriptName() + "\": " + exception.getClass().getSimpleName() +
-                  ": " + exception.getMessage());
-              }
-
-              ScriptParser parser = new ScriptParser(lexer);
-              Script includeScript = new Script(script.getApplicationContext(), includeOrigin);
-
-              parser.parse(includeScript);
-              script.getIncludes().add(includeScript);
-              XLogger.debugln("Added include script \"" + includeOrigin.getScriptName() + "\".");
-            }
-            else if (maybe) {
-              XLogger.debugln("Not found include script \"" + includePath + "\", but it was marked as maybe.");
-            }
-            else {
-              bye("Could not find script \"" + includePath + "\".");
-            }
+            parseInclude(script);
           }
           else {
             bye("Invalid keyword \"" + token.getValue() + "\"; expected '" + KeywordDefinitions.DEFINE + "', '" +
               KeywordDefinitions.EXPORT + "' or '" + KeywordDefinitions.INCLUDE + "'");
           }
+        }
+        else {
+          bye(token, "unexpected token");
         }
       }
       else if (token.getType() == Type.CLOSE_BRACE) {
@@ -222,6 +111,129 @@ public class ScriptParser {
   // Do not call other bye() method, for better stacktrace
   protected void bye(Token token, String message) throws UnexpectedTokenException {
     throw new UnexpectedTokenException(scriptName, lexer.currentLine(), "Invalid token \"" + token + "\"; " + message);
+  }
+
+  protected Definition parseDefinition(Container container) throws ScriptCompileException {
+    Token typeToken = requireToken(Type.NAME_DEFINITION, "expected a return type");
+    String definitionName = (String) typeToken.getValue();
+    List<Argument> arguments = new ArrayList<>();
+
+    requireToken(Type.OPEN_PARENTHESE, "expected an open parenthese");
+
+    Token reading;
+
+    while ((reading = requireToken()).getType() != Type.CLOSE_PARENTHESE) { // Reads definition arguments
+      if (reading.getType() == Type.NAME_DEFINITION) {
+        ValueType argumentType = ValueType.forIdentifier((String) reading.getValue());
+
+        if (argumentType != null) {
+          Token argumentToken = requireToken(Type.NAME_DEFINITION, "expected an argument name");
+          String argumentName = (String) argumentToken.getValue();
+
+          if (!KeywordDefinitions.isKeyword(argumentName)) {
+            arguments.add(new Argument(argumentName, argumentType));
+
+            Token commaOrClose = requireToken();
+
+            if (commaOrClose.getType() == Type.CLOSE_PARENTHESE) {
+              break;
+            }
+
+            if (commaOrClose.getType() != Type.COMMA) {
+              bye(commaOrClose, "expected an argument separator (comma) or close parenthese");
+            }
+          }
+          else {
+            bye(reading, "argument name cannot be a keyword");
+          }
+        }
+        else {
+          bye(reading, "expected an argument type (" + new ArrayList<>(ValueType.values()).toString(", ") + ')');
+        }
+      }
+      else {
+        bye(reading, "expected an argument name");
+      }
+    }
+
+    requireToken(Type.OPEN_BRACE, "expected an open brace");
+
+    Definition definition = new Definition(definitionName, arguments);
+
+    container.getDefinitions().add(definition);
+    XLogger.debugln("Added definition::" + definitionName + ", " + arguments);
+
+    return definition;
+  }
+
+  protected void parseExport(Script script) throws ScriptCompileException {
+    Token nameToken = requireToken(Type.NAME_DEFINITION, "expected a variable name");
+    String variableName = (String) nameToken.getValue();
+
+    if (!KeywordDefinitions.isKeyword(variableName)) {
+      Token attributionToken = requireToken();
+
+      if (attributionToken.getType() == Type.OPERATOR && attributionToken.getValue().equals("=")) {
+        Value value = readValue();
+
+        script.getApplicationContext().setVar(variableName, value);
+        XLogger.debugln("Added exported var::" + variableName + ", val::" + value);
+        requireNewLine();
+      }
+      else {
+        bye(attributionToken, "expected an attribution character '='");
+      }
+    }
+    else {
+      bye(nameToken, "variable name cannot be a keyword");
+    }
+  }
+
+  protected void parseInclude(Script script) throws ScriptCompileException {
+    Token next = requireToken(Type.STRING_LITERAL, "expected a string literal as including script");
+    String includePath = (String) next.getValue();
+    boolean maybe = false;
+    Token maybeOrNewLine = requireToken();
+
+    if (maybeOrNewLine.getType() == Type.NAME_DEFINITION) {
+      if (maybeOrNewLine.getValue().equals("maybe")) {
+        maybe = true;
+        requireToken(Type.NEW_LINE, "expected new line");
+      }
+      else {
+        bye(maybeOrNewLine, "expected 'maybe' or new line");
+      }
+    }
+    else if (maybeOrNewLine.getType() != Type.NEW_LINE) {
+      bye(maybeOrNewLine, "expected 'maybe' or new line");
+    }
+
+    ScriptOrigin includeOrigin = script.getOrigin().findInclude(includePath);
+
+    if (includeOrigin != null) {
+      ScriptLexer lexer = null;
+
+      try {
+        lexer = new ScriptLexer(includeOrigin);
+      }
+      catch (IOException exception) {
+        bye("Could not read script \"" + includeOrigin.getScriptName() + "\": " + exception.getClass().getSimpleName() +
+          ": " + exception.getMessage());
+      }
+
+      ScriptParser parser = new ScriptParser(lexer);
+      Script includeScript = new Script(script.getApplicationContext(), includeOrigin);
+
+      parser.parse(includeScript);
+      script.getIncludes().add(includeScript);
+      XLogger.debugln("Added include script \"" + includeOrigin.getScriptName() + "\".");
+    }
+    else if (maybe) {
+      XLogger.debugln("Not found include script \"" + includePath + "\", but it was marked as maybe.");
+    }
+    else {
+      bye("Could not find script \"" + includePath + "\".");
+    }
   }
 
   protected Resultor readResultor() throws UnexpectedInputException, UnexpectedTokenException {
