@@ -46,7 +46,7 @@ public class ParserTest {
       "export MY_VAR = 0",
       "export MY_STRING = \"oi\"",
       "def printMyName(string name) {",
-      "  print(\"Hello, I'm \" + name + \"!)",
+      "  print(\"Hello, I'm \" + name + \"!\")",
       "}"
     };
     ScriptOrigin origin = new SimpleScriptOrigin("test.xs", StringWorker.join('\n', content));
