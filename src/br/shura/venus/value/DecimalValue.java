@@ -21,21 +21,32 @@ package br.shura.venus.value;
 
 import br.shura.x.util.layer.XApi;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 /**
- * StringValue.java
+ * DecimalValue.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 08/05/16 - 20:47
+ * @date 08/05/16 - 18:41
  * @since GAMMA - 0x3
  */
-public class StringValue implements Value {
-  private final String value;
+public class DecimalValue implements NumericValue {
+  private final BigDecimal value;
 
-  public StringValue(String value) {
+  public DecimalValue(BigDecimal value) {
     XApi.requireNonNull(value, "value");
 
     this.value = value;
+  }
+
+  public DecimalValue(double value) {
+    this(BigDecimal.valueOf(value));
+  }
+
+  public DecimalValue(long value) {
+    this(BigDecimal.valueOf(value));
   }
 
   @Override
@@ -44,26 +55,40 @@ public class StringValue implements Value {
   }
 
   @Override
-  public NumericValue divide(Value value) {
+  public DecimalValue divide(Value value) {
+    if (value instanceof NumericValue) {
+      NumericValue numeric = (NumericValue) value;
+
+      return new DecimalValue(value().divide(numberToBigDecimal(numeric.value()), RoundingMode.FLOOR));
+    }
+
     return null;
   }
 
   @Override
   public BoolValue equals(Value value) {
-    return new BoolValue(value instanceof StringValue && ((StringValue) value).value().equals(value()));
-  }
-
-  public boolean isCharacter() {
-    return value().length() == 1;
+    return new BoolValue(value instanceof DecimalValue && ((DecimalValue) value).value().equals(value()));
   }
 
   @Override
-  public NumericValue minus(Value value) {
+  public DecimalValue minus(Value value) {
+    if (value instanceof NumericValue) {
+      NumericValue numeric = (NumericValue) value;
+
+      return new DecimalValue(value().subtract(numberToBigDecimal(numeric.value())));
+    }
+
     return null;
   }
 
   @Override
-  public NumericValue multiply(Value value) {
+  public DecimalValue multiply(Value value) {
+    if (value instanceof NumericValue) {
+      NumericValue numeric = (NumericValue) value;
+
+      return new DecimalValue(value().multiply(numberToBigDecimal(numeric.value())));
+    }
+
     return null;
   }
 
@@ -73,17 +98,24 @@ public class StringValue implements Value {
   }
 
   @Override
-  public NumericValue plus(Value value) {
+  public DecimalValue plus(Value value) {
+    if (value instanceof NumericValue) {
+      NumericValue numeric = (NumericValue) value;
+
+      return new DecimalValue(value().add(numberToBigDecimal(numeric.value())));
+    }
+
     return null;
   }
 
-  public char toCharacter() {
-    XApi.requireState(isCharacter(), "Cannot convert multi character StringValue to single character");
-
-    return value().charAt(0);
+  @Override
+  public BigDecimal value() {
+    return value;
   }
 
-  public String value() {
-    return value;
+  private static BigDecimal numberToBigDecimal(Number number) {
+    return number instanceof BigDecimal ? (BigDecimal) number :
+           (number instanceof Double || number instanceof Float) ? BigDecimal.valueOf(number.doubleValue()) :
+           BigDecimal.valueOf(number.longValue());
   }
 }

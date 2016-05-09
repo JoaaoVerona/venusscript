@@ -20,13 +20,93 @@
 package br.shura.venus.value;
 
 /**
- * NumericValue.java
+ * IntegerValue.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 09/05/16 - 01:49
+ * @date 09/05/16 - 01:48
  * @since GAMMA - 0x3
  */
-public interface NumericValue extends Value {
-  Number value();
+public class IntegerValue implements NumericValue {
+  private final long value;
+
+  public IntegerValue(long value) {
+    this.value = value;
+  }
+
+  @Override
+  public IntegerValue and(Value value) {
+    if (value instanceof IntegerValue) {
+      return new IntegerValue(value() & ((IntegerValue) value).value());
+    }
+
+    return null;
+  }
+
+  @Override
+  public IntegerValue divide(Value value) {
+    if (value instanceof NumericValue) {
+      NumericValue numeric = (NumericValue) value;
+
+      return new IntegerValue(value() / numeric.value().longValue());
+    }
+
+    return null;
+  }
+
+  @Override
+  public BoolValue equals(Value value) {
+    if (value instanceof NumericValue) {
+      return new BoolValue(value().equals(((NumericValue) value).value()));
+    }
+
+    return null;
+  }
+
+  @Override
+  public IntegerValue minus(Value value) {
+    if (value instanceof NumericValue) {
+      NumericValue numeric = (NumericValue) value;
+
+      return new IntegerValue(value() - numeric.value().longValue());
+    }
+
+    return null;
+  }
+
+  @Override
+  public IntegerValue multiply(Value value) {
+    if (value instanceof NumericValue) {
+      NumericValue numeric = (NumericValue) value;
+
+      return new IntegerValue(value() * numeric.value().longValue());
+    }
+
+    return null;
+  }
+
+  @Override
+  public IntegerValue or(Value value) {
+    if (value instanceof IntegerValue) {
+      return new IntegerValue(value() | ((IntegerValue) value).value());
+    }
+
+    return null;
+  }
+
+  @Override
+  public IntegerValue plus(Value value) {
+    if (value instanceof NumericValue) {
+      NumericValue numeric = (NumericValue) value;
+
+      return new IntegerValue(value() + numeric.value().longValue());
+    }
+
+    return null;
+  }
+
+  @Override
+  public Long value() {
+    return value;
+  }
 }

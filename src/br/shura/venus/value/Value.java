@@ -28,7 +28,7 @@ package br.shura.venus.value;
  * @since GAMMA - 0x3
  */
 public interface Value {
-  BoolValue and(Value value);
+  Value and(Value value);
 
   NumericValue divide(Value value);
 
@@ -38,7 +38,7 @@ public interface Value {
 
   NumericValue multiply(Value value);
 
-  BoolValue or(Value value);
+  Value or(Value value);
 
   NumericValue plus(Value value);
 }
