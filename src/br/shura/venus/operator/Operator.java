@@ -21,6 +21,8 @@ package br.shura.venus.operator;
 
 import br.shura.venus.Context;
 import br.shura.venus.value.Value;
+import br.shura.x.collection.view.ArrayView;
+import br.shura.x.collection.view.View;
 import br.shura.x.object.Base;
 
 import java.util.function.BiFunction;
@@ -35,12 +37,12 @@ import java.util.function.BiFunction;
  */
 public class Operator extends Base {
   private final BiFunction<Value, Value, Value> function;
-  private final String identifier;
+  private final View<String> identifiers;
   private final String name;
 
-  public Operator(String name, String identifier, BiFunction<Value, Value, Value> function) {
+  public Operator(String name, BiFunction<Value, Value, Value> function, String... identifiers) {
     this.function = function;
-    this.identifier = identifier;
+    this.identifiers = new ArrayView<>(identifiers);
     this.name = name;
   }
 
@@ -48,8 +50,8 @@ public class Operator extends Base {
     return function;
   }
 
-  public String getIdentifier() {
-    return identifier;
+  public View<String> getIdentifiers() {
+    return identifiers;
   }
 
   public final Value operate(Context context, Value left, Value right) {
@@ -63,6 +65,6 @@ public class Operator extends Base {
 
   @Override
   protected Object[] stringValues() {
-    return new Object[] { toString(), getIdentifier() };
+    return new Object[] { toString(), getIdentifiers() };
   }
 }
