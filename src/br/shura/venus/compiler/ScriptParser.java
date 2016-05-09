@@ -100,7 +100,11 @@ public class ScriptParser {
               Resultor resultor = readResultor();
               Attribution attribution = new Attribution(name, resultor);
 
-              container.getChildren()
+              container.getChildren().add(attribution);
+              XLogger.debugln("Added attribution " + attribution);
+            }
+            else {
+              bye(token, "expected a valid attribution operator");
             }
           }
           else if (next.getType() == Type.OPEN_PARENTHESE) {
@@ -112,6 +116,10 @@ public class ScriptParser {
             FunctionCall functionCall = new FunctionCall(name, arguments);
 
             container.getChildren().add(functionCall);
+            XLogger.debugln("Added function call: " + functionCall);
+          }
+          else {
+            bye(token, "expected attribution operator or function call");
           }
         }
       }
