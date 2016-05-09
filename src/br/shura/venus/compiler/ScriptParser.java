@@ -29,8 +29,12 @@ import br.shura.venus.component.function.Definition;
 import br.shura.venus.exception.ScriptCompileException;
 import br.shura.venus.exception.UnexpectedInputException;
 import br.shura.venus.exception.UnexpectedTokenException;
+import br.shura.venus.operator.Operator;
+import br.shura.venus.operator.OperatorList;
 import br.shura.venus.origin.ScriptOrigin;
+import br.shura.venus.resultor.Operation;
 import br.shura.venus.resultor.Resultor;
+import br.shura.venus.resultor.Variable;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.NumericValue;
 import br.shura.venus.value.StringValue;
@@ -96,15 +100,33 @@ public class ScriptParser {
           Token next = requireToken();
 
           if (next.getType() == Type.OPERATOR) {
-            if (next.getValue().equals("=")) {
+            String attrib = (String) next.getValue();
+
+            if (attrib.equals("=")) {
               Resultor resultor = readResultor(Type.NEW_LINE);
               Attribution attribution = new Attribution(name, resultor);
 
               container.getChildren().add(attribution);
               XLogger.debugln("Added attribution " + attribution);
             }
+            else if (attrib.endsWith("=")) {
+              String operatorIdentifier = attrib.substring(0, attrib.length() - 1);
+              Operator operator = OperatorList.forIdentifier(operatorIdentifier);
+
+              if (operator != null) {
+                Resultor resultor = readResultor(Type.NEW_LINE);
+                Operation operation = new Operation(operator, new Variable(name), resultor);
+                Attribution attribution = new Attribution(name, operation);
+
+                container.getChildren().add(attribution);
+                XLogger.debugln("Added op_attribution " + attribution);
+              }
+              else {
+                bye(next, "expected a valid attribution operator (=, +=, -=, ...)");
+              }
+            }
             else {
-              bye(token, "expected a valid attribution operator");
+              bye(next, "expected an attribution operator (=, +=, -=, ...)");
             }
           }
           else if (next.getType() == Type.OPEN_PARENTHESE) {
@@ -119,7 +141,7 @@ public class ScriptParser {
             XLogger.debugln("Added function call: " + functionCall);
           }
           else {
-            bye(token, "expected attribution operator or function call");
+            bye(next, "expected attribution operator or function call");
           }
         }
       }
