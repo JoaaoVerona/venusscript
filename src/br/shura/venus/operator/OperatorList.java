@@ -39,6 +39,10 @@ public class OperatorList {
   public static final Operator OR = new Operator("or", "||", Value::or);
   public static final Operator PLUS = new Operator("plus", "+", Value::plus);
 
+  public static Operator forIdentifier(String identifier) {
+    return values().selectFirst(operator -> operator.getIdentifier().equals(identifier));
+  }
+
   public static View<Operator> values() {
     return Enumerations.values(OperatorList.class, Operator.class);
   }
