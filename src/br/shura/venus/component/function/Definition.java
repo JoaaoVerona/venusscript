@@ -22,6 +22,7 @@ package br.shura.venus.component.function;
 import br.shura.venus.component.Container;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.executor.ScriptExecutor;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.List;
@@ -47,7 +48,7 @@ public final class Definition extends Container implements Function {
 
   @Override
   public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
-    return null; // TODO
+    return ScriptExecutor.run(this); // What about the context argument?
   }
 
   @Override
