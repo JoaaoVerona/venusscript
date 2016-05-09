@@ -37,6 +37,7 @@ import br.shura.venus.resultor.Resultor;
 import br.shura.venus.resultor.Variable;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.DecimalValue;
+import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.StringValue;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
@@ -333,7 +334,7 @@ public class ScriptParser {
       }
 
       if (ParseWorker.isLong(value)) {
-        return new DecimalValue(ParseWorker.toLong(value));
+        return new IntegerValue(ParseWorker.toLong(value));
       }
 
       bye(token, "illegal numeric value \"" + value + "\"");
