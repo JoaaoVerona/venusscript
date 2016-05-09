@@ -86,4 +86,9 @@ public class StringValue implements Value {
   public String value() {
     return value;
   }
+
+  @Override
+  public String toString() {
+    return value();
+  }
 }

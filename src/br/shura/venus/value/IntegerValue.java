@@ -109,4 +109,9 @@ public class IntegerValue implements NumericValue {
   public Long value() {
     return value;
   }
+
+  @Override
+  public String toString() {
+    return Long.toString(value());
+  }
 }
