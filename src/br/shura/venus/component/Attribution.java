@@ -45,4 +45,9 @@ public class Attribution extends Component {
   public Resultor getResultor() {
     return resultor;
   }
+
+  @Override
+  public String toString() {
+    return "attribution(" + getName() + "=" + getResultor() + ')';
+  }
 }
