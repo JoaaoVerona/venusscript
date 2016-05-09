@@ -52,4 +52,9 @@ public class SimpleScriptOrigin implements ScriptOrigin {
   public String read() throws IOException {
     return content;
   }
+
+  @Override
+  public String toString() {
+    return "simpleorigin(" + getScriptName() + ')';
+  }
 }

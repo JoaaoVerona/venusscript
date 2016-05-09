@@ -56,4 +56,9 @@ public class FileScriptOrigin implements ScriptOrigin {
   public String read() throws IOException {
     return getFile().readString();
   }
+
+  @Override
+  public String toString() {
+    return "fileorigin(" + getScriptName() + ')';
+  }
 }
