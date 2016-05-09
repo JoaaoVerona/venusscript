@@ -23,6 +23,7 @@ import br.shura.venus.compiler.Token.Type;
 import br.shura.venus.exception.UnexpectedInputException;
 import br.shura.venus.origin.ScriptOrigin;
 import br.shura.x.charset.build.TextBuilder;
+import br.shura.x.collection.store.impl.Queue;
 import br.shura.x.util.Pool;
 
 import java.io.IOException;
@@ -42,12 +43,14 @@ public class ScriptLexer {
   private int line;
   private final ScriptOrigin origin;
   private int position;
+  private final Queue<Token> reread;
   private State state;
   private final String string;
 
   public ScriptLexer(ScriptOrigin origin) throws IOException {
     this.buildingToken = Pool.newBuilder();
     this.origin = origin;
+    this.reread = new Queue<>();
     this.string = origin.read();
   }
 
@@ -56,6 +59,10 @@ public class ScriptLexer {
   }
 
   public Token nextToken() throws UnexpectedInputException {
+    if (!reread.isEmpty()) {
+      return reread.poll();
+    }
+
     while (canRead()) {
       char ch = read();
       char lastChar = !buildingToken.isEmpty() ? buildingToken.charAt(buildingToken.length() - 1) : 0;
@@ -248,6 +255,10 @@ public class ScriptLexer {
     }
 
     return null;
+  }
+
+  public void reRead(Token token) {
+    reread.push(token);
   }
 
   protected void back() {

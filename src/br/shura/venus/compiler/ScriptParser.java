@@ -21,7 +21,9 @@ package br.shura.venus.compiler;
 
 import br.shura.venus.Script;
 import br.shura.venus.compiler.Token.Type;
+import br.shura.venus.component.Attribution;
 import br.shura.venus.component.Container;
+import br.shura.venus.component.FunctionCall;
 import br.shura.venus.component.function.Argument;
 import br.shura.venus.component.function.Definition;
 import br.shura.venus.exception.ScriptCompileException;
@@ -69,24 +71,48 @@ public class ScriptParser {
     Container container = script;
 
     while ((token = lexer.nextToken()) != null) {
-      if (token.getType() == Type.NAME_DEFINITION) { // Lines should start with namedef or closebrace
-        if (token.getValue().equals(KeywordDefinitions.DEFINE)) { // New function definition
+      if (token.getType() == Type.NAME_DEFINITION) {
+        if (token.getValue().equals(KeywordDefinitions.DEFINE)) {
           container = parseDefinition(container);
         }
-        else if (container == script) { // Container == script, then should be export or include
-          if (token.getValue().equals(KeywordDefinitions.EXPORT)) {
+        else if (token.getValue().equals(KeywordDefinitions.EXPORT)) {
+          if (container == script) {
             parseExport(script);
           }
-          else if (token.getValue().equals(KeywordDefinitions.INCLUDE)) {
+          else {
+            bye(token, "cannot use 'export' keyword inside container");
+          }
+        }
+        else if (token.getValue().equals(KeywordDefinitions.INCLUDE)) {
+          if (container == script) {
             parseInclude(script);
           }
           else {
-            bye("Invalid keyword \"" + token.getValue() + "\"; expected '" + KeywordDefinitions.DEFINE + "', '" +
-              KeywordDefinitions.EXPORT + "' or '" + KeywordDefinitions.INCLUDE + "'");
+            bye(token, "cannot use 'import' keyword inside container");
           }
         }
-        else {
-          bye(token, "unexpected token");
+        else { // Should be variable attribution OR function call
+          String name = (String) token.getValue();
+          Token next = requireToken();
+
+          if (next.getType() == Type.OPERATOR) {
+            if (next.getValue().equals("=")) {
+              Resultor resultor = readResultor();
+              Attribution attribution = new Attribution(name, resultor);
+
+              container.getChildren()
+            }
+          }
+          else if (next.getType() == Type.OPEN_PARENTHESE) {
+            Resultor[] arguments = readFunctionArguments();
+
+            requireToken(Type.CLOSE_PARENTHESE, "expected a close parenthese");
+            requireNewLine();
+
+            FunctionCall functionCall = new FunctionCall(name, arguments);
+
+            container.getChildren().add(functionCall);
+          }
         }
       }
       else if (token.getType() == Type.CLOSE_BRACE) {
@@ -98,7 +124,7 @@ public class ScriptParser {
           bye(token, "no container to close");
         }
       }
-      else {
+      else if (token.getType() != Type.NEW_LINE) {
         bye(token, "expected a name definition or close brace");
       }
     }
@@ -236,6 +262,10 @@ public class ScriptParser {
     }
   }
 
+  protected Resultor[] readFunctionArguments() throws UnexpectedInputException, UnexpectedTokenException {
+    return null; // TODO
+  }
+
   protected Resultor readResultor() throws UnexpectedInputException, UnexpectedTokenException {
     return null; // TODO
   }
@@ -275,11 +305,7 @@ public class ScriptParser {
   }
 
   protected void requireNewLine() throws UnexpectedInputException, UnexpectedTokenException {
-    Token token = lexer.nextToken();
-
-    if (token == null) {
-      bye("Expected a new line, but no token found");
-    }
+    Token token = requireToken();
 
     if (token.getType() != Type.NEW_LINE) {
       bye(token, "expected a new line");
