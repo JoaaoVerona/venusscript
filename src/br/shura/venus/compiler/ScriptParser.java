@@ -36,16 +36,16 @@ import br.shura.venus.resultor.Operation;
 import br.shura.venus.resultor.Resultor;
 import br.shura.venus.resultor.Variable;
 import br.shura.venus.value.BoolValue;
-import br.shura.venus.value.NumericValue;
+import br.shura.venus.value.DecimalValue;
 import br.shura.venus.value.StringValue;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.logging.XLogger;
+import br.shura.x.worker.ParseWorker;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 
 /**
  * ScriptParser.java
@@ -328,14 +328,15 @@ public class ScriptParser {
     }
 
     if (token.getType() == Type.NUMBER_LITERAL) {
-      try {
-        BigDecimal number = new BigDecimal(value);
+      if (ParseWorker.isDouble(value)) {
+        return new DecimalValue(ParseWorker.toDouble(value));
+      }
 
-        return new NumericValue(number);
+      if (ParseWorker.isLong(value)) {
+        return new DecimalValue(ParseWorker.toLong(value));
       }
-      catch (NumberFormatException exception) {
-        bye(token, "illegal numeric value \"" + value + "\"");
-      }
+
+      bye(token, "illegal numeric value \"" + value + "\"");
     }
 
     bye(token, "expected a value literal (boolean/char/number/string)");
