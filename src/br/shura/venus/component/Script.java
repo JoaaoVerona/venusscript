@@ -93,4 +93,9 @@ public class Script extends Container {
   public void setParent(Container parent) {
     throw new IllegalStateException("Cannot define a script's parent");
   }
+
+  @Override
+  public String toString() {
+    return "script(name=" + getDisplayName() + ", origin=" + getOrigin() + ", includes=" + getIncludes() + ')';
+  }
 }

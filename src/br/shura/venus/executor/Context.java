@@ -104,4 +104,9 @@ public class Context {
   public void setVar(String name, Value value) {
     getVariables().set(name, value);
   }
+
+  @Override
+  public String toString() {
+    return "context(owner=" + getOwner() + ", vars=" + getVariables() + ", parent=" + getParent() + ')';
+  }
 }
