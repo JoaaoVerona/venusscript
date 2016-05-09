@@ -31,18 +31,18 @@ import br.shura.venus.resultor.Resultor;
  */
 public class Attribution extends Component {
   private final String name;
-  private final Resultor value;
+  private final Resultor resultor;
 
-  public Attribution(String name, Resultor value) {
+  public Attribution(String name, Resultor resultor) {
     this.name = name;
-    this.value = value;
+    this.resultor = resultor;
   }
 
   public String getName() {
     return name;
   }
 
-  public Resultor getValue() {
-    return value;
+  public Resultor getResultor() {
+    return resultor;
   }
 }
