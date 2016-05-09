@@ -49,18 +49,18 @@ import br.shura.x.worker.ParseWorker;
 import java.io.IOException;
 
 /**
- * ScriptParser.java
+ * VenusParser.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
  * @date 06/05/16 - 04:31
  * @since GAMMA - 0x3
  */
-public class ScriptParser {
-  private final ScriptLexer lexer;
+public class VenusParser {
+  private final VenusLexer lexer;
   private String scriptName;
 
-  public ScriptParser(ScriptLexer lexer) {
+  public VenusParser(VenusLexer lexer) {
     this.lexer = lexer;
   }
 
@@ -268,17 +268,17 @@ public class ScriptParser {
     ScriptOrigin includeOrigin = script.getOrigin().findInclude(includePath);
 
     if (includeOrigin != null) {
-      ScriptLexer lexer = null;
+      VenusLexer lexer = null;
 
       try {
-        lexer = new ScriptLexer(includeOrigin);
+        lexer = new VenusLexer(includeOrigin);
       }
       catch (IOException exception) {
         bye("Could not read script \"" + includeOrigin.getScriptName() + "\": " + exception.getClass().getSimpleName() +
           ": " + exception.getMessage());
       }
 
-      ScriptParser parser = new ScriptParser(lexer);
+      VenusParser parser = new VenusParser(lexer);
       Script includeScript = new Script(script.getApplicationContext(), includeOrigin);
 
       parser.parse(includeScript);

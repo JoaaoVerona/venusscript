@@ -29,14 +29,14 @@ import br.shura.x.collection.list.ListIterator;
 import br.shura.x.lang.mutable.MutableBoolean;
 
 /**
- * ScriptExecutor.java
+ * VenusExecutor.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
  * @date 09/05/16 - 02:47
  * @since GAMMA - 0x3
  */
-public class ScriptExecutor {
+public class VenusExecutor {
   public static Value run(Container container) throws ScriptRuntimeException {
     return run(container, new MutableBoolean(true));
   }

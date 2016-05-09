@@ -19,9 +19,9 @@
 
 package br.shura.venus.test;
 
-import br.shura.venus.compiler.ScriptLexer;
 import br.shura.venus.compiler.Token;
 import br.shura.venus.compiler.Token.Type;
+import br.shura.venus.compiler.VenusLexer;
 import br.shura.venus.exception.UnexpectedInputException;
 import br.shura.venus.origin.ScriptOrigin;
 import br.shura.venus.origin.SimpleScriptOrigin;
@@ -51,7 +51,7 @@ public class LexerTest {
       "}"
     };
     ScriptOrigin origin = new SimpleScriptOrigin("test.xs", StringWorker.join('\n', script));
-    ScriptLexer lexer = new ScriptLexer(origin);
+    VenusLexer lexer = new VenusLexer(origin);
 
     assertToken(lexer, Type.NAME_DEFINITION, "i");
     assertToken(lexer, Type.OPERATOR, "=");
@@ -97,7 +97,7 @@ public class LexerTest {
       "}"
     };
     ScriptOrigin origin = new SimpleScriptOrigin("test.xs", StringWorker.join('\n', script));
-    ScriptLexer lexer = new ScriptLexer(origin);
+    VenusLexer lexer = new VenusLexer(origin);
     Token token;
 
     while ((token = lexer.nextToken()) != null) {
@@ -113,7 +113,7 @@ public class LexerTest {
       "'\"'"
     };
     ScriptOrigin origin = new SimpleScriptOrigin("test.xs", StringWorker.join('\n', script));
-    ScriptLexer lexer = new ScriptLexer(origin);
+    VenusLexer lexer = new VenusLexer(origin);
 
     assertToken(lexer, Type.CHAR_LITERAL, "\\n");
     assertToken(lexer, Type.NEW_LINE, null);
@@ -122,7 +122,7 @@ public class LexerTest {
     assertToken(lexer, Type.CHAR_LITERAL, "\"");
   }
 
-  private static void assertToken(ScriptLexer lexer, Type type, Object content) throws AssertionError, UnexpectedInputException {
+  private static void assertToken(VenusLexer lexer, Type type, Object content) throws AssertionError, UnexpectedInputException {
     Token token = lexer.nextToken();
 
     if (token == null) {

@@ -28,17 +28,17 @@ import br.shura.x.util.Pool;
 
 import java.io.IOException;
 
-import static br.shura.venus.compiler.ScriptLexer.State.*;
+import static br.shura.venus.compiler.VenusLexer.State.*;
 
 /**
- * ScriptLexer.java
+ * VenusLexer.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
  * @date 06/05/16 - 04:23
  * @since GAMMA - 0x3
  */
-public class ScriptLexer {
+public class VenusLexer {
   private final TextBuilder buildingToken;
   private int line;
   private final ScriptOrigin origin;
@@ -47,7 +47,7 @@ public class ScriptLexer {
   private State state;
   private final String string;
 
-  public ScriptLexer(ScriptOrigin origin) throws IOException {
+  public VenusLexer(ScriptOrigin origin) throws IOException {
     this.buildingToken = Pool.newBuilder();
     this.origin = origin;
     this.reread = new Queue<>();
