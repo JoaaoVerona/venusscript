@@ -279,6 +279,7 @@ public class VenusLexer {
 
   protected char read() {
     if (position == string.length()) {
+      this.line++;
       this.position++;
 
       return '\n';
