@@ -97,7 +97,7 @@ public class ScriptParser {
 
           if (next.getType() == Type.OPERATOR) {
             if (next.getValue().equals("=")) {
-              Resultor resultor = readResultor();
+              Resultor resultor = readResultor(Type.NEW_LINE);
               Attribution attribution = new Attribution(name, resultor);
 
               container.getChildren().add(attribution);
@@ -271,11 +271,20 @@ public class ScriptParser {
   }
 
   protected Resultor[] readFunctionArguments() throws UnexpectedInputException, UnexpectedTokenException {
-    return null; // TODO
+    List<Resultor> arguments = new ArrayList<>();
+    Token token;
+
+    while ((token = requireToken()).getType() != Type.CLOSE_PARENTHESE) {
+      arguments.add(readResultor(Type.COMMA));
+    }
+
+    lexer.reRead(token);
+
+    return arguments.toArray();
   }
 
-  protected Resultor readResultor() throws UnexpectedInputException, UnexpectedTokenException {
-    return null; // TODO
+  protected Resultor readResultor(Type stopAt) throws UnexpectedInputException, UnexpectedTokenException {
+    return null; // TODO Here is where the "big shit" will happen
   }
 
   protected Value readValue() throws UnexpectedInputException, UnexpectedTokenException {
