@@ -32,13 +32,10 @@ import br.shura.venus.value.ValueType;
  * @date 05/05/16 - 14:42
  * @since GAMMA - 0x3
  */
-public abstract class Resultor {
-  public abstract Value resolve(Context context) throws ScriptRuntimeException;
+public interface Resultor {
+  Value resolve(Context context) throws ScriptRuntimeException;
 
-  public final ValueType resolveType(Context context) throws ScriptRuntimeException {
+  default ValueType resolveType(Context context) throws ScriptRuntimeException {
     return ValueType.forValue(resolve(context));
   }
-
-  @Override
-  public abstract String toString();
 }

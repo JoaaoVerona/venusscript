@@ -32,7 +32,7 @@ import br.shura.x.util.layer.XApi;
  * @date 06/05/16 - 01:34
  * @since GAMMA - 0x3
  */
-public class Variable extends Resultor {
+public class Variable implements Resultor {
   private final String name;
 
   public Variable(String name) {

@@ -32,7 +32,7 @@ import br.shura.venus.value.Value;
  * @date 06/05/16 - 02:18
  * @since GAMMA - 0x3
  */
-public class Operation extends Resultor {
+public class Operation implements Resultor {
   private final Resultor left;
   private final Operator operator;
   private final Resultor right;

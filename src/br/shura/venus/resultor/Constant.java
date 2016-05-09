@@ -31,7 +31,7 @@ import br.shura.x.util.layer.XApi;
  * @date 06/05/16 - 01:31
  * @since GAMMA - 0x3
  */
-public class Constant extends Resultor {
+public class Constant implements Resultor {
   private final Value value;
 
   public Constant(Value value) {

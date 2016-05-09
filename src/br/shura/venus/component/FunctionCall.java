@@ -37,7 +37,7 @@ import br.shura.x.collection.view.View;
  * @date 06/05/16 - 17:13
  * @since GAMMA - 0x3
  */
-public class FunctionCall extends Component {
+public class FunctionCall extends Component implements Resultor {
   private final Resultor[] arguments;
   private final String functionName;
 
@@ -46,7 +46,16 @@ public class FunctionCall extends Component {
     this.functionName = functionName;
   }
 
-  public Value call(Context context) throws ScriptRuntimeException {
+  public View<Resultor> getArguments() {
+    return new ArrayView<>(arguments);
+  }
+
+  public String getFunctionName() {
+    return functionName;
+  }
+
+  @Override
+  public Value resolve(Context context) throws ScriptRuntimeException {
     Function function = context.getOwner().findFunction(context, getFunctionName(), getArguments().size());
     List<Value> list = new ArrayList<>();
 
@@ -59,14 +68,6 @@ public class FunctionCall extends Component {
     function.validateArguments(context, values);
 
     return function.call(context, values);
-  }
-
-  public View<Resultor> getArguments() {
-    return new ArrayView<>(arguments);
-  }
-
-  public String getFunctionName() {
-    return functionName;
   }
 
   @Override
