@@ -262,10 +262,6 @@ public class VenusLexer {
   }
 
   protected void back() {
-    /*if (string.charAt(position - 1) == '\n') {
-      this.line--;
-    }*/
-
     this.position--;
   }
 

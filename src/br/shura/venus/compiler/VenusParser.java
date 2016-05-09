@@ -307,6 +307,10 @@ public class VenusParser {
   }
 
   protected Resultor readResultor(Type stopAt) throws UnexpectedInputException, UnexpectedTokenException {
+    Token token;
+
+    while ((token = requireToken()).getType() != stopAt);
+
     return null; // TODO Here is where the "big shit" will happen
   }
 
