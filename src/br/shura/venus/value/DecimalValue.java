@@ -19,11 +19,6 @@
 
 package br.shura.venus.value;
 
-import br.shura.x.util.layer.XApi;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
 /**
  * DecimalValue.java
  *
@@ -33,20 +28,10 @@ import java.math.RoundingMode;
  * @since GAMMA - 0x3
  */
 public class DecimalValue implements NumericValue {
-  private final BigDecimal value;
-
-  public DecimalValue(BigDecimal value) {
-    XApi.requireNonNull(value, "value");
-
-    this.value = value;
-  }
+  private final double value;
 
   public DecimalValue(double value) {
-    this(BigDecimal.valueOf(value));
-  }
-
-  public DecimalValue(long value) {
-    this(BigDecimal.valueOf(value));
+    this.value = value;
   }
 
   @Override
@@ -59,7 +44,7 @@ public class DecimalValue implements NumericValue {
     if (value instanceof NumericValue) {
       NumericValue numeric = (NumericValue) value;
 
-      return new DecimalValue(value().divide(numberToBigDecimal(numeric.value()), RoundingMode.FLOOR));
+      return new DecimalValue(value() / numeric.value().doubleValue());
     }
 
     return null;
@@ -75,7 +60,7 @@ public class DecimalValue implements NumericValue {
     if (value instanceof NumericValue) {
       NumericValue numeric = (NumericValue) value;
 
-      return new DecimalValue(value().subtract(numberToBigDecimal(numeric.value())));
+      return new DecimalValue(value() - numeric.value().doubleValue());
     }
 
     return null;
@@ -86,7 +71,7 @@ public class DecimalValue implements NumericValue {
     if (value instanceof NumericValue) {
       NumericValue numeric = (NumericValue) value;
 
-      return new DecimalValue(value().multiply(numberToBigDecimal(numeric.value())));
+      return new DecimalValue(value() * numeric.value().doubleValue());
     }
 
     return null;
@@ -102,20 +87,14 @@ public class DecimalValue implements NumericValue {
     if (value instanceof NumericValue) {
       NumericValue numeric = (NumericValue) value;
 
-      return new DecimalValue(value().add(numberToBigDecimal(numeric.value())));
+      return new DecimalValue(value() + numeric.value().doubleValue());
     }
 
     return null;
   }
 
   @Override
-  public BigDecimal value() {
+  public Double value() {
     return value;
-  }
-
-  private static BigDecimal numberToBigDecimal(Number number) {
-    return number instanceof BigDecimal ? (BigDecimal) number :
-           (number instanceof Double || number instanceof Float) ? BigDecimal.valueOf(number.doubleValue()) :
-           BigDecimal.valueOf(number.longValue());
   }
 }
