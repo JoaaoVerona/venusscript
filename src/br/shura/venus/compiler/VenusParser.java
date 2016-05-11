@@ -378,9 +378,12 @@ public class VenusParser {
 
         try {
           value = getValueOf(token);
-          resultor.addResultor(this, token, new Constant(value));
 
-          continue;
+          if (value != null) {
+            resultor.addResultor(this, token, new Constant(value));
+
+            continue;
+          }
         }
         catch (UnexpectedTokenException exception) {
         }
