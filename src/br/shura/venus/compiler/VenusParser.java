@@ -71,7 +71,6 @@ public class VenusParser {
   public void parse(Script script) throws ScriptCompileException {
     script.getChildren().clear();
     script.getContext().getVariables().clear();
-    script.getDefinitions().clear();
     script.getIncludes().clear();
 
     this.scriptName = script.getDisplayName();
@@ -260,7 +259,7 @@ public class VenusParser {
 
     Definition definition = new Definition(definitionName, arguments);
 
-    container.getDefinitions().add(definition);
+    container.getChildren().add(definition);
     XLogger.debugln("Added definition::" + definitionName + ", " + arguments);
 
     return definition;

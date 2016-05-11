@@ -39,20 +39,17 @@ import br.shura.x.util.layer.XApi;
 public abstract class Container extends Component {
   protected Context context;
   private final List<Component> children;
-  private final List<Definition> definitions;
 
   public Container() {
     this.children = new ArrayList<>();
-    this.definitions = new ArrayList<>();
 
     getChildren().addInsertionListener(component -> component.setParent(this));
-    getDefinitions().addInsertionListener(component -> component.setParent(this));
   }
 
   public Function findFunction(Context context, String name, int argumentCount) throws ScriptRuntimeException {
     XApi.requireNonNull(name, "name");
 
-    for (Definition definition : getDefinitions()) {
+    for (Definition definition : getChildren().selectType(Definition.class)) {
       if (definition.getName().equals(name) && definition.getArgumentCount() == argumentCount) {
         return definition;
       }
@@ -75,10 +72,6 @@ public abstract class Container extends Component {
 
   public Context getContext() {
     return context;
-  }
-
-  public List<Definition> getDefinitions() {
-    return definitions;
   }
 
   public abstract String getDisplayName();
