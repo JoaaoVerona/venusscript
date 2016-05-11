@@ -39,4 +39,17 @@ public class MethodLibrary extends ArrayList<Method> {
       throw new IllegalArgumentException("Could not instantiate method class \"" + object.getName() + "\"");
     }
   }
+
+  @SafeVarargs
+  public final boolean addAll(Class<? extends Method>... objects) {
+    boolean allAdded = true;
+
+    for (Class<? extends Method> object : objects) {
+      if (!add(object)) {
+        allAdded = false;
+      }
+    }
+
+    return allAdded;
+  }
 }
