@@ -23,6 +23,7 @@ import br.shura.venus.component.Attribution;
 import br.shura.venus.component.Component;
 import br.shura.venus.component.Container;
 import br.shura.venus.component.FunctionCall;
+import br.shura.venus.component.function.Definition;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.list.ListIterator;
@@ -49,7 +50,7 @@ public class VenusExecutor {
     while (shouldRun.get() && iterator.hasNext()) {
       Component component = iterator.next();
 
-      if (component instanceof Container) {
+      if (component instanceof Container && !(component instanceof Definition)) {
         run((Container) component, shouldRun);
       }
       else if (component instanceof Attribution) {
