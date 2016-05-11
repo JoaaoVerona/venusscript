@@ -19,6 +19,7 @@
 
 package br.shura.venus.origin;
 
+import br.shura.x.io.exception.FileException;
 import br.shura.x.io.file.File;
 
 import java.io.IOException;
@@ -40,7 +41,17 @@ public class FileScriptOrigin implements ScriptOrigin {
 
   @Override
   public ScriptOrigin findInclude(String includeName) {
-    return null; // TODO Find included scripts in same directory or children directories
+    try {
+      File file = new File(getFile().getParent(), includeName);
+
+      if (file.exists()) {
+        return new FileScriptOrigin(file);
+      }
+    }
+    catch (FileException exception) {
+    }
+
+    return null;
   }
 
   public File getFile() {
