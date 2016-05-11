@@ -31,11 +31,11 @@ import br.shura.x.worker.StringWorker;
  * @since GAMMA - 0x3
  */
 public enum ValueType {
-  ANY("any", Value.class),
   BOOLEAN("bool", BoolValue.class),
   DECIMAL("decimal", DecimalValue.class),
   INTEGER("int", IntegerValue.class),
-  STRING("string", StringValue.class);
+  STRING("string", StringValue.class),
+  ANY("any", Value.class); // Should be after all other types
 
   private final String identifier;
   private final String name;
