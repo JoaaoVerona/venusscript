@@ -21,11 +21,14 @@ package br.shura.venus.test;
 
 import br.shura.venus.compiler.VenusLexer;
 import br.shura.venus.compiler.VenusParser;
+import br.shura.venus.component.Component;
+import br.shura.venus.component.Container;
 import br.shura.venus.component.Script;
 import br.shura.venus.exception.ScriptCompileException;
 import br.shura.venus.executor.ApplicationContext;
 import br.shura.venus.origin.ScriptOrigin;
 import br.shura.venus.origin.SimpleScriptOrigin;
+import br.shura.x.logging.XLogger;
 import br.shura.x.worker.StringWorker;
 import org.junit.Test;
 
@@ -55,5 +58,21 @@ public class ParserTest {
     Script script = new Script(new ApplicationContext(), origin);
 
     parser.parse(script);
+    XLogger.println("Script [" + script.getDisplayName() + "]: ");
+    print(script);
+  }
+
+  private static void print(Component component) {
+    XLogger.println(component);
+
+    if (component instanceof Container) {
+      XLogger.pushTab();
+
+      for (Component child : ((Container) component).getChildren()) {
+        print(child);
+      }
+
+      XLogger.popTab();
+    }
   }
 }
