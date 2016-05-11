@@ -29,6 +29,7 @@ import br.shura.venus.component.function.Definition;
 import br.shura.venus.exception.ScriptCompileException;
 import br.shura.venus.exception.UnexpectedInputException;
 import br.shura.venus.exception.UnexpectedTokenException;
+import br.shura.venus.library.MethodLibrary;
 import br.shura.venus.operator.Operator;
 import br.shura.venus.operator.OperatorList;
 import br.shura.venus.origin.ScriptOrigin;
@@ -94,6 +95,14 @@ public class VenusParser {
           }
           else {
             bye(token, "cannot use 'import' keyword inside container");
+          }
+        }
+        else if (token.getValue().equals(KeywordDefinitions.USING)) {
+          if (container == script) {
+            parseUsing(script);
+          }
+          else {
+            bye(token, "cannot use 'using' keyword inside container");
           }
         }
         else { // Should be variable attribution OR function call
@@ -290,6 +299,23 @@ public class VenusParser {
     }
     else {
       bye("Could not find script \"" + includePath + "\".");
+    }
+  }
+
+  protected void parseUsing(Script script) throws ScriptCompileException {
+    Token nameToken = requireToken(Type.STRING_LITERAL, "expected a string literal as used library");
+
+    requireNewLine();
+
+    String libraryName = (String) nameToken.getValue();
+    MethodLibrary library = script.getOrigin().findLibrary(libraryName);
+
+    if (library != null) {
+      script.getLibraryList().add(library);
+      XLogger.debugln("Added used lib \"" + library.getClass().getName() + "\"");
+    }
+    else {
+      bye(nameToken, "unknown library named \"" + libraryName + "\"");
     }
   }
 

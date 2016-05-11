@@ -36,6 +36,7 @@ public class KeywordDefinitions {
   public static final String FALSE = "false";
   public static final String INCLUDE = "include";
   public static final String TRUE = "true";
+  public static final String USING = "using";
 
   public static boolean isKeyword(String definition) {
     return values().contains(definition);
