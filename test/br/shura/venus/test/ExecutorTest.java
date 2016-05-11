@@ -25,10 +25,10 @@ import br.shura.venus.component.Script;
 import br.shura.venus.executor.ApplicationContext;
 import br.shura.venus.executor.VenusExecutor;
 import br.shura.venus.origin.ScriptOrigin;
-import br.shura.venus.origin.SimpleScriptOrigin;
+import br.shura.venus.origin.StreamScriptOrigin;
+import br.shura.x.loader.resource.PathResource;
 import br.shura.x.logging.ILogger.Level;
 import br.shura.x.logging.XLogger;
-import br.shura.x.worker.StringWorker;
 import org.junit.Test;
 
 /**
@@ -44,17 +44,7 @@ public class ExecutorTest {
   public void simpleTest() throws Exception {
     XLogger.disable(Level.DEBUG);
 
-    String[] content = {
-      "using std",
-      "def printMyName(string name) {",
-      "  print(\"Hello, I'm \" + name + \"!\")",
-      "  print(1 + 3 - (5 + 2))",
-      "}",
-      "i = 0",
-      "print(\"Oi, i = \" + i + \".\")",
-      "printMyName(\"João Vitor\")",
-    };
-    ScriptOrigin origin = new SimpleScriptOrigin("test.xs", StringWorker.join('\n', content));
+    ScriptOrigin origin = new StreamScriptOrigin("test.xs", new PathResource("test.vs"));
     VenusLexer lexer = new VenusLexer(origin);
     VenusParser parser = new VenusParser(lexer);
     Script script = new Script(new ApplicationContext(), origin);
