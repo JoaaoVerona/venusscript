@@ -59,26 +59,26 @@ public class LexerTest {
     assertToken(lexer, Type.NEW_LINE, null);
     assertToken(lexer, Type.NAME_DEFINITION, "j");
     assertToken(lexer, Type.OPERATOR, "=");
-    assertToken(lexer, Type.OPEN_PARENTHESE, '(');
+    assertToken(lexer, Type.OPEN_PARENTHESE, "(");
     assertToken(lexer, Type.NAME_DEFINITION, "i");
     assertToken(lexer, Type.OPERATOR, "+");
     assertToken(lexer, Type.NUMBER_LITERAL, "1");
-    assertToken(lexer, Type.CLOSE_PARENTHESE, ')');
+    assertToken(lexer, Type.CLOSE_PARENTHESE, ")");
     assertToken(lexer, Type.NEW_LINE, null);
     assertToken(lexer, Type.NAME_DEFINITION, "while");
-    assertToken(lexer, Type.OPEN_PARENTHESE, '(');
+    assertToken(lexer, Type.OPEN_PARENTHESE, "(");
     assertToken(lexer, Type.NAME_DEFINITION, "true");
-    assertToken(lexer, Type.CLOSE_PARENTHESE, ')');
-    assertToken(lexer, Type.OPEN_BRACE, '{');
+    assertToken(lexer, Type.CLOSE_PARENTHESE, ")");
+    assertToken(lexer, Type.OPEN_BRACE, "{");
     assertToken(lexer, Type.NEW_LINE, null);
     assertToken(lexer, Type.NAME_DEFINITION, "print");
-    assertToken(lexer, Type.OPEN_PARENTHESE, '(');
+    assertToken(lexer, Type.OPEN_PARENTHESE, "(");
     assertToken(lexer, Type.NAME_DEFINITION, "i");
     assertToken(lexer, Type.OPERATOR, "+");
     assertToken(lexer, Type.NAME_DEFINITION, "j");
-    assertToken(lexer, Type.CLOSE_PARENTHESE, ')');
+    assertToken(lexer, Type.CLOSE_PARENTHESE, ")");
     assertToken(lexer, Type.NEW_LINE, null);
-    assertToken(lexer, Type.CLOSE_BRACE, '}');
+    assertToken(lexer, Type.CLOSE_BRACE, "}");
     XLogger.println("Assertion passed.");
   }
 

@@ -31,9 +31,13 @@ import br.shura.x.object.Base;
  */
 public class Token extends Base {
   private final Type type;
-  private final Object value;
+  private final String value;
 
-  public Token(Type type, Object value) {
+  public Token(Type type, char value) {
+    this(type, Character.toString(value));
+  }
+
+  public Token(Type type, String value) {
     this.type = type;
     this.value = value;
   }
@@ -42,7 +46,7 @@ public class Token extends Base {
     return type;
   }
 
-  public Object getValue() {
+  public String getValue() {
     return value;
   }
 
