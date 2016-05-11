@@ -51,7 +51,7 @@ public final class Definition extends Container implements Function {
     int i = 0;
 
     for (Argument argument : getArguments()) {
-      context.setVar(argument.getName(), arguments[i++]);
+      getContext().setVar(argument.getName(), arguments[i++]);
     }
 
     return VenusExecutor.run(this);
