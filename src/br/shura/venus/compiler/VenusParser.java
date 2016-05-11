@@ -333,11 +333,20 @@ public class VenusParser {
   }
 
   protected Resultor readResultor(Type stopAt) throws UnexpectedInputException, UnexpectedTokenException {
+    BuildingResultor resultor = new BuildingResultor();
+    boolean any = false;
     Token token;
 
-    while ((token = requireToken()).getType() != stopAt);
+    while ((token = requireToken()).getType() != stopAt) {
+      any = true;
+      resultor.addToken(token);
+    }
 
-    return null; // TODO Here is where the "big shit" will happen
+    if (!any) {
+      bye(token, "expected a resultor/value");
+    }
+
+    return resultor.build();
   }
 
   protected Value readValue() throws UnexpectedInputException, UnexpectedTokenException {
