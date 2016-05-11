@@ -33,6 +33,7 @@ import br.shura.venus.library.MethodLibrary;
 import br.shura.venus.operator.Operator;
 import br.shura.venus.operator.OperatorList;
 import br.shura.venus.origin.ScriptOrigin;
+import br.shura.venus.resultor.Constant;
 import br.shura.venus.resultor.Operation;
 import br.shura.venus.resultor.Resultor;
 import br.shura.venus.resultor.Variable;
@@ -177,6 +178,38 @@ public class VenusParser {
   // Do not call other bye() method, for better stacktrace
   protected void bye(Token token, String message) throws UnexpectedTokenException {
     throw new UnexpectedTokenException(scriptName, lexer.currentLine(), "Invalid token \"" + token + "\"; " + message);
+  }
+
+  protected Value getValueOf(Token token) throws UnexpectedTokenException {
+    String value = (String) token.getValue();
+
+    if (token.getType() == Type.CHAR_LITERAL || token.getType() == Type.STRING_LITERAL) {
+      return new StringValue(value);
+    }
+
+    if (token.getType() == Type.NAME_DEFINITION) {
+      if (value.equals(KeywordDefinitions.TRUE)) {
+        return new BoolValue(true);
+      }
+
+      if (value.equals(KeywordDefinitions.FALSE)) {
+        return new BoolValue(false);
+      }
+    }
+
+    if (token.getType() == Type.NUMBER_LITERAL) {
+      if (ParseWorker.isDouble(value)) {
+        return new DecimalValue(ParseWorker.toDouble(value));
+      }
+
+      if (ParseWorker.isLong(value)) {
+        return new IntegerValue(ParseWorker.toLong(value));
+      }
+
+      bye(token, "illegal numeric value \"" + value + "\"");
+    }
+
+    return null;
   }
 
   protected Definition parseDefinition(Container container) throws ScriptCompileException {
@@ -324,6 +357,7 @@ public class VenusParser {
     Token token;
 
     while ((token = requireToken()).getType() != Type.CLOSE_PARENTHESE) {
+      lexer.reRead(token);
       arguments.add(readResultor(Type.COMMA));
     }
 
@@ -334,54 +368,85 @@ public class VenusParser {
 
   protected Resultor readResultor(Type stopAt) throws UnexpectedInputException, UnexpectedTokenException {
     BuildingResultor resultor = new BuildingResultor();
-    boolean any = false;
+    String nameDef = null;
     Token token;
 
     while ((token = requireToken()).getType() != stopAt) {
-      any = true;
-      resultor.addToken(token);
+      if (nameDef == null) {
+        Value value;
+
+        try {
+          value = getValueOf(token);
+          resultor.addResultor(new Constant(value));
+
+          continue;
+        }
+        catch (UnexpectedTokenException exception) {
+        }
+      }
+
+      if (token.getType() == Type.OPERATOR) {
+        if (nameDef != null) {
+          resultor.addResultor(new Variable(nameDef));
+          nameDef = null;
+        }
+
+        Operator operator = OperatorList.forIdentifier((String) token.getValue());
+
+        if (operator != null) {
+          resultor.addOperator(operator);
+        }
+        else {
+          bye(token, "expected a valid attribution operator (=, +=, -=, ...)");
+        }
+      }
+      else if (token.getType() == Type.OPEN_PARENTHESE) {
+        if (nameDef != null) {
+          Resultor[] arguments = readFunctionArguments();
+
+          requireToken(Type.CLOSE_PARENTHESE, "expected close parenthese (this should not happen since readFuncArgs check for it?!)");
+          resultor.addResultor(new FunctionCall(nameDef, arguments));
+          nameDef = null;
+        }
+        else {
+          Resultor insideParentheses = readResultor(Type.CLOSE_PARENTHESE);
+
+          resultor.addResultor(insideParentheses);
+        }
+      }
+      else if (token.getType() == Type.NAME_DEFINITION) {
+        nameDef = (String) token.getValue();
+      }
+      else if (nameDef != null) {
+        bye(token, "expected open parenthese (function) or operator after a name definition");
+      }
+      else {
+        bye(token, "unexpected token");
+      }
     }
 
-    if (!any) {
+    if (nameDef != null) {
+      resultor.addResultor(new Variable(nameDef));
+    }
+
+    Resultor result = resultor.build();
+
+    if (result == null) {
       bye(token, "expected a resultor/value");
     }
 
-    return resultor.build();
+    return result;
   }
 
   protected Value readValue() throws UnexpectedInputException, UnexpectedTokenException {
     Token token = requireToken();
-    String value = (String) token.getValue();
+    Value value = getValueOf(token);
 
-    if (token.getType() == Type.CHAR_LITERAL || token.getType() == Type.STRING_LITERAL) {
-      return new StringValue(value);
+    if (value == null) {
+      bye(token, "expected a value literal (boolean/char/number/string)");
     }
 
-    if (token.getType() == Type.NAME_DEFINITION) {
-      if (value.equals(KeywordDefinitions.TRUE)) {
-        return new BoolValue(true);
-      }
-
-      if (value.equals(KeywordDefinitions.FALSE)) {
-        return new BoolValue(false);
-      }
-    }
-
-    if (token.getType() == Type.NUMBER_LITERAL) {
-      if (ParseWorker.isDouble(value)) {
-        return new DecimalValue(ParseWorker.toDouble(value));
-      }
-
-      if (ParseWorker.isLong(value)) {
-        return new IntegerValue(ParseWorker.toLong(value));
-      }
-
-      bye(token, "illegal numeric value \"" + value + "\"");
-    }
-
-    bye(token, "expected a value literal (boolean/char/number/string)");
-
-    return null; // Will not happen since bye() will always throw an exception, but fck-u compiler
+    return value;
   }
 
   protected void requireNewLine() throws UnexpectedInputException, UnexpectedTokenException {
