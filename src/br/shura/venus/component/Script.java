@@ -68,7 +68,7 @@ public class Script extends Container {
 
       for (MethodLibrary library : getLibraryList()) {
         for (Method method : library) {
-          if (method.getName().equals(name) && method.getArgumentCount() == argumentCount) {
+          if (method.getName().equals(name) && (method.isVarArgs() || method.getArgumentCount() == argumentCount)) {
             return method;
           }
         }
