@@ -24,6 +24,7 @@ import br.shura.venus.value.Value;
 import br.shura.x.collection.view.ArrayView;
 import br.shura.x.collection.view.View;
 import br.shura.x.object.Base;
+import br.shura.x.util.layer.XApi;
 
 import java.util.function.BiFunction;
 
@@ -41,6 +42,10 @@ public class Operator extends Base {
   private final String name;
 
   public Operator(String name, BiFunction<Value, Value, Value> function, String... identifiers) {
+    XApi.requireNonNull(function, "function");
+    XApi.requireNonNull(identifiers, "identifiers");
+    XApi.requireNonNull(name, "name");
+
     this.function = function;
     this.identifiers = new ArrayView<>(identifiers);
     this.name = name;
