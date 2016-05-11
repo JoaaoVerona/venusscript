@@ -21,6 +21,7 @@ package br.shura.venus.origin;
 
 import br.shura.venus.library.MethodLibrary;
 import br.shura.venus.library.std.StdLibrary;
+import br.shura.x.loader.resource.PathResource;
 
 import java.io.IOException;
 
@@ -35,15 +36,25 @@ import java.io.IOException;
 public interface ScriptOrigin {
   ScriptOrigin findInclude(String includeName);
 
-  default MethodLibrary findLibrary(String libraryName) {
+  String getScriptName();
+
+  String read() throws IOException;
+
+  static ScriptOrigin defaultInclude(String includeName) {
+    PathResource resource = new PathResource(includeName);
+
+    if (resource.exists()) {
+      return new StreamScriptOrigin(includeName, resource);
+    }
+
+    return null;
+  }
+
+  static MethodLibrary defaultLibrary(String libraryName) {
     if (libraryName.equals("std")) {
       return new StdLibrary();
     }
 
     return null;
   }
-
-  String getScriptName();
-
-  String read() throws IOException;
 }

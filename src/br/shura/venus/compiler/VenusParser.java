@@ -290,7 +290,7 @@ public class VenusParser {
 
   protected void parseInclude(Script script) throws ScriptCompileException {
     Token next = requireToken(Type.STRING_LITERAL, "expected a string literal as including script");
-    String includePath = next.getValue();
+    String includeName = next.getValue();
     boolean maybe = false;
     Token maybeOrNewLine = requireToken();
 
@@ -307,7 +307,11 @@ public class VenusParser {
       bye(maybeOrNewLine, "expected 'maybe' or new line");
     }
 
-    ScriptOrigin includeOrigin = script.getOrigin().findInclude(includePath);
+    ScriptOrigin includeOrigin = script.getOrigin().findInclude(includeName);
+
+    if (includeOrigin == null) {
+      includeOrigin = ScriptOrigin.defaultInclude(includeName);
+    }
 
     if (includeOrigin != null) {
       VenusLexer lexer = null;
@@ -328,10 +332,10 @@ public class VenusParser {
       XLogger.debugln("Added include script \"" + includeOrigin.getScriptName() + "\".");
     }
     else if (maybe) {
-      XLogger.debugln("Not found include script \"" + includePath + "\", but it was marked as maybe.");
+      XLogger.debugln("Not found include script \"" + includeName + "\", but it was marked as maybe.");
     }
     else {
-      bye("Could not find script \"" + includePath + "\".");
+      bye("Could not find script \"" + includeName + "\".");
     }
   }
 
@@ -341,7 +345,7 @@ public class VenusParser {
     requireNewLine();
 
     String libraryName = nameToken.getValue();
-    MethodLibrary library = script.getOrigin().findLibrary(libraryName);
+    MethodLibrary library = ScriptOrigin.defaultLibrary(libraryName);
 
     if (library != null) {
       script.getLibraryList().add(library);
