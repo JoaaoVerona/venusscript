@@ -28,6 +28,7 @@ import br.shura.venus.exception.ScriptCompileException;
 import br.shura.venus.executor.ApplicationContext;
 import br.shura.venus.origin.ScriptOrigin;
 import br.shura.venus.origin.SimpleScriptOrigin;
+import br.shura.x.logging.ILogger.Level;
 import br.shura.x.logging.XLogger;
 import br.shura.x.worker.StringWorker;
 import org.junit.Test;
@@ -45,11 +46,15 @@ import java.io.IOException;
 public class ParserTest {
   @Test
   public void simplePrint() throws IOException, ScriptCompileException {
+    XLogger.disable(Level.DEBUG);
+
     String[] content = {
       "export MY_VAR = 0",
       "export MY_STRING = \"oi\"",
       "def printMyName(string name) {",
       "  print(\"Hello, I'm \" + name + \"!\")",
+      "  print(1 + 3 - (5 + 2))",
+      "  j = (i + 1) * k",
       "}"
     };
     ScriptOrigin origin = new SimpleScriptOrigin("test.xs", StringWorker.join('\n', content));
@@ -58,7 +63,6 @@ public class ParserTest {
     Script script = new Script(new ApplicationContext(), origin);
 
     parser.parse(script);
-    XLogger.println("Script [" + script.getDisplayName() + "]: ");
     print(script);
   }
 
