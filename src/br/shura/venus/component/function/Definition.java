@@ -48,7 +48,13 @@ public final class Definition extends Container implements Function {
 
   @Override
   public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
-    return VenusExecutor.run(this); // What about the context argument?
+    int i = 0;
+
+    for (Argument argument : getArguments()) {
+      context.setVar(argument.getName(), arguments[i++]);
+    }
+
+    return VenusExecutor.run(this);
   }
 
   @Override
