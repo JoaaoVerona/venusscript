@@ -67,4 +67,9 @@ public abstract class Method implements Function {
   public final boolean isVarArgs() {
     return varArgs;
   }
+
+  @Override
+  public final String toString() {
+    return "method(" + getName() + ')';
+  }
 }
