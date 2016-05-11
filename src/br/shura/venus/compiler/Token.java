@@ -51,6 +51,15 @@ public class Token extends Base {
   }
 
   @Override
+  public String toString() {
+    if (getValue() != null) {
+      return getType().toString() + '[' + getValue() + ']';
+    }
+
+    return getType().toString();
+  }
+
+  @Override
   protected Object[] stringValues() {
     return new Object[] { getType(), getValue() };
   }
