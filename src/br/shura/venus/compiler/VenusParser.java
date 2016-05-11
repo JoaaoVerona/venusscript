@@ -369,6 +369,7 @@ public class VenusParser {
   protected Resultor readResultor(Type stopAt) throws UnexpectedInputException, UnexpectedTokenException {
     BuildingResultor resultor = new BuildingResultor();
     String nameDef = null;
+    Token nameDefToken = null;
     Token token;
 
     while ((token = requireToken()).getType() != stopAt) {
@@ -377,7 +378,7 @@ public class VenusParser {
 
         try {
           value = getValueOf(token);
-          resultor.addResultor(new Constant(value));
+          resultor.addResultor(this, token, new Constant(value));
 
           continue;
         }
@@ -387,14 +388,14 @@ public class VenusParser {
 
       if (token.getType() == Type.OPERATOR) {
         if (nameDef != null) {
-          resultor.addResultor(new Variable(nameDef));
+          resultor.addResultor(this, nameDefToken, new Variable(nameDef));
           nameDef = null;
         }
 
         Operator operator = OperatorList.forIdentifier((String) token.getValue());
 
         if (operator != null) {
-          resultor.addOperator(operator);
+          resultor.addOperator(this, token, operator);
         }
         else {
           bye(token, "expected a valid attribution operator (=, +=, -=, ...)");
@@ -405,17 +406,16 @@ public class VenusParser {
           Resultor[] arguments = readFunctionArguments();
 
           requireToken(Type.CLOSE_PARENTHESE, "expected close parenthese (this should not happen since readFuncArgs check for it?!)");
-          resultor.addResultor(new FunctionCall(nameDef, arguments));
+          resultor.addResultor(this, nameDefToken, new FunctionCall(nameDef, arguments));
           nameDef = null;
         }
         else {
-          Resultor insideParentheses = readResultor(Type.CLOSE_PARENTHESE);
-
-          resultor.addResultor(insideParentheses);
+          resultor.addResultor(this, token, readResultor(Type.CLOSE_PARENTHESE));
         }
       }
       else if (token.getType() == Type.NAME_DEFINITION) {
         nameDef = (String) token.getValue();
+        nameDefToken = token;
       }
       else if (nameDef != null) {
         bye(token, "expected open parenthese (function) or operator after a name definition");
@@ -426,7 +426,7 @@ public class VenusParser {
     }
 
     if (nameDef != null) {
-      resultor.addResultor(new Variable(nameDef));
+      resultor.addResultor(this, nameDefToken, new Variable(nameDef));
     }
 
     Resultor result = resultor.build();
