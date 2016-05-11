@@ -47,10 +47,10 @@ import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.lang.function.ExceptionalSupplier;
 import br.shura.x.lang.mutable.MutableBoolean;
 import br.shura.x.logging.XLogger;
-import br.shura.x.worker.ArrayWorker;
 import br.shura.x.worker.ParseWorker;
 
 import java.io.IOException;
+import java.util.function.Predicate;
 
 /**
  * VenusParser.java
@@ -198,12 +198,12 @@ public class VenusParser {
     }
 
     if (token.getType() == Type.NUMBER_LITERAL) {
-      if (ParseWorker.isDouble(value)) {
-        return new DecimalValue(ParseWorker.toDouble(value));
-      }
-
       if (ParseWorker.isLong(value)) {
         return new IntegerValue(ParseWorker.toLong(value));
+      }
+
+      if (ParseWorker.isDouble(value)) {
+        return new DecimalValue(ParseWorker.toDouble(value));
       }
 
       bye(token, "illegal numeric value \"" + value + "\"");
@@ -361,13 +361,23 @@ public class VenusParser {
       MutableBoolean gaveToken = new MutableBoolean();
       final Token t = token;
 
-      arguments.add(readResultor(() -> gaveToken.getOrSetIfNot() ? requireToken() : t, Type.COMMA, Type.CLOSE_PARENTHESE));
+      arguments.add(readResultor(
+        () -> gaveToken.getOrSetIfNot() ? requireToken() : t,
+        tt -> {
+          if (tt.getType() == Type.CLOSE_PARENTHESE) {
+            lexer.reRead(tt);
+
+            return false;
+          }
+
+          return tt.getType() != Type.COMMA;
+        }));
     }
 
     return arguments.toArray();
   }
 
-  protected Resultor readResultor(ExceptionalSupplier<Token, ScriptCompileException> supplier, Type... stopAt) throws ScriptCompileException {
+  protected Resultor readResultor(ExceptionalSupplier<Token, ScriptCompileException> supplier, Predicate<Token> process) throws ScriptCompileException {
     BuildingResultor resultor = new BuildingResultor();
     String nameDef = null;
     Token nameDefToken = null;
@@ -377,7 +387,7 @@ public class VenusParser {
       supplier = this::requireToken;
     }
 
-    while (!ArrayWorker.contains(stopAt, (token = supplier.get()).getType())) {
+    while (process.test(token = supplier.get())) {
       if (nameDef == null) {
         Value value;
 
@@ -432,10 +442,6 @@ public class VenusParser {
       }
     }
 
-    if (token.getType() == Type.CLOSE_PARENTHESE) {
-      lexer.reRead(token);
-    }
-
     if (nameDef != null) {
       resultor.addResultor(this, nameDefToken, new Variable(nameDef));
     }
@@ -447,6 +453,10 @@ public class VenusParser {
     }
 
     return result;
+  }
+
+  protected Resultor readResultor(ExceptionalSupplier<Token, ScriptCompileException> supplier, Type stopAt) throws ScriptCompileException {
+    return readResultor(supplier, token -> token.getType() != stopAt);
   }
 
   protected Value readValue() throws ScriptCompileException {
