@@ -19,6 +19,9 @@
 
 package br.shura.venus.origin;
 
+import br.shura.venus.library.MethodLibrary;
+import br.shura.venus.library.std.StdLibrary;
+
 import java.io.IOException;
 
 /**
@@ -31,6 +34,14 @@ import java.io.IOException;
  */
 public interface ScriptOrigin {
   ScriptOrigin findInclude(String includeName);
+
+  default MethodLibrary findLibrary(String libraryName) {
+    if (libraryName.equals("std")) {
+      return new StdLibrary();
+    }
+
+    return null;
+  }
 
   String getScriptName();
 
