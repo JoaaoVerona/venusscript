@@ -20,9 +20,12 @@
 package br.shura.venus.component;
 
 import br.shura.venus.component.function.Function;
+import br.shura.venus.component.function.Method;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.ApplicationContext;
 import br.shura.venus.executor.Context;
+import br.shura.venus.library.LibraryList;
+import br.shura.venus.library.MethodLibrary;
 import br.shura.venus.origin.ScriptOrigin;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
@@ -38,12 +41,14 @@ import br.shura.x.collection.list.impl.ArrayList;
 public class Script extends Container {
   private final ApplicationContext appContext;
   private final List<Script> includes;
+  private final LibraryList libraryList;
   private final ScriptOrigin origin;
 
   public Script(ApplicationContext appContext, ScriptOrigin origin) {
     this.appContext = appContext;
     this.context = new Context(this, null);
     this.includes = new ArrayList<>();
+    this.libraryList = new LibraryList();
     this.origin = origin;
   }
 
@@ -58,6 +63,14 @@ public class Script extends Container {
           return script.findFunction(context, name, argumentCount);
         }
         catch (ScriptRuntimeException exception2) {
+        }
+      }
+
+      for (MethodLibrary library : getLibraryList()) {
+        for (Method method : library) {
+          if (method.getName().equals(name) && method.getArgumentCount() == argumentCount) {
+            return method;
+          }
         }
       }
 
@@ -77,6 +90,10 @@ public class Script extends Container {
 
   public List<Script> getIncludes() {
     return includes;
+  }
+
+  public LibraryList getLibraryList() {
+    return libraryList;
   }
 
   public ScriptOrigin getOrigin() {
