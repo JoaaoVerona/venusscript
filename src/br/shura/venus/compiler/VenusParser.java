@@ -27,7 +27,6 @@ import br.shura.venus.component.Script;
 import br.shura.venus.component.function.Argument;
 import br.shura.venus.component.function.Definition;
 import br.shura.venus.exception.ScriptCompileException;
-import br.shura.venus.exception.UnexpectedInputException;
 import br.shura.venus.exception.UnexpectedTokenException;
 import br.shura.venus.library.MethodLibrary;
 import br.shura.venus.operator.Operator;
@@ -45,7 +44,10 @@ import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
+import br.shura.x.lang.function.ExceptionalSupplier;
+import br.shura.x.lang.mutable.MutableBoolean;
 import br.shura.x.logging.XLogger;
+import br.shura.x.worker.ArrayWorker;
 import br.shura.x.worker.ParseWorker;
 
 import java.io.IOException;
@@ -107,14 +109,14 @@ public class VenusParser {
           }
         }
         else { // Should be variable attribution OR function call
-          String name = (String) token.getValue();
+          String name = token.getValue();
           Token next = requireToken();
 
           if (next.getType() == Type.OPERATOR) {
-            String attrib = (String) next.getValue();
+            String attrib = next.getValue();
 
             if (attrib.equals("=")) {
-              Resultor resultor = readResultor(Type.NEW_LINE);
+              Resultor resultor = readResultor(null, Type.NEW_LINE);
               Attribution attribution = new Attribution(name, resultor);
 
               container.getChildren().add(attribution);
@@ -125,7 +127,7 @@ public class VenusParser {
               Operator operator = OperatorList.forIdentifier(operatorIdentifier);
 
               if (operator != null) {
-                Resultor resultor = readResultor(Type.NEW_LINE);
+                Resultor resultor = readResultor(null, Type.NEW_LINE);
                 Operation operation = new Operation(operator, new Variable(name), resultor);
                 Attribution attribution = new Attribution(name, operation);
 
@@ -143,7 +145,6 @@ public class VenusParser {
           else if (next.getType() == Type.OPEN_PARENTHESE) {
             Resultor[] arguments = readFunctionArguments();
 
-            requireToken(Type.CLOSE_PARENTHESE, "expected a close parenthese");
             requireNewLine();
 
             FunctionCall functionCall = new FunctionCall(name, arguments);
@@ -181,7 +182,7 @@ public class VenusParser {
   }
 
   protected Value getValueOf(Token token) throws UnexpectedTokenException {
-    String value = (String) token.getValue();
+    String value = token.getValue();
 
     if (token.getType() == Type.CHAR_LITERAL || token.getType() == Type.STRING_LITERAL) {
       return new StringValue(value);
@@ -214,7 +215,7 @@ public class VenusParser {
 
   protected Definition parseDefinition(Container container) throws ScriptCompileException {
     Token typeToken = requireToken(Type.NAME_DEFINITION, "expected a return type");
-    String definitionName = (String) typeToken.getValue();
+    String definitionName = typeToken.getValue();
     List<Argument> arguments = new ArrayList<>();
 
     requireToken(Type.OPEN_PARENTHESE, "expected an open parenthese");
@@ -223,11 +224,11 @@ public class VenusParser {
 
     while ((reading = requireToken()).getType() != Type.CLOSE_PARENTHESE) { // Reads definition arguments
       if (reading.getType() == Type.NAME_DEFINITION) {
-        ValueType argumentType = ValueType.forIdentifier((String) reading.getValue());
+        ValueType argumentType = ValueType.forIdentifier(reading.getValue());
 
         if (argumentType != null) {
           Token argumentToken = requireToken(Type.NAME_DEFINITION, "expected an argument name");
-          String argumentName = (String) argumentToken.getValue();
+          String argumentName = argumentToken.getValue();
 
           if (!KeywordDefinitions.isKeyword(argumentName)) {
             arguments.add(new Argument(argumentName, argumentType));
@@ -267,7 +268,7 @@ public class VenusParser {
 
   protected void parseExport(Script script) throws ScriptCompileException {
     Token nameToken = requireToken(Type.NAME_DEFINITION, "expected a variable name");
-    String variableName = (String) nameToken.getValue();
+    String variableName = nameToken.getValue();
 
     if (!KeywordDefinitions.isKeyword(variableName)) {
       Token attributionToken = requireToken();
@@ -290,7 +291,7 @@ public class VenusParser {
 
   protected void parseInclude(Script script) throws ScriptCompileException {
     Token next = requireToken(Type.STRING_LITERAL, "expected a string literal as including script");
-    String includePath = (String) next.getValue();
+    String includePath = next.getValue();
     boolean maybe = false;
     Token maybeOrNewLine = requireToken();
 
@@ -340,7 +341,7 @@ public class VenusParser {
 
     requireNewLine();
 
-    String libraryName = (String) nameToken.getValue();
+    String libraryName = nameToken.getValue();
     MethodLibrary library = script.getOrigin().findLibrary(libraryName);
 
     if (library != null) {
@@ -352,27 +353,32 @@ public class VenusParser {
     }
   }
 
-  protected Resultor[] readFunctionArguments() throws UnexpectedInputException, UnexpectedTokenException {
+  // This also consumes ending' CLOSE_PARENTHESE
+  protected Resultor[] readFunctionArguments() throws ScriptCompileException {
     List<Resultor> arguments = new ArrayList<>();
     Token token;
 
     while ((token = requireToken()).getType() != Type.CLOSE_PARENTHESE) {
-      lexer.reRead(token);
-      arguments.add(readResultor(Type.COMMA));
-    }
+      MutableBoolean gaveToken = new MutableBoolean();
+      final Token t = token;
 
-    lexer.reRead(token);
+      arguments.add(readResultor(() -> gaveToken.getOrSetIfNot() ? requireToken() : t, Type.COMMA, Type.CLOSE_PARENTHESE));
+    }
 
     return arguments.toArray();
   }
 
-  protected Resultor readResultor(Type stopAt) throws UnexpectedInputException, UnexpectedTokenException {
+  protected Resultor readResultor(ExceptionalSupplier<Token, ScriptCompileException> supplier, Type... stopAt) throws ScriptCompileException {
     BuildingResultor resultor = new BuildingResultor();
     String nameDef = null;
     Token nameDefToken = null;
     Token token;
 
-    while ((token = requireToken()).getType() != stopAt) {
+    if (supplier == null) {
+      supplier = this::requireToken;
+    }
+
+    while (!ArrayWorker.contains(stopAt, (token = supplier.get()).getType())) {
       if (nameDef == null) {
         Value value;
 
@@ -395,7 +401,7 @@ public class VenusParser {
           nameDef = null;
         }
 
-        Operator operator = OperatorList.forIdentifier((String) token.getValue());
+        Operator operator = OperatorList.forIdentifier(token.getValue());
 
         if (operator != null) {
           resultor.addOperator(this, token, operator);
@@ -408,16 +414,15 @@ public class VenusParser {
         if (nameDef != null) {
           Resultor[] arguments = readFunctionArguments();
 
-          requireToken(Type.CLOSE_PARENTHESE, "expected close parenthese (this should not happen since readFuncArgs check for it?!)");
           resultor.addResultor(this, nameDefToken, new FunctionCall(nameDef, arguments));
           nameDef = null;
         }
         else {
-          resultor.addResultor(this, token, readResultor(Type.CLOSE_PARENTHESE));
+          resultor.addResultor(this, token, readResultor(null, Type.CLOSE_PARENTHESE));
         }
       }
       else if (token.getType() == Type.NAME_DEFINITION) {
-        nameDef = (String) token.getValue();
+        nameDef = token.getValue();
         nameDefToken = token;
       }
       else if (nameDef != null) {
@@ -426,6 +431,10 @@ public class VenusParser {
       else {
         bye(token, "unexpected token");
       }
+    }
+
+    if (token.getType() == Type.CLOSE_PARENTHESE) {
+      lexer.reRead(token);
     }
 
     if (nameDef != null) {
@@ -441,7 +450,7 @@ public class VenusParser {
     return result;
   }
 
-  protected Value readValue() throws UnexpectedInputException, UnexpectedTokenException {
+  protected Value readValue() throws ScriptCompileException {
     Token token = requireToken();
     Value value = getValueOf(token);
 
@@ -452,7 +461,7 @@ public class VenusParser {
     return value;
   }
 
-  protected void requireNewLine() throws UnexpectedInputException, UnexpectedTokenException {
+  protected void requireNewLine() throws ScriptCompileException {
     Token token = requireToken();
 
     if (token.getType() != Type.NEW_LINE) {
@@ -460,7 +469,7 @@ public class VenusParser {
     }
   }
 
-  protected Token requireToken() throws UnexpectedInputException, UnexpectedTokenException {
+  protected Token requireToken() throws ScriptCompileException {
     Token token = lexer.nextToken();
 
     if (token == null) {
@@ -470,7 +479,7 @@ public class VenusParser {
     return token;
   }
 
-  protected Token requireToken(Type type, String errorMessage) throws UnexpectedInputException, UnexpectedTokenException {
+  protected Token requireToken(Type type, String errorMessage) throws ScriptCompileException {
     Token token = requireToken();
 
     if (token.getType() != type) {
