@@ -40,5 +40,5 @@ public interface Value {
 
   Value or(Value value);
 
-  NumericValue plus(Value value);
+  Value plus(Value value);
 }

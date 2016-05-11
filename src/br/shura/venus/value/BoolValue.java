@@ -79,7 +79,7 @@ public class BoolValue implements Value {
   }
 
   @Override
-  public NumericValue plus(Value value) {
+  public Value plus(Value value) {
     return null;
   }
 

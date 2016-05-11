@@ -73,8 +73,8 @@ public class StringValue implements Value {
   }
 
   @Override
-  public NumericValue plus(Value value) {
-    return null;
+  public StringValue plus(Value value) {
+    return new StringValue(value() + value);
   }
 
   public char toCharacter() {
