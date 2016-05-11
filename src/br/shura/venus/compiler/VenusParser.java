@@ -336,7 +336,7 @@ public class VenusParser {
   }
 
   protected void parseUsing(Script script) throws ScriptCompileException {
-    Token nameToken = requireToken(Type.STRING_LITERAL, "expected a string literal as used library");
+    Token nameToken = requireToken(Type.NAME_DEFINITION, "expected a library name (without quotes)");
 
     requireNewLine();
 
