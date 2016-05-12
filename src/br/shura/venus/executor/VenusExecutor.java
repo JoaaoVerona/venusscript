@@ -27,6 +27,7 @@ import br.shura.venus.component.ElseIfContainer;
 import br.shura.venus.component.ForEachContainer;
 import br.shura.venus.component.FunctionCall;
 import br.shura.venus.component.IfContainer;
+import br.shura.venus.component.WhileContainer;
 import br.shura.venus.component.function.Definition;
 import br.shura.venus.exception.InvalidValueTypeException;
 import br.shura.venus.exception.ScriptRuntimeException;
@@ -88,6 +89,27 @@ public class VenusExecutor {
             throw new InvalidValueTypeException(context, "For start \"" + from + "\" is not a numeric value");
           }
         }
+        else if (component instanceof WhileContainer) {
+          WhileContainer whileContainer = (WhileContainer) component;
+
+          while (true) {
+            Value value = whileContainer.getCondition().resolve(context);
+
+            if (value instanceof BoolValue) {
+              BoolValue boolValue = (BoolValue) value;
+
+              if (boolValue.value()) {
+                run(whileContainer, shouldRun);
+              }
+              else {
+                break;
+              }
+            }
+            else {
+              throw new InvalidValueTypeException(context, "Cannot apply while condition in value of type " + value.getType());
+            }
+          }
+        }
         else if (component instanceof IfContainer || (component instanceof ElseIfContainer && hadIfAndNotProceed)) {
           IfContainer ifContainer = (IfContainer) component;
           Value value = ifContainer.getCondition().resolve(context);
@@ -108,7 +130,12 @@ public class VenusExecutor {
             throw new InvalidValueTypeException(context, "Cannot apply if condition in value of type " + value.getType());
           }
         }
-        else if (!(component instanceof Definition) && (!(component instanceof ElseContainer) || hadIfAndNotProceed)) {
+        else if (component instanceof ElseContainer) {
+          if (hadIfAndNotProceed) {
+            run((Container) component, shouldRun);
+          }
+        }
+        else if (!(component instanceof Definition)) {
           run((Container) component, shouldRun);
         }
       }
