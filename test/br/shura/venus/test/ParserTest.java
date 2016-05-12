@@ -66,7 +66,7 @@ public class ParserTest {
     print(script);
   }
 
-  private static void print(Component component) {
+  public static void print(Component component) {
     XLogger.println(component);
 
     if (component instanceof Container) {

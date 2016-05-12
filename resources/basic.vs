@@ -8,5 +8,4 @@ i = 3
 j = 7
 println("Olá! i -> " + i + ", j -> " + j + ".")
 printMyName("João Vitor")
-sleep(1000)
 println("Hasta" + " " + "la" + " " + "vista" + ".")
