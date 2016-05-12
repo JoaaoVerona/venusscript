@@ -23,8 +23,11 @@ import br.shura.venus.component.Attribution;
 import br.shura.venus.component.Component;
 import br.shura.venus.component.Container;
 import br.shura.venus.component.FunctionCall;
+import br.shura.venus.component.IfContainer;
 import br.shura.venus.component.function.Definition;
+import br.shura.venus.exception.InvalidValueTypeException;
 import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.list.ListIterator;
 import br.shura.x.lang.mutable.MutableBoolean;
@@ -50,8 +53,25 @@ public class VenusExecutor {
     while (shouldRun.get() && iterator.hasNext()) {
       Component component = iterator.next();
 
-      if (component instanceof Container && !(component instanceof Definition)) {
-        run((Container) component, shouldRun);
+      if (component instanceof Container) {
+        if (component instanceof IfContainer) {
+          IfContainer ifContainer = (IfContainer) component;
+          Value value = ifContainer.getCondition().resolve(context);
+
+          if (value instanceof BoolValue) {
+            BoolValue boolValue = (BoolValue) value;
+
+            if (boolValue.value()) {
+              run((Container) component, shouldRun);
+            }
+          }
+          else {
+            throw new InvalidValueTypeException(context, "Cannot apply if condition in value of type " + value.getType());
+          }
+        }
+        else if (!(component instanceof Definition)) {
+          run((Container) component, shouldRun);
+        }
       }
       else if (component instanceof Attribution) {
         Attribution attribution = (Attribution) component;
