@@ -28,17 +28,33 @@ package br.shura.venus.value;
  * @since GAMMA - 0x3
  */
 public interface Value {
-  Value and(Value value);
+  default Value and(Value value) {
+    return null;
+  }
 
-  NumericValue divide(Value value);
+  default NumericValue divide(Value value) {
+    return null;
+  }
 
   BoolValue equals(Value value);
 
-  NumericValue minus(Value value);
+  default NumericValue minus(Value value) {
+    return null;
+  }
 
-  NumericValue multiply(Value value);
+  default NumericValue multiply(Value value) {
+    return null;
+  }
 
-  Value or(Value value);
+  default Value negate(Value value) {
+    return null;
+  }
 
-  Value plus(Value value);
+  default Value or(Value value) {
+    return null;
+  }
+
+  default Value plus(Value value) {
+    return null;
+  }
 }

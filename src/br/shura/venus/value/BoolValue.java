@@ -48,23 +48,8 @@ public class BoolValue implements Value {
   }
 
   @Override
-  public NumericValue divide(Value value) {
-    return null;
-  }
-
-  @Override
   public BoolValue equals(Value value) {
     return new BoolValue(value instanceof BoolValue && ((BoolValue) value).value() == value());
-  }
-
-  @Override
-  public NumericValue minus(Value value) {
-    return null;
-  }
-
-  @Override
-  public NumericValue multiply(Value value) {
-    return null;
   }
 
   @Override
@@ -75,11 +60,6 @@ public class BoolValue implements Value {
       return new BoolValue(value() || bool.value());
     }
 
-    return null;
-  }
-
-  @Override
-  public Value plus(Value value) {
     return null;
   }
 

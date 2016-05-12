@@ -35,11 +35,6 @@ public class DecimalValue implements NumericValue {
   }
 
   @Override
-  public Value and(Value value) {
-    return null;
-  }
-
-  @Override
   public DecimalValue divide(Value value) {
     if (value instanceof NumericValue) {
       NumericValue numeric = (NumericValue) value;
@@ -74,11 +69,6 @@ public class DecimalValue implements NumericValue {
       return new DecimalValue(value() * numeric.value().doubleValue());
     }
 
-    return null;
-  }
-
-  @Override
-  public Value or(Value value) {
     return null;
   }
 

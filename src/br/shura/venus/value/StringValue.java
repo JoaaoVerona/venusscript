@@ -39,37 +39,12 @@ public class StringValue implements Value {
   }
 
   @Override
-  public Value and(Value value) {
-    return null;
-  }
-
-  @Override
-  public NumericValue divide(Value value) {
-    return null;
-  }
-
-  @Override
   public BoolValue equals(Value value) {
     return new BoolValue(value instanceof StringValue && ((StringValue) value).value().equals(value()));
   }
 
   public boolean isCharacter() {
     return value().length() == 1;
-  }
-
-  @Override
-  public NumericValue minus(Value value) {
-    return null;
-  }
-
-  @Override
-  public NumericValue multiply(Value value) {
-    return null;
-  }
-
-  @Override
-  public Value or(Value value) {
-    return null;
   }
 
   @Override
