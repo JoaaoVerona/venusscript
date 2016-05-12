@@ -30,14 +30,20 @@ import br.shura.venus.resultor.Resultor;
  * @since GAMMA - 0x3
  */
 public class ForEachContainer extends Container {
+  private final Resultor adjustment;
   private final Resultor from;
   private final Resultor to;
   private final String varName;
 
-  public ForEachContainer(String varName, Resultor from, Resultor to) {
+  public ForEachContainer(String varName, Resultor from, Resultor to, Resultor adjustment) {
+    this.adjustment = adjustment;
     this.from = from;
     this.to = to;
     this.varName = varName;
+  }
+
+  public Resultor getAdjustment() {
+    return adjustment;
   }
 
   @Override
