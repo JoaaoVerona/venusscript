@@ -28,6 +28,7 @@ import br.shura.venus.component.ForEachContainer;
 import br.shura.venus.component.FunctionCall;
 import br.shura.venus.component.IfContainer;
 import br.shura.venus.component.Script;
+import br.shura.venus.component.SimpleContainer;
 import br.shura.venus.component.function.Argument;
 import br.shura.venus.component.function.Definition;
 import br.shura.venus.exception.ScriptCompileException;
@@ -186,6 +187,12 @@ public class VenusParser {
         }
 
         justExitedIfContainer = false;
+      }
+      else if (token.getType() == Type.OPEN_BRACE) {
+        SimpleContainer simpleContainer = new SimpleContainer();
+
+        container.getChildren().add(simpleContainer);
+        container = simpleContainer;
       }
       else if (token.getType() == Type.CLOSE_BRACE) {
         if (container != script) {
