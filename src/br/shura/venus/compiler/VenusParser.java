@@ -29,11 +29,12 @@ import br.shura.venus.component.function.Definition;
 import br.shura.venus.exception.ScriptCompileException;
 import br.shura.venus.exception.UnexpectedTokenException;
 import br.shura.venus.library.MethodLibrary;
+import br.shura.venus.operator.BinaryOperator;
 import br.shura.venus.operator.Operator;
 import br.shura.venus.operator.OperatorList;
 import br.shura.venus.origin.ScriptOrigin;
+import br.shura.venus.resultor.BinaryOperation;
 import br.shura.venus.resultor.Constant;
-import br.shura.venus.resultor.Operation;
 import br.shura.venus.resultor.Resultor;
 import br.shura.venus.resultor.Variable;
 import br.shura.venus.value.BoolValue;
@@ -126,12 +127,17 @@ public class VenusParser {
               Operator operator = OperatorList.forIdentifier(operatorIdentifier);
 
               if (operator != null) {
-                Resultor resultor = readResultor(null, Type.NEW_LINE);
-                Operation operation = new Operation(operator, new Variable(name), resultor);
-                Attribution attribution = new Attribution(name, operation);
+                if (operator instanceof BinaryOperator) {
+                  Resultor resultor = readResultor(null, Type.NEW_LINE);
+                  BinaryOperation operation = new BinaryOperation((BinaryOperator) operator, new Variable(name), resultor);
+                  Attribution attribution = new Attribution(name, operation);
 
-                container.getChildren().add(attribution);
-                XLogger.debugln("Added op_attribution " + attribution);
+                  container.getChildren().add(attribution);
+                  XLogger.debugln("Added op_attribution " + attribution);
+                }
+                else {
+                  bye(next, "expected an attribution with binary operator (+=, -=, ...)");
+                }
               }
               else {
                 bye(next, "expected a valid attribution operator (=, +=, -=, ...)");

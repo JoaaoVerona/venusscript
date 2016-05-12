@@ -20,9 +20,12 @@
 package br.shura.venus.compiler;
 
 import br.shura.venus.exception.UnexpectedTokenException;
+import br.shura.venus.operator.BinaryOperator;
 import br.shura.venus.operator.Operator;
-import br.shura.venus.resultor.Operation;
+import br.shura.venus.operator.UnaryOperator;
+import br.shura.venus.resultor.BinaryOperation;
 import br.shura.venus.resultor.Resultor;
+import br.shura.venus.resultor.UnaryOperation;
 
 /**
  * BuildingResultor.java
@@ -41,8 +44,12 @@ public class BuildingResultor {
       parser.bye(owner, "already have an operator");
     }
 
-    if (resultor == null) {
+    if (op instanceof BinaryOperator && resultor == null) {
       parser.bye(owner, "no left operation value");
+    }
+
+    if (op instanceof UnaryOperator && resultor != null) {
+      parser.bye(owner, "cannot apply unary operator to left-sided value");
     }
 
     this.operator = op;
@@ -50,10 +57,21 @@ public class BuildingResultor {
 
   public void addResultor(VenusParser parser, Token owner, Resultor rslt) throws UnexpectedTokenException {
     if (resultor == null) {
-      this.resultor = rslt;
+      if (operator instanceof UnaryOperator) {
+        this.resultor = new UnaryOperation((UnaryOperator) operator, rslt);
+      }
+      else {
+        this.resultor = rslt;
+      }
     }
     else if (operator != null) {
-      this.resultor = new Operation(operator, resultor, rslt);
+      if (operator instanceof BinaryOperator) {
+        this.resultor = new BinaryOperation((BinaryOperator) operator, resultor, rslt);
+      }
+      else {
+        parser.bye("Excepted a binary or unary operator, received " + operator.getClass().getSimpleName());
+      }
+
       this.operator = null;
     }
     else {
