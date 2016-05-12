@@ -23,6 +23,7 @@ import br.shura.venus.compiler.Token.Type;
 import br.shura.venus.component.Attribution;
 import br.shura.venus.component.Container;
 import br.shura.venus.component.FunctionCall;
+import br.shura.venus.component.IfContainer;
 import br.shura.venus.component.Script;
 import br.shura.venus.component.function.Argument;
 import br.shura.venus.component.function.Definition;
@@ -46,8 +47,6 @@ import br.shura.venus.value.ValueType;
 import br.shura.x.charset.build.TextBuilder;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
-import br.shura.x.lang.function.ExceptionalSupplier;
-import br.shura.x.lang.mutable.MutableBoolean;
 import br.shura.x.logging.XLogger;
 import br.shura.x.util.Pool;
 import br.shura.x.worker.ParseWorker;
@@ -118,7 +117,7 @@ public class VenusParser {
             String attrib = next.getValue();
 
             if (attrib.equals("=")) {
-              Resultor resultor = readResultor(null, Type.NEW_LINE);
+              Resultor resultor = readResultor(Type.NEW_LINE);
               Attribution attribution = new Attribution(name, resultor);
 
               container.getChildren().add(attribution);
@@ -133,7 +132,7 @@ public class VenusParser {
 
                 if (operator != null) {
                   if (operator instanceof BinaryOperator) {
-                    Resultor resultor = readResultor(null, Type.NEW_LINE);
+                    Resultor resultor = readResultor(Type.NEW_LINE);
                     BinaryOperation operation = new BinaryOperation((BinaryOperator) operator, new Variable(name), resultor);
                     Attribution attribution = new Attribution(name, operation);
 
@@ -221,6 +220,10 @@ public class VenusParser {
       bye(token, "illegal numeric value \"" + value + "\"");
     }
 
+    return null;
+  }
+
+  protected IfContainer parseIf(Container container) throws ScriptCompileException {
     return null;
   }
 
@@ -374,20 +377,10 @@ public class VenusParser {
     Token token;
 
     while ((token = requireToken()).getType() != Type.CLOSE_PARENTHESE) {
-      MutableBoolean gaveToken = new MutableBoolean();
-      final Token t = token;
-
+      lexer.reRead(token);
       arguments.add(readResultor(
-        () -> gaveToken.getOrSetIfNot() ? requireToken() : t,
-        tt -> {
-          if (tt.getType() == Type.CLOSE_PARENTHESE) {
-            lexer.reRead(tt);
-
-            return false;
-          }
-
-          return tt.getType() != Type.COMMA;
-        }));
+        t -> t.getType() != Type.CLOSE_PARENTHESE && t.getType() != Type.COMMA,
+        t -> t.getType() == Type.CLOSE_PARENTHESE));
     }
 
     return arguments.toArray();
@@ -416,17 +409,17 @@ public class VenusParser {
     return operatorStr.toStringAndClear();
   }
 
-  protected Resultor readResultor(ExceptionalSupplier<Token, ScriptCompileException> supplier, Predicate<Token> process) throws ScriptCompileException {
+  protected Resultor readResultor(Predicate<Token> process) throws ScriptCompileException {
+    return readResultor(process, token -> false);
+  }
+
+  protected Resultor readResultor(Predicate<Token> process, Predicate<Token> reReadLast) throws ScriptCompileException {
     BuildingResultor resultor = new BuildingResultor();
     String nameDef = null;
     Token nameDefToken = null;
     Token token;
 
-    if (supplier == null) {
-      supplier = this::requireToken;
-    }
-
-    while (process.test(token = supplier.get())) {
+    while (process.test(token = requireToken())) {
       if (nameDef == null) {
         Value value;
 
@@ -467,7 +460,7 @@ public class VenusParser {
           nameDef = null;
         }
         else {
-          resultor.addResultor(this, token, readResultor(null, Type.CLOSE_PARENTHESE));
+          resultor.addResultor(this, token, readResultor(Type.CLOSE_PARENTHESE));
         }
       }
       else if (token.getType() == Type.NAME_DEFINITION) {
@@ -486,6 +479,11 @@ public class VenusParser {
       resultor.addResultor(this, nameDefToken, new Variable(nameDef));
     }
 
+    if (reReadLast.test(token)) {
+      XLogger.println("re-read " + token);
+      lexer.reRead(token);
+    }
+
     Resultor result = resultor.build();
 
     if (result == null) {
@@ -495,8 +493,12 @@ public class VenusParser {
     return result;
   }
 
-  protected Resultor readResultor(ExceptionalSupplier<Token, ScriptCompileException> supplier, Type stopAt) throws ScriptCompileException {
-    return readResultor(supplier, token -> token.getType() != stopAt);
+  protected Resultor readResultor(Type stopAt) throws ScriptCompileException {
+    return readResultor(stopAt, token -> false);
+  }
+
+  protected Resultor readResultor(Type stopAt, Predicate<Token> reReadLast) throws ScriptCompileException {
+    return readResultor(token -> token.getType() != stopAt, reReadLast);
   }
 
   protected Value readValue() throws ScriptCompileException {
