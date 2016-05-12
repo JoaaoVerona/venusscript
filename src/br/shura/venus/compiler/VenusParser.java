@@ -93,6 +93,9 @@ public class VenusParser {
             bye(token, "cannot use 'export' keyword inside container");
           }
         }
+        else if (token.getValue().equals(KeywordDefinitions.IF)) {
+          container = parseIf(container);
+        }
         else if (token.getValue().equals(KeywordDefinitions.INCLUDE)) {
           if (container == script) {
             parseInclude(script);
@@ -121,7 +124,6 @@ public class VenusParser {
               Attribution attribution = new Attribution(name, resultor);
 
               container.getChildren().add(attribution);
-              XLogger.debugln("Added attribution " + attribution);
             }
             else {
               attrib = readOperator(attrib);
@@ -137,7 +139,6 @@ public class VenusParser {
                     Attribution attribution = new Attribution(name, operation);
 
                     container.getChildren().add(attribution);
-                    XLogger.debugln("Added op_attribution " + attribution);
                   }
                   else {
                     bye(next, "expected an attribution with binary operator (+=, -=, ...)");
@@ -160,7 +161,6 @@ public class VenusParser {
             FunctionCall functionCall = new FunctionCall(name, arguments);
 
             container.getChildren().add(functionCall);
-            XLogger.debugln("Added function call: " + functionCall);
           }
           else {
             bye(next, "expected attribution operator or function call");
@@ -169,7 +169,6 @@ public class VenusParser {
       }
       else if (token.getType() == Type.CLOSE_BRACE) {
         if (container != script) {
-          XLogger.debugln("Found close brace, changing container from " + container + " to " + container.getParent());
           container = container.getParent();
         }
         else {
@@ -223,10 +222,6 @@ public class VenusParser {
     return null;
   }
 
-  protected IfContainer parseIf(Container container) throws ScriptCompileException {
-    return null;
-  }
-
   protected Definition parseDefinition(Container container) throws ScriptCompileException {
     Token typeToken = requireToken(Type.NAME_DEFINITION, "expected a return type");
     String definitionName = typeToken.getValue();
@@ -275,7 +270,6 @@ public class VenusParser {
     Definition definition = new Definition(definitionName, arguments);
 
     container.getChildren().add(definition);
-    XLogger.debugln("Added definition::" + definitionName + ", " + arguments);
 
     return definition;
   }
@@ -301,6 +295,15 @@ public class VenusParser {
     else {
       bye(nameToken, "variable name cannot be a keyword");
     }
+  }
+
+  protected IfContainer parseIf(Container container) throws ScriptCompileException {
+    Resultor resultor = readResultor(Type.OPEN_BRACE);
+    IfContainer ifContainer = new IfContainer(resultor);
+
+    container.getChildren().add(ifContainer);
+
+    return ifContainer;
   }
 
   protected void parseInclude(Script script) throws ScriptCompileException {
@@ -480,7 +483,6 @@ public class VenusParser {
     }
 
     if (reReadLast.test(token)) {
-      XLogger.println("re-read " + token);
       lexer.reRead(token);
     }
 
