@@ -24,6 +24,7 @@ import br.shura.venus.component.Attribution;
 import br.shura.venus.component.Container;
 import br.shura.venus.component.ElseContainer;
 import br.shura.venus.component.ElseIfContainer;
+import br.shura.venus.component.ForEachContainer;
 import br.shura.venus.component.FunctionCall;
 import br.shura.venus.component.IfContainer;
 import br.shura.venus.component.Script;
@@ -106,6 +107,9 @@ public class VenusParser {
           else {
             bye(token, "cannot use 'export' keyword inside container");
           }
+        }
+        else if (token.getValue().equals(KeywordDefinitions.FOR)) {
+          container = parseFor(container);
         }
         else if (token.getValue().equals(KeywordDefinitions.IF)) {
           container = parseIf(container, false);
@@ -332,6 +336,30 @@ public class VenusParser {
     else {
       bye(nameToken, "variable name cannot be a keyword");
     }
+  }
+
+  protected ForEachContainer parseFor(Container container) throws ScriptCompileException {
+    Token varNameToken = requireToken(Type.NAME_DEFINITION, "expected a variable name");
+
+    requireToken(Type.NAME_DEFINITION, "expected 'in' token");
+    requireToken(Type.OPEN_PARENTHESE, "expected an open parenthese");
+
+    Resultor[] arguments = readFunctionArguments();
+
+    requireToken(Type.OPEN_BRACE, "expected an open brace");
+
+    if (arguments.length == 2) {
+      ForEachContainer forContainer = new ForEachContainer(varNameToken.getValue(), arguments[0], arguments[1]);
+
+      container.getChildren().add(forContainer);
+
+      return forContainer;
+    }
+    else {
+      bye("Expected 2 arguments to for definition; received " + arguments.length);
+    }
+
+    return null; // Will not happen because of bye() above
   }
 
   protected IfContainer parseIf(Container container, boolean isElseIf) throws ScriptCompileException {
