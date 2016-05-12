@@ -21,23 +21,23 @@ package br.shura.venus.resultor;
 
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
-import br.shura.venus.operator.Operator;
+import br.shura.venus.operator.BinaryOperator;
 import br.shura.venus.value.Value;
 
 /**
- * Operation.java
+ * BinaryOperation.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
  * @date 06/05/16 - 02:18
  * @since GAMMA - 0x3
  */
-public class Operation implements Resultor {
+public class BinaryOperation implements Resultor {
   private final Resultor left;
-  private final Operator operator;
+  private final BinaryOperator operator;
   private final Resultor right;
 
-  public Operation(Operator operator, Resultor left, Resultor right) {
+  public BinaryOperation(BinaryOperator operator, Resultor left, Resultor right) {
     this.left = left;
     this.operator = operator;
     this.right = right;
@@ -47,7 +47,7 @@ public class Operation implements Resultor {
     return left;
   }
 
-  public Operator getOperator() {
+  public BinaryOperator getOperator() {
     return operator;
   }
 
