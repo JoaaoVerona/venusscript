@@ -32,12 +32,12 @@ import br.shura.x.worker.enumeration.Enumerations;
  * @since GAMMA - 0x3
  */
 public class OperatorList {
-  public static final Operator AND = new Operator("and", Value::and, "&&", "&");
-  public static final Operator DIVIDE = new Operator("divide", Value::divide, "/");
-  public static final Operator MINUS = new Operator("minus", Value::minus, "-");
-  public static final Operator MULTIPLY = new Operator("multiply", Value::multiply, "*");
-  public static final Operator OR = new Operator("or", Value::or, "||", "|");
-  public static final Operator PLUS = new Operator("plus", Value::plus, "+");
+  public static final BinaryOperator AND = new BinaryOperator("and", Value::and, "&&", "&");
+  public static final BinaryOperator DIVIDE = new BinaryOperator("divide", Value::divide, "/");
+  public static final BinaryOperator MINUS = new BinaryOperator("minus", Value::minus, "-");
+  public static final BinaryOperator MULTIPLY = new BinaryOperator("multiply", Value::multiply, "*");
+  public static final BinaryOperator OR = new BinaryOperator("or", Value::or, "||", "|");
+  public static final BinaryOperator PLUS = new BinaryOperator("plus", Value::plus, "+");
 
   public static Operator forIdentifier(String identifier) {
     return values().selectFirst(operator -> operator.getIdentifiers().contains(identifier));

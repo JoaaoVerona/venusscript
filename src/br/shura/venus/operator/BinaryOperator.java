@@ -19,16 +19,52 @@
 
 package br.shura.venus.operator;
 
+import br.shura.venus.executor.Context;
+import br.shura.venus.value.Value;
+import br.shura.x.collection.view.ArrayView;
 import br.shura.x.collection.view.View;
+import br.shura.x.util.layer.XApi;
+
+import java.util.function.BiFunction;
 
 /**
- * Operator.java
+ * BinaryOperator.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 12/05/16 - 00:14
+ * @date 06/05/16 - 01:51
  * @since GAMMA - 0x3
  */
-public interface Operator {
-  View<String> getIdentifiers();
+public class BinaryOperator implements Operator {
+  private final BiFunction<Value, Value, Value> function;
+  private final View<String> identifiers;
+  private final String name;
+
+  public BinaryOperator(String name, BiFunction<Value, Value, Value> function, String... identifiers) {
+    XApi.requireNonNull(function, "function");
+    XApi.requireNonNull(identifiers, "identifiers");
+    XApi.requireNonNull(name, "name");
+
+    this.function = function;
+    this.identifiers = new ArrayView<>(identifiers);
+    this.name = name;
+  }
+
+  public BiFunction<Value, Value, Value> getFunction() {
+    return function;
+  }
+
+  @Override
+  public View<String> getIdentifiers() {
+    return identifiers;
+  }
+
+  public final Value operate(Context context, Value left, Value right) {
+    return getFunction().apply(left, right);
+  }
+
+  @Override
+  public String toString() {
+    return name;
+  }
 }

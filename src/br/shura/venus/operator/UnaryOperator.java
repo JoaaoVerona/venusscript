@@ -19,16 +19,52 @@
 
 package br.shura.venus.operator;
 
+import br.shura.venus.executor.Context;
+import br.shura.venus.value.Value;
+import br.shura.x.collection.view.ArrayView;
 import br.shura.x.collection.view.View;
+import br.shura.x.util.layer.XApi;
+
+import java.util.function.Function;
 
 /**
- * Operator.java
+ * UnaryOperator.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 12/05/16 - 00:14
+ * @date 12/05/16 - 00:15
  * @since GAMMA - 0x3
  */
-public interface Operator {
-  View<String> getIdentifiers();
+public class UnaryOperator implements Operator {
+  private final Function<Value, Value> function;
+  private final View<String> identifiers;
+  private final String name;
+
+  public UnaryOperator(String name, Function<Value, Value> function, String... identifiers) {
+    XApi.requireNonNull(function, "function");
+    XApi.requireNonNull(identifiers, "identifiers");
+    XApi.requireNonNull(name, "name");
+
+    this.function = function;
+    this.identifiers = new ArrayView<>(identifiers);
+    this.name = name;
+  }
+
+  public Function<Value, Value> getFunction() {
+    return function;
+  }
+
+  @Override
+  public View<String> getIdentifiers() {
+    return identifiers;
+  }
+
+  public final Value operate(Context context, Value value) {
+    return getFunction().apply(value);
+  }
+
+  @Override
+  public String toString() {
+    return name;
+  }
 }
