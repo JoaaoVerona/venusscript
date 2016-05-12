@@ -74,7 +74,7 @@ public class ExecutorTest {
     Folder folder = new Folder("VenusScript/resources");
     List<Object[]> data = new ArrayList<>();
 
-    folder.getFiles(file -> !file.getName().equals("recursion"), file -> data.add(new Object[] { file }));
+    folder.getFiles(file -> data.add(new Object[] { file }));
 
     return data.asCollection(java.util.ArrayList.class);
   }
