@@ -44,7 +44,7 @@ public class ExecutorTest {
   public void simpleTest() throws Exception {
     XLogger.disable(Level.DEBUG);
 
-    ScriptOrigin origin = new StreamScriptOrigin("test.xs", new PathResource("test.vs"));
+    ScriptOrigin origin = new StreamScriptOrigin("executorTest", new PathResource("unaryOps.vs"));
     VenusLexer lexer = new VenusLexer(origin);
     VenusParser parser = new VenusParser(lexer);
     Script script = new Script(new ApplicationContext(), origin);
