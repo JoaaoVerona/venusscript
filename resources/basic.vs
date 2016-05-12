@@ -1,5 +1,7 @@
 using std
 
+# Isto é um comentário.
+
 def printMyName(string name) {
     println("Hello, my name is " + name + "!")
 }
@@ -9,3 +11,4 @@ j = 7
 println("Olá! i -> " + i + ", j -> " + j + ".")
 printMyName("João Vitor")
 println("Hasta" + " " + "la" + " " + "vista" + ".")
+# Isto também é um comentário.
