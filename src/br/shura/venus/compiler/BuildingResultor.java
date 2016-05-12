@@ -47,7 +47,7 @@ public class BuildingResultor {
 
   public void addOperator(VenusParser parser, Token owner, Operator op) throws UnexpectedTokenException {
     if (hasOperator()) {
-      if (operator instanceof BinaryOperator && op instanceof UnaryOperator) {
+      if (op instanceof UnaryOperator) {
         unaryWhenAlready.push((UnaryOperator) op);
 
         return;
@@ -71,6 +71,10 @@ public class BuildingResultor {
   public void addResultor(VenusParser parser, Token owner, Resultor rslt) throws UnexpectedTokenException {
     if (!hasResultor()) {
       if (operator instanceof UnaryOperator) {
+        while (!unaryWhenAlready.isEmpty()) {
+          rslt = new UnaryOperation(unaryWhenAlready.pop(), rslt);
+        }
+
         this.resultor = new UnaryOperation((UnaryOperator) operator, rslt);
       }
       else {
