@@ -22,6 +22,8 @@ package br.shura.venus.executor;
 import br.shura.venus.component.Attribution;
 import br.shura.venus.component.Component;
 import br.shura.venus.component.Container;
+import br.shura.venus.component.ElseContainer;
+import br.shura.venus.component.ElseIfContainer;
 import br.shura.venus.component.FunctionCall;
 import br.shura.venus.component.IfContainer;
 import br.shura.venus.component.function.Definition;
@@ -49,12 +51,13 @@ public class VenusExecutor {
     Context context = container.getContext();
     ListIterator<Component> iterator = container.getChildren().iterator();
     Value result = null;
+    boolean hadIfAndNotProceed = false;
 
     while (shouldRun.get() && iterator.hasNext()) {
       Component component = iterator.next();
 
       if (component instanceof Container) {
-        if (component instanceof IfContainer) {
+        if (component instanceof IfContainer || (component instanceof ElseIfContainer && hadIfAndNotProceed)) {
           IfContainer ifContainer = (IfContainer) component;
           Value value = ifContainer.getCondition().resolve(context);
 
@@ -64,12 +67,17 @@ public class VenusExecutor {
             if (boolValue.value()) {
               run((Container) component, shouldRun);
             }
+            else {
+              hadIfAndNotProceed = true;
+
+              continue;
+            }
           }
           else {
             throw new InvalidValueTypeException(context, "Cannot apply if condition in value of type " + value.getType());
           }
         }
-        else if (!(component instanceof Definition)) {
+        else if (!(component instanceof Definition) && (!(component instanceof ElseContainer) || hadIfAndNotProceed)) {
           run((Container) component, shouldRun);
         }
       }
@@ -83,6 +91,8 @@ public class VenusExecutor {
 
         functionCall.resolve(context);
       }
+
+      hadIfAndNotProceed = false;
     }
 
     return result;
