@@ -19,18 +19,41 @@
 
 package br.shura.venus.library.std;
 
-import br.shura.venus.library.MethodLibrary;
+import br.shura.venus.component.function.Method;
+import br.shura.venus.component.function.annotation.MethodArgs;
+import br.shura.venus.component.function.annotation.MethodName;
+import br.shura.venus.exception.AssertionException;
+import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.value.BoolValue;
+import br.shura.venus.value.Value;
+import br.shura.venus.value.ValueType;
 
 /**
- * StdLibrary.java
+ * Assert.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 09/05/16 - 20:29
+ * @date 12/05/16 - 20:33
  * @since GAMMA - 0x3
  */
-public class StdLibrary extends MethodLibrary {
-  public StdLibrary() {
-    addAll(Assert.class, Print.class, Println.class, Sleep.class);
+@MethodArgs(ValueType.ANY)
+@MethodName("assert")
+public class Assert extends Method {
+  @Override
+  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
+    Value value = arguments[0];
+
+    if (value instanceof BoolValue) {
+      BoolValue boolValue = (BoolValue) value;
+
+      if (boolValue.value()) {
+        return null;
+      }
+
+      throw new AssertionException(context, "Assertion failed");
+    }
+
+    throw new AssertionException(context, "Assertion expected a value of type " + ValueType.BOOLEAN + "; received " + value.getType());
   }
 }
