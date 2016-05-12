@@ -31,6 +31,7 @@ import br.shura.x.worker.enumeration.Enumerations;
  * @since GAMMA - 0x3
  */
 public class KeywordDefinitions {
+  public static final char COMMENTER = '#';
   public static final String DEFINE = "def";
   public static final String ELSE = "else";
   public static final String EXPORT = "export";
