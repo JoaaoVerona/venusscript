@@ -208,6 +208,10 @@ public class VenusLexer {
             return new Token(Type.CLOSE_PARENTHESE, ch);
           }
 
+          if (ch == KeywordDefinitions.COMMENTER) {
+            return new Token(Type.COMMENTER, ch);
+          }
+
           return new Token(Type.OPERATOR, ch);
         }
 
