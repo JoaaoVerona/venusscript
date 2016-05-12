@@ -4,10 +4,11 @@ println("Olá!")
 
 # 0...2
 {
-    j = 2
+    i = 0
 
-    for i in (0, j) {
+    while i < 3 {
         println("i = " + i)
+        i = i + 1
     }
 }
 
