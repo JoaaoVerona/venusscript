@@ -19,6 +19,7 @@
 
 package br.shura.venus.resultor;
 
+import br.shura.venus.exception.IncompatibleTypesException;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.operator.UnaryOperator;
@@ -52,8 +53,13 @@ public class UnaryOperation implements Resultor {
   @Override
   public Value resolve(Context context) throws ScriptRuntimeException {
     Value value = getResultor().resolve(context);
+    Value result = getOperator().operate(context, value);
 
-    return getOperator().operate(context, value);
+    if (result == null) {
+      throw new IncompatibleTypesException(context, "Operator " + getOperator() + " cannot be applied with " + value.getType());
+    }
+
+    return result;
   }
 
   @Override

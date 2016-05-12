@@ -19,6 +19,7 @@
 
 package br.shura.venus.resultor;
 
+import br.shura.venus.exception.IncompatibleTypesException;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.operator.BinaryOperator;
@@ -59,8 +60,14 @@ public class BinaryOperation implements Resultor {
   public Value resolve(Context context) throws ScriptRuntimeException {
     Value left = getLeft().resolve(context);
     Value right = getRight().resolve(context);
+    Value result = getOperator().operate(context, left, right);
 
-    return getOperator().operate(context, left, right);
+    if (result == null) {
+      throw new IncompatibleTypesException(context, "Operator " + getOperator() + " cannot be applied with " +
+        left.getType() + " and " + right.getType());
+    }
+
+    return result;
   }
 
   @Override
