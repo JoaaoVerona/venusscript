@@ -29,6 +29,7 @@ import br.shura.venus.component.FunctionCall;
 import br.shura.venus.component.IfContainer;
 import br.shura.venus.component.Script;
 import br.shura.venus.component.SimpleContainer;
+import br.shura.venus.component.WhileContainer;
 import br.shura.venus.component.function.Argument;
 import br.shura.venus.component.function.Definition;
 import br.shura.venus.exception.ScriptCompileException;
@@ -130,6 +131,9 @@ public class VenusParser {
           else {
             bye(token, "cannot use 'using' keyword inside container");
           }
+        }
+        else if (token.getValue().equals(KeywordDefinitions.WHILE)) {
+          container = parseWhile(container);
         }
         else { // Should be variable attribution OR function call
           String name = token.getValue();
@@ -370,6 +374,15 @@ public class VenusParser {
     }
 
     return null; // Will not happen because of bye() above
+  }
+
+  protected WhileContainer parseWhile(Container container) throws ScriptCompileException {
+    Resultor resultor = readResultor(Type.OPEN_BRACE);
+    WhileContainer whileContainer = new WhileContainer(resultor);
+
+    container.getChildren().add(whileContainer);
+
+    return whileContainer;
   }
 
   protected IfContainer parseIf(Container container, boolean isElseIf) throws ScriptCompileException {
