@@ -24,12 +24,21 @@ import br.shura.venus.compiler.VenusParser;
 import br.shura.venus.component.Script;
 import br.shura.venus.executor.ApplicationContext;
 import br.shura.venus.executor.VenusExecutor;
+import br.shura.venus.origin.FileScriptOrigin;
 import br.shura.venus.origin.ScriptOrigin;
-import br.shura.venus.origin.StreamScriptOrigin;
-import br.shura.x.loader.resource.PathResource;
+import br.shura.x.collection.list.List;
+import br.shura.x.collection.list.impl.ArrayList;
+import br.shura.x.io.file.File;
+import br.shura.x.io.file.Folder;
 import br.shura.x.logging.ILogger.Level;
 import br.shura.x.logging.XLogger;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+
+import java.io.IOException;
+import java.util.Collection;
 
 /**
  * ExecutorTest.java
@@ -39,17 +48,34 @@ import org.junit.Test;
  * @date 11/05/16 - 00:14
  * @since GAMMA - 0x3
  */
+@RunWith(Parameterized.class)
 public class ExecutorTest {
+  private final File file;
+
+  public ExecutorTest(File file) {
+    this.file = file;
+  }
+
   @Test
   public void simpleTest() throws Exception {
     XLogger.disable(Level.DEBUG);
 
-    ScriptOrigin origin = new StreamScriptOrigin("executorTest", new PathResource("unaryOps.vs"));
+    ScriptOrigin origin = new FileScriptOrigin(file);
     VenusLexer lexer = new VenusLexer(origin);
     VenusParser parser = new VenusParser(lexer);
     Script script = new Script(new ApplicationContext(), origin);
 
     parser.parse(script);
     VenusExecutor.run(script);
+  }
+
+  @Parameters
+  public static Collection<Object[]> data() throws IOException {
+    Folder folder = new Folder("VenusScript/resources");
+    List<Object[]> data = new ArrayList<>();
+
+    folder.getFiles(file -> !file.getName().equals("recursion"), file -> data.add(new Object[] { file }));
+
+    return data.asCollection(java.util.ArrayList.class);
   }
 }
