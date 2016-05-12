@@ -46,6 +46,30 @@ public interface Value {
     return ValueType.forValue(this);
   }
 
+  default BoolValue higherEqualThan(Value value) {
+    Integer comparation = compareTo(value);
+
+    return comparation != null ? new BoolValue(comparation >= 0) : null;
+  }
+
+  default BoolValue higherThan(Value value) {
+    Integer comparation = compareTo(value);
+
+    return comparation != null ? new BoolValue(comparation > 0) : null;
+  }
+
+  default BoolValue lowerEqualThan(Value value) {
+    Integer comparation = compareTo(value);
+
+    return comparation != null ? new BoolValue(comparation <= 0) : null;
+  }
+
+  default BoolValue lowerThan(Value value) {
+    Integer comparation = compareTo(value);
+
+    return comparation != null ? new BoolValue(comparation < 0) : null;
+  }
+
   default NumericValue minus(Value value) {
     return null;
   }
