@@ -125,7 +125,7 @@ public class VenusParser {
               XLogger.debugln("Added attribution " + attribution);
             }
             else {
-              attrib += readOperator();
+              attrib = readOperator(attrib);
 
               if (attrib.endsWith("=")) {
                 String operatorIdentifier = attrib.substring(0, attrib.length() - 1);
@@ -393,11 +393,21 @@ public class VenusParser {
     return arguments.toArray();
   }
 
-  protected String readOperator() throws ScriptCompileException {
+  protected String readOperator(String start) throws ScriptCompileException {
     TextBuilder operatorStr = Pool.newBuilder();
     Token operatorToken;
 
+    if (start != null) {
+      operatorStr.append(start);
+    }
+
     while ((operatorToken = requireToken()).getType() == Type.OPERATOR) {
+      String op = operatorToken.getValue();
+
+      if (OperatorList.forIdentifier(op, true) != null && !operatorStr.isEmpty()) {
+        break;
+      }
+
       operatorStr.append(operatorToken.getValue());
     }
 
@@ -439,7 +449,7 @@ public class VenusParser {
           nameDef = null;
         }
 
-        String operatorStr = token.getValue() + readOperator();
+        String operatorStr = readOperator(token.getValue());
         Operator operator = OperatorList.forIdentifier(operatorStr, !resultor.hasResultor());
 
         if (operator != null) {

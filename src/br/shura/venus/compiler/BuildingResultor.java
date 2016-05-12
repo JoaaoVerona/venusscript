@@ -26,6 +26,7 @@ import br.shura.venus.operator.UnaryOperator;
 import br.shura.venus.resultor.BinaryOperation;
 import br.shura.venus.resultor.Resultor;
 import br.shura.venus.resultor.UnaryOperation;
+import br.shura.x.collection.store.impl.Stack;
 
 /**
  * BuildingResultor.java
@@ -38,10 +39,22 @@ import br.shura.venus.resultor.UnaryOperation;
 public class BuildingResultor {
   private Operator operator;
   private Resultor resultor;
+  private final Stack<UnaryOperator> unaryWhenAlready;
+
+  public BuildingResultor() {
+    this.unaryWhenAlready = new Stack<>();
+  }
 
   public void addOperator(VenusParser parser, Token owner, Operator op) throws UnexpectedTokenException {
     if (hasOperator()) {
-      parser.bye(owner, "already have an operator");
+      if (operator instanceof BinaryOperator && op instanceof UnaryOperator) {
+        unaryWhenAlready.push((UnaryOperator) op);
+
+        return;
+      }
+      else {
+        parser.bye(owner, "already have an operator");
+      }
     }
 
     if (op instanceof BinaryOperator && !hasResultor()) {
@@ -66,6 +79,10 @@ public class BuildingResultor {
     }
     else if (hasOperator()) {
       if (operator instanceof BinaryOperator) {
+        while (!unaryWhenAlready.isEmpty()) {
+          rslt = new UnaryOperation(unaryWhenAlready.pop(), rslt);
+        }
+
         this.resultor = new BinaryOperation((BinaryOperator) operator, resultor, rslt);
       }
       else {
