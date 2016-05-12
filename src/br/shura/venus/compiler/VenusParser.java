@@ -43,11 +43,13 @@ import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.StringValue;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
+import br.shura.x.charset.build.TextBuilder;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.lang.function.ExceptionalSupplier;
 import br.shura.x.lang.mutable.MutableBoolean;
 import br.shura.x.logging.XLogger;
+import br.shura.x.util.Pool;
 import br.shura.x.worker.ParseWorker;
 
 import java.io.IOException;
@@ -122,29 +124,33 @@ public class VenusParser {
               container.getChildren().add(attribution);
               XLogger.debugln("Added attribution " + attribution);
             }
-            else if (attrib.endsWith("=")) {
-              String operatorIdentifier = attrib.substring(0, attrib.length() - 1);
-              Operator operator = OperatorList.forIdentifier(operatorIdentifier);
+            else {
+              attrib += readOperator();
 
-              if (operator != null) {
-                if (operator instanceof BinaryOperator) {
-                  Resultor resultor = readResultor(null, Type.NEW_LINE);
-                  BinaryOperation operation = new BinaryOperation((BinaryOperator) operator, new Variable(name), resultor);
-                  Attribution attribution = new Attribution(name, operation);
+              if (attrib.endsWith("=")) {
+                String operatorIdentifier = attrib.substring(0, attrib.length() - 1);
+                Operator operator = OperatorList.forIdentifier(operatorIdentifier, false); // false for bye(excepted bin opr)
 
-                  container.getChildren().add(attribution);
-                  XLogger.debugln("Added op_attribution " + attribution);
+                if (operator != null) {
+                  if (operator instanceof BinaryOperator) {
+                    Resultor resultor = readResultor(null, Type.NEW_LINE);
+                    BinaryOperation operation = new BinaryOperation((BinaryOperator) operator, new Variable(name), resultor);
+                    Attribution attribution = new Attribution(name, operation);
+
+                    container.getChildren().add(attribution);
+                    XLogger.debugln("Added op_attribution " + attribution);
+                  }
+                  else {
+                    bye(next, "expected an attribution with binary operator (+=, -=, ...)");
+                  }
                 }
                 else {
-                  bye(next, "expected an attribution with binary operator (+=, -=, ...)");
+                  bye(next, "expected a valid attribution operator (=, +=, -=, ...)");
                 }
               }
               else {
-                bye(next, "expected a valid attribution operator (=, +=, -=, ...)");
+                bye(next, "expected an attribution operator (=, +=, -=, ...)");
               }
-            }
-            else {
-              bye(next, "expected an attribution operator (=, +=, -=, ...)");
             }
           }
           else if (next.getType() == Type.OPEN_PARENTHESE) {
@@ -387,6 +393,19 @@ public class VenusParser {
     return arguments.toArray();
   }
 
+  protected String readOperator() throws ScriptCompileException {
+    TextBuilder operatorStr = Pool.newBuilder();
+    Token operatorToken;
+
+    while ((operatorToken = requireToken()).getType() == Type.OPERATOR) {
+      operatorStr.append(operatorToken.getValue());
+    }
+
+    lexer.reRead(operatorToken); // Last token have type != OPERATOR
+
+    return operatorStr.toStringAndClear();
+  }
+
   protected Resultor readResultor(ExceptionalSupplier<Token, ScriptCompileException> supplier, Predicate<Token> process) throws ScriptCompileException {
     BuildingResultor resultor = new BuildingResultor();
     String nameDef = null;
@@ -420,7 +439,8 @@ public class VenusParser {
           nameDef = null;
         }
 
-        Operator operator = OperatorList.forIdentifier(token.getValue());
+        String operatorStr = token.getValue() + readOperator();
+        Operator operator = OperatorList.forIdentifier(operatorStr, !resultor.hasResultor());
 
         if (operator != null) {
           resultor.addOperator(this, token, operator);

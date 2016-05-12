@@ -40,15 +40,15 @@ public class BuildingResultor {
   private Resultor resultor;
 
   public void addOperator(VenusParser parser, Token owner, Operator op) throws UnexpectedTokenException {
-    if (operator != null) {
+    if (hasOperator()) {
       parser.bye(owner, "already have an operator");
     }
 
-    if (op instanceof BinaryOperator && resultor == null) {
+    if (op instanceof BinaryOperator && !hasResultor()) {
       parser.bye(owner, "no left operation value");
     }
 
-    if (op instanceof UnaryOperator && resultor != null) {
+    if (op instanceof UnaryOperator && hasResultor()) {
       parser.bye(owner, "cannot apply unary operator to left-sided value");
     }
 
@@ -56,7 +56,7 @@ public class BuildingResultor {
   }
 
   public void addResultor(VenusParser parser, Token owner, Resultor rslt) throws UnexpectedTokenException {
-    if (resultor == null) {
+    if (!hasResultor()) {
       if (operator instanceof UnaryOperator) {
         this.resultor = new UnaryOperation((UnaryOperator) operator, rslt);
       }
@@ -64,7 +64,7 @@ public class BuildingResultor {
         this.resultor = rslt;
       }
     }
-    else if (operator != null) {
+    else if (hasOperator()) {
       if (operator instanceof BinaryOperator) {
         this.resultor = new BinaryOperation((BinaryOperator) operator, resultor, rslt);
       }
@@ -81,5 +81,13 @@ public class BuildingResultor {
 
   public Resultor build() {
     return resultor;
+  }
+
+  public boolean hasOperator() {
+    return operator != null;
+  }
+
+  public boolean hasResultor() {
+    return resultor != null;
   }
 }

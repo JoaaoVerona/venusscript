@@ -40,8 +40,14 @@ public class OperatorList {
   public static final BinaryOperator OR = new BinaryOperator("or", Value::or, "||", "|");
   public static final BinaryOperator PLUS = new BinaryOperator("plus", Value::plus, "+");
 
-  public static Operator forIdentifier(String identifier) {
-    return values().selectFirst(operator -> operator.getIdentifiers().contains(identifier));
+  public static Operator forIdentifier(String identifier, boolean mustBeUnary) { // YES THIS SHOULD BE Boolean OBJECT!
+    for (Operator operator : values()) {
+      if ((!mustBeUnary || operator instanceof UnaryOperator) && operator.getIdentifiers().contains(identifier)) {
+        return operator;
+      }
+    }
+
+    return null;
   }
 
   public static View<Operator> values() {

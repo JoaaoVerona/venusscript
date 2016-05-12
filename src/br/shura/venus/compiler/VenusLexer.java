@@ -94,14 +94,6 @@ public class VenusLexer {
           return new Token(Type.NUMBER_LITERAL, buildingToken.toStringAndClear());
         }
 
-        if (state == IN_OPERATOR) {
-          back();
-
-          this.state = null;
-
-          return new Token(Type.OPERATOR, buildingToken.toStringAndClear());
-        }
-
         this.line++;
 
         return new Token(Type.NEW_LINE, null);
@@ -122,14 +114,6 @@ public class VenusLexer {
           bye("Double quotes found while parsing a name definition");
         }
 
-        if (state == IN_OPERATOR) {
-          back();
-
-          this.state = null;
-
-          return new Token(Type.OPERATOR, buildingToken.toStringAndClear());
-        }
-
         this.state = IN_STRING_LITERAL;
 
         continue;
@@ -148,14 +132,6 @@ public class VenusLexer {
 
         if (state == IN_NAME_DEFINITION) {
           bye("Single quote found while parsing a name definition");
-        }
-
-        if (state == IN_OPERATOR) {
-          back();
-
-          this.state = null;
-
-          return new Token(Type.OPERATOR, buildingToken.toStringAndClear());
         }
 
         this.state = IN_CHAR_LITERAL;
@@ -184,16 +160,7 @@ public class VenusLexer {
             return new Token(Type.NAME_DEFINITION, buildingToken.toStringAndClear());
           }
 
-          continue; // return new Token(Type.WHITESPACE, ch);
-        }
-
-        if (state == IN_OPERATOR && (isLetter || isDigit ||
-          (ch == ',' || ch == ':' || ch == '@' || ch == '{' || ch == '[' || ch == '(' || ch == '}' || ch == ']' || ch == ')'))) {
-          back(); // TODO The above check. Please, change hierarchy.
-
-          this.state = null;
-
-          return new Token(Type.OPERATOR, buildingToken.toStringAndClear());
+          continue;
         }
 
         if (state == IN_NAME_DEFINITION && !isLetter && !isDigit) {
@@ -204,40 +171,44 @@ public class VenusLexer {
           return new Token(Type.NAME_DEFINITION, buildingToken.toStringAndClear());
         }
 
-        if (ch == ',') {
-          return new Token(Type.COMMA, ch);
-        }
+        if (!isLetter && !isDigit) {
+          if (ch == ',') {
+            return new Token(Type.COMMA, ch);
+          }
 
-        if (ch == ':') {
-          return new Token(Type.COLON, ch);
-        }
+          if (ch == ':') {
+            return new Token(Type.COLON, ch);
+          }
 
-        if (ch == '@') {
-          return new Token(Type.AT_SIGN, ch);
-        }
+          if (ch == '@') {
+            return new Token(Type.AT_SIGN, ch);
+          }
 
-        if (ch == '{') {
-          return new Token(Type.OPEN_BRACE, ch);
-        }
+          if (ch == '{') {
+            return new Token(Type.OPEN_BRACE, ch);
+          }
 
-        if (ch == '[') {
-          return new Token(Type.OPEN_BRACKET, ch);
-        }
+          if (ch == '[') {
+            return new Token(Type.OPEN_BRACKET, ch);
+          }
 
-        if (ch == '(') {
-          return new Token(Type.OPEN_PARENTHESE, ch);
-        }
+          if (ch == '(') {
+            return new Token(Type.OPEN_PARENTHESE, ch);
+          }
 
-        if (ch == '}') {
-          return new Token(Type.CLOSE_BRACE, ch);
-        }
+          if (ch == '}') {
+            return new Token(Type.CLOSE_BRACE, ch);
+          }
 
-        if (ch == ']') {
-          return new Token(Type.CLOSE_BRACKET, ch);
-        }
+          if (ch == ']') {
+            return new Token(Type.CLOSE_BRACKET, ch);
+          }
 
-        if (ch == ')') {
-          return new Token(Type.CLOSE_PARENTHESE, ch);
+          if (ch == ')') {
+            return new Token(Type.CLOSE_PARENTHESE, ch);
+          }
+
+          return new Token(Type.OPERATOR, ch);
         }
 
         if (isDigit && state != IN_NAME_DEFINITION) {
@@ -245,9 +216,6 @@ public class VenusLexer {
         }
         else if (isLetter && state != IN_NAME_DEFINITION) {
           this.state = IN_NAME_DEFINITION;
-        }
-        else if (!isLetter && !isDigit && state != IN_OPERATOR) {
-          this.state = IN_OPERATOR;
         }
       }
 
@@ -288,7 +256,6 @@ public class VenusLexer {
     IN_STRING_LITERAL,
     IN_NUMBER_LITERAL,
     IN_CHAR_LITERAL,
-    IN_NAME_DEFINITION,
-    IN_OPERATOR
+    IN_NAME_DEFINITION
   }
 }
