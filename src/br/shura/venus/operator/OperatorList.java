@@ -35,6 +35,10 @@ public class OperatorList {
   public static final BinaryOperator AND = new BinaryOperator("and", Value::and, "&&", "&");
   public static final BinaryOperator DIVIDE = new BinaryOperator("divide", Value::divide, "/");
   public static final BinaryOperator EQUALS = new BinaryOperator("equals", Value::equals, "==");
+  public static final BinaryOperator HIGHER_EQ_THAN = new BinaryOperator("higherEqualThan", Value::higherEqualThan, ">=");
+  public static final BinaryOperator HIGHER_THAN = new BinaryOperator("higherThan", Value::higherThan, ">");
+  public static final BinaryOperator LOWER_EQ_THAN = new BinaryOperator("lowerEqualThan", Value::lowerEqualThan, "<=");
+  public static final BinaryOperator LOWER_THAN = new BinaryOperator("lowherThan", Value::lowerThan, "<");
   public static final BinaryOperator MINUS = new BinaryOperator("minus", Value::minus, "-");
   public static final BinaryOperator MULTIPLY = new BinaryOperator("multiply", Value::multiply, "*");
   public static final UnaryOperator NEGATE = new UnaryOperator("negate", Value::negate, "-");
