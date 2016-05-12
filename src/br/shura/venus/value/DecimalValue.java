@@ -73,6 +73,11 @@ public class DecimalValue implements NumericValue {
   }
 
   @Override
+  public DecimalValue negate() {
+    return new DecimalValue(-value());
+  }
+
+  @Override
   public DecimalValue plus(Value value) {
     if (value instanceof NumericValue) {
       NumericValue numeric = (NumericValue) value;

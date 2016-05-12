@@ -36,6 +36,7 @@ public class OperatorList {
   public static final BinaryOperator DIVIDE = new BinaryOperator("divide", Value::divide, "/");
   public static final BinaryOperator MINUS = new BinaryOperator("minus", Value::minus, "-");
   public static final BinaryOperator MULTIPLY = new BinaryOperator("multiply", Value::multiply, "*");
+  public static final UnaryOperator NEGATE = new UnaryOperator("negate", Value::negate, "-");
   public static final BinaryOperator OR = new BinaryOperator("or", Value::or, "||", "|");
   public static final BinaryOperator PLUS = new BinaryOperator("plus", Value::plus, "+");
 

@@ -86,6 +86,11 @@ public class IntegerValue implements NumericValue {
   }
 
   @Override
+  public IntegerValue negate() {
+    return new IntegerValue(-value());
+  }
+
+  @Override
   public IntegerValue or(Value value) {
     if (value instanceof IntegerValue) {
       return new IntegerValue(value() | ((IntegerValue) value).value());

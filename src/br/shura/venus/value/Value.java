@@ -46,7 +46,7 @@ public interface Value {
     return null;
   }
 
-  default Value negate(Value value) {
+  default Value negate() {
     return null;
   }
 
