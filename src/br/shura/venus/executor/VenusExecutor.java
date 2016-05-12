@@ -24,12 +24,16 @@ import br.shura.venus.component.Component;
 import br.shura.venus.component.Container;
 import br.shura.venus.component.ElseContainer;
 import br.shura.venus.component.ElseIfContainer;
+import br.shura.venus.component.ForEachContainer;
 import br.shura.venus.component.FunctionCall;
 import br.shura.venus.component.IfContainer;
 import br.shura.venus.component.function.Definition;
 import br.shura.venus.exception.InvalidValueTypeException;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.value.BoolValue;
+import br.shura.venus.value.DecimalValue;
+import br.shura.venus.value.IntegerValue;
+import br.shura.venus.value.NumericValue;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.list.ListIterator;
 import br.shura.x.lang.mutable.MutableBoolean;
@@ -57,7 +61,34 @@ public class VenusExecutor {
       Component component = iterator.next();
 
       if (component instanceof Container) {
-        if (component instanceof IfContainer || (component instanceof ElseIfContainer && hadIfAndNotProceed)) {
+        if (component instanceof ForEachContainer) {
+          ForEachContainer forContainer = (ForEachContainer) component;
+          Value from = forContainer.getFrom().resolve(context);
+          Value to = forContainer.getTo().resolve(context);
+
+          if (from instanceof NumericValue) {
+            if (to instanceof NumericValue) {
+              NumericValue numericFrom = (NumericValue) from;
+              NumericValue numericTo = (NumericValue) to;
+              boolean isDecimal = numericFrom instanceof DecimalValue || numericTo instanceof DecimalValue;
+              Value count = isDecimal ? new DecimalValue(numericFrom.value().doubleValue()) :
+                            new IntegerValue(numericFrom.value().longValue());
+
+              while (count.lowerEqualThan(to).value()) {
+                context.setVar(forContainer.getVarName(), count);
+                run(forContainer, shouldRun);
+                count = count.plus(new IntegerValue(1));
+              }
+            }
+            else {
+              throw new InvalidValueTypeException(context, "For end \"" + to + "\" is not a numeric value");
+            }
+          }
+          else {
+            throw new InvalidValueTypeException(context, "For start \"" + from + "\" is not a numeric value");
+          }
+        }
+        else if (component instanceof IfContainer || (component instanceof ElseIfContainer && hadIfAndNotProceed)) {
           IfContainer ifContainer = (IfContainer) component;
           Value value = ifContainer.getCondition().resolve(context);
 
@@ -65,7 +96,7 @@ public class VenusExecutor {
             BoolValue boolValue = (BoolValue) value;
 
             if (boolValue.value()) {
-              run((Container) component, shouldRun);
+              run(ifContainer, shouldRun);
             }
             else {
               hadIfAndNotProceed = true;
