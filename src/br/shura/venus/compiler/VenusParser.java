@@ -355,8 +355,11 @@ public class VenusParser {
 
     requireToken(Type.OPEN_BRACE, "expected an open brace");
 
-    if (arguments.length == 2) {
-      ForEachContainer forContainer = new ForEachContainer(varNameToken.getValue(), arguments[0], arguments[1]);
+    if (arguments.length == 2 || arguments.length == 3) {
+      String varName = varNameToken.getValue();
+      ForEachContainer forContainer = new ForEachContainer(varName, arguments[0], arguments[1],
+        arguments.length == 3 ? arguments[2] : new BinaryOperation(OperatorList.PLUS, new Variable(varName),
+          new Constant(new IntegerValue(1))));
 
       container.getChildren().add(forContainer);
 
