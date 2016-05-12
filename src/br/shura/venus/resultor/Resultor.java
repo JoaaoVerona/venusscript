@@ -36,6 +36,6 @@ public interface Resultor {
   Value resolve(Context context) throws ScriptRuntimeException;
 
   default ValueType resolveType(Context context) throws ScriptRuntimeException {
-    return ValueType.forValue(resolve(context));
+    return resolve(context).getType();
   }
 }

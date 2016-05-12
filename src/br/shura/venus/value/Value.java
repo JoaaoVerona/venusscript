@@ -38,6 +38,10 @@ public interface Value {
 
   BoolValue equals(Value value);
 
+  default ValueType getType() {
+    return ValueType.forValue(this);
+  }
+
   default NumericValue minus(Value value) {
     return null;
   }
