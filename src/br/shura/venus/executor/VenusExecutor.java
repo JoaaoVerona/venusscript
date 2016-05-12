@@ -77,7 +77,7 @@ public class VenusExecutor {
               while (count.lowerEqualThan(to).value()) {
                 context.setVar(forContainer.getVarName(), count);
                 run(forContainer, shouldRun);
-                count = count.plus(new IntegerValue(1));
+                count = forContainer.getAdjustment().resolve(context);
               }
             }
             else {
