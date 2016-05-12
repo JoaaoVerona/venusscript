@@ -22,6 +22,8 @@ package br.shura.venus.compiler;
 import br.shura.venus.compiler.Token.Type;
 import br.shura.venus.component.Attribution;
 import br.shura.venus.component.Container;
+import br.shura.venus.component.ElseContainer;
+import br.shura.venus.component.ElseIfContainer;
 import br.shura.venus.component.FunctionCall;
 import br.shura.venus.component.IfContainer;
 import br.shura.venus.component.Script;
@@ -79,11 +81,20 @@ public class VenusParser {
 
     Token token;
     Container container = script;
+    boolean justExitedIfContainer = false;
 
     while ((token = lexer.nextToken()) != null) {
       if (token.getType() == Type.NAME_DEFINITION) {
         if (token.getValue().equals(KeywordDefinitions.DEFINE)) {
           container = parseDefinition(container);
+        }
+        else if (token.getValue().equals(KeywordDefinitions.ELSE)) {
+          if (justExitedIfContainer) {
+            container = parseElse(container);
+          }
+          else {
+            bye(token, "no previous 'if' container");
+          }
         }
         else if (token.getValue().equals(KeywordDefinitions.EXPORT)) {
           if (container == script) {
@@ -94,7 +105,7 @@ public class VenusParser {
           }
         }
         else if (token.getValue().equals(KeywordDefinitions.IF)) {
-          container = parseIf(container);
+          container = parseIf(container, false);
         }
         else if (token.getValue().equals(KeywordDefinitions.INCLUDE)) {
           if (container == script) {
@@ -166,9 +177,15 @@ public class VenusParser {
             bye(next, "expected attribution operator or function call");
           }
         }
+
+        justExitedIfContainer = false;
       }
       else if (token.getType() == Type.CLOSE_BRACE) {
         if (container != script) {
+          if (container instanceof IfContainer) {
+            justExitedIfContainer = true;
+          }
+
           container = container.getParent();
         }
         else {
@@ -274,6 +291,23 @@ public class VenusParser {
     return definition;
   }
 
+  protected Container parseElse(Container container) throws ScriptCompileException {
+    Token next = requireToken();
+
+    if (next.getType() == Type.NAME_DEFINITION && next.getValue().equals(KeywordDefinitions.IF)) {
+      return parseIf(container, true);
+    }
+
+    lexer.reRead(next);
+    requireToken(Type.OPEN_BRACE, "expected an open brace");
+
+    ElseContainer elseContainer = new ElseContainer();
+
+    container.getChildren().add(elseContainer);
+
+    return elseContainer;
+  }
+
   protected void parseExport(Script script) throws ScriptCompileException {
     Token nameToken = requireToken(Type.NAME_DEFINITION, "expected a variable name");
     String variableName = nameToken.getValue();
@@ -297,9 +331,9 @@ public class VenusParser {
     }
   }
 
-  protected IfContainer parseIf(Container container) throws ScriptCompileException {
+  protected IfContainer parseIf(Container container, boolean isElseIf) throws ScriptCompileException {
     Resultor resultor = readResultor(Type.OPEN_BRACE);
-    IfContainer ifContainer = new IfContainer(resultor);
+    IfContainer ifContainer = isElseIf ? new ElseIfContainer(resultor) : new IfContainer(resultor);
 
     container.getChildren().add(ifContainer);
 

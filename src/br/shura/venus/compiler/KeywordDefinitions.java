@@ -32,6 +32,7 @@ import br.shura.x.worker.enumeration.Enumerations;
  */
 public class KeywordDefinitions {
   public static final String DEFINE = "def";
+  public static final String ELSE = "else";
   public static final String EXPORT = "export";
   public static final String FALSE = "false";
   public static final String IF = "if";
