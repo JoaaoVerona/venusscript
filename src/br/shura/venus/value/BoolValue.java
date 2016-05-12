@@ -53,6 +53,11 @@ public class BoolValue implements Value {
   }
 
   @Override
+  public BoolValue not() {
+    return new BoolValue(!value());
+  }
+
+  @Override
   public BoolValue or(Value value) {
     if (value instanceof BoolValue) {
       BoolValue bool = (BoolValue) value;

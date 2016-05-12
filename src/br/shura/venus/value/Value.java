@@ -50,6 +50,10 @@ public interface Value {
     return null;
   }
 
+  default Value not() {
+    return null;
+  }
+
   default Value or(Value value) {
     return null;
   }
