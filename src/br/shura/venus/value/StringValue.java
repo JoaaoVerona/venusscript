@@ -39,6 +39,17 @@ public class StringValue implements Value {
   }
 
   @Override
+  public Integer compareTo(Value value) {
+    if (value instanceof StringValue) {
+      StringValue string = (StringValue) value;
+
+      return value().compareToIgnoreCase(string.value());
+    }
+
+    return null;
+  }
+
+  @Override
   public BoolValue equals(Value value) {
     return new BoolValue(value instanceof StringValue && ((StringValue) value).value().equals(value()));
   }

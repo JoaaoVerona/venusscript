@@ -44,6 +44,17 @@ public class IntegerValue implements NumericValue {
   }
 
   @Override
+  public Integer compareTo(Value value) {
+    if (value instanceof NumericValue) {
+      NumericValue numeric = (NumericValue) value;
+
+      return value().compareTo(numeric.value().longValue());
+    }
+
+    return null;
+  }
+
+  @Override
   public IntegerValue divide(Value value) {
     if (value instanceof NumericValue) {
       NumericValue numeric = (NumericValue) value;

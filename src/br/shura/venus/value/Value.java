@@ -32,6 +32,10 @@ public interface Value {
     return null;
   }
 
+  default Integer compareTo(Value value) {
+    return null;
+  }
+
   default NumericValue divide(Value value) {
     return null;
   }

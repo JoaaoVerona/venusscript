@@ -35,6 +35,17 @@ public class DecimalValue implements NumericValue {
   }
 
   @Override
+  public Integer compareTo(Value value) {
+    if (value instanceof NumericValue) {
+      NumericValue numeric = (NumericValue) value;
+
+      return value().compareTo(numeric.value().doubleValue());
+    }
+
+    return null;
+  }
+
+  @Override
   public DecimalValue divide(Value value) {
     if (value instanceof NumericValue) {
       NumericValue numeric = (NumericValue) value;
