@@ -20,6 +20,8 @@
 package br.shura.venus.exception;
 
 import br.shura.venus.executor.Context;
+import br.shura.venus.value.ValueType;
+import br.shura.x.collection.view.View;
 
 /**
  * UndefinedFunctionException.java
@@ -30,7 +32,7 @@ import br.shura.venus.executor.Context;
  * @since GAMMA - 0x3
  */
 public class UndefinedFunctionException extends ScriptRuntimeException {
-  public UndefinedFunctionException(Context context, String functionName, int argumentCount) {
-    super(context, "No definition found for a function named \"" + functionName + "\" taking " + argumentCount + " argument(s)");
+  public UndefinedFunctionException(Context context, String functionName, View<ValueType> argumentTypes) {
+    super(context, "No definition found for a function named \"" + functionName + "\" taking argument types: " + argumentTypes);
   }
 }

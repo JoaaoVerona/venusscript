@@ -59,28 +59,22 @@ public class FunctionCall extends Component implements Resultor {
 
   @Override
   public Value resolve(Context context) throws ScriptRuntimeException {
-    Function function = context.getOwner().findFunction(context, getFunctionName(), getArguments().size());
+    View<Value> values = getArguments().reduceExceptional(resultor -> resultor.resolve(context));
+    View<ValueType> types = values.reduce(Value::getType);
+    Function function = context.getOwner().findFunction(context, getFunctionName(), types);
     List<Value> list = new ArrayList<>();
     int i = 0;
 
-    for (Resultor argument : getArguments()) {
-      Value value = argument.resolve(context);
-
+    for (Value value : values) {
       if (!function.isVarArgs() && value.getType() == ValueType.INTEGER && function.getArgumentTypes().at(i) == ValueType.DECIMAL) {
-        IntegerValue intValue = (IntegerValue) value;
-
-        value = new DecimalValue(intValue.value().doubleValue());
+        value = new DecimalValue(((IntegerValue) value).value());
       }
 
       list.add(value);
       i++;
     }
 
-    Value[] values = list.toArray();
-
-    function.validateArguments(context, values);
-
-    return function.call(context, values);
+    return function.call(context, list.toArray());
   }
 
   @Override
