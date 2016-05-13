@@ -19,25 +19,41 @@
 
 package br.shura.venus.library.std;
 
-import br.shura.venus.library.VenusLibrary;
+import br.shura.venus.component.function.Method;
+import br.shura.venus.component.function.annotation.MethodArgs;
+import br.shura.venus.component.function.annotation.MethodName;
+import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.value.BoolValue;
+import br.shura.venus.value.StringValue;
+import br.shura.venus.value.Value;
+import br.shura.venus.value.ValueType;
+import br.shura.x.io.Url;
+import br.shura.x.io.exception.UrlException;
+import br.shura.x.sys.XSystem;
 
 /**
- * StdLibrary.java
+ * Browse.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 09/05/16 - 20:29
+ * @date 13/05/16 - 17:40
  * @since GAMMA - 0x3
  */
-public class StdLibrary extends VenusLibrary {
-  public StdLibrary() {
-    // Basic I/O
-    addAll(Print.class, Println.class, Scan.class);
+@MethodArgs(ValueType.STRING)
+@MethodName("browse")
+public class Browse extends Method {
+  @Override
+  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
+    StringValue path = (StringValue) arguments[0];
 
-    // Desktop
-    addAll(Beep.class, Browse.class);
+    try {
+      XSystem.getDesktop().browse(new Url(path.value()));
 
-    // Utilities
-    addAll(Assert.class, Sleep.class);
+      return new BoolValue(true);
+    }
+    catch (UrlException exception) {
+      return new BoolValue(false);
+    }
   }
 }
