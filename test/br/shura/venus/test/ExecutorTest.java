@@ -85,13 +85,14 @@ public class ExecutorTest {
     int i = 0;
 
     for (File file : files) {
-      XLogger.println(i + ". " + file.getRelativePath(DIRECTORY));
+      XLogger.println(i++ + ". " + file.getRelativePath(DIRECTORY));
     }
 
     XLogger.print("> ");
 
     int option = XLogger.scanInt();
 
+    XLogger.scan();
     new ExecutorTest(files.at(option)).simpleTest();
   }
 }
