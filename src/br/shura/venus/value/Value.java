@@ -19,6 +19,8 @@
 
 package br.shura.venus.value;
 
+import br.shura.x.util.layer.XApi;
+
 /**
  * Value.java
  *
@@ -97,4 +99,37 @@ public interface Value {
   }
 
   Object value();
+
+  static Value clone(Value value) {
+    Value result = construct(value.value());
+
+    XApi.require(result != null, "Could not clone value of type " + value.getType());
+
+    return result;
+  }
+
+  // TODO Not OO, but fast (no need to use Reflection, etc)
+  static Value construct(Object object) {
+    if (object instanceof Boolean) {
+      return new BoolValue((Boolean) object);
+    }
+
+    if (object instanceof CharSequence) {
+      return new StringValue(object.toString());
+    }
+
+    if (object instanceof Double || object instanceof Float) {
+      return new DecimalValue((Double) object);
+    }
+
+    if (object instanceof Number) {
+      return new IntegerValue((Long) object);
+    }
+
+    if (object instanceof ValueType) {
+      return new TypeValue((ValueType) object);
+    }
+
+    return null;
+  }
 }
