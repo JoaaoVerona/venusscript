@@ -19,25 +19,35 @@
 
 package br.shura.venus.library.std;
 
-import br.shura.venus.library.VenusLibrary;
+import br.shura.venus.component.function.Method;
+import br.shura.venus.component.function.annotation.MethodArgs;
+import br.shura.venus.component.function.annotation.MethodName;
+import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.value.DecimalValue;
+import br.shura.venus.value.IntegerValue;
+import br.shura.venus.value.Value;
+import br.shura.venus.value.ValueType;
+import br.shura.x.sys.XSystem;
 
 /**
- * StdLibrary.java
+ * Beep.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 09/05/16 - 20:29
+ * @date 13/05/16 - 17:37
  * @since GAMMA - 0x3
  */
-public class StdLibrary extends VenusLibrary {
-  public StdLibrary() {
-    // Basic I/O
-    addAll(Print.class, Println.class, Scan.class);
+@MethodArgs({ ValueType.DECIMAL, ValueType.INTEGER })
+@MethodName("beep")
+public class Beep extends Method {
+  @Override
+  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
+    DecimalValue frequency = (DecimalValue) arguments[0];
+    IntegerValue duration = (IntegerValue) arguments[1];
 
-    // Desktop
-    addAll(Beep.class);
+    XSystem.getDesktop().beep(frequency.value(), duration.value());
 
-    // Utilities
-    addAll(Assert.class, Sleep.class);
+    return null;
   }
 }
