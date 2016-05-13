@@ -17,19 +17,37 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.component;
+package br.shura.venus.component.branch;
+
+import br.shura.venus.component.Container;
+import br.shura.venus.resultor.Resultor;
 
 /**
- * ElseContainer.java
+ * IfContainer.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 12/05/16 - 02:20
+ * @date 12/05/16 - 01:26
  * @since GAMMA - 0x3
  */
-public class ElseContainer extends Container {
+public class IfContainer extends Container {
+  private final Resultor condition;
+
+  public IfContainer(Resultor condition) {
+    this.condition = condition;
+  }
+
+  public Resultor getCondition() {
+    return condition;
+  }
+
   @Override
   public String getDisplayName() {
-    return "else";
+    return "if(" + getCondition() + ')';
+  }
+
+  @Override
+  public String toString() {
+    return getDisplayName();
   }
 }

@@ -17,36 +17,25 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.component;
+package br.shura.venus.component.branch;
 
 import br.shura.venus.resultor.Resultor;
 
 /**
- * WhileContainer.java
+ * ElseIfContainer.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 12/05/16 - 20:23
+ * @date 12/05/16 - 02:19
  * @since GAMMA - 0x3
  */
-public class WhileContainer extends Container {
-  private final Resultor condition;
-
-  public WhileContainer(Resultor condition) {
-    this.condition = condition;
-  }
-
-  public Resultor getCondition() {
-    return condition;
+public class ElseIfContainer extends IfContainer {
+  public ElseIfContainer(Resultor condition) {
+    super(condition);
   }
 
   @Override
   public String getDisplayName() {
-    return "while(" + getCondition() + ')';
-  }
-
-  @Override
-  public String toString() {
-    return getDisplayName();
+    return "elseif(" + getCondition() + ')';
   }
 }

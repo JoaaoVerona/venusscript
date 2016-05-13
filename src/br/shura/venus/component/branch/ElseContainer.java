@@ -17,49 +17,21 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.component;
+package br.shura.venus.component.branch;
 
-import br.shura.venus.resultor.Resultor;
+import br.shura.venus.component.Container;
 
 /**
- * ForEachContainer.java
+ * ElseContainer.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 12/05/16 - 14:37
+ * @date 12/05/16 - 02:20
  * @since GAMMA - 0x3
  */
-public class ForEachContainer extends Container {
-  private final Resultor adjustment;
-  private final Resultor from;
-  private final Resultor to;
-  private final String varName;
-
-  public ForEachContainer(String varName, Resultor from, Resultor to, Resultor adjustment) {
-    this.adjustment = adjustment;
-    this.from = from;
-    this.to = to;
-    this.varName = varName;
-  }
-
-  public Resultor getAdjustment() {
-    return adjustment;
-  }
-
+public class ElseContainer extends Container {
   @Override
   public String getDisplayName() {
-    return "foreach(" + getVarName() + " in [" + getFrom() + ", " + getTo() + "])";
-  }
-
-  public Resultor getFrom() {
-    return from;
-  }
-
-  public Resultor getTo() {
-    return to;
-  }
-
-  public String getVarName() {
-    return varName;
+    return "else";
   }
 }

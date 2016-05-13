@@ -17,22 +17,23 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.component;
+package br.shura.venus.component.branch;
 
+import br.shura.venus.component.Container;
 import br.shura.venus.resultor.Resultor;
 
 /**
- * IfContainer.java
+ * DoWhileContainer.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 12/05/16 - 01:26
+ * @date 12/05/16 - 20:40
  * @since GAMMA - 0x3
  */
-public class IfContainer extends Container {
-  private final Resultor condition;
+public class DoWhileContainer extends Container {
+  private Resultor condition;
 
-  public IfContainer(Resultor condition) {
+  public DoWhileContainer(Resultor condition) {
     this.condition = condition;
   }
 
@@ -42,7 +43,15 @@ public class IfContainer extends Container {
 
   @Override
   public String getDisplayName() {
-    return "if(" + getCondition() + ')';
+    return "dowhile(" + getCondition() + ')';
+  }
+
+  public boolean hasCondition() {
+    return getCondition() != null;
+  }
+
+  public void setCondition(Resultor condition) {
+    this.condition = condition;
   }
 
   @Override
