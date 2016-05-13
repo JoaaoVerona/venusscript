@@ -22,6 +22,7 @@ package br.shura.venus.executor;
 import br.shura.venus.component.Attribution;
 import br.shura.venus.component.Component;
 import br.shura.venus.component.Container;
+import br.shura.venus.component.DoWhileContainer;
 import br.shura.venus.component.ElseContainer;
 import br.shura.venus.component.ElseIfContainer;
 import br.shura.venus.component.ForEachContainer;
@@ -102,6 +103,30 @@ public class VenusExecutor {
                 run(whileContainer, shouldRun);
               }
               else {
+                break;
+              }
+            }
+            else {
+              throw new InvalidValueTypeException(context, "Cannot apply while condition in value of type " + value.getType());
+            }
+          }
+        }
+        else if (component instanceof DoWhileContainer) {
+          DoWhileContainer doWhileContainer = (DoWhileContainer) component;
+
+          while (true) {
+            run(doWhileContainer, shouldRun);
+
+            if (!doWhileContainer.hasCondition()) {
+              break;
+            }
+
+            Value value = doWhileContainer.getCondition().resolve(context);
+
+            if (value instanceof BoolValue) {
+              BoolValue boolValue = (BoolValue) value;
+
+              if (!boolValue.value()) {
                 break;
               }
             }
