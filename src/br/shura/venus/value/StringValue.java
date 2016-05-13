@@ -49,11 +49,6 @@ public class StringValue implements Value {
     return null;
   }
 
-  @Override
-  public BoolValue equals(Value value) {
-    return new BoolValue(value instanceof StringValue && ((StringValue) value).value().equals(value()));
-  }
-
   public boolean isCharacter() {
     return value().length() == 1;
   }
@@ -69,6 +64,7 @@ public class StringValue implements Value {
     return value().charAt(0);
   }
 
+  @Override
   public String value() {
     return value;
   }

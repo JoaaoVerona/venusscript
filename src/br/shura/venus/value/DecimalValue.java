@@ -57,11 +57,6 @@ public class DecimalValue implements NumericValue {
   }
 
   @Override
-  public BoolValue equals(Value value) {
-    return new BoolValue(value instanceof DecimalValue && ((DecimalValue) value).value().equals(value()));
-  }
-
-  @Override
   public DecimalValue minus(Value value) {
     if (value instanceof NumericValue) {
       NumericValue numeric = (NumericValue) value;

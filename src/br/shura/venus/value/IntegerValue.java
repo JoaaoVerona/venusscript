@@ -66,15 +66,6 @@ public class IntegerValue implements NumericValue {
   }
 
   @Override
-  public BoolValue equals(Value value) {
-    if (value instanceof NumericValue) {
-      return new BoolValue(((NumericValue) value).value().equals(value()));
-    }
-
-    return null;
-  }
-
-  @Override
   public IntegerValue minus(Value value) {
     if (value instanceof NumericValue) {
       NumericValue numeric = (NumericValue) value;

@@ -40,7 +40,9 @@ public interface Value {
     return null;
   }
 
-  BoolValue equals(Value value);
+  default BoolValue equals(Value value) {
+    return new BoolValue(value.value().equals(value()));
+  }
 
   default ValueType getType() {
     return ValueType.forValue(this);
@@ -93,4 +95,6 @@ public interface Value {
   default Value plus(Value value) {
     return null;
   }
+
+  Object value();
 }

@@ -48,11 +48,6 @@ public class BoolValue implements Value {
   }
 
   @Override
-  public BoolValue equals(Value value) {
-    return new BoolValue(value instanceof BoolValue && ((BoolValue) value).value() == value());
-  }
-
-  @Override
   public BoolValue not() {
     return new BoolValue(!value());
   }
@@ -73,7 +68,8 @@ public class BoolValue implements Value {
     return value() ? KeywordDefinitions.TRUE : KeywordDefinitions.FALSE;
   }
 
-  public boolean value() {
+  @Override
+  public Boolean value() {
     return value;
   }
 }
