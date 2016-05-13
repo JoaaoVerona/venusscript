@@ -38,6 +38,7 @@ import br.shura.venus.exception.UnexpectedTokenException;
 import br.shura.venus.library.VenusLibrary;
 import br.shura.venus.library.math.MathLibrary;
 import br.shura.venus.library.std.StdLibrary;
+import br.shura.venus.library.system.SystemLibrary;
 import br.shura.venus.operator.BinaryOperator;
 import br.shura.venus.operator.Operator;
 import br.shura.venus.operator.OperatorList;
@@ -282,6 +283,10 @@ public class VenusParser {
 
     if (libraryName.equals("std")) {
       return new StdLibrary();
+    }
+
+    if (libraryName.equals("system")) {
+      return new SystemLibrary();
     }
 
     return null;
