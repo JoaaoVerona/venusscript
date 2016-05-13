@@ -22,6 +22,7 @@ package br.shura.venus.compiler;
 import br.shura.venus.compiler.Token.Type;
 import br.shura.venus.component.Attribution;
 import br.shura.venus.component.Container;
+import br.shura.venus.component.DoWhileContainer;
 import br.shura.venus.component.ElseContainer;
 import br.shura.venus.component.ElseIfContainer;
 import br.shura.venus.component.ForEachContainer;
@@ -93,6 +94,14 @@ public class VenusParser {
       else if (token.getType() == Type.NAME_DEFINITION) {
         if (token.getValue().equals(KeywordDefinitions.DEFINE)) {
           container = parseDefinition(container);
+        }
+        else if (token.getValue().equals(KeywordDefinitions.DO)) {
+          requireToken(Type.OPEN_BRACE, "expected an open brace");
+
+          DoWhileContainer doWhileContainer = new DoWhileContainer(null);
+
+          container.getChildren().add(doWhileContainer);
+          container = doWhileContainer;
         }
         else if (token.getValue().equals(KeywordDefinitions.ELSE)) {
           if (justExitedIfContainer) {
@@ -202,6 +211,24 @@ public class VenusParser {
         if (container != script) {
           if (container instanceof IfContainer) {
             justExitedIfContainer = true;
+          }
+
+          if (container instanceof DoWhileContainer) {
+            DoWhileContainer doWhileContainer = (DoWhileContainer) container;
+            Token test = lexer.nextToken();
+
+            if (test.getType() == Type.NEW_LINE) {
+              test = lexer.nextToken();
+            }
+
+            if (test.getType() == Type.NAME_DEFINITION && test.getValue().equals(KeywordDefinitions.WHILE)) {
+              Resultor resultor = readResultor(Type.NEW_LINE);
+
+              doWhileContainer.setCondition(resultor);
+            }
+            else {
+              lexer.reRead(test);
+            }
           }
 
           container = container.getParent();
@@ -376,15 +403,6 @@ public class VenusParser {
     return null; // Will not happen because of bye() above
   }
 
-  protected WhileContainer parseWhile(Container container) throws ScriptCompileException {
-    Resultor resultor = readResultor(Type.OPEN_BRACE);
-    WhileContainer whileContainer = new WhileContainer(resultor);
-
-    container.getChildren().add(whileContainer);
-
-    return whileContainer;
-  }
-
   protected IfContainer parseIf(Container container, boolean isElseIf) throws ScriptCompileException {
     Resultor resultor = readResultor(Type.OPEN_BRACE);
     IfContainer ifContainer = isElseIf ? new ElseIfContainer(resultor) : new IfContainer(resultor);
@@ -460,6 +478,15 @@ public class VenusParser {
     else {
       bye(nameToken, "unknown library named \"" + libraryName + "\"");
     }
+  }
+
+  protected WhileContainer parseWhile(Container container) throws ScriptCompileException {
+    Resultor resultor = readResultor(Type.OPEN_BRACE);
+    WhileContainer whileContainer = new WhileContainer(resultor);
+
+    container.getChildren().add(whileContainer);
+
+    return whileContainer;
   }
 
   // This also consumes ending' CLOSE_PARENTHESE
