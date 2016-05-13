@@ -19,6 +19,7 @@
 
 package br.shura.venus.operator;
 
+import br.shura.venus.value.TypeValue;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.view.View;
 import br.shura.x.worker.enumeration.Enumerations;
@@ -45,6 +46,7 @@ public class OperatorList {
   public static final UnaryOperator NOT = new UnaryOperator("not", Value::not, "!");
   public static final BinaryOperator OR = new BinaryOperator("or", Value::or, "||", "|");
   public static final BinaryOperator PLUS = new BinaryOperator("plus", Value::plus, "+");
+  public static final UnaryOperator TYPE_OF = new UnaryOperator("typeOf", value -> new TypeValue(value.getType()), "*");
 
   public static Operator forIdentifier(String identifier, boolean mustBeUnary) { // YES THIS SHOULD BE Boolean OBJECT!
     for (Operator operator : values()) {
