@@ -25,8 +25,10 @@ import br.shura.venus.executor.ApplicationContext;
 import br.shura.venus.executor.Context;
 import br.shura.venus.library.LibraryList;
 import br.shura.venus.origin.ScriptOrigin;
+import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
+import br.shura.x.collection.view.View;
 
 /**
  * Script.java
@@ -51,20 +53,20 @@ public class Script extends Container {
   }
 
   @Override
-  public Function findFunction(Context context, String name, int argumentCount) throws ScriptRuntimeException {
+  public Function findFunction(Context context, String name, View<ValueType> argumentTypes) throws ScriptRuntimeException {
     try {
-      return super.findFunction(context, name, argumentCount);
+      return super.findFunction(context, name, argumentTypes);
     }
     catch (ScriptRuntimeException exception) {
       for (Script script : getIncludes()) {
         try {
-          return script.findFunction(context, name, argumentCount);
+          return script.findFunction(context, name, argumentTypes);
         }
         catch (ScriptRuntimeException exception2) {
         }
       }
 
-      Function function = getLibraryList().findFunction(name, argumentCount);
+      Function function = getLibraryList().findFunction(name, argumentTypes);
 
       if (function != null) {
         return function;
