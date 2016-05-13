@@ -38,6 +38,11 @@ public class ScriptRuntimeException extends CatchableException {
     this.context = context;
   }
 
+  public ScriptRuntimeException(Context context, CharSequence message, Exception exception) {
+    super(message + " at line " + context.currentLine() + " in \"" + context.getOwner().getDisplayName() + "\"", exception);
+    this.context = context;
+  }
+
   public ScriptRuntimeException(Context context, Exception exception) {
     super("Internal runtime exception at line " + context.currentLine() + " in \"" + context.getOwner().getDisplayName() +
       "\"", exception);
