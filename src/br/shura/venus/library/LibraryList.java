@@ -20,7 +20,9 @@
 package br.shura.venus.library;
 
 import br.shura.venus.component.function.Function;
+import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.impl.ArrayList;
+import br.shura.x.collection.view.View;
 import br.shura.x.util.layer.XApi;
 
 /**
@@ -32,17 +34,27 @@ import br.shura.x.util.layer.XApi;
  * @since GAMMA - 0x3
  */
 public class LibraryList extends ArrayList<VenusLibrary> {
-  public Function findFunction(String name, int argumentCount) {
+  public Function findFunction(String name, View<ValueType> argumentTypes) {
+    XApi.requireNonNull(argumentTypes, "argumentTypes");
     XApi.requireNonNull(name, "name");
+
+    Function foundVarArgs = null;
 
     for (VenusLibrary library : this) {
       for (Function function : library) {
-        if (function.getName().equals(name) && (function.isVarArgs() || function.getArgumentCount() == argumentCount)) {
-          return function;
+        if (function.accepts(name, argumentTypes)) {
+          if (function.isVarArgs()) {
+            if (foundVarArgs == null) {
+              foundVarArgs = function;
+            }
+          }
+          else {
+            return function;
+          }
         }
       }
     }
 
-    return null;
+    return foundVarArgs;
   }
 }
