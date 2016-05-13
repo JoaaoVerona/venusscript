@@ -23,6 +23,7 @@ import br.shura.x.collection.view.ArrayView;
 import br.shura.x.collection.view.View;
 import br.shura.x.util.layer.XApi;
 import br.shura.x.worker.StringWorker;
+import br.shura.x.worker.UtilWorker;
 
 /**
  * ValueType.java
@@ -73,7 +74,7 @@ public enum ValueType {
   }
 
   public boolean objectAccepts(Class<?> type) {
-    return getObjectTypes().any(object -> object.isAssignableFrom(type));
+    return getObjectTypes().any(object -> object.isAssignableFrom(UtilWorker.fixPrimitiveClass(type)));
   }
 
   @Override
