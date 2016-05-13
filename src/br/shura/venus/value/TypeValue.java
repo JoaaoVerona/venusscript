@@ -39,6 +39,11 @@ public class TypeValue implements Value {
     return new BoolValue(value instanceof TypeValue && ((TypeValue) value).value() == value());
   }
 
+  @Override
+  public String toString() {
+    return value().toString();
+  }
+
   public ValueType value() {
     return value;
   }

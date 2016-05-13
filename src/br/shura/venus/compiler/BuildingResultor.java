@@ -53,7 +53,7 @@ public class BuildingResultor {
         return;
       }
       else {
-        parser.bye(owner, "already have an operator");
+        parser.bye(owner, "already have an operator \"" + operator + "\"");
       }
     }
 
