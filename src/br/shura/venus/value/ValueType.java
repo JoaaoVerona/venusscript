@@ -31,24 +31,26 @@ import br.shura.x.worker.StringWorker;
  * @since GAMMA - 0x3
  */
 public enum ValueType {
-  BOOLEAN("bool", BoolValue.class),
-  DECIMAL("decimal", DecimalValue.class),
-  INTEGER("int", IntegerValue.class),
-  STRING("string", StringValue.class),
-  TYPE("type", TypeValue.class),
-  ANY("any", Value.class); // Should be after all other types
+  BOOLEAN("bool", BoolValue.class, Boolean.class),
+  DECIMAL("decimal", DecimalValue.class, Double.class),
+  INTEGER("int", IntegerValue.class, Long.class),
+  STRING("string", StringValue.class, String.class),
+  TYPE("type", TypeValue.class, ValueType.class),
+  ANY("any", Value.class, Object.class); // Should be after all other types
 
   private final String identifier;
   private final String name;
+  private final Class<?> objectType;
   private final Class<? extends Value> type;
 
-  private ValueType(String identifier, Class<? extends Value> type) {
+  private ValueType(String identifier, Class<? extends Value> type, Class<?> objectType) {
     this.identifier = identifier;
     this.name = StringWorker.capitalize(StringWorker.replace(name(), '_', ' '));
+    this.objectType = objectType;
     this.type = type;
   }
 
-  public boolean accepts(Class<?> type) {
+  public boolean accepts(Class<? extends Value> type) {
     return getType().isAssignableFrom(type);
   }
 
@@ -60,25 +62,21 @@ public enum ValueType {
     return identifier;
   }
 
+  public Class<?> getObjectType() {
+    return objectType;
+  }
+
   public Class<? extends Value> getType() {
     return type;
+  }
+
+  public boolean objectAccepts(Class<?> type) {
+    return getObjectType().isAssignableFrom(type);
   }
 
   @Override
   public String toString() {
     return name;
-  }
-
-  public static ValueType forClass(Class<?> type) {
-    XApi.requireNonNull(type, "type");
-
-    for (ValueType value : values()) {
-      if (value.accepts(type)) {
-        return value;
-      }
-    }
-
-    return null;
   }
 
   public static ValueType forIdentifier(String identifier) {
@@ -93,9 +91,33 @@ public enum ValueType {
     return null;
   }
 
+  public static ValueType forObjectType(Class<?> type) {
+    XApi.requireNonNull(type, "type");
+
+    for (ValueType value : values()) {
+      if (value.objectAccepts(type)) {
+        return value;
+      }
+    }
+
+    return null;
+  }
+
+  public static ValueType forType(Class<? extends Value> type) {
+    XApi.requireNonNull(type, "type");
+
+    for (ValueType value : values()) {
+      if (value.accepts(type)) {
+        return value;
+      }
+    }
+
+    return null;
+  }
+
   public static ValueType forValue(Value value) {
     XApi.requireNonNull(value, "value");
 
-    return forClass(value.getClass());
+    return forType(value.getClass());
   }
 }
