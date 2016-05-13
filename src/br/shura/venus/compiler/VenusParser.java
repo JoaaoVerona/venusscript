@@ -48,6 +48,7 @@ import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.DecimalValue;
 import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.StringValue;
+import br.shura.venus.value.TypeValue;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
 import br.shura.x.charset.build.TextBuilder;
@@ -252,7 +253,7 @@ public class VenusParser {
     throw new UnexpectedTokenException(scriptName, lexer.currentLine(), "Invalid token \"" + token + "\"; " + message);
   }
 
-  protected Value getValueOf(Token token) throws UnexpectedTokenException {
+  protected Value getValueOf(Token token) throws ScriptCompileException {
     String value = token.getValue();
 
     if (token.getType() == Type.CHAR_LITERAL || token.getType() == Type.STRING_LITERAL) {
@@ -279,6 +280,21 @@ public class VenusParser {
       }
 
       bye(token, "illegal numeric value \"" + value + "\"");
+    }
+
+    if (token.getType() == Type.OPERATOR && token.getValue().equals("*")) {
+      Token next = requireToken();
+
+      if (next.getType() == Type.NAME_DEFINITION) {
+        String keyword = next.getValue();
+        ValueType type = ValueType.forIdentifier(keyword);
+
+        if (type != null) {
+          return new TypeValue(type);
+        }
+      }
+
+      lexer.reRead(next);
     }
 
     return null;
