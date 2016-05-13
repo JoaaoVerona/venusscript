@@ -31,6 +31,6 @@ import br.shura.venus.library.MethodLibrary;
  */
 public class StdLibrary extends MethodLibrary {
   public StdLibrary() {
-    addAll(Assert.class, Print.class, Println.class, Sleep.class);
+    addAll(Assert.class, Print.class, Println.class, Scan.class, Sleep.class);
   }
 }
