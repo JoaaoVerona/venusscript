@@ -44,12 +44,13 @@ public class OperatorList {
   public static final BinaryOperator MULTIPLY = new BinaryOperator("multiply", Value::multiply, "*");
   public static final UnaryOperator NEGATE = new UnaryOperator("negate", Value::negate, "-");
   public static final UnaryOperator NOT = new UnaryOperator("not", Value::not, "!");
+  public static final BinaryOperator NOT_EQUALS = new BinaryOperator("notEquals", (left, right) -> left.equals(right).not(), "!=");
   public static final BinaryOperator OR = new BinaryOperator("or", Value::or, "||", "|");
   public static final BinaryOperator PLUS = new BinaryOperator("plus", Value::plus, "+");
   public static final BinaryOperator REMAINDER = new BinaryOperator("remainder", Value::remainder, "%");
   public static final UnaryOperator TYPE_OF = new UnaryOperator("typeOf", value -> new TypeValue(value.getType()), "*");
 
-  public static Operator forIdentifier(String identifier, boolean mustBeUnary) { // YES THIS SHOULD BE Boolean OBJECT!
+  public static Operator forIdentifier(String identifier, boolean mustBeUnary) {
     for (Operator operator : values()) {
       if ((!mustBeUnary || operator instanceof UnaryOperator) && operator.getIdentifiers().contains(identifier)) {
         return operator;
