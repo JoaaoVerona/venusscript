@@ -60,6 +60,10 @@ public interface Function extends INameable {
       ValueType found = ValueType.forValue(arguments[i]);
 
       if (!required.accepts(found)) {
+        if (required == ValueType.DECIMAL && found == ValueType.INTEGER) {
+          continue;
+        }
+
         throw new InvalidFunctionParameterException(context, this, "Function " + this + " expected " + required +
           " as " + (i + 1) + (i == 0 ? "st" : i == 1 ? "nd" : i == 2 ? "rd" : "th") + " argument, but passed " + found);
       }

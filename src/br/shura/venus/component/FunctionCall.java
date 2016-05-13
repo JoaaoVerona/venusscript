@@ -23,7 +23,10 @@ import br.shura.venus.component.function.Function;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.resultor.Resultor;
+import br.shura.venus.value.DecimalValue;
+import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.Value;
+import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.collection.view.ArrayView;
@@ -58,9 +61,19 @@ public class FunctionCall extends Component implements Resultor {
   public Value resolve(Context context) throws ScriptRuntimeException {
     Function function = context.getOwner().findFunction(context, getFunctionName(), getArguments().size());
     List<Value> list = new ArrayList<>();
+    int i = 0;
 
     for (Resultor argument : getArguments()) {
-      list.add(argument.resolve(context));
+      Value value = argument.resolve(context);
+
+      if (value.getType() == ValueType.INTEGER && function.getArgumentTypes().at(i) == ValueType.DECIMAL) {
+        IntegerValue intValue = (IntegerValue) value;
+
+        value = new DecimalValue(intValue.value().doubleValue());
+      }
+
+      list.add(value);
+      i++;
     }
 
     Value[] values = list.toArray();
