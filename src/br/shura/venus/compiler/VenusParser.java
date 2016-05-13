@@ -36,6 +36,7 @@ import br.shura.venus.component.function.Definition;
 import br.shura.venus.exception.ScriptCompileException;
 import br.shura.venus.exception.UnexpectedTokenException;
 import br.shura.venus.library.VenusLibrary;
+import br.shura.venus.library.math.MathLibrary;
 import br.shura.venus.library.std.StdLibrary;
 import br.shura.venus.operator.BinaryOperator;
 import br.shura.venus.operator.Operator;
@@ -58,6 +59,9 @@ import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.loader.resource.PathResource;
 import br.shura.x.logging.XLogger;
+import br.shura.x.math.impl.FastMath;
+import br.shura.x.math.impl.JavaMath;
+import br.shura.x.math.impl.SimpleMath;
 import br.shura.x.util.Pool;
 import br.shura.x.worker.ParseWorker;
 
@@ -264,6 +268,18 @@ public class VenusParser {
   }
 
   protected VenusLibrary defaultLibrary(String libraryName) {
+    if (libraryName.equals("math_fast")) {
+      return new MathLibrary(new FastMath());
+    }
+
+    if (libraryName.equals("math_java")) {
+      return new MathLibrary(new JavaMath());
+    }
+
+    if (libraryName.equals("math")) {
+      return new MathLibrary(new SimpleMath());
+    }
+
     if (libraryName.equals("std")) {
       return new StdLibrary();
     }
