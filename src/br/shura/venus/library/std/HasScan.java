@@ -19,25 +19,26 @@
 
 package br.shura.venus.library.std;
 
-import br.shura.venus.library.VenusLibrary;
+import br.shura.venus.component.function.Method;
+import br.shura.venus.component.function.annotation.MethodName;
+import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.value.BoolValue;
+import br.shura.venus.value.Value;
+import br.shura.x.logging.XLogger;
 
 /**
- * StdLibrary.java
+ * HasScan.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 09/05/16 - 20:29
+ * @date 13/05/16 - 18:26
  * @since GAMMA - 0x3
  */
-public class StdLibrary extends VenusLibrary {
-  public StdLibrary() {
-    // Basic I/O
-    addAll(HasScan.class, Print.class, Println.class, Scan.class);
-
-    // Desktop
-    addAll(Beep.class, Browse.class, Shell.class);
-
-    // Utilities
-    addAll(Assert.class, Millis.class, Sleep.class);
+@MethodName("hasScan")
+public class HasScan extends Method {
+  @Override
+  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
+    return new BoolValue(XLogger.hasScan());
   }
 }
