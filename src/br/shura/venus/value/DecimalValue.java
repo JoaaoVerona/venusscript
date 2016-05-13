@@ -95,6 +95,17 @@ public class DecimalValue implements NumericValue {
   }
 
   @Override
+  public DecimalValue remainder(Value value) {
+    if (value instanceof NumericValue) {
+      NumericValue numeric = (NumericValue) value;
+
+      return new DecimalValue(value() % numeric.value().doubleValue());
+    }
+
+    return null;
+  }
+
+  @Override
   public Double value() {
     return value;
   }

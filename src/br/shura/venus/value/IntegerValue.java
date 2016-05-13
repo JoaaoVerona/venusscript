@@ -113,6 +113,17 @@ public class IntegerValue implements NumericValue {
   }
 
   @Override
+  public IntegerValue remainder(Value value) {
+    if (value instanceof NumericValue) {
+      NumericValue numeric = (NumericValue) value;
+
+      return new IntegerValue(value() % numeric.value().longValue());
+    }
+
+    return null;
+  }
+
+  @Override
   public Long value() {
     return value;
   }

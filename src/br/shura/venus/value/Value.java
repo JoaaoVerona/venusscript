@@ -98,6 +98,10 @@ public interface Value {
     return null;
   }
 
+  default Value remainder(Value value) {
+    return null;
+  }
+
   Object value();
 
   static Value clone(Value value) {
