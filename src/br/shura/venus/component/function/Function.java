@@ -19,13 +19,13 @@
 
 package br.shura.venus.component.function;
 
-import br.shura.venus.exception.InvalidFunctionParameterException;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
 import br.shura.x.collection.view.View;
 import br.shura.x.lang.INameable;
+import br.shura.x.util.layer.XApi;
 
 /**
  * Function.java
@@ -36,6 +36,31 @@ import br.shura.x.lang.INameable;
  * @since GAMMA - 0x3
  */
 public interface Function extends INameable {
+  default boolean accepts(String name, View<ValueType> argumentTypes) {
+    XApi.requireNonNull(argumentTypes, "argumentTypes");
+    XApi.requireNonNull(name, "name");
+
+    if (getName().equals(name)) {
+      if (getArgumentCount() == argumentTypes.size()) {
+        for (int i = 0; i < getArgumentCount(); i++) {
+          ValueType required = getArgumentTypes().at(i);
+          ValueType found = argumentTypes.at(i);
+
+          if (!required.accepts(found) && (required != ValueType.DECIMAL || found != ValueType.INTEGER)) {
+            return false;
+          }
+        }
+
+        return true;
+      }
+      else if (isVarArgs()) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   Value call(Context context, Value... arguments) throws ScriptRuntimeException;
 
   default int getArgumentCount() {
@@ -45,28 +70,4 @@ public interface Function extends INameable {
   View<ValueType> getArgumentTypes();
 
   boolean isVarArgs();
-
-  default void validateArguments(Context context, Value... arguments) throws ScriptRuntimeException {
-    if (isVarArgs()) {
-      return;
-    }
-
-    if (getArgumentCount() != arguments.length) {
-      throw new InvalidFunctionParameterException(context, this, "Function " + this + " takes " + getArgumentCount() + " arguments, but passed " + arguments.length);
-    }
-
-    for (int i = 0; i < arguments.length; i++) {
-      ValueType required = getArgumentTypes().at(i);
-      ValueType found = ValueType.forValue(arguments[i]);
-
-      if (!required.accepts(found)) {
-        if (required == ValueType.DECIMAL && found == ValueType.INTEGER) {
-          continue;
-        }
-
-        throw new InvalidFunctionParameterException(context, this, "Function " + this + " expected " + required +
-          " as " + (i + 1) + (i == 0 ? "st" : i == 1 ? "nd" : i == 2 ? "rd" : "th") + " argument, but passed " + found);
-      }
-    }
-  }
 }
