@@ -45,7 +45,7 @@ public abstract class Method implements Function {
     boolean hasMethodName = getClass().isAnnotationPresent(MethodName.class);
     boolean isMethodVarArgs = getClass().isAnnotationPresent(MethodVarArgs.class);
 
-    XApi.requireState(hasMethodArgs != isMethodVarArgs, "Must contain either @MethodArgs or @MethodVarArgs");
+    XApi.requireState(!hasMethodArgs || (hasMethodArgs != isMethodVarArgs), "Must contain either @MethodArgs or @MethodVarArgs");
     XApi.requireState(hasMethodName, "No @MethodName found");
 
     this.arguments = hasMethodArgs ? getClass().getAnnotation(MethodArgs.class).value() : new ValueType[0];
