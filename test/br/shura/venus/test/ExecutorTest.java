@@ -28,6 +28,7 @@ import br.shura.venus.origin.FileScriptOrigin;
 import br.shura.venus.origin.ScriptOrigin;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
+import br.shura.x.collection.view.View;
 import br.shura.x.io.file.File;
 import br.shura.x.io.file.Folder;
 import br.shura.x.logging.ILogger.Level;
@@ -74,15 +75,23 @@ public class ExecutorTest {
   public static Collection<Object[]> data() throws IOException {
     List<Object[]> data = new ArrayList<>();
 
-    DIRECTORY.getFiles(file -> !file.getName().equals("input"), file -> data.add(new Object[] { file }));
+    DIRECTORY.getFiles(file -> data.add(new Object[] { file }));
 
     return data.asCollection(java.util.ArrayList.class);
   }
 
   public static void main(String[] args) throws Exception {
-    for (File file : DIRECTORY) {
-      XLogger.println("/// " + file.getFullName() + " ///");
-      new ExecutorTest(file).simpleTest();
+    View<File> files = DIRECTORY.getAllFilesView();
+    int i = 0;
+
+    for (File file : files) {
+      XLogger.println(i + ". " + file.getRelativePath(DIRECTORY));
     }
+
+    XLogger.print("> ");
+
+    int option = XLogger.scanInt();
+
+    new ExecutorTest(files.at(option)).simpleTest();
   }
 }
