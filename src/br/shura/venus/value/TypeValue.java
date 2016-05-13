@@ -19,83 +19,27 @@
 
 package br.shura.venus.value;
 
-import br.shura.x.util.layer.XApi;
-import br.shura.x.worker.StringWorker;
-
 /**
- * ValueType.java
+ * TypeValue.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 03:21
+ * @date 12/05/16 - 21:06
  * @since GAMMA - 0x3
  */
-public enum ValueType {
-  BOOLEAN("bool", BoolValue.class),
-  DECIMAL("decimal", DecimalValue.class),
-  INTEGER("int", IntegerValue.class),
-  STRING("string", StringValue.class),
-  TYPE("type", TypeValue.class),
-  ANY("any", Value.class); // Should be after all other types
+public class TypeValue implements Value {
+  private final ValueType value;
 
-  private final String identifier;
-  private final String name;
-  private final Class<? extends Value> type;
-
-  private ValueType(String identifier, Class<? extends Value> type) {
-    this.identifier = identifier;
-    this.name = StringWorker.capitalize(StringWorker.replace(name(), '_', ' '));
-    this.type = type;
-  }
-
-  public boolean accepts(Class<?> type) {
-    return getType().isAssignableFrom(type);
-  }
-
-  public boolean accepts(ValueType type) {
-    return accepts(type.getType());
-  }
-
-  public String getIdentifier() {
-    return identifier;
-  }
-
-  public Class<? extends Value> getType() {
-    return type;
+  public TypeValue(ValueType value) {
+    this.value = value;
   }
 
   @Override
-  public String toString() {
-    return name;
+  public BoolValue equals(Value value) {
+    return new BoolValue(value instanceof TypeValue && ((TypeValue) value).value() == value());
   }
 
-  public static ValueType forClass(Class<?> type) {
-    XApi.requireNonNull(type, "type");
-
-    for (ValueType value : values()) {
-      if (value.accepts(type)) {
-        return value;
-      }
-    }
-
-    return null;
-  }
-
-  public static ValueType forIdentifier(String identifier) {
-    XApi.requireNonNull(identifier, "identifier");
-
-    for (ValueType value : values()) {
-      if (value.getIdentifier().equals(identifier)) {
-        return value;
-      }
-    }
-
-    return null;
-  }
-
-  public static ValueType forValue(Value value) {
-    XApi.requireNonNull(value, "value");
-
-    return forClass(value.getClass());
+  public ValueType value() {
+    return value;
   }
 }
