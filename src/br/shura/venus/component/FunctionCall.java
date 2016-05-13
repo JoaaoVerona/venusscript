@@ -66,7 +66,7 @@ public class FunctionCall extends Component implements Resultor {
     for (Resultor argument : getArguments()) {
       Value value = argument.resolve(context);
 
-      if (value.getType() == ValueType.INTEGER && function.getArgumentTypes().at(i) == ValueType.DECIMAL) {
+      if (!function.isVarArgs() && value.getType() == ValueType.INTEGER && function.getArgumentTypes().at(i) == ValueType.DECIMAL) {
         IntegerValue intValue = (IntegerValue) value;
 
         value = new DecimalValue(intValue.value().doubleValue());
