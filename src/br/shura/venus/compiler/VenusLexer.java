@@ -40,6 +40,7 @@ import static br.shura.venus.compiler.VenusLexer.State.*;
  */
 public class VenusLexer {
   private final TextBuilder buildingToken;
+  private boolean insideComment;
   private int line;
   private final ScriptOrigin origin;
   private int position;
@@ -70,6 +71,8 @@ public class VenusLexer {
       boolean isLetter = Character.isLetter(ch) || ch == '_';
 
       if (ch == '\n') {
+        this.insideComment = false;
+
         if (state == IN_CHAR_LITERAL) {
           bye("End of line found, but unclosed character literal");
         }
@@ -97,6 +100,10 @@ public class VenusLexer {
         this.line++;
 
         return new Token(Type.NEW_LINE, null);
+      }
+
+      if (insideComment) {
+        continue;
       }
 
       if (ch == '"' && lastChar != '\\' && state != IN_CHAR_LITERAL) {
@@ -209,7 +216,9 @@ public class VenusLexer {
           }
 
           if (ch == KeywordDefinitions.COMMENTER) {
-            return new Token(Type.COMMENTER, ch);
+            this.insideComment = true;
+
+            continue;
           }
 
           return new Token(Type.OPERATOR, ch);

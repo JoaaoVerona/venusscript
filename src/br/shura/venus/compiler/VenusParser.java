@@ -89,10 +89,7 @@ public class VenusParser {
     boolean justExitedIfContainer = false;
 
     while ((token = lexer.nextToken()) != null) {
-      if (token.getType() == Type.COMMENTER) {
-        while (requireToken().getType() != Type.NEW_LINE);
-      }
-      else if (token.getType() == Type.NAME_DEFINITION) {
+      if (token.getType() == Type.NAME_DEFINITION) {
         if (token.getValue().equals(KeywordDefinitions.DEFINE)) {
           container = parseDefinition(container);
         }
