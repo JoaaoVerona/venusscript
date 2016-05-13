@@ -40,8 +40,13 @@ import br.shura.x.logging.XLogger;
 public class Println extends VoidMethod {
   @Override
   public void callVoid(Context context, Value... arguments) throws ScriptRuntimeException {
-    for (Value argument : arguments) {
-      XLogger.println(argument);
+    if (arguments.length != 0) {
+      for (Value argument : arguments) {
+        XLogger.println(argument);
+      }
+    }
+    else {
+      XLogger.newLine();
     }
   }
 }
