@@ -36,10 +36,12 @@ import br.shura.venus.component.function.Definition;
 import br.shura.venus.exception.ScriptCompileException;
 import br.shura.venus.exception.UnexpectedTokenException;
 import br.shura.venus.library.MethodLibrary;
+import br.shura.venus.library.std.StdLibrary;
 import br.shura.venus.operator.BinaryOperator;
 import br.shura.venus.operator.Operator;
 import br.shura.venus.operator.OperatorList;
 import br.shura.venus.origin.ScriptOrigin;
+import br.shura.venus.origin.StreamScriptOrigin;
 import br.shura.venus.resultor.BinaryOperation;
 import br.shura.venus.resultor.Constant;
 import br.shura.venus.resultor.Resultor;
@@ -54,6 +56,7 @@ import br.shura.venus.value.ValueType;
 import br.shura.x.charset.build.TextBuilder;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
+import br.shura.x.loader.resource.PathResource;
 import br.shura.x.logging.XLogger;
 import br.shura.x.util.Pool;
 import br.shura.x.worker.ParseWorker;
@@ -248,6 +251,24 @@ public class VenusParser {
   // Do not call other bye() method, for better stacktrace
   protected void bye(Token token, String message) throws UnexpectedTokenException {
     throw new UnexpectedTokenException(scriptName, lexer.currentLine(), "Invalid token \"" + token + "\"; " + message);
+  }
+
+  protected ScriptOrigin defaultInclude(String includeName) {
+    PathResource resource = new PathResource(includeName);
+
+    if (resource.exists()) {
+      return new StreamScriptOrigin(includeName, resource);
+    }
+
+    return null;
+  }
+
+  protected MethodLibrary defaultLibrary(String libraryName) {
+    if (libraryName.equals("std")) {
+      return new StdLibrary();
+    }
+
+    return null;
   }
 
   protected Value getValueOf(Token token) throws ScriptCompileException {
@@ -447,7 +468,7 @@ public class VenusParser {
     ScriptOrigin includeOrigin = script.getOrigin().findInclude(includeName);
 
     if (includeOrigin == null) {
-      includeOrigin = ScriptOrigin.defaultInclude(includeName);
+      includeOrigin = defaultInclude(includeName);
     }
 
     if (includeOrigin != null) {
@@ -482,7 +503,7 @@ public class VenusParser {
     requireNewLine();
 
     String libraryName = nameToken.getValue();
-    MethodLibrary library = ScriptOrigin.defaultLibrary(libraryName);
+    MethodLibrary library = defaultLibrary(libraryName);
 
     if (library != null) {
       script.getLibraryList().add(library);
