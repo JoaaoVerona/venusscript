@@ -19,18 +19,33 @@
 
 package br.shura.venus.library.system;
 
-import br.shura.venus.library.VenusLibrary;
+import br.shura.venus.component.function.Method;
+import br.shura.venus.component.function.annotation.MethodArgs;
+import br.shura.venus.component.function.annotation.MethodName;
+import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.value.StringValue;
+import br.shura.venus.value.Value;
+import br.shura.venus.value.ValueType;
+import br.shura.x.sys.XSystem;
 
 /**
- * SystemLibrary.java
+ * GetEnvVar.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 13/05/16 - 18:28
+ * @date 13/05/16 - 18:32
  * @since GAMMA - 0x3
  */
-public class SystemLibrary extends VenusLibrary {
-  public SystemLibrary() {
-    addAll(GetEnvVar.class);
+@MethodArgs({ ValueType.STRING, ValueType.ANY })
+@MethodName("getEnvVar")
+public class GetEnvVar extends Method {
+  @Override
+  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
+    StringValue key = (StringValue) arguments[0];
+    Object value = XSystem.getEnvironmentVariable(key.value());
+    Value result = Value.construct(value);
+
+    return result != null ? result : arguments[1];
   }
 }
