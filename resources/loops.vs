@@ -20,12 +20,34 @@ println("Olá!")
     }
 }
 
-# 10...14
+# 10
 {
     k = 5 + (10 / 2)
-    for i in (k, k - k + k + 5 - 1) {
+    for i in (k, k - k + k) {
         println("i = " + i)
     }
+}
+
+# 11...12
+{
+    i = 11
+
+    do {
+        println("i = " + i)
+        i = i + 1
+        println("i = " + i)
+    }
+}
+
+# 13...14
+{
+    i = 13
+
+    do {
+        println("i = " + i)
+        i = i + 1
+    }
+    while i < 15
 }
 
 # 15, 17, 19, 21, 23, 25
