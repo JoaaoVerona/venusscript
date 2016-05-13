@@ -28,7 +28,6 @@ import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.collection.view.BasicView;
 import br.shura.x.collection.view.View;
-import br.shura.x.logging.XLogger;
 import br.shura.x.math.IMath;
 
 import java.lang.reflect.InvocationTargetException;
@@ -59,8 +58,6 @@ public class MathFunction implements Function {
     for (Class<?> arg : method.getParameterTypes()) {
       arguments.add(forObjectType(arg));
     }
-
-    XLogger.println(name + "\t" + arguments.size());
   }
 
   @Override
