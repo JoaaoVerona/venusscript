@@ -1,8 +1,9 @@
 using std
 
 while true {
-    print("Tipo de entrada: ")
+    print("Input type: ")
     type = scan(*type)
-    print("Entrada: ")
+    print("Input: ")
     input = scan(type)
+    println("Value: " + input + " (type: " + (*input) + ")")
 }

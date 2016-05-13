@@ -5,4 +5,6 @@ j = -35
 println("i = " + i + ", j = " + j)
 println("-i = " + (-i) + ", j = " + (-j))
 isPositive = true
-println("isPositive = " + isPositive + ", isNegative = " + !isPositive + ", isSurelyPositive = " + !!!!isPositive)
+println("isPositive = " + isPositive)
+println("isNegative = " + !isPositive)
+println("isSurelyPositive = " + !!!!isPositive)

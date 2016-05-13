@@ -1,6 +1,6 @@
 using std
 
-a = "Olá!"
+a = "I <3 COMPUTER SCIENCE!"
 b = 5.3547
 c = -33
 d = 'o'

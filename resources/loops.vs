@@ -1,7 +1,5 @@
 using std
 
-println("Olá!")
-
 # 0...2
 {
     i = 0

@@ -3,49 +3,49 @@ using std
 i = 5
 
 if i >= 0 {
-    println("Sim.")
+    println("Yeah!")
 }
 
 if i <= 0 {
-    println("Não.")
+    println("Nope...")
 }
 
 j = i == 5
 
 if j {
-    println("Sim.")
+    println("Yeah!")
 }
 else if !j {
-    println("Não.")
+    println("Nope...")
 }
 
 if !!j {
-    println("Sim.")
+    println("Yeah!")
 }
 else if j == false {
-    println("Não.")
+    println("Nope...")
 }
 
 if j == false {
-    println("Não.")
+    println("Nope...")
 }
 else if j == (i == 5) {
-    println("Sim.")
+    println("Yeah!")
 }
 
 if !j {
-    println("Não.")
+    println("Nope...")
 }
 else {
-    println("Sim.")
+    println("Yeah!")
 }
 
 if j == 2 {
-    println("Não.")
+    println("Nope...")
 }
 else if j == 3 {
-    println("Não.")
+    println("Nope...")
 }
 else {
-    println("Sim.")
+    println("Yeah!")
 }
