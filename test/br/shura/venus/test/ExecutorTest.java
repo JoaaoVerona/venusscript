@@ -33,6 +33,7 @@ import br.shura.x.io.file.File;
 import br.shura.x.io.file.Folder;
 import br.shura.x.logging.ILogger.Level;
 import br.shura.x.logging.XLogger;
+import br.shura.x.sys.XSystem;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -59,7 +60,7 @@ public class ExecutorTest {
   }
 
   @Test
-  public void simpleTest() throws Exception {
+  public long simpleTest() throws Exception {
     XLogger.disable(Level.DEBUG);
 
     ScriptOrigin origin = new FileScriptOrigin(file);
@@ -68,7 +69,12 @@ public class ExecutorTest {
     Script script = new Script(new ApplicationContext(), origin);
 
     parser.parse(script);
+
+    long start = XSystem.millis();
+
     VenusExecutor.run(script);
+
+    return XSystem.millis() - start;
   }
 
   @Parameters
@@ -93,6 +99,6 @@ public class ExecutorTest {
     int option = XLogger.scanInt();
 
     XLogger.scan();
-    new ExecutorTest(files.at(option)).simpleTest();
+    XLogger.println("Duration: " + new ExecutorTest(files.at(option)).simpleTest() + "ms");
   }
 }
