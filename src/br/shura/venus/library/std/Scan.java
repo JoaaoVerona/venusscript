@@ -76,7 +76,7 @@ public class Scan extends Method {
           ValueType lookup = ValueType.forIdentifier(line);
 
           if (lookup != null) {
-            return new TypeValue((ValueType) lookup);
+            return new TypeValue(lookup);
           }
 
           continue;

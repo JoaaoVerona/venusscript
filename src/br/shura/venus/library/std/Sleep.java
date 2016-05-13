@@ -19,7 +19,7 @@
 
 package br.shura.venus.library.std;
 
-import br.shura.venus.component.function.Method;
+import br.shura.venus.component.function.VoidMethod;
 import br.shura.venus.component.function.annotation.MethodArgs;
 import br.shura.venus.component.function.annotation.MethodName;
 import br.shura.venus.exception.ScriptRuntimeException;
@@ -39,13 +39,11 @@ import br.shura.x.worker.UtilWorker;
  */
 @MethodArgs(ValueType.INTEGER)
 @MethodName("sleep")
-public class Sleep extends Method {
+public class Sleep extends VoidMethod {
   @Override
-  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
+  public void callVoid(Context context, Value... arguments) throws ScriptRuntimeException {
     IntegerValue timeInMillis = (IntegerValue) arguments[0];
 
     UtilWorker.stay(timeInMillis.value());
-
-    return null;
   }
 }

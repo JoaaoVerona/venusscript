@@ -19,7 +19,7 @@
 
 package br.shura.venus.library.std;
 
-import br.shura.venus.component.function.Method;
+import br.shura.venus.component.function.VoidMethod;
 import br.shura.venus.component.function.annotation.MethodName;
 import br.shura.venus.component.function.annotation.MethodVarArgs;
 import br.shura.venus.exception.ScriptRuntimeException;
@@ -37,13 +37,11 @@ import br.shura.x.logging.XLogger;
  */
 @MethodName("print")
 @MethodVarArgs
-public class Print extends Method {
+public class Print extends VoidMethod {
   @Override
-  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
+  public void callVoid(Context context, Value... arguments) throws ScriptRuntimeException {
     for (Value argument : arguments) {
       XLogger.print(argument);
     }
-
-    return null;
   }
 }
