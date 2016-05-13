@@ -46,6 +46,7 @@ public class OperatorList {
   public static final UnaryOperator NOT = new UnaryOperator("not", Value::not, "!");
   public static final BinaryOperator OR = new BinaryOperator("or", Value::or, "||", "|");
   public static final BinaryOperator PLUS = new BinaryOperator("plus", Value::plus, "+");
+  public static final BinaryOperator REMAINDER = new BinaryOperator("remainder", Value::remainder, "%");
   public static final UnaryOperator TYPE_OF = new UnaryOperator("typeOf", value -> new TypeValue(value.getType()), "*");
 
   public static Operator forIdentifier(String identifier, boolean mustBeUnary) { // YES THIS SHOULD BE Boolean OBJECT!
