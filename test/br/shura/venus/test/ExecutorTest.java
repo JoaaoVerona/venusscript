@@ -50,6 +50,7 @@ import java.util.Collection;
  */
 @RunWith(Parameterized.class)
 public class ExecutorTest {
+  public static final Folder DIRECTORY = new Folder("VenusScript/resources");
   private final File file;
 
   public ExecutorTest(File file) {
@@ -71,11 +72,17 @@ public class ExecutorTest {
 
   @Parameters
   public static Collection<Object[]> data() throws IOException {
-    Folder folder = new Folder("VenusScript/resources");
     List<Object[]> data = new ArrayList<>();
 
-    folder.getFiles(file -> data.add(new Object[] { file }));
+    DIRECTORY.getFiles(file -> !file.getName().equals("input"), file -> data.add(new Object[] { file }));
 
     return data.asCollection(java.util.ArrayList.class);
+  }
+
+  public static void main(String[] args) throws Exception {
+    for (File file : DIRECTORY) {
+      XLogger.println("/// " + file.getFullName() + " ///");
+      new ExecutorTest(file).simpleTest();
+    }
   }
 }
