@@ -19,6 +19,8 @@
 
 package br.shura.venus.value;
 
+import br.shura.x.collection.view.ArrayView;
+import br.shura.x.collection.view.View;
 import br.shura.x.util.layer.XApi;
 import br.shura.x.worker.StringWorker;
 
@@ -32,21 +34,21 @@ import br.shura.x.worker.StringWorker;
  */
 public enum ValueType {
   BOOLEAN("bool", BoolValue.class, Boolean.class),
-  DECIMAL("decimal", DecimalValue.class, Double.class),
-  INTEGER("int", IntegerValue.class, Long.class),
+  DECIMAL("decimal", DecimalValue.class, Double.class, Float.class),
+  INTEGER("int", IntegerValue.class, Integer.class, Long.class),
   STRING("string", StringValue.class, String.class),
   TYPE("type", TypeValue.class, ValueType.class),
   ANY("any", Value.class, Object.class); // Should be after all other types
 
   private final String identifier;
   private final String name;
-  private final Class<?> objectType;
+  private final Class<?>[] objectTypes;
   private final Class<? extends Value> type;
 
-  private ValueType(String identifier, Class<? extends Value> type, Class<?> objectType) {
+  private ValueType(String identifier, Class<? extends Value> type, Class<?>... objectTypes) {
     this.identifier = identifier;
     this.name = StringWorker.capitalize(StringWorker.replace(name(), '_', ' '));
-    this.objectType = objectType;
+    this.objectTypes = objectTypes;
     this.type = type;
   }
 
@@ -62,8 +64,8 @@ public enum ValueType {
     return identifier;
   }
 
-  public Class<?> getObjectType() {
-    return objectType;
+  public View<Class<?>> getObjectTypes() {
+    return new ArrayView<>(objectTypes);
   }
 
   public Class<? extends Value> getType() {
@@ -71,7 +73,7 @@ public enum ValueType {
   }
 
   public boolean objectAccepts(Class<?> type) {
-    return getObjectType().isAssignableFrom(type);
+    return getObjectTypes().any(object -> object.isAssignableFrom(type));
   }
 
   @Override
