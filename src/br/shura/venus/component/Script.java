@@ -20,12 +20,10 @@
 package br.shura.venus.component;
 
 import br.shura.venus.component.function.Function;
-import br.shura.venus.component.function.Method;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.ApplicationContext;
 import br.shura.venus.executor.Context;
 import br.shura.venus.library.LibraryList;
-import br.shura.venus.library.MethodLibrary;
 import br.shura.venus.origin.ScriptOrigin;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
@@ -66,12 +64,10 @@ public class Script extends Container {
         }
       }
 
-      for (MethodLibrary library : getLibraryList()) {
-        for (Method method : library) {
-          if (method.getName().equals(name) && (method.isVarArgs() || method.getArgumentCount() == argumentCount)) {
-            return method;
-          }
-        }
+      Function function = getLibraryList().findFunction(name, argumentCount);
+
+      if (function != null) {
+        return function;
       }
 
       throw exception;

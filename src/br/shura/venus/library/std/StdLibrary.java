@@ -19,7 +19,7 @@
 
 package br.shura.venus.library.std;
 
-import br.shura.venus.library.MethodLibrary;
+import br.shura.venus.library.VenusLibrary;
 
 /**
  * StdLibrary.java
@@ -29,7 +29,7 @@ import br.shura.venus.library.MethodLibrary;
  * @date 09/05/16 - 20:29
  * @since GAMMA - 0x3
  */
-public class StdLibrary extends MethodLibrary {
+public class StdLibrary extends VenusLibrary {
   public StdLibrary() {
     addAll(Assert.class, Print.class, Println.class, Scan.class, Sleep.class);
   }

@@ -35,7 +35,7 @@ import br.shura.venus.component.function.Argument;
 import br.shura.venus.component.function.Definition;
 import br.shura.venus.exception.ScriptCompileException;
 import br.shura.venus.exception.UnexpectedTokenException;
-import br.shura.venus.library.MethodLibrary;
+import br.shura.venus.library.VenusLibrary;
 import br.shura.venus.library.std.StdLibrary;
 import br.shura.venus.operator.BinaryOperator;
 import br.shura.venus.operator.Operator;
@@ -263,7 +263,7 @@ public class VenusParser {
     return null;
   }
 
-  protected MethodLibrary defaultLibrary(String libraryName) {
+  protected VenusLibrary defaultLibrary(String libraryName) {
     if (libraryName.equals("std")) {
       return new StdLibrary();
     }
@@ -503,7 +503,7 @@ public class VenusParser {
     requireNewLine();
 
     String libraryName = nameToken.getValue();
-    MethodLibrary library = defaultLibrary(libraryName);
+    VenusLibrary library = defaultLibrary(libraryName);
 
     if (library != null) {
       script.getLibraryList().add(library);

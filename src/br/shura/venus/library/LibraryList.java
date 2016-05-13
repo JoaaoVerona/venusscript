@@ -19,7 +19,7 @@
 
 package br.shura.venus.library;
 
-import br.shura.venus.component.function.Method;
+import br.shura.venus.component.function.Function;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.util.layer.XApi;
 
@@ -31,14 +31,14 @@ import br.shura.x.util.layer.XApi;
  * @date 07/05/16 - 17:42
  * @since GAMMA - 0x3
  */
-public class LibraryList extends ArrayList<MethodLibrary> {
-  public Method findFunction(String name, int argumentCount) {
+public class LibraryList extends ArrayList<VenusLibrary> {
+  public Function findFunction(String name, int argumentCount) {
     XApi.requireNonNull(name, "name");
 
-    for (MethodLibrary library : this) {
-      for (Method method : library) {
-        if (method.getName().equals(name) && method.getArgumentCount() == argumentCount) {
-          return method;
+    for (VenusLibrary library : this) {
+      for (Function function : library) {
+        if (function.getName().equals(name) && (function.isVarArgs() || function.getArgumentCount() == argumentCount)) {
+          return function;
         }
       }
     }

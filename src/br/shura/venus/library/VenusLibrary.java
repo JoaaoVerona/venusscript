@@ -19,19 +19,19 @@
 
 package br.shura.venus.library;
 
-import br.shura.venus.component.function.Method;
+import br.shura.venus.component.function.Function;
 import br.shura.x.collection.list.impl.ArrayList;
 
 /**
- * MethodLibrary.java
+ * VenusLibrary.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
  * @date 07/05/16 - 17:40
  * @since GAMMA - 0x3
  */
-public class MethodLibrary extends ArrayList<Method> {
-  public boolean add(Class<? extends Method> object) {
+public class VenusLibrary extends ArrayList<Function> {
+  public boolean add(Class<? extends Function> object) {
     try {
       return add(object.newInstance());
     }
@@ -41,10 +41,10 @@ public class MethodLibrary extends ArrayList<Method> {
   }
 
   @SafeVarargs
-  public final boolean addAll(Class<? extends Method>... objects) {
+  public final boolean addAll(Class<? extends Function>... objects) {
     boolean allAdded = true;
 
-    for (Class<? extends Method> object : objects) {
+    for (Class<? extends Function> object : objects) {
       if (!add(object)) {
         allAdded = false;
       }
