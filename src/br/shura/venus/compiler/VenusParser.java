@@ -86,6 +86,7 @@ public class VenusParser {
   private Container container;
   private final VenusLexer lexer;
   private boolean nextAsyncable;
+  private boolean nextDaemon;
   private Script script;
 
   public VenusParser(VenusLexer lexer) {
@@ -107,7 +108,7 @@ public class VenusParser {
       if (token.getType() == Type.NAME_DEFINITION) {
         if (token.getValue().equals(KeywordDefinitions.ASYNC)) {
           if (nextAsyncable) {
-            bye(token, "duplicated async keyword");
+            bye(token, "duplicated 'async' keyword");
           }
 
           this.nextAsyncable = true;
@@ -139,6 +140,18 @@ public class VenusParser {
           }
           else {
             bye(token, "there is no parent container available");
+          }
+        }
+        else if (token.getValue().equals(KeywordDefinitions.DAEMON)) {
+          if (nextAsyncable) {
+            if (nextDaemon) {
+              bye(token, "duplicated 'daemon' keyword");
+            }
+
+            this.nextDaemon = true;
+          }
+          else {
+            bye(token, "'daemon' keyword must come after an 'async' keyword");
           }
         }
         else if (token.getValue().equals(KeywordDefinitions.DEFINE)) {
@@ -287,12 +300,13 @@ public class VenusParser {
 
   protected void addComponent(Component component, boolean asyncable) {
     if (asyncable && nextAsyncable) {
-      AsyncContainer asyncContainer = new AsyncContainer(!(component instanceof SimpleContainer));
+      AsyncContainer asyncContainer = new AsyncContainer(!(component instanceof SimpleContainer), nextDaemon);
 
       container.getChildren().add(asyncContainer);
       asyncContainer.getChildren().add(component);
 
       this.nextAsyncable = false;
+      this.nextDaemon = false;
     }
     else {
       container.getChildren().add(component);
