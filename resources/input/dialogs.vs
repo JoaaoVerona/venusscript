@@ -1,5 +1,7 @@
 using dialogs
 
+setTheme("system")
+
 while true {
     infoDialog("Hello!", "Welcome to dialogs.vs.")
     name = inputDialog("Try it.", "Please, insert your name:")
@@ -13,9 +15,9 @@ while true {
         if askDialog("Oh...", "Do you want to try again?") {
             continue
         }
-
-        break
     }
+
+    break
 }
 
 dialog("Well...", "Bye bye!")
