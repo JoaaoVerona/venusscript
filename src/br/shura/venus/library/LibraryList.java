@@ -38,6 +38,7 @@ public class LibraryList extends ArrayList<VenusLibrary> {
     XApi.requireNonNull(argumentTypes, "argumentTypes");
     XApi.requireNonNull(name, "name");
 
+    Function found = null;
     Function foundVarArgs = null;
 
     for (VenusLibrary library : this) {
@@ -49,12 +50,12 @@ public class LibraryList extends ArrayList<VenusLibrary> {
             }
           }
           else {
-            return function;
+            found = function;
           }
         }
       }
     }
 
-    return foundVarArgs;
+    return found != null ? found : foundVarArgs;
   }
 }
