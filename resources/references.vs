@@ -10,3 +10,11 @@ def sendName(string name, ref callback) {
 }
 
 sendName("João Vitor", @plusSupername)
+
+################
+
+def tryout(ref callback) {
+    callback()
+}
+
+tryout(@hasScan)
