@@ -35,7 +35,6 @@ import br.shura.x.util.layer.XApi;
  */
 public class LibraryList extends ArrayList<VenusLibrary> {
   public Function findFunction(String name, View<ValueType> argumentTypes) {
-    XApi.requireNonNull(argumentTypes, "argumentTypes");
     XApi.requireNonNull(name, "name");
 
     Function found = null;

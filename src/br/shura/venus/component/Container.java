@@ -49,7 +49,6 @@ public abstract class Container extends Component {
   }
 
   public Function findFunction(Context context, String name, View<ValueType> argumentTypes) throws ScriptRuntimeException {
-    XApi.requireNonNull(argumentTypes, "argumentTypes");
     XApi.requireNonNull(name, "name");
 
     Definition foundVarArgs = null;

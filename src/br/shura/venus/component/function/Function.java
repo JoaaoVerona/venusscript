@@ -37,10 +37,13 @@ import br.shura.x.util.layer.XApi;
  */
 public interface Function extends INameable {
   default boolean accepts(String name, View<ValueType> argumentTypes) {
-    XApi.requireNonNull(argumentTypes, "argumentTypes");
     XApi.requireNonNull(name, "name");
 
     if (getName().equals(name)) {
+      if (argumentTypes == null) {
+        return true;
+      }
+
       if (getArgumentCount() == argumentTypes.size()) {
         for (int i = 0; i < getArgumentCount(); i++) {
           ValueType required = getArgumentTypes().at(i);
