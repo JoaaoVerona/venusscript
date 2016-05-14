@@ -21,6 +21,7 @@ package br.shura.venus.compiler;
 
 import br.shura.venus.compiler.Token.Type;
 import br.shura.venus.component.Attribution;
+import br.shura.venus.component.Component;
 import br.shura.venus.component.Container;
 import br.shura.venus.component.FunctionCall;
 import br.shura.venus.component.Script;
@@ -81,8 +82,9 @@ import java.util.function.Predicate;
  * @since GAMMA - 0x3
  */
 public class VenusParser {
+  private Container container;
   private final VenusLexer lexer;
-  private String scriptName;
+  private Script script;
 
   public VenusParser(VenusLexer lexer) {
     this.lexer = lexer;
@@ -93,10 +95,10 @@ public class VenusParser {
     script.getContext().getVariables().clear();
     script.getIncludes().clear();
 
-    this.scriptName = script.getDisplayName();
+    this.container = script;
+    this.script = script;
 
     Token token;
-    Container container = script;
     boolean justExitedIfContainer = false;
 
     while ((token = lexer.nextToken()) != null) {
@@ -124,26 +126,22 @@ public class VenusParser {
           }
 
           if (foundContinuable) {
-            container.getChildren().add(token.getValue().equals(KeywordDefinitions.BREAK) ? new Break() : new Continue());
+            addComponent(token.getValue().equals(KeywordDefinitions.BREAK) ? new Break() : new Continue(), false);
           }
           else {
             bye(token, "there is no parent container available");
           }
         }
         else if (token.getValue().equals(KeywordDefinitions.DEFINE)) {
-          container = parseDefinition(container);
+          parseDefinition();
         }
         else if (token.getValue().equals(KeywordDefinitions.DO)) {
           requireToken(Type.OPEN_BRACE, "expected an open brace");
-
-          DoWhileContainer doWhileContainer = new DoWhileContainer(null);
-
-          container.getChildren().add(doWhileContainer);
-          container = doWhileContainer;
+          addContainer(new DoWhileContainer(null), true);
         }
         else if (token.getValue().equals(KeywordDefinitions.ELSE)) {
           if (justExitedIfContainer) {
-            container = parseElse(container);
+            parseElse();
           }
           else {
             bye(token, "no previous 'if' container");
@@ -151,21 +149,21 @@ public class VenusParser {
         }
         else if (token.getValue().equals(KeywordDefinitions.EXPORT)) {
           if (container == script) {
-            parseExport(script);
+            parseExport();
           }
           else {
             bye(token, "cannot use 'export' keyword inside container");
           }
         }
         else if (token.getValue().equals(KeywordDefinitions.FOR)) {
-          container = parseFor(container);
+          parseFor();
         }
         else if (token.getValue().equals(KeywordDefinitions.IF)) {
-          container = parseIf(container, false);
+          parseIf(false);
         }
         else if (token.getValue().equals(KeywordDefinitions.INCLUDE)) {
           if (container == script) {
-            parseInclude(script);
+            parseInclude();
           }
           else {
             bye(token, "cannot use 'import' keyword inside container");
@@ -173,14 +171,14 @@ public class VenusParser {
         }
         else if (token.getValue().equals(KeywordDefinitions.USING)) {
           if (container == script) {
-            parseUsing(script);
+            parseUsing();
           }
           else {
             bye(token, "cannot use 'using' keyword inside container");
           }
         }
         else if (token.getValue().equals(KeywordDefinitions.WHILE)) {
-          container = parseWhile(container);
+          parseWhile();
         }
         else { // Should be variable attribution OR function call
           String name = token.getValue();
@@ -193,7 +191,7 @@ public class VenusParser {
               Resultor resultor = readResultor(Type.NEW_LINE);
               Attribution attribution = new Attribution(name, resultor);
 
-              container.getChildren().add(attribution);
+              addComponent(attribution, false);
             }
             else {
               attrib = readOperator(attrib);
@@ -208,7 +206,7 @@ public class VenusParser {
                     BinaryOperation operation = new BinaryOperation((BinaryOperator) operator, new Variable(name), resultor);
                     Attribution attribution = new Attribution(name, operation);
 
-                    container.getChildren().add(attribution);
+                    addComponent(attribution, false);
                   }
                   else {
                     bye(next, "expected an attribution with binary operator (+=, -=, ...)");
@@ -227,10 +225,7 @@ public class VenusParser {
             Resultor[] arguments = readFunctionArguments();
 
             requireNewLine();
-
-            FunctionCall functionCall = new FunctionCall(name, arguments);
-
-            container.getChildren().add(functionCall);
+            addComponent(new FunctionCall(name, arguments), true);
           }
           else {
             bye(next, "expected attribution operator or function call");
@@ -240,10 +235,7 @@ public class VenusParser {
         justExitedIfContainer = false;
       }
       else if (token.getType() == Type.OPEN_BRACE) {
-        SimpleContainer simpleContainer = new SimpleContainer();
-
-        container.getChildren().add(simpleContainer);
-        container = simpleContainer;
+        addContainer(new SimpleContainer(), true);
       }
       else if (token.getType() == Type.CLOSE_BRACE) {
         if (container != script) {
@@ -281,13 +273,23 @@ public class VenusParser {
     }
   }
 
+  protected void addComponent(Component component, boolean asyncable) {
+    container.getChildren().add(component);
+  }
+
+  protected void addContainer(Container container, boolean asyncable) {
+    addComponent(container, asyncable);
+
+    this.container = container;
+  }
+
   protected void bye(String message) throws UnexpectedTokenException {
-    throw new UnexpectedTokenException(scriptName, lexer.currentLine(), message);
+    throw new UnexpectedTokenException(script.getDisplayName(), lexer.currentLine(), message);
   }
 
   // Do not call other bye() method, for better stacktrace
   protected void bye(Token token, String message) throws UnexpectedTokenException {
-    throw new UnexpectedTokenException(scriptName, lexer.currentLine(), "Invalid token \"" + token + "\"; " + message);
+    throw new UnexpectedTokenException(script.getDisplayName(), lexer.currentLine(), "Invalid token \"" + token + "\"; " + message);
   }
 
   protected ScriptOrigin defaultInclude(String includeName) {
@@ -371,7 +373,7 @@ public class VenusParser {
     return null;
   }
 
-  protected Definition parseDefinition(Container container) throws ScriptCompileException {
+  protected void parseDefinition() throws ScriptCompileException {
     Token typeToken = requireToken(Type.NAME_DEFINITION, "expected a return type");
     String definitionName = typeToken.getValue();
     List<Argument> arguments = new ArrayList<>();
@@ -415,32 +417,23 @@ public class VenusParser {
     }
 
     requireToken(Type.OPEN_BRACE, "expected an open brace");
-
-    Definition definition = new Definition(definitionName, arguments);
-
-    container.getChildren().add(definition);
-
-    return definition;
+    addContainer(new Definition(definitionName, arguments), false);
   }
 
-  protected Container parseElse(Container container) throws ScriptCompileException {
+  protected void parseElse() throws ScriptCompileException {
     Token next = requireToken();
 
     if (next.getType() == Type.NAME_DEFINITION && next.getValue().equals(KeywordDefinitions.IF)) {
-      return parseIf(container, true);
+      parseIf(true);
     }
-
-    lexer.reRead(next);
-    requireToken(Type.OPEN_BRACE, "expected an open brace");
-
-    ElseContainer elseContainer = new ElseContainer();
-
-    container.getChildren().add(elseContainer);
-
-    return elseContainer;
+    else {
+      lexer.reRead(next);
+      requireToken(Type.OPEN_BRACE, "expected an open brace");
+      addContainer(new ElseContainer(), false);
+    }
   }
 
-  protected void parseExport(Script script) throws ScriptCompileException {
+  protected void parseExport() throws ScriptCompileException {
     Token nameToken = requireToken(Type.NAME_DEFINITION, "expected a variable name");
     String variableName = nameToken.getValue();
 
@@ -463,7 +456,7 @@ public class VenusParser {
     }
   }
 
-  protected ForEachContainer parseFor(Container container) throws ScriptCompileException {
+  protected void parseFor() throws ScriptCompileException {
     Token varNameToken = requireToken(Type.NAME_DEFINITION, "expected a variable name");
 
     requireToken(Type.NAME_DEFINITION, "expected 'in' token");
@@ -479,27 +472,21 @@ public class VenusParser {
         arguments.length == 3 ? arguments[2] : new BinaryOperation(OperatorList.PLUS, new Variable(varName),
           new Constant(new IntegerValue(1))));
 
-      container.getChildren().add(forContainer);
-
-      return forContainer;
+      addContainer(forContainer, true);
     }
     else {
       bye("Expected 2 arguments to for definition; received " + arguments.length);
     }
-
-    return null; // Will not happen because of bye() above
   }
 
-  protected IfContainer parseIf(Container container, boolean isElseIf) throws ScriptCompileException {
+  protected void parseIf(boolean isElseIf) throws ScriptCompileException {
     Resultor resultor = readResultor(Type.OPEN_BRACE);
     IfContainer ifContainer = isElseIf ? new ElseIfContainer(resultor) : new IfContainer(resultor);
 
-    container.getChildren().add(ifContainer);
-
-    return ifContainer;
+    addContainer(ifContainer, false);
   }
 
-  protected void parseInclude(Script script) throws ScriptCompileException {
+  protected void parseInclude() throws ScriptCompileException {
     Token next = requireToken(Type.STRING_LITERAL, "expected a string literal as including script");
     String includeName = next.getValue();
     boolean maybe = false;
@@ -550,7 +537,7 @@ public class VenusParser {
     }
   }
 
-  protected void parseUsing(Script script) throws ScriptCompileException {
+  protected void parseUsing() throws ScriptCompileException {
     Token nameToken = requireToken(Type.NAME_DEFINITION, "expected a library name (without quotes)");
 
     requireNewLine();
@@ -567,13 +554,11 @@ public class VenusParser {
     }
   }
 
-  protected WhileContainer parseWhile(Container container) throws ScriptCompileException {
+  protected void parseWhile() throws ScriptCompileException {
     Resultor resultor = readResultor(Type.OPEN_BRACE);
     WhileContainer whileContainer = new WhileContainer(resultor);
 
-    container.getChildren().add(whileContainer);
-
-    return whileContainer;
+    addContainer(whileContainer, true);
   }
 
   // This also consumes ending' CLOSE_PARENTHESE
