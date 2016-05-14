@@ -16,6 +16,8 @@ for i in (20, 29) {
     println(i)
 }
 
+sleep(1000)
 print("Should instantly print OK: ")
-async sleep(10000)
+async daemon sleep(10000)
 println("OK")
+println("Execution should be finished, since sleep is daemon.")
