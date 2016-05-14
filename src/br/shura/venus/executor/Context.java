@@ -36,11 +36,11 @@ import br.shura.x.util.layer.XApi;
  * @since GAMMA - 0x3
  */
 public class Context {
+  private int currentLine;
   private VenusExecutor executor;
   private final Container owner;
   private final Context parent;
   private final Map<String, Value> variables;
-  private int currentLine;
 
   public Context(Container owner, Context parent) {
     this.owner = owner;
@@ -96,13 +96,29 @@ public class Context {
     return getParent() != null;
   }
 
+  public boolean isOwnerOf(String name) {
+    return getVariables().containsKey(name);
+  }
+
   public void setVar(String name, Value value) {
-    getVariables().set(name, value);
+    if (!changeVar(name, value)) {
+      getVariables().add(name, value);
+    }
   }
 
   @Override
   public String toString() {
     return "context(owner=" + getOwner() + ", vars=" + getVariables() + ", parent=" + getParent() + ')';
+  }
+
+  protected boolean changeVar(String name, Value value) {
+    if (isOwnerOf(name)) {
+      getVariables().set(name, value);
+
+      return true;
+    }
+
+    return hasParent() && getParent().changeVar(name, value);
   }
 
   @Internal
