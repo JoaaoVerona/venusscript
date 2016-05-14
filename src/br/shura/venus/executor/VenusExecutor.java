@@ -23,6 +23,8 @@ import br.shura.venus.component.Attribution;
 import br.shura.venus.component.Component;
 import br.shura.venus.component.Container;
 import br.shura.venus.component.FunctionCall;
+import br.shura.venus.component.branch.Break;
+import br.shura.venus.component.branch.Continue;
 import br.shura.venus.component.branch.DoWhileContainer;
 import br.shura.venus.component.branch.ElseContainer;
 import br.shura.venus.component.branch.ElseIfContainer;
@@ -38,7 +40,6 @@ import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.NumericValue;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.list.ListIterator;
-import br.shura.x.lang.mutable.MutableBoolean;
 
 /**
  * VenusExecutor.java
@@ -49,18 +50,28 @@ import br.shura.x.lang.mutable.MutableBoolean;
  * @since GAMMA - 0x3
  */
 public class VenusExecutor {
-  public static Value run(Container container) throws ScriptRuntimeException {
-    return run(container, new MutableBoolean(true));
+  private boolean breaking;
+  private boolean continuing;
+  private boolean shouldRun;
+
+  public VenusExecutor() {
+    this.shouldRun = true;
   }
 
-  public static Value run(Container container, MutableBoolean shouldRun) throws ScriptRuntimeException {
+  public Value run(Container container) throws ScriptRuntimeException {
     Context context = container.getContext();
     ListIterator<Component> iterator = container.getChildren().iterator();
     Value result = null;
     boolean hadIfAndNotProceed = false;
 
-    while (shouldRun.get() && iterator.hasNext()) {
+    context.setExecutor(this);
+
+    while (shouldRun && iterator.hasNext()) {
       Component component = iterator.next();
+
+      if (breaking || continuing) {
+        break;
+      }
 
       if (component instanceof Container) {
         if (component instanceof ForEachContainer) {
@@ -78,7 +89,18 @@ public class VenusExecutor {
 
               while (count.lowerEqualThan(to).value()) {
                 context.setVar(forContainer.getVarName(), count);
-                run(forContainer, shouldRun);
+                run(forContainer);
+
+                if (breaking) {
+                  this.breaking = false;
+
+                  break;
+                }
+
+                if (continuing) {
+                  this.continuing = false;
+                }
+
                 count = forContainer.getAdjustment().resolve(context);
               }
             }
@@ -100,7 +122,18 @@ public class VenusExecutor {
               BoolValue boolValue = (BoolValue) value;
 
               if (boolValue.value()) {
-                run(whileContainer, shouldRun);
+                run(whileContainer);
+
+                if (breaking) {
+                  this.breaking = false;
+
+                  break;
+                }
+
+                if (continuing) {
+                  this.continuing = false;
+                }
+
               }
               else {
                 break;
@@ -115,7 +148,17 @@ public class VenusExecutor {
           DoWhileContainer doWhileContainer = (DoWhileContainer) component;
 
           while (true) {
-            run(doWhileContainer, shouldRun);
+            run(doWhileContainer);
+
+            if (breaking) {
+              this.breaking = false;
+
+              break;
+            }
+
+            if (continuing) {
+              this.continuing = false;
+            }
 
             if (!doWhileContainer.hasCondition()) {
               break;
@@ -143,7 +186,7 @@ public class VenusExecutor {
             BoolValue boolValue = (BoolValue) value;
 
             if (boolValue.value()) {
-              run(ifContainer, shouldRun);
+              run(ifContainer);
             }
             else {
               hadIfAndNotProceed = true;
@@ -157,17 +200,23 @@ public class VenusExecutor {
         }
         else if (component instanceof ElseContainer) {
           if (hadIfAndNotProceed) {
-            run((Container) component, shouldRun);
+            run((Container) component);
           }
         }
         else if (!(component instanceof Definition)) {
-          run((Container) component, shouldRun);
+          run((Container) component);
         }
       }
       else if (component instanceof Attribution) {
         Attribution attribution = (Attribution) component;
 
         context.setVar(attribution.getName(), attribution.getResultor().resolve(context));
+      }
+      else if (component instanceof Break) {
+        this.breaking = true;
+      }
+      else if (component instanceof Continue) {
+        this.continuing = true;
       }
       else if (component instanceof FunctionCall) {
         FunctionCall functionCall = (FunctionCall) component;
@@ -179,5 +228,9 @@ public class VenusExecutor {
     }
 
     return result;
+  }
+
+  public void stop() {
+    this.shouldRun = true;
   }
 }

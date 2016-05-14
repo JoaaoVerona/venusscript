@@ -24,6 +24,7 @@ import br.shura.venus.exception.UndefinedVariableException;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.map.Map;
 import br.shura.x.collection.map.impl.LinkedMap;
+import br.shura.x.lang.annotation.Internal;
 import br.shura.x.util.layer.XApi;
 
 /**
@@ -35,6 +36,7 @@ import br.shura.x.util.layer.XApi;
  * @since GAMMA - 0x3
  */
 public class Context {
+  private VenusExecutor executor;
   private final Container owner;
   private final Context parent;
   private final Map<String, Value> variables;
@@ -43,6 +45,10 @@ public class Context {
     this.owner = owner;
     this.parent = parent;
     this.variables = new LinkedMap<>();
+  }
+
+  public VenusExecutor currentExecutor() {
+    return executor;
   }
 
   public int currentLine() {
@@ -108,5 +114,10 @@ public class Context {
   @Override
   public String toString() {
     return "context(owner=" + getOwner() + ", vars=" + getVariables() + ", parent=" + getParent() + ')';
+  }
+
+  @Internal
+  protected void setExecutor(VenusExecutor executor) {
+    this.executor = executor;
   }
 }
