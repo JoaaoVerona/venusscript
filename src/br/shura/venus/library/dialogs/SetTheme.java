@@ -19,19 +19,53 @@
 
 package br.shura.venus.library.dialogs;
 
-import br.shura.venus.library.VenusLibrary;
+import br.shura.venus.component.function.Method;
+import br.shura.venus.component.function.annotation.MethodArgs;
+import br.shura.venus.component.function.annotation.MethodName;
+import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.value.BoolValue;
+import br.shura.venus.value.StringValue;
+import br.shura.venus.value.Value;
+import br.shura.venus.value.ValueType;
+
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
- * DialogsLibrary.java
+ * SetTheme.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 14/05/16 - 19:37
+ * @date 14/05/16 - 20:34
  * @since GAMMA - 0x3
  */
-public class DialogsLibrary extends VenusLibrary {
-  public DialogsLibrary() {
-    addAll(AskDialog.class, Dialog.class, ErrorDialog.class, InfoDialog.class, InputDialog.class,
-      SetTheme.class, WarnDialog.class);
+@MethodArgs(ValueType.STRING)
+@MethodName("setTheme")
+public class SetTheme extends Method {
+  @Override
+  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
+    StringValue value = (StringValue) arguments[0];
+    String themeName = value.value();
+    String themePath = null;
+
+    if (themeName.equalsIgnoreCase("metal")) {
+      themePath = UIManager.getCrossPlatformLookAndFeelClassName();
+    }
+    else if (themeName.equalsIgnoreCase("system")) {
+      themePath = UIManager.getSystemLookAndFeelClassName();
+    }
+
+    if (themePath != null) {
+      try {
+        UIManager.setLookAndFeel(themePath);
+
+        return new BoolValue(true);
+      }
+      catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException exception) {
+      }
+    }
+
+    return new BoolValue(false);
   }
 }
