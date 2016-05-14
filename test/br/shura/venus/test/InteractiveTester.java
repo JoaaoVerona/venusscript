@@ -24,6 +24,8 @@ import br.shura.venus.compiler.VenusParser;
 import br.shura.venus.component.Component;
 import br.shura.venus.component.Container;
 import br.shura.venus.component.Script;
+import br.shura.venus.exception.ScriptCompileException;
+import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.ApplicationContext;
 import br.shura.venus.executor.VenusExecutor;
 import br.shura.venus.origin.FileScriptOrigin;
@@ -46,6 +48,7 @@ import static br.shura.x.sys.XSystem.millis;
  */
 public class InteractiveTester {
   public static final Folder DIRECTORY = new Folder("VenusScript/resources");
+  public static final boolean LIGHTWEIGHT_ERRORS = true;
 
   public static void main(String[] args) throws Exception {
     View<File> files = DIRECTORY.getAllFilesView();
@@ -80,7 +83,19 @@ public class InteractiveTester {
     VenusParser parser = new VenusParser(lexer);
     Script script = new Script(new ApplicationContext(), origin);
 
-    parser.parse(script);
+    if (LIGHTWEIGHT_ERRORS) {
+      try {
+        parser.parse(script);
+      }
+      catch (ScriptCompileException exception) {
+        XLogger.warnln("COMPILE ERR: " + exception.getMessage());
+
+        return;
+      }
+    }
+    else {
+      parser.parse(script);
+    }
 
     if (printAst) {
       print(script);
@@ -89,7 +104,19 @@ public class InteractiveTester {
 
     long start = millis();
 
-    executor.run(script);
+    if (LIGHTWEIGHT_ERRORS) {
+      try {
+        executor.run(script);
+      }
+      catch (ScriptRuntimeException exception) {
+        XLogger.warnln("RUNTIME ERR: " + exception.getMessage());
+
+        return;
+      }
+    }
+    else {
+      executor.run(script);
+    }
 
     long duration = millis() - start;
 
@@ -100,9 +127,13 @@ public class InteractiveTester {
     XLogger.println(component);
 
     if (component instanceof Container) {
-      for (Component container : ((Container) component).getChildren()) {
-        XLogger.println(container);
+      XLogger.pushTab();
+
+      for (Component child : ((Container) component).getChildren()) {
+        print(child);
       }
+
+      XLogger.popTab();
     }
   }
 }
