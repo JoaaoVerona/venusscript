@@ -20,6 +20,7 @@
 package br.shura.venus.compiler;
 
 import br.shura.venus.compiler.Token.Type;
+import br.shura.venus.component.AsyncContainer;
 import br.shura.venus.component.Attribution;
 import br.shura.venus.component.Component;
 import br.shura.venus.component.Container;
@@ -84,6 +85,7 @@ import java.util.function.Predicate;
 public class VenusParser {
   private Container container;
   private final VenusLexer lexer;
+  private boolean nextAsyncable;
   private Script script;
 
   public VenusParser(VenusLexer lexer) {
@@ -103,7 +105,14 @@ public class VenusParser {
 
     while ((token = lexer.nextToken()) != null) {
       if (token.getType() == Type.NAME_DEFINITION) {
-        if (token.getValue().equals(KeywordDefinitions.BREAK) || token.getValue().equals(KeywordDefinitions.CONTINUE)) {
+        if (token.getValue().equals(KeywordDefinitions.ASYNC)) {
+          if (nextAsyncable) {
+            bye(token, "duplicated async keyword");
+          }
+
+          this.nextAsyncable = true;
+        }
+        else if (token.getValue().equals(KeywordDefinitions.BREAK) || token.getValue().equals(KeywordDefinitions.CONTINUE)) {
           requireToken(Type.NEW_LINE, "expected a new line");
 
           Container lookup = container;
@@ -261,7 +270,10 @@ public class VenusParser {
             }
           }
 
-          container = container.getParent();
+          do {
+            container = container.getParent();
+          }
+          while (container instanceof AsyncContainer && ((AsyncContainer) container).isInternal());
         }
         else {
           bye(token, "no container to close");
@@ -274,7 +286,17 @@ public class VenusParser {
   }
 
   protected void addComponent(Component component, boolean asyncable) {
-    container.getChildren().add(component);
+    if (asyncable && nextAsyncable) {
+      AsyncContainer asyncContainer = new AsyncContainer(!(component instanceof SimpleContainer));
+
+      container.getChildren().add(asyncContainer);
+      asyncContainer.getChildren().add(component);
+
+      this.nextAsyncable = false;
+    }
+    else {
+      container.getChildren().add(component);
+    }
   }
 
   protected void addContainer(Container container, boolean asyncable) {
