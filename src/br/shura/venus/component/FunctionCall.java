@@ -20,6 +20,7 @@
 package br.shura.venus.component;
 
 import br.shura.venus.component.function.Function;
+import br.shura.venus.exception.InvalidFunctionParameterException;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.resultor.Resultor;
@@ -65,9 +66,26 @@ public class FunctionCall extends Component implements Resultor {
     List<Value> list = new ArrayList<>();
     int i = 0;
 
+    // This check is necessary because of function references.
+    if (!function.isVarArgs() && types.size() != function.getArgumentTypes().size()) {
+      throw new InvalidFunctionParameterException(context, function, "Function \"" + function + "\" expected " +
+        function.getArgumentTypes().size() + " arguments; received " + types.size());
+    }
+
     for (Value value : values) {
-      if (!function.isVarArgs() && value.getType() == ValueType.INTEGER && function.getArgumentTypes().at(i) == ValueType.DECIMAL) {
-        value = new DecimalValue(((IntegerValue) value).value());
+      if (!function.isVarArgs()) {
+        ValueType required = function.getArgumentTypes().at(i);
+
+        if (value.getType() == ValueType.INTEGER && required == ValueType.DECIMAL) {
+          value = new DecimalValue(((IntegerValue) value).value());
+        }
+
+        // This check is necessary because of function references.
+        if (!required.accepts(value.getType())) {
+          throw new InvalidFunctionParameterException(context, function, "Function \"" + function + "\" expected " +
+            required + " as " + (i + 1) + (i == 0 ? "st" : i == 1 ? "nd" : i == 2 ? "rd" : "th") + " argument; received " +
+            value.getType());
+        }
       }
 
       list.add(value);
