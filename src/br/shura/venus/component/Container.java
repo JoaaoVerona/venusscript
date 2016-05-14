@@ -95,4 +95,9 @@ public abstract class Container extends Component {
     super.setParent(parent);
     this.context = parent.getContext();
   }
+
+  @Override
+  public String toString() {
+    return getDisplayName();
+  }
 }
