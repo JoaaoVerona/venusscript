@@ -19,8 +19,6 @@
 
 package br.shura.venus.test;
 
-import br.shura.venus.compiler.VenusLexer;
-import br.shura.venus.compiler.VenusParser;
 import br.shura.venus.component.Script;
 import br.shura.venus.executor.ApplicationContext;
 import br.shura.venus.executor.VenusExecutor;
@@ -62,12 +60,9 @@ public class ExecutorTest {
     XLogger.disable(Level.DEBUG);
 
     ScriptOrigin origin = new FileScriptOrigin(file);
+    Script script = origin.compile(new ApplicationContext());
     VenusExecutor executor = new VenusExecutor();
-    VenusLexer lexer = new VenusLexer(origin);
-    VenusParser parser = new VenusParser(lexer);
-    Script script = new Script(new ApplicationContext(), origin);
 
-    parser.parse(script);
     executor.run(script);
   }
 

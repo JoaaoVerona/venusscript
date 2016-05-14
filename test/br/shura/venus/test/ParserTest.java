@@ -19,8 +19,6 @@
 
 package br.shura.venus.test;
 
-import br.shura.venus.compiler.VenusLexer;
-import br.shura.venus.compiler.VenusParser;
 import br.shura.venus.component.Component;
 import br.shura.venus.component.Container;
 import br.shura.venus.component.Script;
@@ -58,11 +56,8 @@ public class ParserTest {
       "}"
     };
     ScriptOrigin origin = new SimpleScriptOrigin("test.xs", StringWorker.join('\n', content));
-    VenusLexer lexer = new VenusLexer(origin);
-    VenusParser parser = new VenusParser(lexer);
-    Script script = new Script(new ApplicationContext(), origin);
+    Script script = origin.compile(new ApplicationContext());
 
-    parser.parse(script);
     print(script);
   }
 

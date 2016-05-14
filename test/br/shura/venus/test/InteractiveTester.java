@@ -19,8 +19,6 @@
 
 package br.shura.venus.test;
 
-import br.shura.venus.compiler.VenusLexer;
-import br.shura.venus.compiler.VenusParser;
 import br.shura.venus.component.Component;
 import br.shura.venus.component.Container;
 import br.shura.venus.component.Script;
@@ -78,14 +76,11 @@ public class InteractiveTester {
 
     File file = files.at(option);
     ScriptOrigin origin = new FileScriptOrigin(file);
-    VenusExecutor executor = new VenusExecutor();
-    VenusLexer lexer = new VenusLexer(origin);
-    VenusParser parser = new VenusParser(lexer);
-    Script script = new Script(new ApplicationContext(), origin);
+    Script script;
 
     if (LIGHTWEIGHT_ERRORS) {
       try {
-        parser.parse(script);
+        script = origin.compile(new ApplicationContext());
       }
       catch (ScriptCompileException exception) {
         XLogger.warnln("COMPILE ERR: " + exception.getMessage());
@@ -94,7 +89,7 @@ public class InteractiveTester {
       }
     }
     else {
-      parser.parse(script);
+      script = origin.compile(new ApplicationContext());
     }
 
     if (printAst) {
@@ -102,6 +97,7 @@ public class InteractiveTester {
       XLogger.newLine();
     }
 
+    VenusExecutor executor = new VenusExecutor();
     long start = millis();
 
     if (LIGHTWEIGHT_ERRORS) {
