@@ -19,6 +19,7 @@
 
 package br.shura.venus.executor;
 
+import br.shura.venus.component.AsyncContainer;
 import br.shura.venus.component.Attribution;
 import br.shura.venus.component.Component;
 import br.shura.venus.component.Container;
@@ -40,6 +41,11 @@ import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.NumericValue;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.list.ListIterator;
+import br.shura.x.collection.store.impl.Queue;
+import br.shura.x.logging.XLogger;
+import br.shura.x.runnable.XThread;
+
+import java.util.function.Supplier;
 
 /**
  * VenusExecutor.java
@@ -50,31 +56,62 @@ import br.shura.x.collection.list.ListIterator;
  * @since GAMMA - 0x3
  */
 public class VenusExecutor {
+  private final Queue<ScriptRuntimeException> asyncExceptions;
   private boolean breaking;
   private boolean continuing;
   private boolean shouldRun;
 
   public VenusExecutor() {
+    this.asyncExceptions = new Queue<>();
     this.shouldRun = true;
   }
 
   public Value run(Container container) throws ScriptRuntimeException {
+    return run(container, () -> shouldRun);
+  }
+
+  public void stop() {
+    this.shouldRun = true;
+  }
+
+  protected Value run(Container container, Supplier<Boolean> shouldRun) throws ScriptRuntimeException {
     Context context = container.getContext();
     ListIterator<Component> iterator = container.getChildren().iterator();
     Value result = null;
     boolean hadIfAndNotProceed = false;
 
+    if (context == null) {
+      XLogger.println(container + "||" + container.getParent());
+    }
     context.setExecutor(this);
 
-    while (shouldRun && iterator.hasNext()) {
+    while (shouldRun.get() && iterator.hasNext()) {
       Component component = iterator.next();
 
       if (breaking || continuing) {
         break;
       }
 
+      if (!asyncExceptions.isEmpty()) {
+        throw asyncExceptions.poll();
+      }
+
       if (component instanceof Container) {
-        if (component instanceof ForEachContainer) {
+        if (component instanceof AsyncContainer) {
+          AsyncContainer asyncContainer = (AsyncContainer) component;
+
+          XThread.execute("AsyncVenusThread", () -> {
+            VenusExecutor executor = new VenusExecutor();
+
+            try {
+              executor.run(asyncContainer, () -> VenusExecutor.this.shouldRun);
+            }
+            catch (ScriptRuntimeException exception) {
+              asyncExceptions.push(exception);
+            }
+          });
+        }
+        else if (component instanceof ForEachContainer) {
           ForEachContainer forContainer = (ForEachContainer) component;
           Value from = forContainer.getFrom().resolve(context);
           Value to = forContainer.getTo().resolve(context);
@@ -228,9 +265,5 @@ public class VenusExecutor {
     }
 
     return result;
-  }
-
-  public void stop() {
-    this.shouldRun = true;
   }
 }
