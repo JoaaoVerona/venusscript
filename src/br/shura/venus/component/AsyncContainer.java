@@ -31,11 +31,9 @@ import br.shura.venus.executor.Context;
  */
 public class AsyncContainer extends Container {
   private final boolean daemon;
-  private final boolean internal;
 
-  public AsyncContainer(boolean daemon, boolean internal) {
+  public AsyncContainer(boolean daemon) {
     this.daemon = daemon;
-    this.internal = internal;
   }
 
   @Override
@@ -45,10 +43,6 @@ public class AsyncContainer extends Container {
 
   public boolean isDaemon() {
     return daemon;
-  }
-
-  public boolean isInternal() {
-    return internal;
   }
 
   @Override
