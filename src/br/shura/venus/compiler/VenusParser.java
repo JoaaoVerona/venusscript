@@ -25,6 +25,9 @@ import br.shura.venus.component.Container;
 import br.shura.venus.component.FunctionCall;
 import br.shura.venus.component.Script;
 import br.shura.venus.component.SimpleContainer;
+import br.shura.venus.component.branch.Break;
+import br.shura.venus.component.branch.Breakable;
+import br.shura.venus.component.branch.Continue;
 import br.shura.venus.component.branch.DoWhileContainer;
 import br.shura.venus.component.branch.ElseContainer;
 import br.shura.venus.component.branch.ElseIfContainer;
@@ -98,7 +101,36 @@ public class VenusParser {
 
     while ((token = lexer.nextToken()) != null) {
       if (token.getType() == Type.NAME_DEFINITION) {
-        if (token.getValue().equals(KeywordDefinitions.DEFINE)) {
+        if (token.getValue().equals(KeywordDefinitions.BREAK) || token.getValue().equals(KeywordDefinitions.CONTINUE)) {
+          requireToken(Type.NEW_LINE, "expected a new line");
+
+          Container lookup = container;
+          boolean foundContinuable = false;
+
+          while (lookup != null) {
+            if (lookup instanceof Breakable) {
+              foundContinuable = true;
+
+              break;
+            }
+
+            // If there is a definition, at run-time it will be another context,
+            // so do not let lookuping parents
+            if (lookup instanceof Definition) {
+              break;
+            }
+
+            lookup = lookup.getParent();
+          }
+
+          if (foundContinuable) {
+            container.getChildren().add(token.getValue().equals(KeywordDefinitions.BREAK) ? new Break() : new Continue());
+          }
+          else {
+            bye(token, "there is no parent container available");
+          }
+        }
+        else if (token.getValue().equals(KeywordDefinitions.DEFINE)) {
           container = parseDefinition(container);
         }
         else if (token.getValue().equals(KeywordDefinitions.DO)) {
