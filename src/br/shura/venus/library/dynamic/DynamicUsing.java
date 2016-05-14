@@ -19,18 +19,42 @@
 
 package br.shura.venus.library.dynamic;
 
+import br.shura.venus.component.Script;
+import br.shura.venus.component.function.VoidMethod;
+import br.shura.venus.component.function.annotation.MethodArgs;
+import br.shura.venus.component.function.annotation.MethodName;
+import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
 import br.shura.venus.library.VenusLibrary;
+import br.shura.venus.value.StringValue;
+import br.shura.venus.value.Value;
+import br.shura.venus.value.ValueType;
+
+import java.util.function.Supplier;
 
 /**
- * DynamicLibrary.java
+ * DynamicUsing.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 14/05/16 - 00:47
+ * @date 14/05/16 - 00:40
  * @since GAMMA - 0x3
  */
-public class DynamicLibrary extends VenusLibrary {
-  public DynamicLibrary() {
-    addAll(DynamicInclude.class, DynamicUsing.class);
+@MethodArgs(ValueType.STRING)
+@MethodName("dynamicUsing")
+public class DynamicUsing extends VoidMethod {
+  @Override
+  public void callVoid(Context context, Value... arguments) throws ScriptRuntimeException {
+    StringValue libraryName = (StringValue) arguments[0];
+    Script script = context.getOwner().getScript();
+    Supplier<VenusLibrary> supplier = script.getApplicationContext().getLibrarySuppliers().get(libraryName.value());
+    VenusLibrary library;
+
+    if (supplier != null && (library = supplier.get()) != null) {
+      script.getLibraryList().add(library);
+    }
+    else {
+      throw new ScriptRuntimeException(context, "Could not find a library named \"" + libraryName + "\"");
+    }
   }
 }
