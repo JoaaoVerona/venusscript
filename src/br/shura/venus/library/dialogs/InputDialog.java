@@ -55,6 +55,8 @@ public class InputDialog extends Method {
       message.newLine();
     }
 
-    return new StringValue(XDialogs.askInput(title, message));
+    String input = XDialogs.askInput(title, message);
+
+    return new StringValue(input != null ? input : Pool.EMPTY_STRING);
   }
 }
