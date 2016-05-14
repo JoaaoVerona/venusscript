@@ -19,6 +19,11 @@
 
 package br.shura.venus.origin;
 
+import br.shura.venus.compiler.VenusLexer;
+import br.shura.venus.compiler.VenusParser;
+import br.shura.venus.component.Script;
+import br.shura.venus.exception.ScriptCompileException;
+import br.shura.venus.executor.ApplicationContext;
 import br.shura.x.loader.resource.PathResource;
 
 import java.io.IOException;
@@ -32,6 +37,25 @@ import java.io.IOException;
  * @since GAMMA - 0x3
  */
 public interface ScriptOrigin {
+  default Script compile(ApplicationContext applicationContext) throws ScriptCompileException {
+    VenusLexer lexer;
+
+    try {
+      lexer = new VenusLexer(this);
+    }
+    catch (IOException exception) {
+      throw new ScriptCompileException("Could not read script \"" + getScriptName() + "\": " + exception.getClass().getSimpleName() +
+        ": " + exception.getMessage());
+    }
+
+    VenusParser parser = new VenusParser(lexer);
+    Script script = new Script(applicationContext, this);
+
+    parser.parse(script);
+
+    return script;
+  }
+
   default ScriptOrigin findInclude(String includeName) {
     PathResource resource = new PathResource(includeName);
 
