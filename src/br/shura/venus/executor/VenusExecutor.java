@@ -99,8 +99,7 @@ public class VenusExecutor {
       if (component instanceof Container) {
         if (component instanceof AsyncContainer) {
           AsyncContainer asyncContainer = (AsyncContainer) component;
-
-          XThread.execute("AsyncVenusThread", () -> {
+          XThread thread = new XThread("AsyncVenusThread", () -> {
             VenusExecutor executor = new VenusExecutor();
 
             try {
@@ -110,6 +109,9 @@ public class VenusExecutor {
               asyncExceptions.push(exception);
             }
           });
+
+          thread.setDaemon(asyncContainer.isDaemon());
+          thread.start();
         }
         else if (component instanceof ForEachContainer) {
           ForEachContainer forContainer = (ForEachContainer) component;
