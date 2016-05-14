@@ -45,9 +45,4 @@ public class IfContainer extends Container {
   public String getDisplayName() {
     return "if(" + getCondition() + ')';
   }
-
-  @Override
-  public String toString() {
-    return getDisplayName();
-  }
 }

@@ -19,38 +19,13 @@
 
 package br.shura.venus.component.branch;
 
-import br.shura.venus.component.Container;
-import br.shura.venus.resultor.Resultor;
-
 /**
- * DoWhileContainer.java
+ * Breakable.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 12/05/16 - 20:40
+ * @date 13/05/16 - 21:42
  * @since GAMMA - 0x3
  */
-public class DoWhileContainer extends Container implements Breakable {
-  private Resultor condition;
-
-  public DoWhileContainer(Resultor condition) {
-    this.condition = condition;
-  }
-
-  public Resultor getCondition() {
-    return condition;
-  }
-
-  @Override
-  public String getDisplayName() {
-    return "dowhile(" + getCondition() + ')';
-  }
-
-  public boolean hasCondition() {
-    return getCondition() != null;
-  }
-
-  public void setCondition(Resultor condition) {
-    this.condition = condition;
-  }
+public interface Breakable {
 }

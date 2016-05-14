@@ -30,7 +30,7 @@ import br.shura.venus.resultor.Resultor;
  * @date 12/05/16 - 14:37
  * @since GAMMA - 0x3
  */
-public class ForEachContainer extends Container {
+public class ForEachContainer extends Container implements Breakable {
   private final Resultor adjustment;
   private final Resultor from;
   private final Resultor to;

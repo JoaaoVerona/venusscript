@@ -30,7 +30,7 @@ import br.shura.venus.resultor.Resultor;
  * @date 12/05/16 - 20:23
  * @since GAMMA - 0x3
  */
-public class WhileContainer extends Container {
+public class WhileContainer extends Container implements Breakable {
   private final Resultor condition;
 
   public WhileContainer(Resultor condition) {
@@ -44,10 +44,5 @@ public class WhileContainer extends Container {
   @Override
   public String getDisplayName() {
     return "while(" + getCondition() + ')';
-  }
-
-  @Override
-  public String toString() {
-    return getDisplayName();
   }
 }
