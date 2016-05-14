@@ -19,7 +19,10 @@
 
 package br.shura.venus.component;
 
+import br.shura.venus.compiler.VenusLexer;
+import br.shura.venus.compiler.VenusParser;
 import br.shura.venus.component.function.Function;
+import br.shura.venus.exception.ScriptCompileException;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.ApplicationContext;
 import br.shura.venus.executor.Context;
@@ -29,6 +32,9 @@ import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.collection.view.View;
+import br.shura.x.logging.XLogger;
+
+import java.io.IOException;
 
 /**
  * Script.java
@@ -101,6 +107,36 @@ public class Script extends Container {
   @Override
   public Script getScript() {
     return this;
+  }
+
+  public String include(String includeName, boolean maybe) throws ScriptCompileException {
+    ScriptOrigin includeOrigin = getOrigin().findInclude(includeName);
+
+    if (includeOrigin != null) {
+      VenusLexer lexer;
+
+      try {
+        lexer = new VenusLexer(includeOrigin);
+      }
+      catch (IOException exception) {
+        return "Could not read script \"" + includeOrigin.getScriptName() + "\": " + exception.getClass().getSimpleName() +
+          ": " + exception.getMessage();
+      }
+
+      VenusParser parser = new VenusParser(lexer);
+      Script includeScript = new Script(getApplicationContext(), includeOrigin);
+
+      parser.parse(includeScript);
+      getIncludes().add(includeScript);
+    }
+    else if (maybe) {
+      XLogger.debugln("Not found include script \"" + includeName + "\", but it was marked as maybe.");
+    }
+    else {
+      return "Could not find script \"" + includeName + "\".";
+    }
+
+    return null;
   }
 
   @Deprecated

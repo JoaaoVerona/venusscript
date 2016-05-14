@@ -47,7 +47,6 @@ import br.shura.venus.library.system.SystemLibrary;
 import br.shura.venus.operator.BinaryOperator;
 import br.shura.venus.operator.Operator;
 import br.shura.venus.operator.OperatorList;
-import br.shura.venus.origin.ScriptOrigin;
 import br.shura.venus.resultor.BinaryOperation;
 import br.shura.venus.resultor.Constant;
 import br.shura.venus.resultor.Resultor;
@@ -69,7 +68,6 @@ import br.shura.x.math.impl.SimpleMath;
 import br.shura.x.util.Pool;
 import br.shura.x.worker.ParseWorker;
 
-import java.io.IOException;
 import java.util.function.Predicate;
 
 /**
@@ -529,30 +527,10 @@ public class VenusParser {
       bye(maybeOrNewLine, "expected 'maybe' or new line");
     }
 
-    ScriptOrigin includeOrigin = script.getOrigin().findInclude(includeName);
+    String error = script.include(includeName, maybe);
 
-    if (includeOrigin != null) {
-      VenusLexer lexer = null;
-
-      try {
-        lexer = new VenusLexer(includeOrigin);
-      }
-      catch (IOException exception) {
-        bye("Could not read script \"" + includeOrigin.getScriptName() + "\": " + exception.getClass().getSimpleName() +
-          ": " + exception.getMessage());
-      }
-
-      VenusParser parser = new VenusParser(lexer);
-      Script includeScript = new Script(script.getApplicationContext(), includeOrigin);
-
-      parser.parse(includeScript);
-      script.getIncludes().add(includeScript);
-    }
-    else if (maybe) {
-      XLogger.debugln("Not found include script \"" + includeName + "\", but it was marked as maybe.");
-    }
-    else {
-      bye("Could not find script \"" + includeName + "\".");
+    if (error != null) {
+      bye(error);
     }
   }
 
