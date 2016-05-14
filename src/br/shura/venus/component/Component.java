@@ -33,6 +33,7 @@ import br.shura.x.util.layer.XApi;
  */
 public abstract class Component {
   private Container parent;
+  private int sourceLine;
 
   public Context getApplicationContext() {
     XApi.requireState(getParent() != null, "Could not retrieve application context; no parent available");
@@ -40,8 +41,12 @@ public abstract class Component {
     return getParent().getApplicationContext();
   }
 
-  public Container getParent() {
+  public final Container getParent() {
     return parent;
+  }
+
+  public final int getSourceLine() {
+    return sourceLine;
   }
 
   public Script getScript() {
@@ -50,8 +55,13 @@ public abstract class Component {
     return getParent().getScript();
   }
 
-  public boolean hasParent() {
+  public final boolean hasParent() {
     return getParent() != null;
+  }
+
+  @Internal
+  public void setSourceLine(int sourceLine) {
+    this.sourceLine = sourceLine;
   }
 
   @Internal
