@@ -17,51 +17,19 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.executor;
+package br.shura.venus.library.dynamic;
 
-import br.shura.venus.component.Container;
 import br.shura.venus.library.VenusLibrary;
-import br.shura.venus.library.dynamic.DynamicLibrary;
-import br.shura.venus.library.math.MathLibrary;
-import br.shura.venus.library.std.StdLibrary;
-import br.shura.venus.library.system.SystemLibrary;
-import br.shura.x.collection.map.Map;
-import br.shura.x.collection.map.impl.LinkedMap;
-import br.shura.x.math.impl.FastMath;
-import br.shura.x.math.impl.JavaMath;
-import br.shura.x.math.impl.SimpleMath;
-
-import java.util.function.Supplier;
 
 /**
- * ApplicationContext.java
+ * DynamicLibrary.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 04:14
+ * @date 14/05/16 - 00:47
  * @since GAMMA - 0x3
  */
-public class ApplicationContext extends Context {
-  private final Map<String, Supplier<VenusLibrary>> librarySuppliers;
-
-  public ApplicationContext() {
-    super(new Container() {
-      @Override
-      public String getDisplayName() {
-        return "APPLICATION";
-      }
-    }, null);
-    this.librarySuppliers = new LinkedMap<>();
-
-    getLibrarySuppliers().add("dynamic", DynamicLibrary::new);
-    getLibrarySuppliers().add("math", () -> new MathLibrary(new SimpleMath()));
-    getLibrarySuppliers().add("math_fast", () -> new MathLibrary(new FastMath()));
-    getLibrarySuppliers().add("math_java", () -> new MathLibrary(new JavaMath()));
-    getLibrarySuppliers().add("std", StdLibrary::new);
-    getLibrarySuppliers().add("system", SystemLibrary::new);
-  }
-
-  public Map<String, Supplier<VenusLibrary>> getLibrarySuppliers() {
-    return librarySuppliers;
+public class DynamicLibrary extends VenusLibrary {
+  public DynamicLibrary() {
   }
 }
