@@ -583,7 +583,6 @@ public class VenusParser {
 
     if (library != null) {
       script.getLibraryList().add(library);
-      XLogger.debugln("Added used lib \"" + library.getClass().getName() + "\"");
     }
     else {
       bye(nameToken, "unknown library named \"" + libraryName + "\"");
