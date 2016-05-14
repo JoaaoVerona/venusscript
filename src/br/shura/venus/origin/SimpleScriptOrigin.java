@@ -39,11 +39,6 @@ public class SimpleScriptOrigin implements ScriptOrigin {
   }
 
   @Override
-  public ScriptOrigin findInclude(String includeName) {
-    return null;
-  }
-
-  @Override
   public String getScriptName() {
     return name;
   }

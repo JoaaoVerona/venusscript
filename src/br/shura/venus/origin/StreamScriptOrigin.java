@@ -40,11 +40,6 @@ public class StreamScriptOrigin implements ScriptOrigin {
     this.resource = resource;
   }
 
-  @Override
-  public ScriptOrigin findInclude(String includeName) {
-    return null;
-  }
-
   public IResource getResource() {
     return resource;
   }

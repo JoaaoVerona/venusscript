@@ -51,7 +51,7 @@ public class FileScriptOrigin implements ScriptOrigin {
     catch (FileException exception) {
     }
 
-    return null;
+    return ScriptOrigin.super.findInclude(includeName);
   }
 
   public File getFile() {

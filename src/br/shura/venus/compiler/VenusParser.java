@@ -48,7 +48,6 @@ import br.shura.venus.operator.BinaryOperator;
 import br.shura.venus.operator.Operator;
 import br.shura.venus.operator.OperatorList;
 import br.shura.venus.origin.ScriptOrigin;
-import br.shura.venus.origin.StreamScriptOrigin;
 import br.shura.venus.resultor.BinaryOperation;
 import br.shura.venus.resultor.Constant;
 import br.shura.venus.resultor.Resultor;
@@ -63,7 +62,6 @@ import br.shura.venus.value.ValueType;
 import br.shura.x.charset.build.TextBuilder;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
-import br.shura.x.loader.resource.PathResource;
 import br.shura.x.logging.XLogger;
 import br.shura.x.math.impl.FastMath;
 import br.shura.x.math.impl.JavaMath;
@@ -328,16 +326,6 @@ public class VenusParser {
     throw new UnexpectedTokenException(script.getDisplayName(), lexer.currentLine(), "Invalid token \"" + token + "\"; " + message);
   }
 
-  protected ScriptOrigin defaultInclude(String includeName) {
-    PathResource resource = new PathResource(includeName);
-
-    if (resource.exists()) {
-      return new StreamScriptOrigin(includeName, resource);
-    }
-
-    return null;
-  }
-
   protected VenusLibrary defaultLibrary(String libraryName) {
     if (libraryName.equals("math_fast")) {
       return new MathLibrary(new FastMath());
@@ -543,10 +531,6 @@ public class VenusParser {
 
     ScriptOrigin includeOrigin = script.getOrigin().findInclude(includeName);
 
-    if (includeOrigin == null) {
-      includeOrigin = defaultInclude(includeName);
-    }
-
     if (includeOrigin != null) {
       VenusLexer lexer = null;
 
@@ -563,7 +547,6 @@ public class VenusParser {
 
       parser.parse(includeScript);
       script.getIncludes().add(includeScript);
-      XLogger.debugln("Added include script \"" + includeOrigin.getScriptName() + "\".");
     }
     else if (maybe) {
       XLogger.debugln("Not found include script \"" + includeName + "\", but it was marked as maybe.");

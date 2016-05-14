@@ -19,6 +19,8 @@
 
 package br.shura.venus.origin;
 
+import br.shura.x.loader.resource.PathResource;
+
 import java.io.IOException;
 
 /**
@@ -30,7 +32,15 @@ import java.io.IOException;
  * @since GAMMA - 0x3
  */
 public interface ScriptOrigin {
-  ScriptOrigin findInclude(String includeName);
+  default ScriptOrigin findInclude(String includeName) {
+    PathResource resource = new PathResource(includeName);
+
+    if (resource.exists()) {
+      return new StreamScriptOrigin(includeName, resource);
+    }
+
+    return null;
+  }
 
   String getScriptName();
 
