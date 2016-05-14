@@ -30,15 +30,21 @@ import br.shura.venus.executor.Context;
  * @since GAMMA - 0x3
  */
 public class AsyncContainer extends Container {
+  private final boolean daemon;
   private final boolean internal;
 
-  public AsyncContainer(boolean internal) {
+  public AsyncContainer(boolean daemon, boolean internal) {
+    this.daemon = daemon;
     this.internal = internal;
   }
 
   @Override
   public String getDisplayName() {
     return "async()";
+  }
+
+  public boolean isDaemon() {
+    return daemon;
   }
 
   public boolean isInternal() {
