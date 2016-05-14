@@ -520,7 +520,7 @@ public class VenusParser {
       script.getLibraryList().add(library);
     }
     else {
-      bye(nameToken, "unknown library named \"" + libraryName + "\"");
+      bye(nameToken, "could not find a library named \"" + libraryName + "\"");
     }
   }
 
