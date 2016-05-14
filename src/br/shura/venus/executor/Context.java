@@ -85,18 +85,6 @@ public class Context {
       }
     }
 
-    if (name.length() > 1 && name.charAt(0) == '$') {
-      try {
-        object = getOwner().getApplicationContext().getVar(name.substring(1));
-
-        if (object != null) {
-          return object;
-        }
-      }
-      catch (UndefinedVariableException exception) {
-      }
-    }
-
     throw new UndefinedVariableException(this, name);
   }
 
