@@ -19,6 +19,7 @@
 
 package br.shura.venus.value;
 
+import br.shura.venus.component.function.Function;
 import br.shura.x.collection.view.ArrayView;
 import br.shura.x.collection.view.View;
 import br.shura.x.util.layer.XApi;
@@ -37,6 +38,7 @@ public enum ValueType {
   BOOLEAN("bool", BoolValue.class, Boolean.class),
   DECIMAL("decimal", DecimalValue.class, Double.class, Float.class),
   INTEGER("int", IntegerValue.class, Integer.class, Long.class),
+  REFERENCE("ref", ReferenceValue.class, Function.class),
   STRING("string", StringValue.class, String.class),
   TYPE("type", TypeValue.class, ValueType.class),
   ANY("any", Value.class, Object.class); // Should be after all other types
