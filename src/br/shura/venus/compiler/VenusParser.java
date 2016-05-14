@@ -298,6 +298,7 @@ public class VenusParser {
     if (asyncable && nextAsyncable) {
       AsyncContainer asyncContainer = new AsyncContainer(nextDaemon);
 
+      asyncContainer.setSourceLine(lexer.currentLine());
       container.getChildren().add(asyncContainer);
       asyncContainer.getChildren().add(component);
 
@@ -305,6 +306,7 @@ public class VenusParser {
       this.nextDaemon = false;
     }
     else {
+      component.setSourceLine(lexer.currentLine());
       container.getChildren().add(component);
     }
   }
