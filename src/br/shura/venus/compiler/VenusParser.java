@@ -284,9 +284,9 @@ public class VenusParser {
           }
 
           do {
-            container = container.getParent();
+            this.container = container.getParent();
           }
-          while (container instanceof AsyncContainer && ((AsyncContainer) container).isInternal());
+          while (container instanceof AsyncContainer);
         }
         else {
           bye(token, "no container to close");
@@ -300,7 +300,7 @@ public class VenusParser {
 
   protected void addComponent(Component component, boolean asyncable) {
     if (asyncable && nextAsyncable) {
-      AsyncContainer asyncContainer = new AsyncContainer(!(component instanceof SimpleContainer), nextDaemon);
+      AsyncContainer asyncContainer = new AsyncContainer(nextDaemon);
 
       container.getChildren().add(asyncContainer);
       asyncContainer.getChildren().add(component);
