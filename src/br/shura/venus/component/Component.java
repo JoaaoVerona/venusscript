@@ -68,4 +68,7 @@ public abstract class Component {
   public void setParent(Container parent) {
     this.parent = parent;
   }
+
+  @Override
+  public abstract String toString();
 }
