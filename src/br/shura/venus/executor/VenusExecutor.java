@@ -42,7 +42,6 @@ import br.shura.venus.value.NumericValue;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.list.ListIterator;
 import br.shura.x.collection.store.impl.Queue;
-import br.shura.x.logging.XLogger;
 import br.shura.x.runnable.XThread;
 
 import java.util.function.Supplier;
@@ -80,9 +79,6 @@ public class VenusExecutor {
     Value result = null;
     boolean hadIfAndNotProceed = false;
 
-    if (context == null) {
-      XLogger.println(container + "||" + container.getParent());
-    }
     context.setExecutor(this);
 
     while (shouldRun.get() && iterator.hasNext()) {
@@ -95,6 +91,8 @@ public class VenusExecutor {
       if (!asyncExceptions.isEmpty()) {
         throw asyncExceptions.poll();
       }
+
+      context.setCurrentLine(component.getSourceLine());
 
       if (component instanceof Container) {
         if (component instanceof AsyncContainer) {
