@@ -40,10 +40,8 @@ import br.shura.venus.component.function.Argument;
 import br.shura.venus.component.function.Definition;
 import br.shura.venus.exception.ScriptCompileException;
 import br.shura.venus.exception.UnexpectedTokenException;
+import br.shura.venus.library.LibraryList;
 import br.shura.venus.library.VenusLibrary;
-import br.shura.venus.library.math.MathLibrary;
-import br.shura.venus.library.std.StdLibrary;
-import br.shura.venus.library.system.SystemLibrary;
 import br.shura.venus.operator.BinaryOperator;
 import br.shura.venus.operator.Operator;
 import br.shura.venus.operator.OperatorList;
@@ -62,9 +60,6 @@ import br.shura.x.charset.build.TextBuilder;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.logging.XLogger;
-import br.shura.x.math.impl.FastMath;
-import br.shura.x.math.impl.JavaMath;
-import br.shura.x.math.impl.SimpleMath;
 import br.shura.x.util.Pool;
 import br.shura.x.worker.ParseWorker;
 
@@ -326,30 +321,6 @@ public class VenusParser {
     throw new UnexpectedTokenException(script.getDisplayName(), lexer.currentLine(), "Invalid token \"" + token + "\"; " + message);
   }
 
-  protected VenusLibrary defaultLibrary(String libraryName) {
-    if (libraryName.equals("math_fast")) {
-      return new MathLibrary(new FastMath());
-    }
-
-    if (libraryName.equals("math_java")) {
-      return new MathLibrary(new JavaMath());
-    }
-
-    if (libraryName.equals("math")) {
-      return new MathLibrary(new SimpleMath());
-    }
-
-    if (libraryName.equals("std")) {
-      return new StdLibrary();
-    }
-
-    if (libraryName.equals("system")) {
-      return new SystemLibrary();
-    }
-
-    return null;
-  }
-
   protected Value getValueOf(Token token) throws ScriptCompileException {
     String value = token.getValue();
 
@@ -542,7 +513,7 @@ public class VenusParser {
     requireNewLine();
 
     String libraryName = nameToken.getValue();
-    VenusLibrary library = defaultLibrary(libraryName);
+    VenusLibrary library = LibraryList.findLibrary(libraryName);
 
     if (library != null) {
       script.getLibraryList().add(library);
