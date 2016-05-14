@@ -19,6 +19,8 @@
 
 package br.shura.venus.value;
 
+import br.shura.x.util.layer.XApi;
+
 /**
  * TypeValue.java
  *
@@ -31,6 +33,8 @@ public class TypeValue implements Value {
   private final ValueType value;
 
   public TypeValue(ValueType value) {
+    XApi.requireNonNull(value, "value");
+
     this.value = value;
   }
 
