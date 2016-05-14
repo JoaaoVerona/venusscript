@@ -30,7 +30,11 @@ import br.shura.x.exception.CatchableException;
  * @since GAMMA - 0x3
  */
 public class ScriptCompileException extends CatchableException {
-  public ScriptCompileException(String scriptName, int currentLine, String message) {
-    super(message + " at line " + (currentLine + 1) + " of script \"" + scriptName + "\"");
+  public ScriptCompileException(CharSequence message) {
+    super(message);
+  }
+
+  public ScriptCompileException(String scriptName, int currentLine, CharSequence message) {
+    this(message + " at line " + (currentLine + 1) + " of script \"" + scriptName + "\"");
   }
 }
