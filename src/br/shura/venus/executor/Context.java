@@ -40,6 +40,7 @@ public class Context {
   private final Container owner;
   private final Context parent;
   private final Map<String, Value> variables;
+  private int currentLine;
 
   public Context(Container owner, Context parent) {
     this.owner = owner;
@@ -52,7 +53,7 @@ public class Context {
   }
 
   public int currentLine() {
-    return 0;
+    return currentLine;
   }
 
   public Container getOwner() {
@@ -114,6 +115,11 @@ public class Context {
   @Override
   public String toString() {
     return "context(owner=" + getOwner() + ", vars=" + getVariables() + ", parent=" + getParent() + ')';
+  }
+
+  @Internal
+  protected void setCurrentLine(int currentLine) {
+    this.currentLine = currentLine;
   }
 
   @Internal
