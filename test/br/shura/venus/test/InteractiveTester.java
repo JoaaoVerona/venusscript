@@ -21,46 +21,59 @@ package br.shura.venus.test;
 
 import br.shura.venus.compiler.VenusLexer;
 import br.shura.venus.compiler.VenusParser;
+import br.shura.venus.component.Component;
+import br.shura.venus.component.Container;
 import br.shura.venus.component.Script;
 import br.shura.venus.executor.ApplicationContext;
 import br.shura.venus.executor.VenusExecutor;
 import br.shura.venus.origin.FileScriptOrigin;
 import br.shura.venus.origin.ScriptOrigin;
-import br.shura.x.collection.list.List;
-import br.shura.x.collection.list.impl.ArrayList;
+import br.shura.x.collection.view.View;
 import br.shura.x.io.file.File;
 import br.shura.x.io.file.Folder;
-import br.shura.x.logging.ILogger.Level;
 import br.shura.x.logging.XLogger;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import br.shura.x.worker.ParseWorker;
 
-import java.io.IOException;
-import java.util.Collection;
+import static br.shura.x.sys.XSystem.millis;
 
 /**
- * ExecutorTest.java
+ * InteractiveTester.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 11/05/16 - 00:14
+ * @date 13/05/16 - 21:57
  * @since GAMMA - 0x3
  */
-@RunWith(Parameterized.class)
-public class ExecutorTest {
+public class InteractiveTester {
   public static final Folder DIRECTORY = new Folder("VenusScript/resources");
-  private final File file;
 
-  public ExecutorTest(File file) {
-    this.file = file;
-  }
+  public static void main(String[] args) throws Exception {
+    View<File> files = DIRECTORY.getAllFilesView();
+    int i = 0;
 
-  @Test
-  public void simpleTest() throws Exception {
-    XLogger.disable(Level.DEBUG);
+    for (File file : files) {
+      XLogger.println(i++ + ". " + file.getRelativePath(DIRECTORY));
+    }
 
+    XLogger.print("> ");
+
+    int option = -1;
+    boolean printAst = false;
+
+    while (option < 0 || option >= files.size()) {
+      String optionStr = XLogger.scan();
+
+      if (optionStr.startsWith("*")) {
+        optionStr = optionStr.substring(1);
+        printAst = true;
+      }
+
+      if (ParseWorker.isInt(optionStr)) {
+        option = ParseWorker.toInt(optionStr);
+      }
+    }
+
+    File file = files.at(option);
     ScriptOrigin origin = new FileScriptOrigin(file);
     VenusExecutor executor = new VenusExecutor();
     VenusLexer lexer = new VenusLexer(origin);
@@ -68,15 +81,28 @@ public class ExecutorTest {
     Script script = new Script(new ApplicationContext(), origin);
 
     parser.parse(script);
+
+    if (printAst) {
+      print(script);
+      XLogger.newLine();
+    }
+
+    long start = millis();
+
     executor.run(script);
+
+    long duration = millis() - start;
+
+    XLogger.println("Duration: " + duration + "ms");
   }
 
-  @Parameters
-  public static Collection<Object[]> data() throws IOException {
-    List<Object[]> data = new ArrayList<>();
+  private static void print(Component component) {
+    XLogger.println(component);
 
-    DIRECTORY.getFiles(file -> data.add(new Object[] { file }));
-
-    return data.asCollection(java.util.ArrayList.class);
+    if (component instanceof Container) {
+      for (Component container : ((Container) component).getChildren()) {
+        XLogger.println(container);
+      }
+    }
   }
 }
