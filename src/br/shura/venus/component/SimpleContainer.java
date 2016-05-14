@@ -30,6 +30,6 @@ package br.shura.venus.component;
 public class SimpleContainer extends Container {
   @Override
   public String getDisplayName() {
-    return "simplecontainer";
+    return "simplecontainer()";
   }
 }
