@@ -35,6 +35,7 @@ public class KeywordDefinitions {
   public static final String ASYNC = "async";
   public static final String BREAK = "break";
   public static final String CONTINUE = "continue";
+  public static final String DAEMON = "daemon";
   public static final String DEFINE = "def";
   public static final String DO = "do";
   public static final String ELSE = "else";
