@@ -38,11 +38,13 @@ import br.shura.x.util.layer.XApi;
 public class Context {
   private int currentLine;
   private VenusExecutor executor;
+  private final Map<String, Object> monitors;
   private final Container owner;
   private final Context parent;
   private final Map<String, Value> variables;
 
   public Context(Container owner, Context parent) {
+    this.monitors = new LinkedMap<>();
     this.owner = owner;
     this.parent = parent;
     this.variables = new LinkedMap<>();
@@ -54,6 +56,30 @@ public class Context {
 
   public int currentLine() {
     return currentLine;
+  }
+
+  public Object getMonitor(String name) throws UndefinedVariableException {
+    XApi.requireNonNull(name, "name");
+
+    Object object = monitors.getKeyEntry(name);
+
+    if (object != null) {
+      return object;
+    }
+
+    if (hasParent()) {
+      try {
+        object = getParent().getMonitor(name);
+
+        if (object != null) {
+          return object;
+        }
+      }
+      catch (UndefinedVariableException exception) {
+      }
+    }
+
+    throw new UndefinedVariableException(this, name);
   }
 
   public Container getOwner() {
@@ -102,13 +128,9 @@ public class Context {
 
   public void setVar(String name, Value value) {
     if (!changeVar(name, value)) {
+      monitors.add(name, new Object());
       getVariables().add(name, value);
     }
-  }
-
-  @Override
-  public String toString() {
-    return "context(owner=" + getOwner() + ", vars=" + getVariables() + ", parent=" + getParent() + ')';
   }
 
   protected boolean changeVar(String name, Value value) {
@@ -119,6 +141,11 @@ public class Context {
     }
 
     return hasParent() && getParent().changeVar(name, value);
+  }
+
+  @Override
+  public String toString() {
+    return "context(owner=" + getOwner() + ", vars=" + getVariables() + ", parent=" + getParent() + ')';
   }
 
   @Internal
