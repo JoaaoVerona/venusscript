@@ -20,15 +20,9 @@
 package br.shura.venus.library;
 
 import br.shura.venus.component.function.Function;
-import br.shura.venus.library.math.MathLibrary;
-import br.shura.venus.library.std.StdLibrary;
-import br.shura.venus.library.system.SystemLibrary;
 import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.collection.view.View;
-import br.shura.x.math.impl.FastMath;
-import br.shura.x.math.impl.JavaMath;
-import br.shura.x.math.impl.SimpleMath;
 import br.shura.x.util.layer.XApi;
 
 /**
@@ -62,29 +56,5 @@ public class LibraryList extends ArrayList<VenusLibrary> {
     }
 
     return foundVarArgs;
-  }
-
-  public static VenusLibrary findLibrary(String libraryName) {
-    if (libraryName.equals("math_fast")) {
-      return new MathLibrary(new FastMath());
-    }
-
-    if (libraryName.equals("math_java")) {
-      return new MathLibrary(new JavaMath());
-    }
-
-    if (libraryName.equals("math")) {
-      return new MathLibrary(new SimpleMath());
-    }
-
-    if (libraryName.equals("std")) {
-      return new StdLibrary();
-    }
-
-    if (libraryName.equals("system")) {
-      return new SystemLibrary();
-    }
-
-    return null;
   }
 }
