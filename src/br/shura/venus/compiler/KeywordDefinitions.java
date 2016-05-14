@@ -32,6 +32,7 @@ import br.shura.x.worker.enumeration.Enumerations;
  */
 public class KeywordDefinitions {
   public static final char COMMENTER = '#';
+  public static final String ASYNC = "async";
   public static final String BREAK = "break";
   public static final String CONTINUE = "continue";
   public static final String DEFINE = "def";
