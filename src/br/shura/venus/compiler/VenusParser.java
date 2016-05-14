@@ -46,6 +46,7 @@ import br.shura.venus.operator.Operator;
 import br.shura.venus.operator.OperatorList;
 import br.shura.venus.resultor.BinaryOperation;
 import br.shura.venus.resultor.Constant;
+import br.shura.venus.resultor.Reference;
 import br.shura.venus.resultor.Resultor;
 import br.shura.venus.resultor.Variable;
 import br.shura.venus.value.BoolValue;
@@ -598,7 +599,12 @@ public class VenusParser {
         }
       }
 
-      if (token.getType() == Type.OPERATOR) {
+      if (token.getType() == Type.AT_SIGN) {
+        Token next = requireToken(Type.NAME_DEFINITION, "expected a function name as reference");
+
+        resultor.addResultor(this, next, new Reference(next.getValue()));
+      }
+      else if (token.getType() == Type.OPERATOR) {
         if (nameDef != null) {
           resultor.addResultor(this, nameDefToken, new Variable(nameDef));
           nameDef = null;
