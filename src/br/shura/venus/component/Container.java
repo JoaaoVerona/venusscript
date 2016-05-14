@@ -23,7 +23,10 @@ import br.shura.venus.component.function.Definition;
 import br.shura.venus.component.function.Function;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.exception.UndefinedFunctionException;
+import br.shura.venus.exception.UndefinedVariableException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.value.ReferenceValue;
+import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
@@ -50,6 +53,18 @@ public abstract class Container extends Component {
 
   public Function findFunction(Context context, String name, View<ValueType> argumentTypes) throws ScriptRuntimeException {
     XApi.requireNonNull(name, "name");
+
+    try {
+      Value value = context.getVar(name);
+
+      if (value instanceof ReferenceValue) {
+        ReferenceValue reference = (ReferenceValue) value;
+
+        return reference.value();
+      }
+    }
+    catch (UndefinedVariableException exception) {
+    }
 
     Definition foundVarArgs = null;
 
