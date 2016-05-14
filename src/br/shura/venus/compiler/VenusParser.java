@@ -500,10 +500,12 @@ public class VenusParser {
       bye(maybeOrNewLine, "expected 'maybe' or new line");
     }
 
-    String error = script.include(includeName, maybe);
 
-    if (error != null) {
-      bye(error);
+    try {
+      script.include(includeName, maybe);
+    }
+    catch (ScriptCompileException exception) {
+      bye('"' + exception.getMessage() + '"');
     }
   }
 
