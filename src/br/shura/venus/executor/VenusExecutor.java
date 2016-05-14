@@ -33,8 +33,11 @@ import br.shura.venus.component.branch.ForEachContainer;
 import br.shura.venus.component.branch.IfContainer;
 import br.shura.venus.component.branch.WhileContainer;
 import br.shura.venus.component.function.Definition;
+import br.shura.venus.component.sync.Consume;
+import br.shura.venus.component.sync.Produce;
 import br.shura.venus.exception.InvalidValueTypeException;
 import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.resultor.Variable;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.DecimalValue;
 import br.shura.venus.value.IntegerValue;
@@ -42,6 +45,7 @@ import br.shura.venus.value.NumericValue;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.list.ListIterator;
 import br.shura.x.collection.store.impl.Queue;
+import br.shura.x.logging.XLogger;
 import br.shura.x.runnable.XThread;
 
 import java.util.function.Supplier;
@@ -259,6 +263,44 @@ public class VenusExecutor {
         FunctionCall functionCall = (FunctionCall) component;
 
         functionCall.resolve(context);
+      }
+      else if (component instanceof Produce) {
+        Produce produce = (Produce) component;
+        Variable variable = produce.getVariable();
+        Object monitor;
+
+        synchronized ((monitor = context.getMonitor(variable.getName()))) {
+          Value value = variable.resolve(context);
+
+          context.setVar(variable.getName(), value.plus(new IntegerValue(1)));
+          monitor.notifyAll();
+        }
+      }
+      else if (component instanceof Consume) {
+        Consume consume = (Consume) component;
+        Variable variable = consume.getVariable();
+        Object monitor;
+
+        synchronized ((monitor = context.getMonitor(variable.getName()))) {
+          Value value = variable.resolve(context);
+          long val = 0;
+
+          if (value instanceof IntegerValue) {
+            IntegerValue intValue = (IntegerValue) value;
+
+            val = intValue.value();
+          }
+
+          if (val <= 0) {
+            try {
+              monitor.wait();
+              context.setVar(variable.getName(), value.minus(new IntegerValue(1)));
+            }
+            catch (InterruptedException exception) {
+              XLogger.warnln("Thread " + Thread.currentThread() + " interrupted while consumer " + consume + " was waiting.");
+            }
+          }
+        }
       }
 
       hadIfAndNotProceed = false;
