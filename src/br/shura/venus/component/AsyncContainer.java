@@ -19,6 +19,8 @@
 
 package br.shura.venus.component;
 
+import br.shura.venus.executor.Context;
+
 /**
  * AsyncContainer.java
  *
@@ -28,8 +30,24 @@ package br.shura.venus.component;
  * @since GAMMA - 0x3
  */
 public class AsyncContainer extends Container {
+  private final boolean internal;
+
+  public AsyncContainer(boolean internal) {
+    this.internal = internal;
+  }
+
   @Override
   public String getDisplayName() {
     return "async()";
+  }
+
+  public boolean isInternal() {
+    return internal;
+  }
+
+  @Override
+  public void setParent(Container parent) {
+    super.setParent(parent);
+    this.context = new Context(this, parent.getContext());
   }
 }
