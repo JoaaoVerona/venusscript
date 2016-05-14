@@ -19,18 +19,42 @@
 
 package br.shura.venus.library.dialogs;
 
-import br.shura.venus.library.VenusLibrary;
+import br.shura.uiset.dialog.XDialogs;
+import br.shura.venus.component.function.VoidMethod;
+import br.shura.venus.component.function.annotation.MethodName;
+import br.shura.venus.component.function.annotation.MethodVarArgs;
+import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.value.Value;
+import br.shura.x.charset.build.TextBuilder;
+import br.shura.x.sys.enumeration.AlertType;
+import br.shura.x.util.Pool;
 
 /**
- * DialogsLibrary.java
+ * InfoDialog.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 14/05/16 - 19:37
+ * @date 14/05/16 - 19:50
  * @since GAMMA - 0x3
  */
-public class DialogsLibrary extends VenusLibrary {
-  public DialogsLibrary() {
-    addAll(AskDialog.class, Dialog.class, ErrorDialog.class, InfoDialog.class);
+@MethodName("infoDialog")
+@MethodVarArgs
+public class InfoDialog extends VoidMethod {
+  @Override
+  public void callVoid(Context context, Value... arguments) throws ScriptRuntimeException {
+    if (arguments.length == 0) {
+      return;
+    }
+
+    String title = arguments.length > 1 ? arguments[0].toString() : null;
+    TextBuilder message = Pool.newBuilder();
+
+    for (int i = arguments.length > 1 ? 1 : 0; i < arguments.length; i++) {
+      message.append(arguments[i]);
+      message.newLine();
+    }
+
+    XDialogs.show(AlertType.INFORMATION, title, message);
   }
 }
