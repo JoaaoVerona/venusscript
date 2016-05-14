@@ -19,18 +19,42 @@
 
 package br.shura.venus.library.dialogs;
 
-import br.shura.venus.library.VenusLibrary;
+import br.shura.uiset.dialog.XDialogs;
+import br.shura.venus.component.function.Method;
+import br.shura.venus.component.function.annotation.MethodName;
+import br.shura.venus.component.function.annotation.MethodVarArgs;
+import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.value.BoolValue;
+import br.shura.venus.value.Value;
+import br.shura.x.charset.build.TextBuilder;
+import br.shura.x.util.Pool;
 
 /**
- * DialogsLibrary.java
+ * AskDialog.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 14/05/16 - 19:37
+ * @date 14/05/16 - 19:51
  * @since GAMMA - 0x3
  */
-public class DialogsLibrary extends VenusLibrary {
-  public DialogsLibrary() {
-    addAll(AskDialog.class);
+@MethodName("askDialog")
+@MethodVarArgs
+public class AskDialog extends Method {
+  @Override
+  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
+    if (arguments.length == 0) {
+      return new BoolValue(false);
+    }
+
+    String title = arguments.length > 1 ? arguments[0].toString() : null;
+    TextBuilder message = Pool.newBuilder();
+
+    for (int i = arguments.length > 1 ? 1 : 0; i < arguments.length; i++) {
+      message.append(arguments[i]);
+      message.newLine();
+    }
+
+    return new BoolValue(XDialogs.ask(title, message));
   }
 }
