@@ -19,18 +19,44 @@
 
 package br.shura.venus.library.dynamic;
 
-import br.shura.venus.library.VenusLibrary;
+import br.shura.venus.component.Script;
+import br.shura.venus.component.function.VoidMethod;
+import br.shura.venus.component.function.annotation.MethodArgs;
+import br.shura.venus.component.function.annotation.MethodName;
+import br.shura.venus.exception.ScriptCompileException;
+import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.value.BoolValue;
+import br.shura.venus.value.StringValue;
+import br.shura.venus.value.Value;
+import br.shura.venus.value.ValueType;
 
 /**
- * DynamicLibrary.java
+ * DynamicInclude.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 14/05/16 - 00:47
+ * @date 14/05/16 - 00:16
  * @since GAMMA - 0x3
  */
-public class DynamicLibrary extends VenusLibrary {
-  public DynamicLibrary() {
-    addAll(DynamicInclude.class);
+@MethodArgs({ ValueType.STRING, ValueType.BOOLEAN })
+@MethodName("dynamicInclude")
+public class DynamicInclude extends VoidMethod {
+  @Override
+  public void callVoid(Context context, Value... arguments) throws ScriptRuntimeException {
+    StringValue includeName = (StringValue) arguments[0];
+    BoolValue maybe = (BoolValue) arguments[1];
+    Script script = context.getOwner().getScript();
+
+    try {
+      String error = script.include(includeName.value(), maybe.value());
+
+      if (error != null) {
+        throw new ScriptRuntimeException(context, error);
+      }
+    }
+    catch (ScriptCompileException exception) {
+      throw new ScriptRuntimeException(context, "Could not include script: " + exception.getMessage());
+    }
   }
 }
