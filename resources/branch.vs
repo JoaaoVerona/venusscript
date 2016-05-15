@@ -10,7 +10,11 @@ for i in (1, 30) {
     }
 }
 
-for i in (8, 10) {
+for i in (-20, 10) {
+    if i <= 7 {
+        continue
+    }
+
     println(i)
     continue
 }
