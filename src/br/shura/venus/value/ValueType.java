@@ -90,7 +90,7 @@ public enum ValueType {
     XApi.requireNonNull(identifier, "identifier");
 
     for (ValueType value : values()) {
-      if (value.getIdentifier().equals(value)) {
+      if (value.getIdentifier().equals(identifier)) {
         return value;
       }
     }
