@@ -42,7 +42,7 @@ public enum ValueType {
   INTEGER("int", IntegerValue.class, Integer.class, Long.class),
   STRING("string", StringValue.class, String.class),
   TYPE("type", TypeValue.class, ValueType.class),
-  VARIABLE_REFERENCE(null, VariableRefValue.class, Variable.class),
+  VARIABLE_REFERENCE("var", VariableRefValue.class, Variable.class),
   ANY("any", Value.class, Object.class); // Should be after all other types
 
   private final String identifier;
@@ -77,10 +77,6 @@ public enum ValueType {
     return type;
   }
 
-  public boolean hasIdentifier() {
-    return getIdentifier() != null;
-  }
-
   public boolean objectAccepts(Class<?> type) {
     return getObjectTypes().any(object -> object.isAssignableFrom(UtilWorker.fixPrimitiveClass(type)));
   }
@@ -94,7 +90,7 @@ public enum ValueType {
     XApi.requireNonNull(identifier, "identifier");
 
     for (ValueType value : values()) {
-      if (identifier.equals(value.getIdentifier())) { // Reversed equals() because value::getIdentifier can be null
+      if (value.getIdentifier().equals(value)) {
         return value;
       }
     }
