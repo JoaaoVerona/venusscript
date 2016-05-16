@@ -38,8 +38,6 @@ import br.shura.venus.component.branch.IfContainer;
 import br.shura.venus.component.branch.WhileContainer;
 import br.shura.venus.component.function.Argument;
 import br.shura.venus.component.function.Definition;
-import br.shura.venus.component.sync.Consume;
-import br.shura.venus.component.sync.Produce;
 import br.shura.venus.exception.ScriptCompileException;
 import br.shura.venus.exception.UnexpectedTokenException;
 import br.shura.venus.library.VenusLibrary;
@@ -137,18 +135,6 @@ public class VenusParser {
             bye(token, "there is no parent container available");
           }
         }
-        else if (token.getValue().equals(KeywordDefinitions.CONSUME)) {
-          Resultor resultor = readResultor(Type.NEW_LINE);
-
-          if (resultor instanceof Variable) {
-            Consume consume = new Consume((Variable) resultor);
-
-            addComponent(consume, false);
-          }
-          else {
-            bye(token, "expected a variable as 'consume' parameter, received " + resultor);
-          }
-        }
         else if (token.getValue().equals(KeywordDefinitions.DAEMON)) {
           if (nextAsyncable) {
             if (nextDaemon) {
@@ -196,18 +182,6 @@ public class VenusParser {
           }
           else {
             bye(token, "cannot use 'import' keyword inside container");
-          }
-        }
-        else if (token.getValue().equals(KeywordDefinitions.PRODUCE)) {
-          Resultor resultor = readResultor(Type.NEW_LINE);
-
-          if (resultor instanceof Variable) {
-            Produce produce = new Produce((Variable) resultor);
-
-            addComponent(produce, false);
-          }
-          else {
-            bye(token, "expected a variable as 'consume' parameter, received " + resultor);
           }
         }
         else if (token.getValue().equals(KeywordDefinitions.USING)) {
