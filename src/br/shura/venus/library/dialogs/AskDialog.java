@@ -19,7 +19,7 @@
 
 package br.shura.venus.library.dialogs;
 
-import br.shura.uiset.dialog.XDialogs;
+import br.shura.dialogs.XDialogs;
 import br.shura.venus.component.function.Method;
 import br.shura.venus.component.function.annotation.MethodName;
 import br.shura.venus.component.function.annotation.MethodVarArgs;
