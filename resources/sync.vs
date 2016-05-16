@@ -4,10 +4,10 @@ mutex = 0
 
 async while true {
     sleep(1000)
-    produce mutex
+    produce(:mutex)
 }
 
 while true {
-    consume mutex
+    consume(:mutex)
     println("Produced!")
 }
