@@ -21,22 +21,22 @@ package br.shura.venus.resultor;
 
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
-import br.shura.venus.value.ReferenceValue;
+import br.shura.venus.value.FunctionRefValue;
 import br.shura.venus.value.Value;
 import br.shura.x.util.layer.XApi;
 
 /**
- * Reference.java
+ * FunctionRef.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
  * @date 14/05/16 - 02:52
  * @since GAMMA - 0x3
  */
-public class Reference implements Resultor {
+public class FunctionRef implements Resultor {
   private final String name;
 
-  public Reference(String name) {
+  public FunctionRef(String name) {
     XApi.requireNonNull(name, "name");
 
     this.name = name;
@@ -48,7 +48,7 @@ public class Reference implements Resultor {
 
   @Override
   public Value resolve(Context context) throws ScriptRuntimeException {
-    return new ReferenceValue(context.getOwner().findFunction(context, getName(), null));
+    return new FunctionRefValue(context.getOwner().findFunction(context, getName(), null));
   }
 
   @Override

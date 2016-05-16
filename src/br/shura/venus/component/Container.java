@@ -25,7 +25,7 @@ import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.exception.UndefinedFunctionException;
 import br.shura.venus.exception.UndefinedVariableException;
 import br.shura.venus.executor.Context;
-import br.shura.venus.value.ReferenceValue;
+import br.shura.venus.value.FunctionRefValue;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.List;
@@ -57,8 +57,8 @@ public abstract class Container extends Component {
     try {
       Value value = context.getVar(name);
 
-      if (value instanceof ReferenceValue) {
-        ReferenceValue reference = (ReferenceValue) value;
+      if (value instanceof FunctionRefValue) {
+        FunctionRefValue reference = (FunctionRefValue) value;
 
         return reference.value();
       }

@@ -23,17 +23,17 @@ import br.shura.venus.component.function.Function;
 import br.shura.x.util.layer.XApi;
 
 /**
- * ReferenceValue.java
+ * FunctionRefValue.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
  * @date 14/05/16 - 02:38
  * @since GAMMA - 0x3
  */
-public class ReferenceValue implements Value {
+public class FunctionRefValue implements Value {
   private final Function value;
 
-  public ReferenceValue(Function value) {
+  public FunctionRefValue(Function value) {
     XApi.requireNonNull(value, "value");
 
     this.value = value;
