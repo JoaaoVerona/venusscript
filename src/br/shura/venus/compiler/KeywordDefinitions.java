@@ -34,7 +34,6 @@ public class KeywordDefinitions {
   public static final String ASYNC = "async";
   public static final String BREAK = "break";
   public static final char COMMENTER = '#';
-  public static final String CONSUME = "consume";
   public static final String CONTINUE = "continue";
   public static final String DAEMON = "daemon";
   public static final String DEFINE = "def";
@@ -46,7 +45,6 @@ public class KeywordDefinitions {
   public static final String IF = "if";
   public static final String IN = "in";
   public static final String INCLUDE = "include";
-  public static final String PRODUCE = "produce";
   public static final String TRUE = "true";
   public static final String USING = "using";
   public static final String WHILE = "while";
