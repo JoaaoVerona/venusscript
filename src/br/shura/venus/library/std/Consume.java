@@ -19,28 +19,54 @@
 
 package br.shura.venus.library.std;
 
-import br.shura.venus.library.VenusLibrary;
+import br.shura.venus.component.function.VoidMethod;
+import br.shura.venus.component.function.annotation.MethodArgs;
+import br.shura.venus.component.function.annotation.MethodName;
+import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.resultor.Variable;
+import br.shura.venus.value.IntegerValue;
+import br.shura.venus.value.Value;
+import br.shura.venus.value.ValueType;
+import br.shura.venus.value.VariableRefValue;
+import br.shura.x.logging.XLogger;
 
 /**
- * StdLibrary.java
+ * Consume.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 09/05/16 - 20:29
+ * @date 16/05/16 - 00:59
  * @since GAMMA - 0x3
  */
-public class StdLibrary extends VenusLibrary {
-  public StdLibrary() {
-    // Basic I/O
-    addAll(HasScan.class, Print.class, Println.class, Scan.class);
+@MethodArgs(ValueType.VARIABLE_REFERENCE)
+@MethodName("consume")
+public class Consume extends VoidMethod {
+  @Override
+  public void callVoid(Context context, Value... arguments) throws ScriptRuntimeException {
+    VariableRefValue reference = (VariableRefValue) arguments[0];
+    Variable variable = reference.value();
+    Object monitor;
 
-    // Desktop
-    addAll(Beep.class, Browse.class, Shell.class);
+    synchronized ((monitor = context.getMonitor(variable.getName()))) {
+      Value value = variable.resolve(context);
+      long val = 0;
 
-    // Synchronous
-    addAll(Consume.class, Produce.class);
+      if (value instanceof IntegerValue) {
+        IntegerValue intValue = (IntegerValue) value;
 
-    // Utilities
-    addAll(Assert.class, Millis.class, Sleep.class);
+        val = intValue.value();
+      }
+
+      if (val <= 0) {
+        try {
+          monitor.wait();
+          context.setVar(variable.getName(), value.minus(new IntegerValue(1)));
+        }
+        catch (InterruptedException exception) {
+          XLogger.warnln("Thread " + Thread.currentThread() + " interrupted while consumer was waiting.");
+        }
+      }
+    }
   }
 }
