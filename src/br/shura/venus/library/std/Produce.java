@@ -19,28 +19,39 @@
 
 package br.shura.venus.library.std;
 
-import br.shura.venus.library.VenusLibrary;
+import br.shura.venus.component.function.VoidMethod;
+import br.shura.venus.component.function.annotation.MethodArgs;
+import br.shura.venus.component.function.annotation.MethodName;
+import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.resultor.Variable;
+import br.shura.venus.value.IntegerValue;
+import br.shura.venus.value.Value;
+import br.shura.venus.value.ValueType;
+import br.shura.venus.value.VariableRefValue;
 
 /**
- * StdLibrary.java
+ * Produce.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 09/05/16 - 20:29
+ * @date 16/05/16 - 00:57
  * @since GAMMA - 0x3
  */
-public class StdLibrary extends VenusLibrary {
-  public StdLibrary() {
-    // Basic I/O
-    addAll(HasScan.class, Print.class, Println.class, Scan.class);
+@MethodArgs(ValueType.VARIABLE_REFERENCE)
+@MethodName("produce")
+public class Produce extends VoidMethod {
+  @Override
+  public void callVoid(Context context, Value... arguments) throws ScriptRuntimeException {
+    VariableRefValue reference = (VariableRefValue) arguments[0];
+    Variable variable = reference.value();
+    Object monitor;
 
-    // Desktop
-    addAll(Beep.class, Browse.class, Shell.class);
+    synchronized ((monitor = context.getMonitor(variable.getName()))) {
+      Value value = variable.resolve(context);
 
-    // Synchronous
-    addAll(Produce.class);
-
-    // Utilities
-    addAll(Assert.class, Millis.class, Sleep.class);
+      context.setVar(variable.getName(), value.plus(new IntegerValue(1)));
+      monitor.notifyAll();
+    }
   }
 }
