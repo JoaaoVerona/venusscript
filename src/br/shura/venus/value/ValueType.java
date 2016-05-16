@@ -20,6 +20,7 @@
 package br.shura.venus.value;
 
 import br.shura.venus.component.function.Function;
+import br.shura.venus.resultor.Variable;
 import br.shura.x.collection.view.ArrayView;
 import br.shura.x.collection.view.View;
 import br.shura.x.util.layer.XApi;
@@ -41,6 +42,7 @@ public enum ValueType {
   INTEGER("int", IntegerValue.class, Integer.class, Long.class),
   STRING("string", StringValue.class, String.class),
   TYPE("type", TypeValue.class, ValueType.class),
+  VARIABLE_REFERENCE(null, VariableRefValue.class, Variable.class),
   ANY("any", Value.class, Object.class); // Should be after all other types
 
   private final String identifier;
@@ -75,6 +77,10 @@ public enum ValueType {
     return type;
   }
 
+  public boolean hasIdentifier() {
+    return getIdentifier() != null;
+  }
+
   public boolean objectAccepts(Class<?> type) {
     return getObjectTypes().any(object -> object.isAssignableFrom(UtilWorker.fixPrimitiveClass(type)));
   }
@@ -88,7 +94,7 @@ public enum ValueType {
     XApi.requireNonNull(identifier, "identifier");
 
     for (ValueType value : values()) {
-      if (value.getIdentifier().equals(identifier)) {
+      if (identifier.equals(value.getIdentifier())) { // Reversed equals() because value::getIdentifier can be null
         return value;
       }
     }
