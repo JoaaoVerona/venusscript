@@ -37,8 +37,8 @@ import br.shura.x.worker.UtilWorker;
 public enum ValueType {
   BOOLEAN("bool", BoolValue.class, Boolean.class),
   DECIMAL("decimal", DecimalValue.class, Double.class, Float.class),
+  FUNCTION_REFERENCE("ref", FunctionRefValue.class, Function.class),
   INTEGER("int", IntegerValue.class, Integer.class, Long.class),
-  REFERENCE("ref", FunctionRefValue.class, Function.class),
   STRING("string", StringValue.class, String.class),
   TYPE("type", TypeValue.class, ValueType.class),
   ANY("any", Value.class, Object.class); // Should be after all other types
