@@ -187,6 +187,10 @@ public class VenusLexer {
             return new Token(Type.AT_SIGN, ch);
           }
 
+          if (ch == ':') {
+            return new Token(Type.COLON, ch);
+          }
+
           if (ch == '{') {
             return new Token(Type.OPEN_BRACE, ch);
           }
