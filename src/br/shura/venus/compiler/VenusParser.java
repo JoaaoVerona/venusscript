@@ -58,6 +58,7 @@ import br.shura.venus.value.StringValue;
 import br.shura.venus.value.TypeValue;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
+import br.shura.venus.value.VariableRefValue;
 import br.shura.x.charset.build.TextBuilder;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
@@ -356,6 +357,16 @@ public class VenusParser {
 
   protected Value getValueOf(Token token) throws ScriptCompileException {
     String value = token.getValue();
+
+    if (token.getType() == Type.COLON) {
+      Token next = requireToken();
+
+      if (next.getType() == Type.NAME_DEFINITION) {
+        return new VariableRefValue(new Variable(next.getValue()));
+      }
+
+      lexer.reRead(next);
+    }
 
     if (token.getType() == Type.CHAR_LITERAL || token.getType() == Type.STRING_LITERAL) {
       return new StringValue(value);
