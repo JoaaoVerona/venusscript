@@ -70,6 +70,11 @@ public class MathFunction implements Function {
 
     try {
       Object result = getMethod().invoke(getInstance(), values.toArray());
+
+      if (getMethod().getReturnType() == void.class && result == null) {
+        return null;
+      }
+
       Value value = Value.construct(result);
 
       if (value == null) {
