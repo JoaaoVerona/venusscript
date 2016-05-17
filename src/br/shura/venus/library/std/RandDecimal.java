@@ -19,31 +19,32 @@
 
 package br.shura.venus.library.std;
 
-import br.shura.venus.library.VenusLibrary;
+import br.shura.venus.component.function.Method;
+import br.shura.venus.component.function.annotation.MethodArgs;
+import br.shura.venus.component.function.annotation.MethodName;
+import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.value.DecimalValue;
+import br.shura.venus.value.Value;
+import br.shura.venus.value.ValueType;
+import br.shura.x.math.random.XRandom;
 
 /**
- * StdLibrary.java
+ * RandDecimal.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 09/05/16 - 20:29
+ * @date 17/05/16 - 13:59
  * @since GAMMA - 0x3
  */
-public class StdLibrary extends VenusLibrary {
-  public StdLibrary() {
-    // Basic I/O
-    addAll(HasScan.class, Print.class, Println.class, Scan.class);
+@MethodArgs({ ValueType.DECIMAL, ValueType.DECIMAL })
+@MethodName("randDecimal")
+public class RandDecimal extends Method {
+  @Override
+  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
+    DecimalValue min = (DecimalValue) arguments[0];
+    DecimalValue max = (DecimalValue) arguments[1];
 
-    // Desktop
-    addAll(Beep.class, Browse.class, Shell.class);
-
-    // Random
-    addAll(RandDecimal.class, RandInt.class);
-
-    // Synchronous
-    addAll(Consume.class, Produce.class);
-
-    // Utilities
-    addAll(Assert.class, Millis.class, Sleep.class);
+    return new DecimalValue(XRandom.INSTANCE.nextDouble(min.value(), max.value()));
   }
 }
