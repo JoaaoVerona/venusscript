@@ -17,55 +17,36 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.executor;
+package br.shura.venus.library.crypto;
 
-import br.shura.venus.component.Container;
+import br.shura.crypto.IDecrypter;
+import br.shura.crypto.IEncrypter;
+import br.shura.crypto.util.CryptographyMap;
 import br.shura.venus.library.VenusLibrary;
-import br.shura.venus.library.crypto.CryptoLibrary;
-import br.shura.venus.library.dialogs.DialogsLibrary;
-import br.shura.venus.library.dynamic.DynamicLibrary;
-import br.shura.venus.library.math.MathLibrary;
-import br.shura.venus.library.std.StdLibrary;
-import br.shura.venus.library.system.SystemLibrary;
-import br.shura.x.collection.map.Map;
-import br.shura.x.collection.map.impl.LinkedMap;
-import br.shura.x.math.impl.FastMath;
-import br.shura.x.math.impl.JavaMath;
-import br.shura.x.math.impl.SimpleMath;
-
-import java.util.function.Supplier;
+import br.shura.x.collection.entry.Entry;
 
 /**
- * ApplicationContext.java
+ * CryptoLibrary.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 04:14
+ * @date 17/05/16 - 12:49
  * @since GAMMA - 0x3
  */
-public class ApplicationContext extends Context {
-  private final Map<String, Supplier<VenusLibrary>> librarySuppliers;
-
-  public ApplicationContext() {
-    super(new Container() {
-      @Override
-      public String getDisplayName() {
-        return "APPLICATION";
-      }
-    }, null);
-    this.librarySuppliers = new LinkedMap<>();
-
-    getLibrarySuppliers().add("crypto", CryptoLibrary::new);
-    getLibrarySuppliers().add("dialogs", DialogsLibrary::new);
-    getLibrarySuppliers().add("dynamic", DynamicLibrary::new);
-    getLibrarySuppliers().add("math", () -> new MathLibrary(new SimpleMath()));
-    getLibrarySuppliers().add("math_fast", () -> new MathLibrary(new FastMath()));
-    getLibrarySuppliers().add("math_java", () -> new MathLibrary(new JavaMath()));
-    getLibrarySuppliers().add("std", StdLibrary::new);
-    getLibrarySuppliers().add("system", SystemLibrary::new);
+public class CryptoLibrary extends VenusLibrary {
+  public CryptoLibrary() {
+    this(new CryptographyMap().registerDefaults());
   }
 
-  public Map<String, Supplier<VenusLibrary>> getLibrarySuppliers() {
-    return librarySuppliers;
+  public CryptoLibrary(CryptographyMap map) {
+    for (Entry<String, Object> entry : map) {
+      if (entry.getValue() instanceof IEncrypter) {
+        add(new EncryptFunction(entry.getKey(), (IEncrypter) entry.getValue()));
+      }
+
+      if (entry.getValue() instanceof IDecrypter) {
+        add(new DecryptFunction("un" + entry.getKey(), (IDecrypter) entry.getValue()));
+      }
+    }
   }
 }
