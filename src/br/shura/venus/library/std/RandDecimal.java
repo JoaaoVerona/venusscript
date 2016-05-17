@@ -44,7 +44,16 @@ public class RandDecimal extends Method {
   public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
     DecimalValue min = (DecimalValue) arguments[0];
     DecimalValue max = (DecimalValue) arguments[1];
+    double minValue = min.value();
+    double maxValue = max.value();
 
-    return new DecimalValue(XRandom.INSTANCE.nextDouble(min.value(), max.value()));
+    if (minValue > maxValue) {
+      double temp = maxValue;
+
+      maxValue = minValue;
+      minValue = temp;
+    }
+
+    return new DecimalValue(XRandom.INSTANCE.nextDouble(minValue, maxValue));
   }
 }

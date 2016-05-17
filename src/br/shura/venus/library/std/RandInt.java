@@ -44,7 +44,16 @@ public class RandInt extends Method {
   public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
     IntegerValue min = (IntegerValue) arguments[0];
     IntegerValue max = (IntegerValue) arguments[1];
+    long minValue = min.value();
+    long maxValue = max.value();
 
-    return new IntegerValue(XRandom.INSTANCE.nextLong(min.value(), max.value()));
+    if (minValue > maxValue) {
+      long temp = maxValue;
+
+      maxValue = minValue;
+      minValue = temp;
+    }
+
+    return new IntegerValue(XRandom.INSTANCE.nextLong(minValue, maxValue));
   }
 }
