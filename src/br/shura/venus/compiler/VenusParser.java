@@ -35,6 +35,7 @@ import br.shura.venus.component.branch.ElseContainer;
 import br.shura.venus.component.branch.ElseIfContainer;
 import br.shura.venus.component.branch.ForEachContainer;
 import br.shura.venus.component.branch.IfContainer;
+import br.shura.venus.component.branch.Return;
 import br.shura.venus.component.branch.WhileContainer;
 import br.shura.venus.component.function.Argument;
 import br.shura.venus.component.function.Definition;
@@ -183,6 +184,9 @@ public class VenusParser {
           else {
             bye(token, "cannot use 'import' keyword inside container");
           }
+        }
+        else if (token.getValue().equals(KeywordDefinitions.RETURN)) {
+          parseReturn();
         }
         else if (token.getValue().equals(KeywordDefinitions.USING)) {
           if (container == script) {
@@ -525,6 +529,12 @@ public class VenusParser {
     catch (ScriptCompileException exception) {
       bye('"' + exception.getMessage() + '"');
     }
+  }
+
+  protected void parseReturn() throws ScriptCompileException {
+    Resultor resultor = readResultor(Type.NEW_LINE);
+
+    addComponent(new Return(resultor), false);
   }
 
   protected void parseUsing() throws ScriptCompileException {
