@@ -61,7 +61,7 @@ public class Context {
   public Object getMonitor(String name) throws UndefinedVariableException {
     XApi.requireNonNull(name, "name");
 
-    Object object = monitors.getKeyEntry(name);
+    Object object = monitors.get(name);
 
     if (object != null) {
       return object;
