@@ -66,7 +66,7 @@ public class FunctionCall extends Component implements Resultor {
     List<Value> list = new ArrayList<>();
     int i = 0;
 
-    // This check is necessary because of function references.
+    // This check is necessary because of function references being untyped (issue #9).
     if (!function.isVarArgs() && types.size() != function.getArgumentTypes().size()) {
       throw new InvalidFunctionParameterException(context, function, "Function \"" + function + "\" expected " +
         function.getArgumentTypes().size() + " arguments; received " + types.size());
@@ -80,7 +80,7 @@ public class FunctionCall extends Component implements Resultor {
           value = new DecimalValue(((IntegerValue) value).value());
         }
 
-        // This check is necessary because of function references.
+        // This check is necessary because of function references being untyped (issue #9).
         if (!required.accepts(value.getType())) {
           throw new InvalidFunctionParameterException(context, function, "Function \"" + function + "\" expected " +
             required + " as " + (i + 1) + (i == 0 ? "st" : i == 1 ? "nd" : i == 2 ? "rd" : "th") + " argument; received " +
