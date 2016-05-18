@@ -8,9 +8,6 @@ It is required Java 8+ and libraries:
 - [ShuraX Cryptography](todo): required if enabling CryptoLibrary
 - [ShuraX Dialogs](todo): required if enabling DialogsLibrary
 
-### Authors
-[BloodShura](https://github.com/BloodShura) - João Vitor Verona Biazibetti
-
 ### Definition
 - Highly extensible
 - Dynamic typing
