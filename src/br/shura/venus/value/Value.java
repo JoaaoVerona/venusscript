@@ -127,7 +127,7 @@ public interface Value {
     }
 
     if (object instanceof Number) {
-      return new IntegerValue((Long) object);
+      return new IntegerValue(((Number) object).longValue());
     }
 
     if (object instanceof ValueType) {
