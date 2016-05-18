@@ -42,7 +42,9 @@ import br.shura.venus.value.NumericValue;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.list.ListIterator;
 import br.shura.x.collection.store.impl.Queue;
+import br.shura.x.logging.XLogger;
 import br.shura.x.runnable.XThread;
+import br.shura.x.runnable.collection.ThreadPool;
 
 import java.util.function.Supplier;
 
@@ -59,9 +61,11 @@ public class VenusExecutor {
   private boolean breaking;
   private boolean continuing;
   private boolean shouldRun;
+  private final ThreadPool<XThread> asyncThreads;
 
   public VenusExecutor() {
     this.asyncExceptions = new Queue<>();
+    this.asyncThreads = new ThreadPool<>();
     this.shouldRun = true;
   }
 
@@ -84,12 +88,13 @@ public class VenusExecutor {
     while (shouldRun.get() && iterator.hasNext()) {
       Component component = iterator.next();
 
-      if (breaking || continuing) {
-        break;
+      if (!asyncExceptions.isEmpty()) {
+        XLogger.println("Poll!");
+        throw asyncExceptions.poll();
       }
 
-      if (!asyncExceptions.isEmpty()) {
-        throw asyncExceptions.poll();
+      if (breaking || continuing) {
+        break;
       }
 
       context.setCurrentLine(component.getSourceLine());
@@ -106,8 +111,12 @@ public class VenusExecutor {
             catch (ScriptRuntimeException exception) {
               asyncExceptions.push(exception);
             }
+            catch (Exception exception) {
+              XLogger.println(exception);
+            }
           });
 
+          asyncThreads.add(thread);
           thread.setDaemon(asyncContainer.isDaemon());
           thread.start();
         }
@@ -262,6 +271,12 @@ public class VenusExecutor {
       }
 
       hadIfAndNotProceed = false;
+    }
+
+    asyncThreads.join();
+
+    if (!asyncExceptions.isEmpty()) {
+      throw asyncExceptions.poll();
     }
 
     return result;
