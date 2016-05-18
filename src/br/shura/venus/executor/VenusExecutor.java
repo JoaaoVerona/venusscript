@@ -88,13 +88,12 @@ public class VenusExecutor {
     while (shouldRun.get() && iterator.hasNext()) {
       Component component = iterator.next();
 
-      if (!asyncExceptions.isEmpty()) {
-        XLogger.println("Poll!");
-        throw asyncExceptions.poll();
-      }
-
       if (breaking || continuing) {
         break;
+      }
+
+      if (!asyncExceptions.isEmpty()) {
+        throw asyncExceptions.poll();
       }
 
       context.setCurrentLine(component.getSourceLine());
