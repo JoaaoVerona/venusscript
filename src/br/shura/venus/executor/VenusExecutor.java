@@ -31,6 +31,7 @@ import br.shura.venus.component.branch.ElseContainer;
 import br.shura.venus.component.branch.ElseIfContainer;
 import br.shura.venus.component.branch.ForEachContainer;
 import br.shura.venus.component.branch.IfContainer;
+import br.shura.venus.component.branch.Return;
 import br.shura.venus.component.branch.WhileContainer;
 import br.shura.venus.component.function.Definition;
 import br.shura.venus.exception.InvalidValueTypeException;
@@ -58,10 +59,10 @@ import java.util.function.Supplier;
  */
 public class VenusExecutor {
   private final Queue<ScriptRuntimeException> asyncExceptions;
+  private final ThreadPool<XThread> asyncThreads;
   private boolean breaking;
   private boolean continuing;
   private boolean shouldRun;
-  private final ThreadPool<XThread> asyncThreads;
 
   public VenusExecutor() {
     this.asyncExceptions = new Queue<>();
@@ -267,6 +268,13 @@ public class VenusExecutor {
         FunctionCall functionCall = (FunctionCall) component;
 
         functionCall.resolve(context);
+      }
+      else if (component instanceof Return) {
+        Return returner = (Return) component;
+
+        result = returner.getResultor().resolve(context);
+
+        break;
       }
 
       hadIfAndNotProceed = false;
