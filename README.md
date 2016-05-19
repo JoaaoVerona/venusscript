@@ -12,6 +12,7 @@ It is required Java 8+ and libraries:
 - Highly extensible
 - Dynamic typing
 - Context/scope manipulation
+- No 'null' type/value
 - Simple syntax
 - Runtime injections (of libraries, overriding functions, new functions, ...)
 - Multithreaded
@@ -43,3 +44,4 @@ It is required Java 8+ and libraries:
 - Debugging features (including, but not limited to, *breakpoints*)
 - [interpret()](https://github.com/BloodShura/VenusScript/issues/17)
 - [wait()](https://github.com/BloodShura/VenusScript/issues/5)
+- [... and many more...](https://github.com/BloodShura/VenusScript/issues?q=is%3Aissue+is%3Aopen+-label%3Abug)
