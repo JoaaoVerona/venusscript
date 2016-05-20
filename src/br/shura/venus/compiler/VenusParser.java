@@ -87,8 +87,8 @@ public class VenusParser {
     this.script = script;
   }
 
-  public void parse(VenusLexer lexer, Container container) throws ScriptCompileException {
-    this.container = container;
+  public void parse(VenusLexer lexer, Container c) throws ScriptCompileException {
+    this.container = c;
     this.lexer = lexer;
 
     Token token;
