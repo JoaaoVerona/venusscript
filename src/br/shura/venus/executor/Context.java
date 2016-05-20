@@ -122,6 +122,20 @@ public class Context {
     return getParent() != null;
   }
 
+  public boolean hasVar(String name) throws UndefinedVariableException {
+    XApi.requireNonNull(name, "name");
+
+    if (isOwnerOf(name)) {
+      return true;
+    }
+
+    if (hasParent()) {
+      return getParent().hasVar(name);
+    }
+
+    return false;
+  }
+
   public boolean isOwnerOf(String name) {
     return getVariables().containsKey(name);
   }
