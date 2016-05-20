@@ -21,6 +21,7 @@ package br.shura.venus.library.dialogs;
 
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.Method;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
@@ -44,8 +45,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 @MethodName("setTheme")
 public class SetTheme extends Method {
   @Override
-  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
-    StringValue value = (StringValue) arguments[0];
+  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+    StringValue value = (StringValue) descriptor.get(0);
     String themeName = value.value();
     String themePath = null;
 

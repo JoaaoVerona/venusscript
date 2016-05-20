@@ -21,6 +21,7 @@ package br.shura.venus.library.std;
 
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.Method;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.value.BoolValue;
@@ -38,7 +39,7 @@ import br.shura.x.logging.XLogger;
 @MethodName("hasScan")
 public class HasScan extends Method {
   @Override
-  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
+  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
     return new BoolValue(XLogger.hasScan());
   }
 }

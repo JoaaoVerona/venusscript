@@ -24,6 +24,7 @@ import br.shura.crypto.exception.CryptoException;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.function.Function;
+import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.StringValue;
 import br.shura.venus.value.Value;
@@ -52,9 +53,9 @@ public class EncryptFunction implements Function {
   }
 
   @Override
-  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
-    StringValue value = (StringValue) arguments[0];
-    VariableRefValue reference = (VariableRefValue) arguments[1];
+  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+    StringValue value = (StringValue) descriptor.get(0);
+    VariableRefValue reference = (VariableRefValue) descriptor.get(1);
 
     try {
       String result = getEncrypter().encryptToStr(value.value());

@@ -23,12 +23,12 @@ import br.shura.venus.component.Script;
 import br.shura.venus.exception.ScriptCompileException;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.VoidMethod;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.StringValue;
-import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
 
 /**
@@ -43,9 +43,9 @@ import br.shura.venus.value.ValueType;
 @MethodName("dynamicInclude")
 public class DynamicInclude extends VoidMethod {
   @Override
-  public void callVoid(Context context, Value... arguments) throws ScriptRuntimeException {
-    StringValue includeName = (StringValue) arguments[0];
-    BoolValue maybe = (BoolValue) arguments[1];
+  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+    StringValue includeName = (StringValue) descriptor.get(0);
+    BoolValue maybe = (BoolValue) descriptor.get(1);
     Script script = context.getOwner().getScript();
 
     try {

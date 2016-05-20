@@ -21,6 +21,7 @@ package br.shura.venus.library.system;
 
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.Method;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
@@ -41,11 +42,11 @@ import br.shura.x.sys.XSystem;
 @MethodName("getProperty")
 public class GetProperty extends Method {
   @Override
-  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
-    StringValue key = (StringValue) arguments[0];
+  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+    StringValue key = (StringValue) descriptor.get(0);
     Object value = XSystem.getProperty(key.value());
     Value result = Value.construct(value);
 
-    return result != null ? result : arguments[1];
+    return result != null ? result : descriptor.get(1);
   }
 }

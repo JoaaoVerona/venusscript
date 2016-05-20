@@ -22,12 +22,12 @@ package br.shura.venus.library.dynamic;
 import br.shura.venus.component.Script;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.VoidMethod;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.library.VenusLibrary;
 import br.shura.venus.value.StringValue;
-import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
 
 import java.util.function.Supplier;
@@ -44,8 +44,8 @@ import java.util.function.Supplier;
 @MethodName("dynamicUsing")
 public class DynamicUsing extends VoidMethod {
   @Override
-  public void callVoid(Context context, Value... arguments) throws ScriptRuntimeException {
-    StringValue libraryName = (StringValue) arguments[0];
+  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+    StringValue libraryName = (StringValue) descriptor.get(0);
     Script script = context.getOwner().getScript();
     Supplier<VenusLibrary> supplier = script.getApplicationContext().getLibrarySuppliers().get(libraryName.value());
     VenusLibrary library;

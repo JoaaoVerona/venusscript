@@ -21,6 +21,7 @@ package br.shura.venus.library.std;
 
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.VoidMethod;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.function.annotation.MethodVarArgs;
@@ -39,9 +40,9 @@ import br.shura.x.logging.XLogger;
 @MethodVarArgs
 public class Println extends VoidMethod {
   @Override
-  public void callVoid(Context context, Value... arguments) throws ScriptRuntimeException {
-    if (arguments.length != 0) {
-      for (Value argument : arguments) {
+  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+    if (!descriptor.isEmpty()) {
+      for (Value argument : descriptor.getValues()) {
         XLogger.println(argument);
       }
     }

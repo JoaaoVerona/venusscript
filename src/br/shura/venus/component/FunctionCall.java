@@ -23,6 +23,7 @@ import br.shura.venus.exception.InvalidFunctionParameterException;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.function.Function;
+import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.resultor.Resultor;
 import br.shura.venus.value.DecimalValue;
 import br.shura.venus.value.IntegerValue;
@@ -31,6 +32,7 @@ import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.collection.view.ArrayView;
+import br.shura.x.collection.view.BasicView;
 import br.shura.x.collection.view.View;
 
 /**
@@ -92,7 +94,7 @@ public class FunctionCall extends Component implements Resultor {
       i++;
     }
 
-    return function.call(context, list.toArray());
+    return function.call(context, new FunctionCallDescriptor(this, getArguments(), new BasicView<>(list)));
   }
 
   @Override

@@ -46,11 +46,11 @@ public final class Definition extends Container implements Function {
   }
 
   @Override
-  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
+  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
     int i = 0;
 
     for (Argument argument : getArguments()) {
-      getContext().setVar(argument.getName(), arguments[i++]);
+      getContext().setVar(argument.getName(), descriptor.get(i++));
     }
 
     return context.currentExecutor().run(this);

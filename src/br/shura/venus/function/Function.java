@@ -64,7 +64,7 @@ public interface Function extends INameable {
     return false;
   }
 
-  Value call(Context context, Value... arguments) throws ScriptRuntimeException;
+  Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException;
 
   default int getArgumentCount() {
     return getArgumentTypes().size();

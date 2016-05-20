@@ -21,6 +21,7 @@ package br.shura.venus.library.std;
 
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.Method;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
@@ -41,9 +42,9 @@ import br.shura.x.math.random.XRandom;
 @MethodName("randDecimal")
 public class RandDecimal extends Method {
   @Override
-  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
-    DecimalValue min = (DecimalValue) arguments[0];
-    DecimalValue max = (DecimalValue) arguments[1];
+  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+    DecimalValue min = (DecimalValue) descriptor.get(0);
+    DecimalValue max = (DecimalValue) descriptor.get(1);
     double minValue = min.value();
     double maxValue = max.value();
 

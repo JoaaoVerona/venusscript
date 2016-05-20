@@ -25,11 +25,11 @@ import br.shura.venus.component.SimpleContainer;
 import br.shura.venus.exception.ScriptCompileException;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.VoidMethod;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.function.annotation.MethodVarArgs;
 import br.shura.venus.origin.SimpleScriptOrigin;
-import br.shura.venus.value.Value;
 import br.shura.x.charset.build.TextBuilder;
 import br.shura.x.util.Pool;
 
@@ -47,11 +47,11 @@ import java.io.IOException;
 @MethodVarArgs
 public class Interpret extends VoidMethod {
   @Override
-  public void callVoid(Context context, Value... arguments) throws ScriptRuntimeException {
+  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
     VenusParser parser = context.getOwner().getScript().getParser();
     TextBuilder builder = Pool.newBuilder();
 
-    builder.appendln(arguments);
+    builder.appendln(descriptor.getValues());
 
     String source = builder.toStringAndClear();
     SimpleScriptOrigin origin = new SimpleScriptOrigin("Interpreted-Script", source);

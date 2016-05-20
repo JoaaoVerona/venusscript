@@ -21,6 +21,7 @@ package br.shura.venus.library.std;
 
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.Method;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
@@ -44,9 +45,9 @@ import java.io.IOException;
 @MethodName("shell")
 public class Shell extends Method {
   @Override
-  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
-    StringValue command = (StringValue) arguments[0];
-    BoolValue newWindow = (BoolValue) arguments[1];
+  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+    StringValue command = (StringValue) descriptor.get(0);
+    BoolValue newWindow = (BoolValue) descriptor.get(1);
 
     try {
       XSystem.getTerminal().runInShell(command.value(), newWindow.value());

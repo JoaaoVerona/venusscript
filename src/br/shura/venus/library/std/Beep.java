@@ -21,12 +21,12 @@ package br.shura.venus.library.std;
 
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.VoidMethod;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.value.DecimalValue;
 import br.shura.venus.value.IntegerValue;
-import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
 import br.shura.x.sys.XSystem;
 
@@ -42,9 +42,9 @@ import br.shura.x.sys.XSystem;
 @MethodName("beep")
 public class Beep extends VoidMethod {
   @Override
-  public void callVoid(Context context, Value... arguments) throws ScriptRuntimeException {
-    DecimalValue frequency = (DecimalValue) arguments[0];
-    IntegerValue duration = (IntegerValue) arguments[1];
+  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+    DecimalValue frequency = (DecimalValue) descriptor.get(0);
+    IntegerValue duration = (IntegerValue) descriptor.get(1);
 
     XSystem.getDesktop().beep(frequency.value(), duration.value());
   }

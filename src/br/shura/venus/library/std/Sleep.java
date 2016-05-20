@@ -21,11 +21,11 @@ package br.shura.venus.library.std;
 
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.VoidMethod;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.value.IntegerValue;
-import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
 import br.shura.x.worker.UtilWorker;
 
@@ -41,8 +41,8 @@ import br.shura.x.worker.UtilWorker;
 @MethodName("sleep")
 public class Sleep extends VoidMethod {
   @Override
-  public void callVoid(Context context, Value... arguments) throws ScriptRuntimeException {
-    IntegerValue timeInMillis = (IntegerValue) arguments[0];
+  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+    IntegerValue timeInMillis = (IntegerValue) descriptor.get(0);
 
     UtilWorker.stay(timeInMillis.value());
   }

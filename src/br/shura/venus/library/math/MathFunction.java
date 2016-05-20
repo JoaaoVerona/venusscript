@@ -22,6 +22,7 @@ package br.shura.venus.library.math;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.function.Function;
+import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
@@ -63,11 +64,11 @@ public class MathFunction implements Function {
   }
 
   @Override
-  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
+  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
     List<Object> values = new ArrayList<>();
     int i = 0;
 
-    for (Value argument : arguments) {
+    for (Value argument : descriptor.getValues()) {
       if (argument instanceof IntegerValue && UtilWorker.fixPrimitiveClass(method.getParameterTypes()[i]) == Integer.class) {
         values.add(((Long) argument.value()).intValue());
       }

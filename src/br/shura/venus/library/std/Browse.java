@@ -21,6 +21,7 @@ package br.shura.venus.library.std;
 
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.Method;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
@@ -44,8 +45,8 @@ import br.shura.x.sys.XSystem;
 @MethodName("browse")
 public class Browse extends Method {
   @Override
-  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
-    StringValue path = (StringValue) arguments[0];
+  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+    StringValue path = (StringValue) descriptor.get(0);
 
     try {
       XSystem.getDesktop().browse(new Url(path.value()));

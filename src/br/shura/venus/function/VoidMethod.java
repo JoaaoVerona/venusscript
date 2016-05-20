@@ -33,11 +33,11 @@ import br.shura.venus.value.Value;
  */
 public abstract class VoidMethod extends Method {
   @Override
-  public final Value call(Context context, Value... arguments) throws ScriptRuntimeException {
-    callVoid(context, arguments);
+  public final Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+    callVoid(context, descriptor);
 
     return null;
   }
 
-  public abstract void callVoid(Context context, Value... arguments) throws ScriptRuntimeException;
+  public abstract void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException;
 }

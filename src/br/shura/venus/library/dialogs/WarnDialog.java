@@ -22,6 +22,7 @@ package br.shura.venus.library.dialogs;
 import br.shura.dialogs.XDialogs;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.VoidMethod;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.function.annotation.MethodVarArgs;
@@ -42,16 +43,17 @@ import br.shura.x.util.Pool;
 @MethodVarArgs
 public class WarnDialog extends VoidMethod {
   @Override
-  public void callVoid(Context context, Value... arguments) throws ScriptRuntimeException {
-    if (arguments.length == 0) {
+  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+    if (descriptor.isEmpty()) {
       return;
     }
 
-    String title = arguments.length > 1 ? arguments[0].toString() : null;
+    String title = descriptor.transform(0, Value::toString, null);
     TextBuilder message = Pool.newBuilder();
+    int offset = descriptor.count() > 1 ? 1 : 0;
 
-    for (int i = arguments.length > 1 ? 1 : 0; i < arguments.length; i++) {
-      message.append(arguments[i]);
+    for (int i = offset; i < descriptor.count(); i++) {
+      message.append(descriptor.get(i));
       message.newLine();
     }
 

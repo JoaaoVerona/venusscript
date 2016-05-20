@@ -21,6 +21,7 @@ package br.shura.venus.library.std;
 
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.VoidMethod;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
@@ -42,8 +43,8 @@ import br.shura.venus.value.VariableRefValue;
 @MethodName("produce")
 public class Produce extends VoidMethod {
   @Override
-  public void callVoid(Context context, Value... arguments) throws ScriptRuntimeException {
-    VariableRefValue reference = (VariableRefValue) arguments[0];
+  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+    VariableRefValue reference = (VariableRefValue) descriptor.get(0);
     Variable variable = reference.value();
     Object monitor;
 

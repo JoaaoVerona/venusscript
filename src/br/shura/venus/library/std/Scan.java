@@ -22,6 +22,7 @@ package br.shura.venus.library.std;
 import br.shura.venus.exception.InvalidValueTypeException;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.Method;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
@@ -48,8 +49,8 @@ import br.shura.x.worker.exception.InvalidParseException;
 @MethodName("scan")
 public class Scan extends Method {
   @Override
-  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
-    TypeValue value = (TypeValue) arguments[0];
+  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+    TypeValue value = (TypeValue) descriptor.get(0);
     ValueType type = value.value();
 
     while (true) {

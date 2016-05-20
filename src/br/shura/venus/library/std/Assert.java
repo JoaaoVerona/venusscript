@@ -22,6 +22,7 @@ package br.shura.venus.library.std;
 import br.shura.venus.exception.AssertionException;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.Method;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
@@ -41,8 +42,8 @@ import br.shura.venus.value.ValueType;
 @MethodName("assert")
 public class Assert extends Method {
   @Override
-  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
-    Value value = arguments[0];
+  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+    Value value = descriptor.get(0);
 
     if (value instanceof BoolValue) {
       BoolValue boolValue = (BoolValue) value;
