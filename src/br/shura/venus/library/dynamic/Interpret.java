@@ -19,18 +19,52 @@
 
 package br.shura.venus.library.dynamic;
 
-import br.shura.venus.library.VenusLibrary;
+import br.shura.venus.compiler.VenusLexer;
+import br.shura.venus.compiler.VenusParser;
+import br.shura.venus.component.SimpleContainer;
+import br.shura.venus.component.function.VoidMethod;
+import br.shura.venus.component.function.annotation.MethodName;
+import br.shura.venus.component.function.annotation.MethodVarArgs;
+import br.shura.venus.exception.ScriptCompileException;
+import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.origin.SimpleScriptOrigin;
+import br.shura.venus.value.Value;
+import br.shura.x.charset.build.TextBuilder;
+import br.shura.x.util.Pool;
+
+import java.io.IOException;
 
 /**
- * DynamicLibrary.java
+ * Interpret.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 14/05/16 - 00:47
+ * @date 20/05/16 - 01:08
  * @since GAMMA - 0x3
  */
-public class DynamicLibrary extends VenusLibrary {
-  public DynamicLibrary() {
-    addAll(DynamicInclude.class, DynamicUsing.class, Interpret.class);
+@MethodName("interpret")
+@MethodVarArgs
+public class Interpret extends VoidMethod {
+  @Override
+  public void callVoid(Context context, Value... arguments) throws ScriptRuntimeException {
+    VenusParser parser = context.getOwner().getScript().getParser();
+    TextBuilder builder = Pool.newBuilder();
+
+    builder.appendln(arguments);
+
+    String source = builder.toStringAndClear();
+    SimpleScriptOrigin origin = new SimpleScriptOrigin("Interpreted-Script", source);
+    SimpleContainer container = new SimpleContainer();
+
+    container.setParent(context.getOwner());
+
+    try {
+      parser.parse(new VenusLexer(origin), container);
+      context.currentExecutor().run(container);
+    }
+    catch (IOException | ScriptCompileException exception) {
+      throw new ScriptRuntimeException(context, "Failed to interpret script", exception);
+    }
   }
 }
