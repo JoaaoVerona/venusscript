@@ -48,10 +48,10 @@ public interface ScriptOrigin {
         ": " + exception.getMessage());
     }
 
-    VenusParser parser = new VenusParser(lexer);
     Script script = new Script(applicationContext, this);
+    VenusParser parser = script.getParser();
 
-    parser.parse(script);
+    parser.parse(lexer, script);
 
     return script;
   }

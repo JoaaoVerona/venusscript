@@ -19,6 +19,7 @@
 
 package br.shura.venus.component;
 
+import br.shura.venus.compiler.VenusParser;
 import br.shura.venus.component.function.Function;
 import br.shura.venus.exception.ScriptCompileException;
 import br.shura.venus.exception.ScriptRuntimeException;
@@ -45,6 +46,7 @@ public class Script extends Container {
   private final List<Script> includes;
   private final LibraryList libraryList;
   private final ScriptOrigin origin;
+  private final VenusParser parser;
 
   public Script(ApplicationContext appContext, ScriptOrigin origin) {
     this.appContext = appContext;
@@ -52,6 +54,7 @@ public class Script extends Container {
     this.includes = new ArrayList<>();
     this.libraryList = new LibraryList();
     this.origin = origin;
+    this.parser = new VenusParser(this);
   }
 
   @Override
@@ -98,6 +101,10 @@ public class Script extends Container {
 
   public ScriptOrigin getOrigin() {
     return origin;
+  }
+
+  public VenusParser getParser() {
+    return parser;
   }
 
   @Override

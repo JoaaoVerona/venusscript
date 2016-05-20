@@ -78,22 +78,18 @@ import java.util.function.Supplier;
  */
 public class VenusParser {
   private Container container;
-  private final VenusLexer lexer;
+  private VenusLexer lexer;
   private boolean nextAsyncable;
   private boolean nextDaemon;
-  private Script script;
+  private final Script script;
 
-  public VenusParser(VenusLexer lexer) {
-    this.lexer = lexer;
+  public VenusParser(Script script) {
+    this.script = script;
   }
 
-  public void parse(Script script) throws ScriptCompileException {
-    script.getChildren().clear();
-    script.getContext().getVariables().clear();
-    script.getIncludes().clear();
-
-    this.container = script;
-    this.script = script;
+  public void parse(VenusLexer lexer, Container container) throws ScriptCompileException {
+    this.container = container;
+    this.lexer = lexer;
 
     Token token;
     boolean justExitedIfContainer = false;
