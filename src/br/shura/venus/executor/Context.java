@@ -38,13 +38,13 @@ import br.shura.x.util.layer.XApi;
 public class Context {
   private int currentLine;
   private VenusExecutor executor;
-  private final Map<String, Object> monitors;
+  private final Map<String, Object> lockMonitors;
   private final Container owner;
   private final Context parent;
   private final Map<String, Value> variables;
 
   public Context(Container owner, Context parent) {
-    this.monitors = new LinkedMap<>();
+    this.lockMonitors = new LinkedMap<>();
     this.owner = owner;
     this.parent = parent;
     this.variables = new LinkedMap<>();
@@ -58,10 +58,10 @@ public class Context {
     return currentLine;
   }
 
-  public Object getMonitor(String name) throws UndefinedVariableException {
+  public Object getLockMonitor(String name) throws UndefinedVariableException {
     XApi.requireNonNull(name, "name");
 
-    Object object = monitors.get(name);
+    Object object = lockMonitors.get(name);
 
     if (object != null) {
       return object;
@@ -69,7 +69,7 @@ public class Context {
 
     if (hasParent()) {
       try {
-        object = getParent().getMonitor(name);
+        object = getParent().getLockMonitor(name);
 
         if (object != null) {
           return object;
@@ -134,7 +134,7 @@ public class Context {
 
   public void setVar(String name, Value value) {
     if (!changeVar(name, value)) {
-      monitors.add(name, new Object());
+      lockMonitors.add(name, new Object());
       getVariables().add(name, value);
     }
   }

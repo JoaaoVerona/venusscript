@@ -49,7 +49,7 @@ public class Consume extends VoidMethod {
     Variable variable = reference.value();
     Object monitor;
 
-    synchronized ((monitor = context.getMonitor(variable.getName()))) {
+    synchronized ((monitor = context.getLockMonitor(variable.getName()))) {
       Value value = variable.resolve(context);
       long val = 0;
 
