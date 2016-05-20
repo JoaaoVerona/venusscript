@@ -55,14 +55,14 @@ public class LexerTest {
 
     assertToken(lexer, Type.NAME_DEFINITION, "i");
     assertToken(lexer, Type.OPERATOR, "=");
-    assertToken(lexer, Type.NUMBER_LITERAL, "0");
+    assertToken(lexer, Type.DECIMAL_LITERAL, "0");
     assertToken(lexer, Type.NEW_LINE, null);
     assertToken(lexer, Type.NAME_DEFINITION, "j");
     assertToken(lexer, Type.OPERATOR, "=");
     assertToken(lexer, Type.OPEN_PARENTHESE, "(");
     assertToken(lexer, Type.NAME_DEFINITION, "i");
     assertToken(lexer, Type.OPERATOR, "+");
-    assertToken(lexer, Type.NUMBER_LITERAL, "1");
+    assertToken(lexer, Type.DECIMAL_LITERAL, "1");
     assertToken(lexer, Type.CLOSE_PARENTHESE, ")");
     assertToken(lexer, Type.NEW_LINE, null);
     assertToken(lexer, Type.NAME_DEFINITION, "while");

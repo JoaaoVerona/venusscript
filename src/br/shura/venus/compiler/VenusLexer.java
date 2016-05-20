@@ -97,7 +97,7 @@ public class VenusLexer {
 
             this.state = null;
 
-            return new Token(Type.NUMBER_LITERAL, buildingToken.toStringAndClear());
+            return new Token(Type.DECIMAL_LITERAL, buildingToken.toStringAndClear());
           }
 
           this.line++;
@@ -159,7 +159,7 @@ public class VenusLexer {
 
             this.state = null;
 
-            return new Token(Type.NUMBER_LITERAL, buildingToken.toStringAndClear());
+            return new Token(Type.DECIMAL_LITERAL, buildingToken.toStringAndClear());
           }
         }
         else if (state != IN_CHAR_LITERAL && state != IN_STRING_LITERAL) {

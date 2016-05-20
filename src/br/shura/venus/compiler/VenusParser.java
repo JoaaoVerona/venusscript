@@ -356,7 +356,7 @@ public class VenusParser {
       }
     }
 
-    if (token.getType() == Type.NUMBER_LITERAL) {
+    if (token.getType() == Type.DECIMAL_LITERAL) {
       if (ParseWorker.isLong(value)) {
         return new IntegerValue(ParseWorker.toLong(value));
       }
