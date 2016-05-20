@@ -34,6 +34,7 @@ It is required Java 8+ and libraries:
 - Strongly typed function definitions (e.g. ```def print(string name) {...```)
 - Basic standard libraries (random, input, output, cryptography, dialogs, math, runtime injection)
 - Interpret source code at runtime (e.g. ```interpret("println(3 + 5 + 2 - 1)")```)
+- Binary, decimal and hexadecimal literals
 
 ### To be implemented
 - Object-oriented programming (classes, attributes, methods)
