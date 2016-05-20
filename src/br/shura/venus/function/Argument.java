@@ -17,25 +17,38 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.component.function.annotation;
+package br.shura.venus.function;
 
 import br.shura.venus.value.ValueType;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import br.shura.x.object.Base;
 
 /**
- * MethodArgs.java
+ * Argument.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 02:30
+ * @date 07/05/16 - 18:22
  * @since GAMMA - 0x3
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface MethodArgs {
-  ValueType[] value();
+public class Argument extends Base {
+  private final String name;
+  private final ValueType type;
+
+  public Argument(String name, ValueType type) {
+    this.name = name;
+    this.type = type;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public ValueType getType() {
+    return type;
+  }
+
+  @Override
+  protected Object[] stringValues() {
+    return new Object[] { getName(), getType() };
+  }
 }

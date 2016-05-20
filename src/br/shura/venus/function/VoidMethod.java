@@ -17,82 +17,27 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.component.function;
+package br.shura.venus.function;
 
-import br.shura.venus.component.Container;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
-import br.shura.x.collection.list.List;
-import br.shura.x.collection.view.BasicView;
-import br.shura.x.collection.view.View;
 
 /**
- * Definition.java
+ * VoidMethod.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 15:34
+ * @date 13/05/16 - 18:51
  * @since GAMMA - 0x3
  */
-public final class Definition extends Container implements Function {
-  private final List<Argument> arguments;
-  private final String name;
-
-  public Definition(String name, List<Argument> arguments) {
-    this.arguments = arguments;
-    this.name = name;
-  }
-
+public abstract class VoidMethod extends Method {
   @Override
-  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
-    int i = 0;
+  public final Value call(Context context, Value... arguments) throws ScriptRuntimeException {
+    callVoid(context, arguments);
 
-    for (Argument argument : getArguments()) {
-      getContext().setVar(argument.getName(), arguments[i++]);
-    }
-
-    return context.currentExecutor().run(this);
+    return null;
   }
 
-  @Override
-  public int getArgumentCount() { // Default impl. of getArgumentCount() calls getArgumentTypes(), but our impl. is expensive
-    return arguments.size();
-  }
-
-  @Override
-  public View<ValueType> getArgumentTypes() {
-    return getArguments().reduce(Argument::getType);
-  }
-
-  public View<Argument> getArguments() {
-    return new BasicView<>(arguments);
-  }
-
-  @Override
-  public String getDisplayName() {
-    return '@' + getName();
-  }
-
-  @Override
-  public String getName() {
-    return name;
-  }
-
-  @Override
-  public boolean isVarArgs() {
-    return false;
-  }
-
-  @Override
-  public void setParent(Container parent) {
-    super.setParent(parent);
-    this.context = new Context(this, parent.getContext());
-  }
-
-  @Override
-  public String toString() {
-    return "definition(" + getName() + ')';
-  }
+  public abstract void callVoid(Context context, Value... arguments) throws ScriptRuntimeException;
 }

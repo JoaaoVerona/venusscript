@@ -17,11 +17,11 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.component.function;
+package br.shura.venus.function;
 
-import br.shura.venus.component.function.annotation.MethodArgs;
-import br.shura.venus.component.function.annotation.MethodName;
-import br.shura.venus.component.function.annotation.MethodVarArgs;
+import br.shura.venus.function.annotation.MethodArgs;
+import br.shura.venus.function.annotation.MethodName;
+import br.shura.venus.function.annotation.MethodVarArgs;
 import br.shura.venus.value.ValueType;
 import br.shura.x.collection.view.ArrayView;
 import br.shura.x.collection.view.View;

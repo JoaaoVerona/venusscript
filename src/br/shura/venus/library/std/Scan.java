@@ -19,12 +19,12 @@
 
 package br.shura.venus.library.std;
 
-import br.shura.venus.component.function.Method;
-import br.shura.venus.component.function.annotation.MethodArgs;
-import br.shura.venus.component.function.annotation.MethodName;
 import br.shura.venus.exception.InvalidValueTypeException;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.function.Method;
+import br.shura.venus.function.annotation.MethodArgs;
+import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.DecimalValue;
 import br.shura.venus.value.IntegerValue;

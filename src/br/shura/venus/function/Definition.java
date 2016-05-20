@@ -17,60 +17,82 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.component.function;
+package br.shura.venus.function;
 
+import br.shura.venus.component.Container;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
+import br.shura.x.collection.list.List;
+import br.shura.x.collection.view.BasicView;
 import br.shura.x.collection.view.View;
-import br.shura.x.lang.INameable;
-import br.shura.x.util.layer.XApi;
 
 /**
- * Function.java
+ * Definition.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 02:24
+ * @date 06/05/16 - 15:34
  * @since GAMMA - 0x3
  */
-public interface Function extends INameable {
-  default boolean accepts(String name, View<ValueType> argumentTypes) {
-    XApi.requireNonNull(name, "name");
+public final class Definition extends Container implements Function {
+  private final List<Argument> arguments;
+  private final String name;
 
-    if (getName().equals(name)) {
-      if (argumentTypes == null) {
-        return true;
-      }
+  public Definition(String name, List<Argument> arguments) {
+    this.arguments = arguments;
+    this.name = name;
+  }
 
-      if (getArgumentCount() == argumentTypes.size()) {
-        for (int i = 0; i < getArgumentCount(); i++) {
-          ValueType required = getArgumentTypes().at(i);
-          ValueType found = argumentTypes.at(i);
+  @Override
+  public Value call(Context context, Value... arguments) throws ScriptRuntimeException {
+    int i = 0;
 
-          if (!required.accepts(found) && (required != ValueType.DECIMAL || found != ValueType.INTEGER)) {
-            return false;
-          }
-        }
-
-        return true;
-      }
-      else if (isVarArgs()) {
-        return true;
-      }
+    for (Argument argument : getArguments()) {
+      getContext().setVar(argument.getName(), arguments[i++]);
     }
 
+    return context.currentExecutor().run(this);
+  }
+
+  @Override
+  public int getArgumentCount() { // Default impl. of getArgumentCount() calls getArgumentTypes(), but our impl. is expensive
+    return arguments.size();
+  }
+
+  @Override
+  public View<ValueType> getArgumentTypes() {
+    return getArguments().reduce(Argument::getType);
+  }
+
+  public View<Argument> getArguments() {
+    return new BasicView<>(arguments);
+  }
+
+  @Override
+  public String getDisplayName() {
+    return '@' + getName();
+  }
+
+  @Override
+  public String getName() {
+    return name;
+  }
+
+  @Override
+  public boolean isVarArgs() {
     return false;
   }
 
-  Value call(Context context, Value... arguments) throws ScriptRuntimeException;
-
-  default int getArgumentCount() {
-    return getArgumentTypes().size();
+  @Override
+  public void setParent(Container parent) {
+    super.setParent(parent);
+    this.context = new Context(this, parent.getContext());
   }
 
-  View<ValueType> getArgumentTypes();
-
-  boolean isVarArgs();
+  @Override
+  public String toString() {
+    return "definition(" + getName() + ')';
+  }
 }

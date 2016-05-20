@@ -17,38 +17,60 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.component.function;
+package br.shura.venus.function;
 
+import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
-import br.shura.x.object.Base;
+import br.shura.x.collection.view.View;
+import br.shura.x.lang.INameable;
+import br.shura.x.util.layer.XApi;
 
 /**
- * Argument.java
+ * Function.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 07/05/16 - 18:22
+ * @date 06/05/16 - 02:24
  * @since GAMMA - 0x3
  */
-public class Argument extends Base {
-  private final String name;
-  private final ValueType type;
+public interface Function extends INameable {
+  default boolean accepts(String name, View<ValueType> argumentTypes) {
+    XApi.requireNonNull(name, "name");
 
-  public Argument(String name, ValueType type) {
-    this.name = name;
-    this.type = type;
+    if (getName().equals(name)) {
+      if (argumentTypes == null) {
+        return true;
+      }
+
+      if (getArgumentCount() == argumentTypes.size()) {
+        for (int i = 0; i < getArgumentCount(); i++) {
+          ValueType required = getArgumentTypes().at(i);
+          ValueType found = argumentTypes.at(i);
+
+          if (!required.accepts(found) && (required != ValueType.DECIMAL || found != ValueType.INTEGER)) {
+            return false;
+          }
+        }
+
+        return true;
+      }
+      else if (isVarArgs()) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
-  public String getName() {
-    return name;
+  Value call(Context context, Value... arguments) throws ScriptRuntimeException;
+
+  default int getArgumentCount() {
+    return getArgumentTypes().size();
   }
 
-  public ValueType getType() {
-    return type;
-  }
+  View<ValueType> getArgumentTypes();
 
-  @Override
-  protected Object[] stringValues() {
-    return new Object[] { getName(), getType() };
-  }
+  boolean isVarArgs();
 }

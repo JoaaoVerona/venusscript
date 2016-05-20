@@ -20,11 +20,11 @@
 package br.shura.venus.component;
 
 import br.shura.venus.compiler.VenusParser;
-import br.shura.venus.component.function.Function;
 import br.shura.venus.exception.ScriptCompileException;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.ApplicationContext;
 import br.shura.venus.executor.Context;
+import br.shura.venus.function.Function;
 import br.shura.venus.library.LibraryList;
 import br.shura.venus.origin.ScriptOrigin;
 import br.shura.venus.value.ValueType;

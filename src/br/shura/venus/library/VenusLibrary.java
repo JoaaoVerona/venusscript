@@ -19,7 +19,7 @@
 
 package br.shura.venus.library;
 
-import br.shura.venus.component.function.Function;
+import br.shura.venus.function.Function;
 import br.shura.x.collection.list.impl.ArrayList;
 
 /**

@@ -17,27 +17,25 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.component.function;
+package br.shura.venus.function.annotation;
 
-import br.shura.venus.exception.ScriptRuntimeException;
-import br.shura.venus.executor.Context;
-import br.shura.venus.value.Value;
+import br.shura.venus.value.ValueType;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * VoidMethod.java
+ * MethodArgs.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 13/05/16 - 18:51
+ * @date 06/05/16 - 02:30
  * @since GAMMA - 0x3
  */
-public abstract class VoidMethod extends Method {
-  @Override
-  public final Value call(Context context, Value... arguments) throws ScriptRuntimeException {
-    callVoid(context, arguments);
-
-    return null;
-  }
-
-  public abstract void callVoid(Context context, Value... arguments) throws ScriptRuntimeException;
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface MethodArgs {
+  ValueType[] value();
 }

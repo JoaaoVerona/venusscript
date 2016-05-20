@@ -19,9 +19,9 @@
 
 package br.shura.venus.library.math;
 
-import br.shura.venus.component.function.Function;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.function.Function;
 import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
