@@ -25,7 +25,6 @@ import br.shura.venus.origin.ScriptOrigin;
 import br.shura.x.charset.build.TextBuilder;
 import br.shura.x.charset.sequence.CharSet;
 import br.shura.x.collection.store.impl.Queue;
-import br.shura.x.logging.XLogger;
 import br.shura.x.util.Pool;
 import br.shura.x.worker.StringWorker;
 
@@ -213,7 +212,6 @@ public class VenusLexer {
             back();
 
             this.state = null;
-            XLogger.println("return type=" + numberLiteralType);
 
             return new Token(numberLiteralType, buildingToken.toStringAndClear());
           }
