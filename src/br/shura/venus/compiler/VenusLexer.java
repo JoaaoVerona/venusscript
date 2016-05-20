@@ -23,7 +23,9 @@ import br.shura.venus.compiler.Token.Type;
 import br.shura.venus.exception.UnexpectedInputException;
 import br.shura.venus.origin.ScriptOrigin;
 import br.shura.x.charset.build.TextBuilder;
+import br.shura.x.charset.sequence.CharSet;
 import br.shura.x.collection.store.impl.Queue;
+import br.shura.x.logging.XLogger;
 import br.shura.x.util.Pool;
 import br.shura.x.worker.StringWorker;
 
@@ -44,6 +46,7 @@ public class VenusLexer {
   private boolean insideComment;
   private char lastChar;
   private int line;
+  private Type numberLiteralType;
   private final ScriptOrigin origin;
   private int position;
   private final Queue<Token> reread;
@@ -97,7 +100,7 @@ public class VenusLexer {
 
             this.state = null;
 
-            return new Token(Type.DECIMAL_LITERAL, buildingToken.toStringAndClear());
+            return new Token(numberLiteralType, buildingToken.toStringAndClear());
           }
 
           this.line++;
@@ -150,16 +153,69 @@ public class VenusLexer {
         }
 
         if (state == IN_NUMBER_LITERAL) {
-          if (isLetter) {
-            bye("Letter found while parsing a number literal");
+          if (ch == 'b' && buildingToken.length() == 1 && buildingToken.charAt(0) == '0') {
+            if (numberLiteralType == Type.DECIMAL_LITERAL) {
+              this.numberLiteralType = Type.BINARY_LITERAL;
+
+              buildingToken.clear();
+
+              continue;
+            }
+            else {
+              bye("Cannot re-define number literal type (already " + numberLiteralType + ')');
+            }
           }
 
-          if (!isDigit && ch != '.') {
+          if (ch == 'x' && buildingToken.length() == 1 && buildingToken.charAt(0) == '0') {
+            if (numberLiteralType == Type.DECIMAL_LITERAL) {
+              this.numberLiteralType = Type.HEXADECIMAL_LITERAL;
+
+              buildingToken.clear();
+
+              continue;
+            }
+            else {
+              bye("Cannot re-define number literal type (already " + numberLiteralType + ')');
+            }
+          }
+
+          boolean condition = false;
+
+          if (numberLiteralType == Type.BINARY_LITERAL) {
+            if (isLetter) {
+              if (!CharSet.BINARY.contains(ch)) {
+                bye("Invalid binary character \"" + ch + "\"");
+              }
+            }
+            else {
+              condition = !isDigit;
+            }
+          }
+          else if (numberLiteralType == Type.DECIMAL_LITERAL) {
+            if (isLetter) {
+              bye("Letter found while parsing a number literal");
+            }
+
+            condition = !isDigit && ch != '.';
+          }
+          else if (numberLiteralType == Type.HEXADECIMAL_LITERAL) {
+            if (isLetter) {
+              if (!CharSet.HEXADECIMAL.contains(ch)) {
+                bye("Invalid hexadecimal character \"" + ch + "\"");
+              }
+            }
+            else {
+              condition = !isDigit;
+            }
+          }
+
+          if (condition) {
             back();
 
             this.state = null;
+            XLogger.println("return type=" + numberLiteralType);
 
-            return new Token(Type.DECIMAL_LITERAL, buildingToken.toStringAndClear());
+            return new Token(numberLiteralType, buildingToken.toStringAndClear());
           }
         }
         else if (state != IN_CHAR_LITERAL && state != IN_STRING_LITERAL) {
@@ -228,6 +284,7 @@ public class VenusLexer {
           }
 
           if (isDigit && state != IN_NAME_DEFINITION) {
+            this.numberLiteralType = Type.DECIMAL_LITERAL;
             this.state = IN_NUMBER_LITERAL;
           }
           else if (isLetter && state != IN_NAME_DEFINITION) {
