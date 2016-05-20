@@ -661,7 +661,7 @@ public class VenusParser {
       else if (nameDef != null) {
         bye(token, "expected open parenthese (function) or operator after a name definition");
       }
-      else {
+      else if (token.getType() != Type.NEW_LINE) {
         bye(token, "unexpected token");
       }
     }
