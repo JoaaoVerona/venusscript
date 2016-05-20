@@ -125,15 +125,7 @@ public class Context {
   public boolean hasVar(String name) throws UndefinedVariableException {
     XApi.requireNonNull(name, "name");
 
-    if (isOwnerOf(name)) {
-      return true;
-    }
-
-    if (hasParent()) {
-      return getParent().hasVar(name);
-    }
-
-    return false;
+    return isOwnerOf(name) || (hasParent() && getParent().hasVar(name));
   }
 
   public boolean isOwnerOf(String name) {
