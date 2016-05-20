@@ -46,7 +46,7 @@ import static br.shura.x.sys.XSystem.millis;
  */
 public class InteractiveTester {
   public static final Folder DIRECTORY = new Folder("VenusScript/resources");
-  public static final boolean LIGHTWEIGHT_ERRORS = true;
+  public static final boolean LIGHTWEIGHT_ERRORS = false;
 
   public static void main(String[] args) throws Exception {
     View<File> files = DIRECTORY.getAllFilesView();
