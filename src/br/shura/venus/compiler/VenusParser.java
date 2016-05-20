@@ -62,6 +62,7 @@ import br.shura.x.charset.build.TextBuilder;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.logging.XLogger;
+import br.shura.x.math.number.BaseConverter;
 import br.shura.x.util.Pool;
 import br.shura.x.worker.ParseWorker;
 
@@ -332,6 +333,15 @@ public class VenusParser {
   protected Value getValueOf(Token token) throws ScriptCompileException {
     String value = token.getValue();
 
+    if (token.getType() == Type.BINARY_LITERAL) {
+      try {
+        return new IntegerValue(BaseConverter.encodeToLong(value, BaseConverter.BINARY));
+      }
+      catch (NumberFormatException exception) {
+        bye(token, "illegal binary value \"" + value + "\"");
+      }
+    }
+
     if (token.getType() == Type.COLON) {
       Token next = requireToken();
 
@@ -346,16 +356,6 @@ public class VenusParser {
       return new StringValue(value);
     }
 
-    if (token.getType() == Type.NAME_DEFINITION) {
-      if (value.equals(KeywordDefinitions.TRUE)) {
-        return new BoolValue(true);
-      }
-
-      if (value.equals(KeywordDefinitions.FALSE)) {
-        return new BoolValue(false);
-      }
-    }
-
     if (token.getType() == Type.DECIMAL_LITERAL) {
       if (ParseWorker.isLong(value)) {
         return new IntegerValue(ParseWorker.toLong(value));
@@ -365,7 +365,26 @@ public class VenusParser {
         return new DecimalValue(ParseWorker.toDouble(value));
       }
 
-      bye(token, "illegal numeric value \"" + value + "\"");
+      bye(token, "illegal decimal value \"" + value + "\"");
+    }
+
+    if (token.getType() == Type.HEXADECIMAL_LITERAL) {
+      try {
+        return new IntegerValue(BaseConverter.encodeToLong(value, BaseConverter.HEXADECIMAL));
+      }
+      catch (NumberFormatException exception) {
+        bye(token, "illegal hexadecimal value \"" + value + "\"");
+      }
+    }
+
+    if (token.getType() == Type.NAME_DEFINITION) {
+      if (value.equals(KeywordDefinitions.TRUE)) {
+        return new BoolValue(true);
+      }
+
+      if (value.equals(KeywordDefinitions.FALSE)) {
+        return new BoolValue(false);
+      }
     }
 
     if (token.getType() == Type.OPERATOR && token.getValue().equals("*")) {
