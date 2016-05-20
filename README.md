@@ -33,6 +33,7 @@ It is required Java 8+ and libraries:
 - Ranged foreach container (e.g. ```for i in (0, n)```)
 - Strongly typed function definitions (e.g. ```def print(string name) {...```)
 - Basic standard libraries (random, input, output, cryptography, dialogs, math, runtime injection)
+- Interpret source code at runtime (e.g. ```interpret("println(3 + 5 + 2 - 1)")```)
 
 ### To be implemented
 - Object-oriented programming (classes, attributes, methods)
@@ -42,6 +43,5 @@ It is required Java 8+ and libraries:
 - Enumerations?
 - User-defined value types
 - Debugging features (including, but not limited to, *breakpoints*)
-- [interpret()](https://github.com/BloodShura/VenusScript/issues/17)
 - [wait()](https://github.com/BloodShura/VenusScript/issues/5)
 - [... and many more...](https://github.com/BloodShura/VenusScript/issues?q=is%3Aissue+is%3Aopen+-label%3Abug)
