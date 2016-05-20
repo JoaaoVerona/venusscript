@@ -25,6 +25,7 @@ import br.shura.venus.origin.ScriptOrigin;
 import br.shura.x.charset.build.TextBuilder;
 import br.shura.x.collection.store.impl.Queue;
 import br.shura.x.util.Pool;
+import br.shura.x.worker.StringWorker;
 
 import java.io.IOException;
 
@@ -41,6 +42,7 @@ import static br.shura.venus.compiler.VenusLexer.State.*;
 public class VenusLexer {
   private final TextBuilder buildingToken;
   private boolean insideComment;
+  private char lastChar;
   private int line;
   private final ScriptOrigin origin;
   private int position;
@@ -66,173 +68,184 @@ public class VenusLexer {
 
     while (canRead()) {
       char ch = read();
-      char lastChar = !buildingToken.isEmpty() ? buildingToken.charAt(buildingToken.length() - 1) : 0;
-      boolean isDigit = Character.isDigit(ch);
-      boolean isLetter = Character.isLetter(ch) || ch == '_';
 
-      if (ch == '\n') {
-        this.insideComment = false;
+      try {
+        boolean isDigit = Character.isDigit(ch);
+        boolean isLetter = Character.isLetter(ch) || ch == '_';
 
-        if (state == IN_CHAR_LITERAL) {
-          bye("End of line found, but unclosed character literal");
-        }
+        if (ch == '\n') {
+          this.insideComment = false;
 
-        if (state == IN_STRING_LITERAL) {
-          bye("End of line found, but unclosed string literal");
-        }
+          if (state == IN_CHAR_LITERAL) {
+            bye("End of line found, but unclosed character literal");
+          }
 
-        if (state == IN_NAME_DEFINITION) {
-          back();
+          if (state == IN_STRING_LITERAL) {
+            bye("End of line found, but unclosed string literal");
+          }
 
-          this.state = null;
-
-          return new Token(Type.NAME_DEFINITION, buildingToken.toStringAndClear());
-        }
-
-        if (state == IN_NUMBER_LITERAL) {
-          back();
-
-          this.state = null;
-
-          return new Token(Type.NUMBER_LITERAL, buildingToken.toStringAndClear());
-        }
-
-        this.line++;
-
-        return new Token(Type.NEW_LINE, null);
-      }
-
-      if (insideComment) {
-        continue;
-      }
-
-      if (ch == '"' && lastChar != '\\' && state != IN_CHAR_LITERAL) {
-        if (state == IN_STRING_LITERAL) {
-          this.state = null;
-
-          return new Token(Type.STRING_LITERAL, buildingToken.toStringAndClear());
-        }
-
-        if (state == IN_NUMBER_LITERAL) {
-          bye("Double quotes found while parsing a number literal");
-        }
-
-        if (state == IN_NAME_DEFINITION) {
-          bye("Double quotes found while parsing a name definition");
-        }
-
-        this.state = IN_STRING_LITERAL;
-
-        continue;
-      }
-
-      if (ch == '\'' && lastChar != '\\' && state != IN_STRING_LITERAL) {
-        if (state == IN_CHAR_LITERAL) {
-          this.state = null;
-
-          return new Token(Type.CHAR_LITERAL, buildingToken.toStringAndClear());
-        }
-
-        if (state == IN_NUMBER_LITERAL) {
-          bye("Single quote found while parsing a number literal");
-        }
-
-        if (state == IN_NAME_DEFINITION) {
-          bye("Single quote found while parsing a name definition");
-        }
-
-        this.state = IN_CHAR_LITERAL;
-
-        continue;
-      }
-
-      if (state == IN_NUMBER_LITERAL) {
-        if (isLetter) {
-          bye("Letter found while parsing a number literal");
-        }
-
-        if (!isDigit && ch != '.') {
-          back();
-
-          this.state = null;
-
-          return new Token(Type.NUMBER_LITERAL, buildingToken.toStringAndClear());
-        }
-      }
-      else if (state != IN_CHAR_LITERAL && state != IN_STRING_LITERAL) {
-        if (ch == ' ' || ch == '\t') {
           if (state == IN_NAME_DEFINITION) {
+            back();
+
             this.state = null;
 
             return new Token(Type.NAME_DEFINITION, buildingToken.toStringAndClear());
           }
 
+          if (state == IN_NUMBER_LITERAL) {
+            back();
+
+            this.state = null;
+
+            return new Token(Type.NUMBER_LITERAL, buildingToken.toStringAndClear());
+          }
+
+          this.line++;
+
+          return new Token(Type.NEW_LINE, null);
+        }
+
+        if (insideComment) {
           continue;
         }
 
-        if (state == IN_NAME_DEFINITION && !isLetter && !isDigit) {
-          back();
+        if (ch == '"' && lastChar != '\\' && state != IN_CHAR_LITERAL) {
+          if (state == IN_STRING_LITERAL) {
+            this.state = null;
 
-          this.state = null;
+            return new Token(Type.STRING_LITERAL, buildingToken.toStringAndClear());
+          }
 
-          return new Token(Type.NAME_DEFINITION, buildingToken.toStringAndClear());
+          if (state == IN_NUMBER_LITERAL) {
+            bye("Double quotes found while parsing a number literal");
+          }
+
+          if (state == IN_NAME_DEFINITION) {
+            bye("Double quotes found while parsing a name definition");
+          }
+
+          this.state = IN_STRING_LITERAL;
+
+          continue;
         }
 
-        if (!isLetter && !isDigit) {
-          if (ch == ',') {
-            return new Token(Type.COMMA, ch);
+        if (ch == '\'' && lastChar != '\\' && state != IN_STRING_LITERAL) {
+          if (state == IN_CHAR_LITERAL) {
+            this.state = null;
+
+            return new Token(Type.CHAR_LITERAL, buildingToken.toStringAndClear());
           }
 
-          if (ch == '@') {
-            return new Token(Type.AT_SIGN, ch);
+          if (state == IN_NUMBER_LITERAL) {
+            bye("Single quote found while parsing a number literal");
           }
 
-          if (ch == ':') {
-            return new Token(Type.COLON, ch);
+          if (state == IN_NAME_DEFINITION) {
+            bye("Single quote found while parsing a name definition");
           }
 
-          if (ch == '{') {
-            return new Token(Type.OPEN_BRACE, ch);
+          this.state = IN_CHAR_LITERAL;
+
+          continue;
+        }
+
+        if (state == IN_NUMBER_LITERAL) {
+          if (isLetter) {
+            bye("Letter found while parsing a number literal");
           }
 
-          if (ch == '[') {
-            return new Token(Type.OPEN_BRACKET, ch);
-          }
+          if (!isDigit && ch != '.') {
+            back();
 
-          if (ch == '(') {
-            return new Token(Type.OPEN_PARENTHESE, ch);
-          }
+            this.state = null;
 
-          if (ch == '}') {
-            return new Token(Type.CLOSE_BRACE, ch);
+            return new Token(Type.NUMBER_LITERAL, buildingToken.toStringAndClear());
           }
+        }
+        else if (state != IN_CHAR_LITERAL && state != IN_STRING_LITERAL) {
+          if (ch == ' ' || ch == '\t') {
+            if (state == IN_NAME_DEFINITION) {
+              this.state = null;
 
-          if (ch == ']') {
-            return new Token(Type.CLOSE_BRACKET, ch);
-          }
-
-          if (ch == ')') {
-            return new Token(Type.CLOSE_PARENTHESE, ch);
-          }
-
-          if (ch == KeywordDefinitions.COMMENTER) {
-            this.insideComment = true;
+              return new Token(Type.NAME_DEFINITION, buildingToken.toStringAndClear());
+            }
 
             continue;
           }
 
-          return new Token(Type.OPERATOR, ch);
+          if (state == IN_NAME_DEFINITION && !isLetter && !isDigit) {
+            back();
+
+            this.state = null;
+
+            return new Token(Type.NAME_DEFINITION, buildingToken.toStringAndClear());
+          }
+
+          if (!isLetter && !isDigit) {
+            if (ch == ',') {
+              return new Token(Type.COMMA, ch);
+            }
+
+            if (ch == '@') {
+              return new Token(Type.AT_SIGN, ch);
+            }
+
+            if (ch == ':') {
+              return new Token(Type.COLON, ch);
+            }
+
+            if (ch == '{') {
+              return new Token(Type.OPEN_BRACE, ch);
+            }
+
+            if (ch == '[') {
+              return new Token(Type.OPEN_BRACKET, ch);
+            }
+
+            if (ch == '(') {
+              return new Token(Type.OPEN_PARENTHESE, ch);
+            }
+
+            if (ch == '}') {
+              return new Token(Type.CLOSE_BRACE, ch);
+            }
+
+            if (ch == ']') {
+              return new Token(Type.CLOSE_BRACKET, ch);
+            }
+
+            if (ch == ')') {
+              return new Token(Type.CLOSE_PARENTHESE, ch);
+            }
+
+            if (ch == KeywordDefinitions.COMMENTER) {
+              this.insideComment = true;
+
+              continue;
+            }
+
+            return new Token(Type.OPERATOR, ch);
+          }
+
+          if (isDigit && state != IN_NAME_DEFINITION) {
+            this.state = IN_NUMBER_LITERAL;
+          }
+          else if (isLetter && state != IN_NAME_DEFINITION) {
+            this.state = IN_NAME_DEFINITION;
+          }
         }
 
-        if (isDigit && state != IN_NAME_DEFINITION) {
-          this.state = IN_NUMBER_LITERAL;
+        if (lastChar == '\\') {
+          buildingToken.append(StringWorker.unescape("\\" + ch));
+          ch = 0;
         }
-        else if (isLetter && state != IN_NAME_DEFINITION) {
-          this.state = IN_NAME_DEFINITION;
+        else if (ch != '\\') {
+          buildingToken.append(ch);
         }
       }
-
-      buildingToken.append(ch);
+      finally {
+        this.lastChar = ch;
+      }
     }
 
     return null;
