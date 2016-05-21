@@ -266,13 +266,19 @@ public class VenusExecutor {
       }
       else if (component instanceof FunctionCall) {
         FunctionCall functionCall = (FunctionCall) component;
+        Value value = functionCall.resolve(context);
 
-        functionCall.resolve(context);
+        if (value != null) {
+          result = value;
+        }
       }
       else if (component instanceof Return) {
         Return returner = (Return) component;
+        Value value = returner.getResultor().resolve(context);
 
-        result = returner.getResultor().resolve(context);
+        if (value != null) {
+          result = value;
+        }
 
         break;
       }
