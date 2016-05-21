@@ -67,7 +67,9 @@ public class VariableStructure {
 
     synchronized (changeMonitors) {
       for (Object monitor : changeMonitors) {
-        monitor.notifyAll();
+        synchronized (monitor) {
+          monitor.notifyAll();
+        }
       }
     }
   }
