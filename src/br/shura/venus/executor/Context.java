@@ -61,7 +61,7 @@ public class Context {
   public Object getLockMonitor(String name) throws UndefinedVariableException {
     XApi.requireNonNull(name, "name");
 
-    Object object = lockMonitors.get(name);
+    Object object = getLockMonitors().get(name);
 
     if (object != null) {
       return object;
@@ -80,6 +80,10 @@ public class Context {
     }
 
     throw new UndefinedVariableException(this, name);
+  }
+
+  public Map<String, Object> getLockMonitors() throws UndefinedVariableException {
+    return lockMonitors;
   }
 
   public Container getOwner() {
@@ -139,6 +143,11 @@ public class Context {
     }
   }
 
+  @Override
+  public String toString() {
+    return "context(owner=" + getOwner() + ", vars=" + getVariables() + ", parent=" + getParent() + ')';
+  }
+
   protected boolean changeVar(String name, Value value) {
     if (isOwnerOf(name)) {
       getVariables().set(name, value);
@@ -147,11 +156,6 @@ public class Context {
     }
 
     return hasParent() && getParent().changeVar(name, value);
-  }
-
-  @Override
-  public String toString() {
-    return "context(owner=" + getOwner() + ", vars=" + getVariables() + ", parent=" + getParent() + ')';
   }
 
   @Internal
