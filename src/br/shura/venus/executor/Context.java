@@ -40,7 +40,7 @@ public class Context {
   private VenusExecutor executor;
   private final Container owner;
   private final Context parent;
-  private final Map<String, VariableDefinition> variables;
+  private final Map<String, VariableStructure> variables;
 
   public Context(Container owner, Context parent) {
     this.owner = owner;
@@ -59,7 +59,7 @@ public class Context {
   public Object getLockMonitor(String name) throws UndefinedVariableException {
     XApi.requireNonNull(name, "name");
 
-    VariableDefinition object = findVariable(name);
+    VariableStructure object = findVariable(name);
 
     return object.getValue();
   }
@@ -75,12 +75,12 @@ public class Context {
   public Value getVar(String name) throws UndefinedVariableException {
     XApi.requireNonNull(name, "name");
 
-    VariableDefinition object = findVariable(name);
+    VariableStructure object = findVariable(name);
 
     return object.getValue();
   }
 
-  public Map<String, VariableDefinition> getVariables() {
+  public Map<String, VariableStructure> getVariables() {
     return variables;
   }
 
@@ -100,7 +100,7 @@ public class Context {
 
   public void setVar(String name, Value value) {
     if (!changeVar(name, value)) {
-      getVariables().add(name, new VariableDefinition(value));
+      getVariables().add(name, new VariableStructure(value));
     }
   }
 
@@ -119,7 +119,7 @@ public class Context {
     return hasParent() && getParent().changeVar(name, value);
   }
 
-  protected VariableDefinition findVariable(String name) throws UndefinedVariableException {
+  protected VariableStructure findVariable(String name) throws UndefinedVariableException {
     if (isOwnerOf(name)) {
       return getVariables().get(name);
     }

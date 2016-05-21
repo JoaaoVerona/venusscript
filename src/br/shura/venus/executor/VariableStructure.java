@@ -22,18 +22,18 @@ package br.shura.venus.executor;
 import br.shura.venus.value.Value;
 
 /**
- * VariableDefinition.java
+ * VariableStructure.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
  * @date 20/05/16 - 21:26
  * @since GAMMA - 0x3
  */
-public class VariableDefinition {
+public class VariableStructure {
   private final Object lockMonitor;
   private Value value;
 
-  public VariableDefinition(Value value) {
+  public VariableStructure(Value value) {
     this.lockMonitor = new Object();
     this.value = value;
   }
