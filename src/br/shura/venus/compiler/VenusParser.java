@@ -547,9 +547,15 @@ public class VenusParser {
   }
 
   protected void parseReturn() throws ScriptCompileException {
-    Resultor resultor = readResultor(Type.NEW_LINE);
+    Token test = lexer.nextToken();
 
-    addComponent(new Return(resultor), false);
+    if (test == null || test.getType() == Type.NEW_LINE) {
+      addComponent(new Return(null), false);
+    }
+    else {
+      lexer.reRead(test);
+      addComponent(new Return(readResultor(Type.NEW_LINE)), false);
+    }
   }
 
   protected void parseUsing() throws ScriptCompileException {
