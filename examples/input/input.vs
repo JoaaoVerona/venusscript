@@ -1,3 +1,7 @@
+# VenusScript - Basic input example.
+# This script simply asks the user to specify
+# a value type, and a value. Then it prints them.
+
 using std
 
 while true {

@@ -1,3 +1,12 @@
+# VenusScript - Loop containers example.
+# This script shows some variations of
+# usages for loop containers:
+# - do-while
+# - for
+# - while
+# Should be self explanatory if you already
+# understand resultors.
+
 using std
 
 # 0...2
@@ -30,6 +39,9 @@ using std
 {
     i = 11
 
+    # NOTE: 'do' containers, without a trailing
+    # 'while' keyword, are just like a simple
+    # container; it is, they DO NOT loop.
     do {
         println("i = " + i)
         i = i + 1

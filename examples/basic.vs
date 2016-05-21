@@ -1,10 +1,22 @@
-using std
+# Venus Script - Basic example.
+# This script shows a basic program, creating
+# a simple function (here called 'definition')
+# and executing it.
 
-# Isto é um comentário.
+# This is a comment!
 
+using std # Uses library 'std'.
+
+# Creates a new definition called 'printMyName',
+# which receives a single argument called 'name'
+# of type 'string'.
 def printMyName(string name) {
+    # Calls the method 'println' imported from library
+    # 'std', concatenating the argument 'name' with
+    # string literal.s
     println("AAAND HIS NAME IS " + name + "!")
 }
 
-println("Hello, VenusScript!") # Isto também é um comentário.
+# Calls the created definition, passing
+# 'João Vitor Verona Biazibetti' as argument.
 printMyName("João Vitor Verona Biazibetti")

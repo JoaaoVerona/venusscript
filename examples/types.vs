@@ -1,3 +1,8 @@
+# VenusScript - Types example.
+# This script is used for testing purposes.
+# Basically, shows the value type of some variables,
+# and asserts they are correct.
+
 using std
 
 a = "I <3 COMPUTER SCIENCE!"

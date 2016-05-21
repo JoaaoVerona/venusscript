@@ -1,3 +1,7 @@
+# VenusScript - Math library example.
+# This script shows some usages of methods
+# from 'math' library.
+
 using math
 using std
 

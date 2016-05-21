@@ -1,3 +1,7 @@
+# VenusScript - Return values example.
+# This script shows a small example of how
+# to return values from definitions.
+
 using std
 
 def completeName(string name) {

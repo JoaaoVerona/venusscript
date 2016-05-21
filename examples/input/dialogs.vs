@@ -1,3 +1,8 @@
+# VenusScript - Dialogs example.
+# This script is a small demonstration on how
+# to use the 'dialogs' library together with
+# workflow manipulation of loop containers.
+
 using dialogs
 
 setTheme("system")

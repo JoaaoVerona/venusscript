@@ -1,3 +1,7 @@
+# VenusScript - Recursion example.
+# This script shows a simple example of
+# recursive functions.
+
 using std
 
 def countdown(int i) {
