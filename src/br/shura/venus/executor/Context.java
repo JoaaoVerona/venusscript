@@ -38,13 +38,11 @@ import br.shura.x.util.layer.XApi;
 public class Context {
   private int currentLine;
   private VenusExecutor executor;
-  private final Map<String, Object> lockMonitors;
   private final Container owner;
   private final Context parent;
-  private final Map<String, Value> variables;
+  private final Map<String, VariableDefinition> variables;
 
   public Context(Container owner, Context parent) {
-    this.lockMonitors = new LinkedMap<>();
     this.owner = owner;
     this.parent = parent;
     this.variables = new LinkedMap<>();
@@ -61,29 +59,9 @@ public class Context {
   public Object getLockMonitor(String name) throws UndefinedVariableException {
     XApi.requireNonNull(name, "name");
 
-    Object object = getLockMonitors().get(name);
+    VariableDefinition object = findVariable(name);
 
-    if (object != null) {
-      return object;
-    }
-
-    if (hasParent()) {
-      try {
-        object = getParent().getLockMonitor(name);
-
-        if (object != null) {
-          return object;
-        }
-      }
-      catch (UndefinedVariableException exception) {
-      }
-    }
-
-    throw new UndefinedVariableException(this, name);
-  }
-
-  public Map<String, Object> getLockMonitors() {
-    return lockMonitors;
+    return object.value;
   }
 
   public Container getOwner() {
@@ -97,28 +75,12 @@ public class Context {
   public Value getVar(String name) throws UndefinedVariableException {
     XApi.requireNonNull(name, "name");
 
-    Value object = getVariables().get(name);
+    VariableDefinition object = findVariable(name);
 
-    if (object != null) {
-      return object;
-    }
-
-    if (hasParent()) {
-      try {
-        object = getParent().getVar(name);
-
-        if (object != null) {
-          return object;
-        }
-      }
-      catch (UndefinedVariableException exception) {
-      }
-    }
-
-    throw new UndefinedVariableException(this, name);
+    return object.value;
   }
 
-  public Map<String, Value> getVariables() {
+  public Map<String, VariableDefinition> getVariables() {
     return variables;
   }
 
@@ -138,8 +100,7 @@ public class Context {
 
   public void setVar(String name, Value value) {
     if (!changeVar(name, value)) {
-      getLockMonitors().add(name, new Object());
-      getVariables().add(name, value);
+      getVariables().add(name, new VariableDefinition(value));
     }
   }
 
@@ -150,12 +111,28 @@ public class Context {
 
   protected boolean changeVar(String name, Value value) {
     if (isOwnerOf(name)) {
-      getVariables().set(name, value);
+      getVariables().get(name).value = value;
 
       return true;
     }
 
     return hasParent() && getParent().changeVar(name, value);
+  }
+
+  protected VariableDefinition findVariable(String name) throws UndefinedVariableException {
+    if (isOwnerOf(name)) {
+      return getVariables().get(name);
+    }
+
+    if (hasParent()) {
+      try {
+        return getParent().findVariable(name);
+      }
+      catch (UndefinedVariableException exception) {
+      }
+    }
+
+    throw new UndefinedVariableException(this, name);
   }
 
   @Internal
@@ -166,5 +143,15 @@ public class Context {
   @Internal
   protected void setExecutor(VenusExecutor executor) {
     this.executor = executor;
+  }
+
+  public static class VariableDefinition {
+    public final Object lockMonitor;
+    public Value value;
+
+    public VariableDefinition(Value value) {
+      this.lockMonitor = new Object();
+      this.value = value;
+    }
   }
 }
