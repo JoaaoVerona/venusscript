@@ -21,7 +21,7 @@ It is required Java 8+ and libraries:
 
 ### Already implemented
 - Asynchronous features: async. scopes
-- Synchronous features: monitor locks (produce, consume)
+- Synchronous features: monitor locks (produce, consume), value waiting (e.g. ```wait(i == 5)```)
 - Value types
 - Function references
 - Variable references
@@ -44,5 +44,4 @@ It is required Java 8+ and libraries:
 - Enumerations?
 - User-defined value types
 - Debugging features (including, but not limited to, *breakpoints*)
-- [wait()](https://github.com/BloodShura/VenusScript/issues/5)
 - [... and many more...](https://github.com/BloodShura/VenusScript/issues?q=is%3Aissue+is%3Aopen+-label%3Abug)
