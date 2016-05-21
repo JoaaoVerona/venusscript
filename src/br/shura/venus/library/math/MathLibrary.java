@@ -39,5 +39,7 @@ public class MathLibrary extends VenusLibrary {
         add(new MathFunction(method, instance));
       }
     }
+
+    addAll(RandDecimal.class, RandInt.class);
   }
 }

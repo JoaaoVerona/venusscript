@@ -37,9 +37,6 @@ public class StdLibrary extends VenusLibrary {
     // Desktop
     addAll(Beep.class, Browse.class, Shell.class);
 
-    // Random
-    addAll(RandDecimal.class, RandInt.class);
-
     // Synchronous
     addAll(Consume.class, Produce.class, WaitAttribution.class, WaitDefinition.class);
 
