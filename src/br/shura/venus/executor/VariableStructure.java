@@ -20,6 +20,8 @@
 package br.shura.venus.executor;
 
 import br.shura.venus.value.Value;
+import br.shura.x.collection.list.List;
+import br.shura.x.collection.list.impl.ArrayList;
 
 /**
  * VariableStructure.java
@@ -30,12 +32,20 @@ import br.shura.venus.value.Value;
  * @since GAMMA - 0x3
  */
 public class VariableStructure {
+  private final List<Object> changeMonitors;
   private final Object lockMonitor;
   private Value value;
 
   public VariableStructure(Value value) {
+    this.changeMonitors = new ArrayList<>();
     this.lockMonitor = new Object();
     this.value = value;
+  }
+
+  public void addChangeMonitor(Object monitor) {
+    synchronized (changeMonitors) {
+      changeMonitors.add(monitor);
+    }
   }
 
   public Object getLockMonitor() {
@@ -46,7 +56,19 @@ public class VariableStructure {
     return value;
   }
 
+  public void removeChangeMonitor(Object monitor) {
+    synchronized (changeMonitors) {
+      changeMonitors.remove(monitor);
+    }
+  }
+
   public void setValue(Value value) {
     this.value = value;
+
+    synchronized (changeMonitors) {
+      for (Object monitor : changeMonitors) {
+        monitor.notifyAll();
+      }
+    }
   }
 }
