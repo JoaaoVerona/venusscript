@@ -19,31 +19,33 @@
 
 package br.shura.venus.library.std;
 
-import br.shura.venus.library.VenusLibrary;
+import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.function.FunctionCallDescriptor;
+import br.shura.venus.function.VoidMethod;
+import br.shura.venus.function.annotation.MethodArgs;
+import br.shura.venus.function.annotation.MethodName;
+import br.shura.venus.value.ValueType;
+import br.shura.venus.value.VariableRefValue;
+import br.shura.x.worker.UtilWorker;
 
 /**
- * StdLibrary.java
+ * WaitDefinition.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 09/05/16 - 20:29
+ * @date 20/05/16 - 20:49
  * @since GAMMA - 0x3
  */
-public class StdLibrary extends VenusLibrary {
-  public StdLibrary() {
-    // Basic I/O
-    addAll(HasScan.class, Print.class, Println.class, Scan.class);
+@MethodArgs(ValueType.VARIABLE_REFERENCE)
+@MethodName("wait")
+public class WaitDefinition extends VoidMethod {
+  @Override
+  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+    VariableRefValue reference = (VariableRefValue) descriptor.get(0);
 
-    // Desktop
-    addAll(Beep.class, Browse.class, Shell.class);
-
-    // Random
-    addAll(RandDecimal.class, RandInt.class);
-
-    // Synchronous
-    addAll(Consume.class, Produce.class, WaitDefinition.class);
-
-    // Utilities
-    addAll(Assert.class, Millis.class, Sleep.class);
+    while (!context.hasVar(reference.value().getName())) {
+      UtilWorker.stay(50L);
+    }
   }
 }
