@@ -21,6 +21,7 @@ package br.shura.venus.executor;
 
 import br.shura.venus.component.Container;
 import br.shura.venus.exception.UndefinedVariableException;
+import br.shura.venus.resultor.Variable;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.map.Map;
 import br.shura.x.collection.map.impl.LinkedMap;
@@ -56,14 +57,6 @@ public class Context {
     return currentLine;
   }
 
-  public Object getLockMonitor(String name) throws UndefinedVariableException {
-    XApi.requireNonNull(name, "name");
-
-    VariableStructure object = findVariable(name);
-
-    return object.getValue();
-  }
-
   public Container getOwner() {
     return owner;
   }
@@ -72,12 +65,34 @@ public class Context {
     return parent;
   }
 
+  public VariableStructure getStructure(String name) throws UndefinedVariableException {
+    if (isOwnerOf(name)) {
+      return getVariables().get(name);
+    }
+
+    if (hasParent()) {
+      try {
+        return getParent().getStructure(name);
+      }
+      catch (UndefinedVariableException exception) {
+      }
+    }
+
+    throw new UndefinedVariableException(this, name);
+  }
+
+  public VariableStructure getStructure(Variable variable) throws UndefinedVariableException {
+    return getStructure(variable.getName());
+  }
+
   public Value getVar(String name) throws UndefinedVariableException {
     XApi.requireNonNull(name, "name");
 
-    VariableStructure object = findVariable(name);
+    return getStructure(name).getValue();
+  }
 
-    return object.getValue();
+  public Value getVar(Variable variable) throws UndefinedVariableException {
+    return getVar(variable.getName());
   }
 
   public Map<String, VariableStructure> getVariables() {
@@ -117,22 +132,6 @@ public class Context {
     }
 
     return hasParent() && getParent().changeVar(name, value);
-  }
-
-  protected VariableStructure findVariable(String name) throws UndefinedVariableException {
-    if (isOwnerOf(name)) {
-      return getVariables().get(name);
-    }
-
-    if (hasParent()) {
-      try {
-        return getParent().findVariable(name);
-      }
-      catch (UndefinedVariableException exception) {
-      }
-    }
-
-    throw new UndefinedVariableException(this, name);
   }
 
   @Internal
