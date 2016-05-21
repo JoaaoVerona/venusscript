@@ -41,7 +41,7 @@ public class StdLibrary extends VenusLibrary {
     addAll(RandDecimal.class, RandInt.class);
 
     // Synchronous
-    addAll(Consume.class, Produce.class, WaitDefinition.class);
+    addAll(Consume.class, Produce.class, WaitAttribution.class, WaitDefinition.class);
 
     // Utilities
     addAll(Assert.class, Millis.class, Sleep.class);
