@@ -45,7 +45,7 @@ import static br.shura.x.sys.XSystem.millis;
  * @since GAMMA - 0x3
  */
 public class InteractiveTester {
-  public static final Folder DIRECTORY = new Folder("VenusScript/resources");
+  public static final Folder DIRECTORY = new Folder("VenusScript/examples");
   public static final boolean LIGHTWEIGHT_ERRORS = false;
 
   public static void main(String[] args) throws Exception {

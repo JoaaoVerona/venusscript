@@ -48,7 +48,7 @@ import java.util.Collection;
  */
 @RunWith(Parameterized.class)
 public class ExecutorTest {
-  public static final Folder DIRECTORY = new Folder("VenusScript/resources");
+  public static final Folder DIRECTORY = new Folder("VenusScript/examples");
   private final File file;
 
   public ExecutorTest(File file) {

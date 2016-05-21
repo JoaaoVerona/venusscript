@@ -34,20 +34,20 @@ import br.shura.venus.value.Value;
  * @since GAMMA - 0x3
  */
 public class UnaryOperation implements Resultor {
-  private final Resultor resultor;
   private final UnaryOperator operator;
+  private final Resultor resultor;
 
   public UnaryOperation(UnaryOperator operator, Resultor resultor) {
     this.operator = operator;
     this.resultor = resultor;
   }
 
-  public Resultor getResultor() {
-    return resultor;
-  }
-
   public UnaryOperator getOperator() {
     return operator;
+  }
+
+  public Resultor getResultor() {
+    return resultor;
   }
 
   @Override
