@@ -43,6 +43,6 @@ public class Return extends Component {
 
   @Override
   public String toString() {
-    return null;
+    return "return(" + getResultor() + ')';
   }
 }
