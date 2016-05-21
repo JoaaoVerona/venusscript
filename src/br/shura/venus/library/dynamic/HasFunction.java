@@ -19,18 +19,62 @@
 
 package br.shura.venus.library.dynamic;
 
-import br.shura.venus.library.VenusLibrary;
+import br.shura.venus.exception.InvalidFunctionParameterException;
+import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.exception.UndefinedFunctionException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.function.FunctionCallDescriptor;
+import br.shura.venus.function.Method;
+import br.shura.venus.function.annotation.MethodName;
+import br.shura.venus.function.annotation.MethodVarArgs;
+import br.shura.venus.value.BoolValue;
+import br.shura.venus.value.TypeValue;
+import br.shura.venus.value.Value;
+import br.shura.venus.value.ValueType;
+import br.shura.x.collection.list.List;
+import br.shura.x.collection.list.impl.ArrayList;
+import br.shura.x.collection.view.BasicView;
 
 /**
- * DynamicLibrary.java
+ * HasFunction.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 14/05/16 - 00:47
+ * @date 21/05/16 - 00:35
  * @since GAMMA - 0x3
  */
-public class DynamicLibrary extends VenusLibrary {
-  public DynamicLibrary() {
-    addAll(DynamicInclude.class, DynamicUsing.class, HasFunction.class, Interpret.class);
+@MethodName("hasFunction")
+@MethodVarArgs
+public class HasFunction extends Method {
+  @Override
+  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+    if (descriptor.isEmpty()) {
+      throw new InvalidFunctionParameterException(context, this, "Expected at least function name");
+    }
+
+    String name = descriptor.get(0).toString();
+    List<ValueType> types = new ArrayList<>();
+
+    for (int i = 1; i < descriptor.count(); i++) {
+      Value value = descriptor.get(i);
+
+      if (value instanceof TypeValue) {
+        TypeValue typeValue = (TypeValue) value;
+
+        types.add(typeValue.value());
+      }
+      else {
+        throw new InvalidFunctionParameterException(context, this, "Expected value type, received " + value.getType());
+      }
+    }
+
+    try {
+      context.getOwner().findFunction(context, name, new BasicView<>(types));
+
+      return new BoolValue(true);
+    }
+    catch (UndefinedFunctionException exception) {
+      return new BoolValue(false);
+    }
   }
 }
