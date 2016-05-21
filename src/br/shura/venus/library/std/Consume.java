@@ -65,7 +65,7 @@ public class Consume extends VoidMethod {
           context.setVar(variable.getName(), value.minus(new IntegerValue(1)));
         }
         catch (InterruptedException exception) {
-          XLogger.warnln("Thread " + Thread.currentThread() + " interrupted while consumer was waiting.");
+          XLogger.warnln("Thread " + Thread.currentThread() + " interrupted while 'consume' was locking.");
         }
       }
     }
