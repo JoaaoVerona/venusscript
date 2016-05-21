@@ -82,7 +82,7 @@ public class Context {
     throw new UndefinedVariableException(this, name);
   }
 
-  public Map<String, Object> getLockMonitors() throws UndefinedVariableException {
+  public Map<String, Object> getLockMonitors() {
     return lockMonitors;
   }
 
@@ -138,7 +138,7 @@ public class Context {
 
   public void setVar(String name, Value value) {
     if (!changeVar(name, value)) {
-      lockMonitors.add(name, new Object());
+      getLockMonitors().add(name, new Object());
       getVariables().add(name, value);
     }
   }
