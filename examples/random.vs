@@ -5,5 +5,8 @@ while true {
     min = scan(*int)
     print("Max: ")
     max = scan(*int)
-    println("Result: " + randInt(min, max))
+
+    for i in (0, 10) {
+        println("Result: " + randInt(min, max))
+    }
 }
