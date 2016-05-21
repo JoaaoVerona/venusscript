@@ -17,59 +17,64 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.library.dynamic;
+package br.shura.venus.library.engine;
 
-import br.shura.venus.compiler.VenusLexer;
-import br.shura.venus.compiler.VenusParser;
-import br.shura.venus.component.SimpleContainer;
-import br.shura.venus.exception.ScriptCompileException;
+import br.shura.venus.exception.InvalidFunctionParameterException;
 import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.exception.UndefinedFunctionException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.Method;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.function.annotation.MethodVarArgs;
-import br.shura.venus.origin.SimpleScriptOrigin;
 import br.shura.venus.value.BoolValue;
+import br.shura.venus.value.TypeValue;
 import br.shura.venus.value.Value;
-import br.shura.x.charset.build.TextBuilder;
-import br.shura.x.util.Pool;
-
-import java.io.IOException;
+import br.shura.venus.value.ValueType;
+import br.shura.x.collection.list.List;
+import br.shura.x.collection.list.impl.ArrayList;
+import br.shura.x.collection.view.BasicView;
 
 /**
- * Evaluate.java
+ * HasFunction.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 21/05/16 - 00:45
+ * @date 21/05/16 - 00:35
  * @since GAMMA - 0x3
  */
-@MethodName("evaluate")
+@MethodName("hasFunction")
 @MethodVarArgs
-public class Evaluate extends Method {
+public class HasFunction extends Method {
   @Override
   public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    VenusParser parser = context.getOwner().getScript().getParser();
-    TextBuilder builder = Pool.newBuilder();
+    if (descriptor.isEmpty()) {
+      throw new InvalidFunctionParameterException(context, this, "Expected at least function name");
+    }
 
-    builder.appendln(descriptor.getValues());
+    String name = descriptor.get(0).toString();
+    List<ValueType> types = new ArrayList<>();
 
-    String source = builder.toStringAndClear();
-    SimpleScriptOrigin origin = new SimpleScriptOrigin("Interpreted-Script", source);
-    SimpleContainer container = new SimpleContainer();
+    for (int i = 1; i < descriptor.count(); i++) {
+      Value value = descriptor.get(i);
 
-    container.setParent(context.getOwner());
+      if (value instanceof TypeValue) {
+        TypeValue typeValue = (TypeValue) value;
+
+        types.add(typeValue.value());
+      }
+      else {
+        throw new InvalidFunctionParameterException(context, this, "Expected value type, received " + value.getType());
+      }
+    }
 
     try {
-      parser.parse(new VenusLexer(origin), container);
+      context.getOwner().findFunction(context, name, new BasicView<>(types));
 
-      Value result = context.currentExecutor().run(container);
-
-      return result != null ? result : new BoolValue(false);
+      return new BoolValue(true);
     }
-    catch (IOException | ScriptCompileException exception) {
-      throw new ScriptRuntimeException(context, "Failed to interpret script", exception);
+    catch (UndefinedFunctionException exception) {
+      return new BoolValue(false);
     }
   }
 }

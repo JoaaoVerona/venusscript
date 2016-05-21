@@ -17,7 +17,7 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.library.dynamic;
+package br.shura.venus.library.engine;
 
 import br.shura.venus.compiler.VenusLexer;
 import br.shura.venus.compiler.VenusParser;

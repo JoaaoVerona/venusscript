@@ -31,6 +31,6 @@ import br.shura.venus.library.VenusLibrary;
  */
 public class DynamicLibrary extends VenusLibrary {
   public DynamicLibrary() {
-    addAll(DynamicInclude.class, DynamicUsing.class, Evaluate.class, HasFunction.class, Interpret.class);
+    addAll(DynamicInclude.class, DynamicUsing.class);
   }
 }

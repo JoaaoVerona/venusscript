@@ -31,6 +31,6 @@ import br.shura.venus.library.VenusLibrary;
  */
 public class EngineLibrary extends VenusLibrary {
   public EngineLibrary() {
-
+    addAll(Evaluate.class, HasFunction.class, Interpret.class);
   }
 }
