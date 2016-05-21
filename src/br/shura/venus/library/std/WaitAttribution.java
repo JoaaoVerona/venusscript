@@ -19,6 +19,8 @@
 
 package br.shura.venus.library.std;
 
+import br.shura.venus.component.FunctionCall;
+import br.shura.venus.exception.InvalidFunctionParameterException;
 import br.shura.venus.exception.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.function.FunctionCallDescriptor;
@@ -53,7 +55,7 @@ public class WaitAttribution extends VoidMethod {
     List<Variable> list = new ArrayList<>();
     Object lock = new Object();
 
-    scanVariables(resultor, list);
+    scan(context, resultor, list);
     list.forEachExceptional(variable -> context.getStructure(variable).addChangeMonitor(lock));
 
     Value value = resultor.resolve(context); // Maybe value changed after it was resolved.
@@ -76,17 +78,20 @@ public class WaitAttribution extends VoidMethod {
     list.forEachExceptional(variable -> context.getStructure(variable).removeChangeMonitor(lock));
   }
 
-  private static void scanVariables(Resultor resultor, List<Variable> list) {
+  private void scan(Context context, Resultor resultor, List<Variable> list) throws ScriptRuntimeException {
     if (resultor instanceof BinaryOperation) {
       BinaryOperation operation = (BinaryOperation) resultor;
 
-      scanVariables(operation.getLeft(), list);
-      scanVariables(operation.getRight(), list);
+      scan(context, operation.getLeft(), list);
+      scan(context, operation.getRight(), list);
+    }
+    else if (resultor instanceof FunctionCall) {
+      throw new InvalidFunctionParameterException(context, this, "Cannot embed a function call on arguments for 'wait' method");
     }
     else if (resultor instanceof UnaryOperation) {
       UnaryOperation operation = (UnaryOperation) resultor;
 
-      scanVariables(operation.getResultor(), list);
+      scan(context, operation.getResultor(), list);
     }
     else if (resultor instanceof Variable) {
       list.add((Variable) resultor);
