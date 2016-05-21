@@ -61,7 +61,7 @@ public class Context {
 
     VariableDefinition object = findVariable(name);
 
-    return object.value;
+    return object.getValue();
   }
 
   public Container getOwner() {
@@ -77,7 +77,7 @@ public class Context {
 
     VariableDefinition object = findVariable(name);
 
-    return object.value;
+    return object.getValue();
   }
 
   public Map<String, VariableDefinition> getVariables() {
@@ -111,7 +111,7 @@ public class Context {
 
   protected boolean changeVar(String name, Value value) {
     if (isOwnerOf(name)) {
-      getVariables().get(name).value = value;
+      getVariables().get(name).setValue(value);
 
       return true;
     }
@@ -143,15 +143,5 @@ public class Context {
   @Internal
   protected void setExecutor(VenusExecutor executor) {
     this.executor = executor;
-  }
-
-  public static class VariableDefinition {
-    public final Object lockMonitor;
-    public Value value;
-
-    public VariableDefinition(Value value) {
-      this.lockMonitor = new Object();
-      this.value = value;
-    }
   }
 }
