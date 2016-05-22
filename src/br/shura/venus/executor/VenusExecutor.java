@@ -179,7 +179,6 @@ public class VenusExecutor {
                 if (continuing) {
                   this.continuing = false;
                 }
-
               }
               else {
                 break;
