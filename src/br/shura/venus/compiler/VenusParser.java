@@ -381,17 +381,6 @@ public class VenusParser {
     return null;
   }
 
-  // This is called when we already parsed the name and the OPEN_BRACKET token (so we go
-  // directly to parsing the index)
-  protected void parseArrayAttribution(String name) throws ScriptCompileException {
-    Resultor index = readResultor(Type.CLOSE_BRACKET);
-    Token operatorToken = requireToken(Type.OPERATOR, "expected an attribution operator");
-    Resultor resultor = parseAttributionHelper(name, operatorToken);
-    ArrayAttribution attribution = new ArrayAttribution(name, index, resultor);
-
-    addComponent(attribution, false);
-  }
-
   protected Object parseArrayElementOperation(String currentNameDef, Resultor index, String operatorStr, Token errorToken, boolean mustBeUnary) throws ScriptCompileException {
     if (operatorStr.equals("=")) {
       Resultor resultor = readResultor(token -> token.getType() != Type.NEW_LINE && token.getType() != Type.CLOSE_PARENTHESE,
@@ -429,41 +418,6 @@ public class VenusParser {
     }
 
     bye(errorToken, "expected a valid " + (mustBeUnary ? "unary operator" : "operator") + " (+, -, *, /, %, ...)");
-
-    return null; // Will not happen
-  }
-
-  protected Resultor parseAttributionHelper(String name, Token operatorToken) throws ScriptCompileException {
-    String attribOperator = operatorToken.getValue();
-
-    if (attribOperator.equals("=")) {
-      return readResultor(Type.NEW_LINE);
-    }
-
-    attribOperator = readOperator(attribOperator);
-
-    if (attribOperator.endsWith("=")) {
-      String operatorIdentifier = attribOperator.substring(0, attribOperator.length() - 1);
-      Operator operator = OperatorList.forIdentifier(operatorIdentifier, false); // false for bye(excepted bin opr)
-
-      if (operator != null) {
-        if (operator instanceof BinaryOperator) {
-          Resultor resultor = readResultor(Type.NEW_LINE);
-
-          return new BinaryOperation((BinaryOperator) operator, new Variable(name), resultor);
-        }
-
-        bye(operatorToken, "expected an attribution with binary operator (+=, -=, ...)");
-      }
-      else {
-        bye(operatorToken, "expected a valid attribution operator (=, +=, -=, ...)");
-      }
-    }
-    else {
-      bye(operatorToken, "expected an attribution operator (=, +=, -=, ...)");
-    }
-
-    bye(operatorToken, "reached end of parseAttributionHelper");
 
     return null; // Will not happen
   }
