@@ -285,7 +285,7 @@ public class VenusExecutor {
       hadIfAndNotProceed = false;
     }
 
-    asyncThreads.join();
+    //asyncThreads.join(); // TODO Bugged. Removed temporarily.
 
     if (!asyncExceptions.isEmpty()) {
       throw asyncExceptions.poll();
