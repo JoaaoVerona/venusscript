@@ -23,41 +23,29 @@ import br.shura.venus.component.Container;
 import br.shura.venus.resultor.Resultor;
 
 /**
- * ForRangeContainer.java
+ * ForEachContainer.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 12/05/16 - 14:37
+ * @date 22/05/16 - 03:40
  * @since GAMMA - 0x3
  */
-public class ForRangeContainer extends Container implements Breakable {
-  private final Resultor adjustment;
-  private final Resultor from;
-  private final Resultor to;
+public class ForEachContainer extends Container implements Breakable {
+  private final Resultor iterable;
   private final String varName;
 
-  public ForRangeContainer(String varName, Resultor from, Resultor to, Resultor adjustment) {
-    this.adjustment = adjustment;
-    this.from = from;
-    this.to = to;
+  public ForEachContainer(String varName, Resultor iterable) {
+    this.iterable = iterable;
     this.varName = varName;
-  }
-
-  public Resultor getAdjustment() {
-    return adjustment;
   }
 
   @Override
   public String getDisplayName() {
-    return "for(" + getVarName() + " in [" + getFrom() + ", " + getTo() + "])";
+    return "foreach(" + getVarName() + " in " + getIterable() + ')';
   }
 
-  public Resultor getFrom() {
-    return from;
-  }
-
-  public Resultor getTo() {
-    return to;
+  public Resultor getIterable() {
+    return iterable;
   }
 
   public String getVarName() {
