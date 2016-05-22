@@ -27,6 +27,7 @@ import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.ApplicationContext;
 import br.shura.venus.executor.VenusExecutor;
 import br.shura.venus.origin.FileScriptOrigin;
+import br.shura.venus.origin.ScriptMode;
 import br.shura.venus.origin.ScriptOrigin;
 import br.shura.x.collection.view.View;
 import br.shura.x.io.file.File;
@@ -102,7 +103,7 @@ public class InteractiveTester {
 
     if (LIGHTWEIGHT_ERRORS) {
       try {
-        executor.run(script);
+        executor.run(script, ScriptMode.NORMAL);
       }
       catch (ScriptRuntimeException exception) {
         XLogger.warnln("RUNTIME ERR: " + exception.getMessage());
@@ -111,7 +112,7 @@ public class InteractiveTester {
       }
     }
     else {
-      executor.run(script);
+      executor.run(script, ScriptMode.NORMAL);
     }
 
     long duration = millis() - start;

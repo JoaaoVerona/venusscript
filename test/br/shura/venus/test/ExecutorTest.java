@@ -23,6 +23,7 @@ import br.shura.venus.component.Script;
 import br.shura.venus.executor.ApplicationContext;
 import br.shura.venus.executor.VenusExecutor;
 import br.shura.venus.origin.FileScriptOrigin;
+import br.shura.venus.origin.ScriptMode;
 import br.shura.venus.origin.ScriptOrigin;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
@@ -63,7 +64,7 @@ public class ExecutorTest {
     Script script = origin.compile(new ApplicationContext());
     VenusExecutor executor = new VenusExecutor();
 
-    executor.run(script);
+    executor.run(script, ScriptMode.NORMAL);
   }
 
   @Parameters
