@@ -45,6 +45,7 @@ import br.shura.venus.library.VenusLibrary;
 import br.shura.venus.operator.BinaryOperator;
 import br.shura.venus.operator.Operator;
 import br.shura.venus.operator.OperatorList;
+import br.shura.venus.resultor.ArrayAccess;
 import br.shura.venus.resultor.BinaryOperation;
 import br.shura.venus.resultor.Constant;
 import br.shura.venus.resultor.FunctionRef;
@@ -407,6 +408,10 @@ public class VenusParser {
       }
     }
 
+    if (token.getType() == Type.OPEN_BRACKET) {
+
+    }
+
     if (token.getType() == Type.OPERATOR && token.getValue().equals("*")) {
       Token next = requireToken();
 
@@ -601,19 +606,43 @@ public class VenusParser {
     addContainer(whileContainer, true);
   }
 
-  // This also consumes ending' CLOSE_PARENTHESE
   protected Resultor[] readFunctionArguments() throws ScriptCompileException {
-    List<Resultor> arguments = new ArrayList<>();
+    return readResultors(Type.COMMA, Type.CLOSE_PARENTHESE);
+  }
+
+  // This also consumes the last 'end' token
+  protected Resultor[] readResultors(Type separator, Type end) throws ScriptCompileException {
+    List<Resultor> result = new ArrayList<>();
     Token token;
 
-    while ((token = requireToken()).getType() != Type.CLOSE_PARENTHESE) {
+    while ((token = requireToken()).getType() != end) {
       lexer.reRead(token);
-      arguments.add(readResultor(
-        t -> t.getType() != Type.CLOSE_PARENTHESE && t.getType() != Type.COMMA,
-        t -> t.getType() == Type.CLOSE_PARENTHESE));
+      result.add(readResultor(
+        t -> t.getType() != end && t.getType() != separator,
+        t -> t.getType() == end));
     }
 
-    return arguments.toArray();
+    return result.toArray();
+  }
+
+  protected Value[] readValues(Type separator, Type end) throws ScriptCompileException {
+    List<Value> result = new ArrayList<>();
+    Token token;
+
+    while ((token = requireToken()).getType() != end) {
+      lexer.reRead(token);
+      result.add(readValue());
+
+      Token test = requireToken();
+
+      if (test.getType() == separator) {
+        continue;
+      }
+
+      lexer.reRead(test);
+    }
+
+    return result.toArray();
   }
 
   protected String readOperator(String start) throws ScriptCompileException {
@@ -690,6 +719,17 @@ public class VenusParser {
         }
         else {
           bye(token, "expected a valid attribution operator (=, +=, -=, ...)");
+        }
+      }
+      else if (token.getType() == Type.OPEN_BRACKET) {
+        if (nameDef != null) {
+          Resultor index = readResultor(Type.CLOSE_BRACKET);
+
+          resultor.addResultor(this, nameDefToken, new ArrayAccess(nameDef, index));
+          nameDef = null;
+        }
+        else {
+          bye(token, "expected a variable name before array bracket");
         }
       }
       else if (token.getType() == Type.OPEN_PARENTHESE) {
