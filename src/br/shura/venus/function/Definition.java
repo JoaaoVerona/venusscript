@@ -22,6 +22,7 @@ package br.shura.venus.function;
 import br.shura.venus.component.Container;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.origin.ScriptMode;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.List;
@@ -53,7 +54,7 @@ public final class Definition extends Container implements Function {
       getContext().setVar(argument.getName(), descriptor.get(i++));
     }
 
-    return context.currentExecutor().run(this);
+    return context.currentExecutor().run(this, ScriptMode.NORMAL);
   }
 
   @Override
