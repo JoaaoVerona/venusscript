@@ -20,6 +20,7 @@
 package br.shura.venus.compiler;
 
 import br.shura.venus.compiler.Token.Type;
+import br.shura.venus.component.ArrayAttribution;
 import br.shura.venus.component.AsyncContainer;
 import br.shura.venus.component.Attribution;
 import br.shura.venus.component.Component;
@@ -100,7 +101,7 @@ public class VenusParser {
       if (token.getType() == Type.DOLLAR_SIGN) {
         Token next = requireToken(Type.NAME_DEFINITION, "expected a variable name");
 
-        parseAttribution('$' + next.getValue(), requireToken(Type.OPERATOR, "expected an attribution operator"));
+        parseAttributionOrFunctionCall('$' + next.getValue(), false);
       }
       else if (token.getType() == Type.NAME_DEFINITION) {
         if (token.getValue().equals(KeywordDefinitions.ASYNC)) {
@@ -202,8 +203,8 @@ public class VenusParser {
         else if (token.getValue().equals(KeywordDefinitions.WHILE)) {
           parseWhile();
         }
-        else { // Should be variable attribution OR function call
-          parseAttributionOrFunctionCall(token.getValue());
+        else {
+          parseAttributionOrFunctionCall(token.getValue(), true);
         }
 
         justExitedIfContainer = false;
@@ -250,51 +251,69 @@ public class VenusParser {
     }
   }
 
-  protected void parseAttribution(String name, Token operatorToken) throws ScriptCompileException {
+  protected Resultor parseAttributionHelper(String name, Token operatorToken) throws ScriptCompileException {
     String attribOperator = operatorToken.getValue();
 
     if (attribOperator.equals("=")) {
-      Resultor resultor = readResultor(Type.NEW_LINE);
-      Attribution attribution = new Attribution(name, resultor);
-
-      addComponent(attribution, false);
+      return readResultor(Type.NEW_LINE);
     }
-    else {
-      attribOperator = readOperator(attribOperator);
 
-      if (attribOperator.endsWith("=")) {
-        String operatorIdentifier = attribOperator.substring(0, attribOperator.length() - 1);
-        Operator operator = OperatorList.forIdentifier(operatorIdentifier, false); // false for bye(excepted bin opr)
+    attribOperator = readOperator(attribOperator);
 
-        if (operator != null) {
-          if (operator instanceof BinaryOperator) {
-            Resultor resultor = readResultor(Type.NEW_LINE);
-            BinaryOperation operation = new BinaryOperation((BinaryOperator) operator, new Variable(name), resultor);
-            Attribution attribution = new Attribution(name, operation);
+    if (attribOperator.endsWith("=")) {
+      String operatorIdentifier = attribOperator.substring(0, attribOperator.length() - 1);
+      Operator operator = OperatorList.forIdentifier(operatorIdentifier, false); // false for bye(excepted bin opr)
 
-            addComponent(attribution, false);
-          }
-          else {
-            bye(operatorToken, "expected an attribution with binary operator (+=, -=, ...)");
-          }
+      if (operator != null) {
+        if (operator instanceof BinaryOperator) {
+          Resultor resultor = readResultor(Type.NEW_LINE);
+
+          return new BinaryOperation((BinaryOperator) operator, new Variable(name), resultor);
         }
-        else {
-          bye(operatorToken, "expected a valid attribution operator (=, +=, -=, ...)");
-        }
+
+        bye(operatorToken, "expected an attribution with binary operator (+=, -=, ...)");
       }
       else {
-        bye(operatorToken, "expected an attribution operator (=, +=, -=, ...)");
+        bye(operatorToken, "expected a valid attribution operator (=, +=, -=, ...)");
       }
     }
+    else {
+      bye(operatorToken, "expected an attribution operator (=, +=, -=, ...)");
+    }
+
+    bye(operatorToken, "reached end of parseAttributionHelper");
+
+    return null; // Will not happen
   }
 
-  protected void parseAttributionOrFunctionCall(String name) throws ScriptCompileException {
+  protected void parseAttribution(String name, Token operatorToken) throws ScriptCompileException {
+    Resultor resultor = parseAttributionHelper(name, operatorToken);
+    Attribution attribution = new Attribution(name, resultor);
+
+    addComponent(attribution, false);
+  }
+
+  // This is called when we already parsed the name and the OPEN_BRACKET token (so we go
+  // directly to parsing the index)
+  protected void parseArrayAttribution(String name) throws ScriptCompileException {
+    Resultor index = readResultor(Type.CLOSE_BRACKET);
+    Token operatorToken = requireToken(Type.OPERATOR, "expected an attribution operator");
+    Resultor resultor = parseAttributionHelper(name, operatorToken);
+    ArrayAttribution attribution = new ArrayAttribution(name, index, resultor);
+
+    addComponent(attribution, false);
+  }
+
+  protected void parseAttributionOrFunctionCall(String name, boolean canBeFunctionCall) throws ScriptCompileException {
     Token next = requireToken();
 
-    if (next.getType() == Type.OPERATOR) {
+    if (next.getType() == Type.OPEN_BRACKET) {
+      parseArrayAttribution(name);
+    }
+    else if (next.getType() == Type.OPERATOR) {
       parseAttribution(name, next);
     }
-    else if (next.getType() == Type.OPEN_PARENTHESE) {
+    else if (next.getType() == Type.OPEN_PARENTHESE && canBeFunctionCall) {
       Resultor[] arguments = readFunctionArguments();
 
       requireNewLine();
