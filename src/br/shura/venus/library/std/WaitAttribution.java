@@ -86,7 +86,7 @@ public class WaitAttribution extends VoidMethod {
       scan(context, operation.getRight(), list);
     }
     else if (resultor instanceof FunctionCall) {
-      throw new InvalidFunctionParameterException(context, this, "Cannot embed a function call on arguments for 'wait' method");
+      throw new InvalidFunctionParameterException(context, "Cannot embed a function call on arguments for 'wait' method");
     }
     else if (resultor instanceof UnaryOperation) {
       UnaryOperation operation = (UnaryOperation) resultor;

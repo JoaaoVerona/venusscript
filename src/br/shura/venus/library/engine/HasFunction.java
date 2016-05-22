@@ -49,7 +49,7 @@ public class HasFunction extends Method {
   @Override
   public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
     if (descriptor.isEmpty()) {
-      throw new InvalidFunctionParameterException(context, this, "Expected at least function name");
+      throw new InvalidFunctionParameterException(context, "Expected at least function name");
     }
 
     String name = descriptor.get(0).toString();
@@ -64,7 +64,7 @@ public class HasFunction extends Method {
         types.add(typeValue.value());
       }
       else {
-        throw new InvalidFunctionParameterException(context, this, "Expected value type, received " + value.getType());
+        throw new InvalidFunctionParameterException(context, "Expected value type, received " + value.getType());
       }
     }
 

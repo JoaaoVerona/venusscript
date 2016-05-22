@@ -20,7 +20,6 @@
 package br.shura.venus.exception.runtime;
 
 import br.shura.venus.executor.Context;
-import br.shura.venus.function.Function;
 
 /**
  * InvalidFunctionParameterException.java
@@ -31,14 +30,7 @@ import br.shura.venus.function.Function;
  * @since GAMMA - 0x3
  */
 public class InvalidFunctionParameterException extends ScriptRuntimeException {
-  private final Function function;
-
-  public InvalidFunctionParameterException(Context context, Function function, CharSequence message) {
+  public InvalidFunctionParameterException(Context context, CharSequence message) {
     super(context, message);
-    this.function = function;
-  }
-
-  public Function getFunction() {
-    return function;
   }
 }

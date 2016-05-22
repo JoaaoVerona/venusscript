@@ -70,7 +70,7 @@ public class FunctionCall extends Component implements Resultor {
 
     // This check is necessary because of function references being untyped (issue #9).
     if (!function.isVarArgs() && types.size() != function.getArgumentTypes().size()) {
-      throw new InvalidFunctionParameterException(context, function, "Function \"" + function + "\" expected " +
+      throw new InvalidFunctionParameterException(context, "Function \"" + function + "\" expected " +
         function.getArgumentTypes().size() + " arguments; received " + types.size());
     }
 
@@ -84,7 +84,7 @@ public class FunctionCall extends Component implements Resultor {
 
         // This check is necessary because of function references being untyped (issue #9).
         if (!required.accepts(value.getType())) {
-          throw new InvalidFunctionParameterException(context, function, "Function \"" + function + "\" expected " +
+          throw new InvalidFunctionParameterException(context, "Function \"" + function + "\" expected " +
             required + " as " + (i + 1) + (i == 0 ? "st" : i == 1 ? "nd" : i == 2 ? "rd" : "th") + " argument; received " +
             value.getType());
         }
