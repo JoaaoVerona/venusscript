@@ -19,7 +19,6 @@
 
 package br.shura.venus.library.std;
 
-import br.shura.venus.component.FunctionCall;
 import br.shura.venus.exception.runtime.InvalidFunctionParameterException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
@@ -28,6 +27,7 @@ import br.shura.venus.function.VoidMethod;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.resultor.BinaryOperation;
+import br.shura.venus.resultor.FunctionCall;
 import br.shura.venus.resultor.Resultor;
 import br.shura.venus.resultor.UnaryOperation;
 import br.shura.venus.resultor.Variable;

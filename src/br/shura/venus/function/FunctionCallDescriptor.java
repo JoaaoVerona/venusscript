@@ -19,7 +19,7 @@
 
 package br.shura.venus.function;
 
-import br.shura.venus.component.FunctionCall;
+import br.shura.venus.resultor.FunctionCall;
 import br.shura.venus.resultor.Resultor;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.view.View;
