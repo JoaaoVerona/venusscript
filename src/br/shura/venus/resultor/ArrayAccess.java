@@ -23,6 +23,7 @@ import br.shura.venus.exception.runtime.InvalidArrayAccessException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.value.ArrayValue;
+import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
 
@@ -36,9 +37,9 @@ import br.shura.venus.value.ValueType;
  */
 public class ArrayAccess implements Resultor {
   private final Variable array;
-  private final int index;
+  private final Resultor index;
 
-  public ArrayAccess(Variable array, int index) {
+  public ArrayAccess(Variable array, Resultor index) {
     this.array = array;
     this.index = index;
   }
@@ -47,7 +48,7 @@ public class ArrayAccess implements Resultor {
     return array;
   }
 
-  public int getIndex() {
+  public Resultor getIndex() {
     return index;
   }
 
@@ -57,8 +58,16 @@ public class ArrayAccess implements Resultor {
 
     if (value instanceof ArrayValue) {
       ArrayValue array = (ArrayValue) value;
+      Value index = getIndex().resolve(context);
 
-      return array.get(context, getIndex());
+      if (index instanceof IntegerValue) {
+        IntegerValue intIndex = (IntegerValue) index;
+
+        return array.get(context, intIndex.value().intValue());
+      }
+
+      throw new InvalidArrayAccessException(context, "Index \"" + index + "\" is of type " +
+        index.getType() + "; expected to be an " + ValueType.INTEGER);
     }
 
     throw new InvalidArrayAccessException(context, "Variable \"" + getArray().getName() + "\" is of type " +
