@@ -59,4 +59,9 @@ public class ArrayDefine implements Resultor {
 
     return value;
   }
+
+  @Override
+  public String toString() {
+    return "arrdef(" + getResultors() + ')';
+  }
 }
