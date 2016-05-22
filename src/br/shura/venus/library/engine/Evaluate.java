@@ -29,6 +29,7 @@ import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.Method;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.function.annotation.MethodVarArgs;
+import br.shura.venus.origin.ScriptMode;
 import br.shura.venus.origin.SimpleScriptOrigin;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.Value;
@@ -62,9 +63,9 @@ public class Evaluate extends Method {
     container.setParent(context.getOwner());
 
     try {
-      parser.parse(new VenusLexer(origin), container, true);
+      parser.parse(new VenusLexer(origin), container);
 
-      Value result = context.currentExecutor().run(container);
+      Value result = context.currentExecutor().run(container, ScriptMode.EVALUATION);
 
       return result != null ? result : new BoolValue(false);
     }

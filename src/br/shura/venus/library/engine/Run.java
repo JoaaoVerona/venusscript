@@ -28,6 +28,7 @@ import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.Method;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
+import br.shura.venus.origin.ScriptMode;
 import br.shura.venus.origin.ScriptOrigin;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.StringValue;
@@ -56,7 +57,7 @@ public class Run extends Method {
         Script script = origin.compile(current.getApplicationContext());
         VenusExecutor executor = new VenusExecutor();
 
-        executor.run(script);
+        executor.run(script, ScriptMode.NORMAL);
 
         return new BoolValue(true);
       }

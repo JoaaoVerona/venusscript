@@ -29,6 +29,7 @@ import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.VoidMethod;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.function.annotation.MethodVarArgs;
+import br.shura.venus.origin.ScriptMode;
 import br.shura.venus.origin.SimpleScriptOrigin;
 import br.shura.x.charset.build.TextBuilder;
 import br.shura.x.util.Pool;
@@ -60,8 +61,8 @@ public class Interpret extends VoidMethod {
     container.setParent(context.getOwner());
 
     try {
-      parser.parse(new VenusLexer(origin), container, true);
-      context.currentExecutor().run(container);
+      parser.parse(new VenusLexer(origin), container);
+      context.currentExecutor().run(container, ScriptMode.INTERACTIVE);
     }
     catch (IOException | ScriptCompileException exception) {
       throw new ScriptRuntimeException(context, "Failed to compile script", exception);
