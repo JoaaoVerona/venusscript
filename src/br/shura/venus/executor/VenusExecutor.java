@@ -19,6 +19,7 @@
 
 package br.shura.venus.executor;
 
+import br.shura.venus.component.ArrayAttribution;
 import br.shura.venus.component.AsyncContainer;
 import br.shura.venus.component.Attribution;
 import br.shura.venus.component.Component;
@@ -33,9 +34,11 @@ import br.shura.venus.component.branch.ForEachContainer;
 import br.shura.venus.component.branch.IfContainer;
 import br.shura.venus.component.branch.Return;
 import br.shura.venus.component.branch.WhileContainer;
+import br.shura.venus.exception.runtime.InvalidArrayAccessException;
 import br.shura.venus.exception.runtime.InvalidValueTypeException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.function.Definition;
+import br.shura.venus.value.ArrayValue;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.DecimalValue;
 import br.shura.venus.value.IntegerValue;
@@ -250,6 +253,20 @@ public class VenusExecutor {
         }
         else if (!(component instanceof Definition)) {
           run((Container) component);
+        }
+      }
+      else if (component instanceof ArrayAttribution) {
+        ArrayAttribution attribution = (ArrayAttribution) component;
+        Value value = context.getVar(attribution.getName());
+
+        if (value instanceof ArrayValue) {
+          ArrayValue array = (ArrayValue) value;
+
+          array.set(context, attribution.getIndex(), attribution.getResultor().resolve(context));
+        }
+        else {
+          throw new InvalidArrayAccessException(context, "Variable \"" + attribution.getName() + "\" is of type " +
+            value.getType() + "; expected to be an array");
         }
       }
       else if (component instanceof Attribution) {
