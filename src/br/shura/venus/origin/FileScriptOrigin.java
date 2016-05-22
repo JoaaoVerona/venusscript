@@ -40,7 +40,7 @@ public class FileScriptOrigin implements ScriptOrigin {
   }
 
   @Override
-  public ScriptOrigin findInclude(String includeName) {
+  public ScriptOrigin findRelative(String includeName) {
     try {
       File file = new File(getFile().getParent(), includeName);
 
@@ -51,7 +51,7 @@ public class FileScriptOrigin implements ScriptOrigin {
     catch (FileException exception) {
     }
 
-    return ScriptOrigin.super.findInclude(includeName);
+    return ScriptOrigin.super.findRelative(includeName);
   }
 
   public File getFile() {

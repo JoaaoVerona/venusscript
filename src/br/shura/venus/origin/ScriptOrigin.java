@@ -56,7 +56,7 @@ public interface ScriptOrigin {
     return script;
   }
 
-  default ScriptOrigin findInclude(String includeName) {
+  default ScriptOrigin findRelative(String includeName) {
     PathResource resource = new PathResource(includeName);
 
     if (resource.exists()) {

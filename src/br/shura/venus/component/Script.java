@@ -113,7 +113,7 @@ public class Script extends Container {
   }
 
   public void include(String includeName, boolean maybe) throws ScriptCompileException {
-    ScriptOrigin origin = getOrigin().findInclude(includeName);
+    ScriptOrigin origin = getOrigin().findRelative(includeName);
 
     if (origin != null) {
       Script script = origin.compile(getApplicationContext());
