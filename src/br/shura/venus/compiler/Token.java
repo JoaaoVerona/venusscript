@@ -81,6 +81,7 @@ public class Token extends Base {
     COMMA,
     AT_SIGN,
     NEW_LINE,
-    COLON
+    COLON,
+    DOLLAR_SIGN
   }
 }
