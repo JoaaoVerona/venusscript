@@ -554,6 +554,8 @@ public class VenusParser {
       }
     }
     else {
+      lexer.reRead(next);
+
       Resultor iterable = readResultor(Type.OPEN_BRACE);
       String varName = varNameToken.getValue();
       ForEachContainer forContainer = new ForEachContainer(varName, iterable);
