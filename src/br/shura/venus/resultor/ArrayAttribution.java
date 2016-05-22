@@ -17,9 +17,15 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.component;
+package br.shura.venus.resultor;
 
-import br.shura.venus.resultor.Resultor;
+import br.shura.venus.exception.runtime.InvalidArrayAccessException;
+import br.shura.venus.exception.runtime.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.value.ArrayValue;
+import br.shura.venus.value.IntegerValue;
+import br.shura.venus.value.Value;
+import br.shura.venus.value.ValueType;
 
 /**
  * ArrayAttribution.java
@@ -29,7 +35,7 @@ import br.shura.venus.resultor.Resultor;
  * @date 22/05/16 - 02:17
  * @since GAMMA - 0x3
  */
-public class ArrayAttribution extends Component {
+public class ArrayAttribution implements Resultor {
   private final String name;
   private final Resultor index;
   private final Resultor resultor;
@@ -50,6 +56,31 @@ public class ArrayAttribution extends Component {
 
   public Resultor getResultor() {
     return resultor;
+  }
+
+  @Override
+  public Value resolve(Context context) throws ScriptRuntimeException {
+    Value value = context.getVar(getName());
+
+    if (value instanceof ArrayValue) {
+      ArrayValue array = (ArrayValue) value;
+      Value index = getIndex().resolve(context);
+
+      if (index instanceof IntegerValue) {
+        IntegerValue intIndex = (IntegerValue) index;
+        Value result = getResultor().resolve(context);
+
+        array.set(context, intIndex.value().intValue(), result);
+
+        return result;
+      }
+
+      throw new InvalidArrayAccessException(context, "Index \"" + index + "\" is of type " +
+        index.getType() + "; expected to be an " + ValueType.INTEGER);
+    }
+
+    throw new InvalidArrayAccessException(context, "Variable \"" + getName() + "\" is of type " +
+      value.getType() + "; expected to be an " + ValueType.ARRAY);
   }
 
   @Override

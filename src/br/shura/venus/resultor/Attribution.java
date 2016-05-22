@@ -17,9 +17,11 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.component;
+package br.shura.venus.resultor;
 
-import br.shura.venus.resultor.Resultor;
+import br.shura.venus.exception.runtime.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.value.Value;
 
 /**
  * Attribution.java
@@ -29,7 +31,7 @@ import br.shura.venus.resultor.Resultor;
  * @date 06/05/16 - 17:07
  * @since GAMMA - 0x3
  */
-public class Attribution extends Component {
+public class Attribution implements Resultor {
   private final String name;
   private final Resultor resultor;
 
@@ -44,6 +46,15 @@ public class Attribution extends Component {
 
   public Resultor getResultor() {
     return resultor;
+  }
+
+  @Override
+  public Value resolve(Context context) throws ScriptRuntimeException {
+    Value value = getResultor().resolve(context);
+
+    context.setVar(getName(), value);
+
+    return value;
   }
 
   @Override
