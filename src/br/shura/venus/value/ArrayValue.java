@@ -35,6 +35,10 @@ import br.shura.x.util.comparator.SimpleEqualizer;
 public class ArrayValue implements Value {
   private final Value[] values;
 
+  public ArrayValue(int size) {
+    this(new Value[size]);
+  }
+
   public ArrayValue(Value... values) {
     this.values = values;
   }
