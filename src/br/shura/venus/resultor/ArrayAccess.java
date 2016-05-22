@@ -36,25 +36,25 @@ import br.shura.venus.value.ValueType;
  * @since GAMMA - 0x3
  */
 public class ArrayAccess implements Resultor {
-  private final Variable array;
   private final Resultor index;
+  private final String name;
 
-  public ArrayAccess(Variable array, Resultor index) {
-    this.array = array;
+  public ArrayAccess(String name, Resultor index) {
     this.index = index;
-  }
-
-  public Variable getArray() {
-    return array;
+    this.name = name;
   }
 
   public Resultor getIndex() {
     return index;
   }
 
+  public String getName() {
+    return name;
+  }
+
   @Override
   public Value resolve(Context context) throws ScriptRuntimeException {
-    Value value = getArray().resolve(context);
+    Value value = context.getVar(getName());
 
     if (value instanceof ArrayValue) {
       ArrayValue array = (ArrayValue) value;
@@ -70,12 +70,12 @@ public class ArrayAccess implements Resultor {
         index.getType() + "; expected to be an " + ValueType.INTEGER);
     }
 
-    throw new InvalidArrayAccessException(context, "Variable \"" + getArray().getName() + "\" is of type " +
+    throw new InvalidArrayAccessException(context, "Variable \"" + getName() + "\" is of type " +
       value.getType() + "; expected to be an " + ValueType.ARRAY);
   }
 
   @Override
   public String toString() {
-    return "arr(" + getArray().getName() + '[' + getIndex() + "])";
+    return "arr(" + getName() + '[' + getIndex() + "])";
   }
 }
