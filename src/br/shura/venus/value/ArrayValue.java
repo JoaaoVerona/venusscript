@@ -25,7 +25,10 @@ import br.shura.venus.executor.Context;
 import br.shura.x.charset.build.TextBuilder;
 import br.shura.x.util.Pool;
 import br.shura.x.util.comparator.SimpleEqualizer;
+import br.shura.x.util.iterator.ArrayIterator;
 import br.shura.x.util.layer.XApi;
+
+import java.util.Iterator;
 
 /**
  * ArrayValue.java
@@ -35,7 +38,7 @@ import br.shura.x.util.layer.XApi;
  * @date 22/05/16 - 02:05
  * @since GAMMA - 0x3
  */
-public class ArrayValue implements Value {
+public class ArrayValue implements IterableValue {
   private final Value[] values;
 
   public ArrayValue(int size) {
@@ -67,6 +70,11 @@ public class ArrayValue implements Value {
     return value()[index];
   }
 
+  @Override
+  public Iterator<Value> iterator() {
+    return new ArrayIterator<>(value());
+  }
+
   public void set(Context context, int index, Value value) throws ScriptRuntimeException {
     if (index < 0 || index >= size()) {
       throw new InvalidArrayAccessException(context, "Out of range array index: " + index + ", expected between 0~" + (size() - 1));
@@ -80,13 +88,13 @@ public class ArrayValue implements Value {
   }
 
   @Override
-  public Value[] value() {
-    return values;
+  public String toString() {
+    return toString(this);
   }
 
   @Override
-  public String toString() {
-    return toString(this);
+  public Value[] value() {
+    return values;
   }
 
   private static <E> String toString(ArrayValue array) {
