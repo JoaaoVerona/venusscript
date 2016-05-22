@@ -34,7 +34,7 @@ import br.shura.venus.component.branch.Continue;
 import br.shura.venus.component.branch.DoWhileContainer;
 import br.shura.venus.component.branch.ElseContainer;
 import br.shura.venus.component.branch.ElseIfContainer;
-import br.shura.venus.component.branch.ForEachContainer;
+import br.shura.venus.component.branch.ForRangeContainer;
 import br.shura.venus.component.branch.IfContainer;
 import br.shura.venus.component.branch.Return;
 import br.shura.venus.component.branch.WhileContainer;
@@ -540,7 +540,7 @@ public class VenusParser {
 
     if (arguments.length == 2 || arguments.length == 3) {
       String varName = varNameToken.getValue();
-      ForEachContainer forContainer = new ForEachContainer(varName, arguments[0], arguments[1],
+      ForRangeContainer forContainer = new ForRangeContainer(varName, arguments[0], arguments[1],
         arguments.length == 3 ? arguments[2] : new BinaryOperation(OperatorList.PLUS, new Variable(varName),
           new Constant(new IntegerValue(1))));
 

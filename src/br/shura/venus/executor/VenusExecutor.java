@@ -30,7 +30,7 @@ import br.shura.venus.component.branch.Continue;
 import br.shura.venus.component.branch.DoWhileContainer;
 import br.shura.venus.component.branch.ElseContainer;
 import br.shura.venus.component.branch.ElseIfContainer;
-import br.shura.venus.component.branch.ForEachContainer;
+import br.shura.venus.component.branch.ForRangeContainer;
 import br.shura.venus.component.branch.IfContainer;
 import br.shura.venus.component.branch.Return;
 import br.shura.venus.component.branch.WhileContainer;
@@ -124,8 +124,8 @@ public class VenusExecutor {
           thread.setDaemon(asyncContainer.isDaemon());
           thread.start();
         }
-        else if (component instanceof ForEachContainer) {
-          ForEachContainer forContainer = (ForEachContainer) component;
+        else if (component instanceof ForRangeContainer) {
+          ForRangeContainer forContainer = (ForRangeContainer) component;
           Value from = forContainer.getFrom().resolve(context);
           Value to = forContainer.getTo().resolve(context);
 
