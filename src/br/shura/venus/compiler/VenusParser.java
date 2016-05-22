@@ -51,6 +51,7 @@ import br.shura.venus.resultor.Constant;
 import br.shura.venus.resultor.FunctionRef;
 import br.shura.venus.resultor.Resultor;
 import br.shura.venus.resultor.Variable;
+import br.shura.venus.value.ArrayValue;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.DecimalValue;
 import br.shura.venus.value.IntegerValue;
@@ -409,7 +410,9 @@ public class VenusParser {
     }
 
     if (token.getType() == Type.OPEN_BRACKET) {
+      Value[] values = readValues(Type.COMMA, Type.CLOSE_BRACKET);
 
+      return new ArrayValue(values);
     }
 
     if (token.getType() == Type.OPERATOR && token.getValue().equals("*")) {
