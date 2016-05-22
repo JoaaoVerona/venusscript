@@ -2,6 +2,7 @@
 # This script shows how to use function references
 # (a.k.a. callbacks), which are tokenized with '@'.
 
+using math
 using std
 
 def plusSupername(string name) {
@@ -18,7 +19,7 @@ sendName("João Vitor", @plusSupername)
 ################
 
 def tryout(ref callback) {
-    callback()
+    callback(2, 20)
 }
 
-tryout(@hasScan)
+println("Rand int=" + tryout(@randInt))
