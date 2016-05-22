@@ -84,14 +84,14 @@ public class DecimalValue implements NumericValue {
   }
 
   @Override
-  public DecimalValue plus(Value value) {
+  public Value plus(Value value) {
     if (value instanceof NumericValue) {
       NumericValue numeric = (NumericValue) value;
 
       return new DecimalValue(value() + numeric.value().doubleValue());
     }
 
-    return null;
+    return NumericValue.super.plus(value);
   }
 
   @Override

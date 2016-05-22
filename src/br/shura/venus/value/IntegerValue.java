@@ -102,14 +102,14 @@ public class IntegerValue implements NumericValue {
   }
 
   @Override
-  public IntegerValue plus(Value value) {
+  public Value plus(Value value) {
     if (value instanceof NumericValue) {
       NumericValue numeric = (NumericValue) value;
 
       return new IntegerValue(value() + numeric.value().longValue());
     }
 
-    return null;
+    return NumericValue.super.plus(value);
   }
 
   @Override

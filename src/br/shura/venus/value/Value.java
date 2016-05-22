@@ -95,6 +95,12 @@ public interface Value {
   }
 
   default Value plus(Value value) {
+    if (value instanceof StringValue) {
+      StringValue string = (StringValue) value;
+
+      return new StringValue(value() + string.value());
+    }
+
     return null;
   }
 
