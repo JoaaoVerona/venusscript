@@ -19,18 +19,52 @@
 
 package br.shura.venus.library.engine;
 
-import br.shura.venus.library.VenusLibrary;
+import br.shura.venus.component.Script;
+import br.shura.venus.exception.ScriptCompileException;
+import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.executor.VenusExecutor;
+import br.shura.venus.function.FunctionCallDescriptor;
+import br.shura.venus.function.Method;
+import br.shura.venus.function.annotation.MethodArgs;
+import br.shura.venus.function.annotation.MethodName;
+import br.shura.venus.origin.ScriptOrigin;
+import br.shura.venus.value.BoolValue;
+import br.shura.venus.value.StringValue;
+import br.shura.venus.value.Value;
+import br.shura.venus.value.ValueType;
 
 /**
- * EngineLibrary.java
+ * Run.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 21/05/16 - 01:36
+ * @date 22/05/16 - 01:04
  * @since GAMMA - 0x3
  */
-public class EngineLibrary extends VenusLibrary {
-  public EngineLibrary() {
-    addAll(Evaluate.class, HasFunction.class, Interpret.class, Run.class);
+@MethodArgs(ValueType.STRING)
+@MethodName("run")
+public class Run extends Method {
+  @Override
+  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+    StringValue path = (StringValue) descriptor.get(0);
+    Script current = context.getOwner().getScript();
+    ScriptOrigin origin = current.getOrigin().findRelative(path.value());
+
+    if (origin != null) {
+      try {
+        Script script = origin.compile(current.getApplicationContext());
+        VenusExecutor executor = new VenusExecutor();
+
+        executor.run(script);
+
+        return new BoolValue(true);
+      }
+      catch (ScriptCompileException exception) {
+        throw new ScriptRuntimeException(context, "Failed to compile script", exception);
+      }
+    }
+
+    return new BoolValue(false);
   }
 }
