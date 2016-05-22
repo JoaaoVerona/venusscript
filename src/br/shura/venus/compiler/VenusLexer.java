@@ -248,6 +248,10 @@ public class VenusLexer {
               return new Token(Type.COLON, ch);
             }
 
+            if (ch == '$') {
+              return new Token(Type.DOLLAR_SIGN, ch);
+            }
+
             if (ch == '{') {
               return new Token(Type.OPEN_BRACE, ch);
             }
