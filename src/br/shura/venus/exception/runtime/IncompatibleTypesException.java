@@ -17,22 +17,20 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.exception;
+package br.shura.venus.exception.runtime;
 
 import br.shura.venus.executor.Context;
-import br.shura.venus.value.ValueType;
-import br.shura.x.collection.view.View;
 
 /**
- * UndefinedFunctionException.java
+ * IncompatibleTypesException.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 15:50
+ * @date 08/05/16 - 19:02
  * @since GAMMA - 0x3
  */
-public class UndefinedFunctionException extends ScriptRuntimeException {
-  public UndefinedFunctionException(Context context, String functionName, View<ValueType> argumentTypes) {
-    super(context, "No definition found for a function named \"" + functionName + "\" taking argument types: " + argumentTypes);
+public class IncompatibleTypesException extends ScriptRuntimeException {
+  public IncompatibleTypesException(Context context, CharSequence message) {
+    super(context, message);
   }
 }

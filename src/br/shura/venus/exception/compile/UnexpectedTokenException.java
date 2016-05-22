@@ -17,39 +17,18 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.exception;
-
-import br.shura.venus.executor.Context;
-import br.shura.x.exception.CatchableException;
+package br.shura.venus.exception.compile;
 
 /**
- * ScriptRuntimeException.java
+ * UnexpectedTokenException.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 05/05/16 - 14:42
+ * @date 06/05/16 - 18:21
  * @since GAMMA - 0x3
  */
-public class ScriptRuntimeException extends CatchableException {
-  private final Context context;
-
-  public ScriptRuntimeException(Context context, CharSequence message) {
-    super(message + " at line " + context.currentLine() + " in \"" + context.getOwner().getDisplayName() + "\"");
-    this.context = context;
-  }
-
-  public ScriptRuntimeException(Context context, CharSequence message, Throwable cause) {
-    super(message + " at line " + context.currentLine() + " in \"" + context.getOwner().getDisplayName() + "\"", cause);
-    this.context = context;
-  }
-
-  public ScriptRuntimeException(Context context, Throwable cause) {
-    super("Runtime error at line " + context.currentLine() + " in \"" + context.getOwner().getDisplayName() +
-      "\"", cause);
-    this.context = context;
-  }
-
-  public Context getContext() {
-    return context;
+public class UnexpectedTokenException extends ScriptCompileException {
+  public UnexpectedTokenException(String scriptName, int currentLine, String message) {
+    super(scriptName, currentLine, message);
   }
 }

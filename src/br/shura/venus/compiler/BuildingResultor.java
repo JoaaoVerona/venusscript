@@ -19,7 +19,7 @@
 
 package br.shura.venus.compiler;
 
-import br.shura.venus.exception.UnexpectedTokenException;
+import br.shura.venus.exception.compile.UnexpectedTokenException;
 import br.shura.venus.operator.BinaryOperator;
 import br.shura.venus.operator.Operator;
 import br.shura.venus.operator.UnaryOperator;

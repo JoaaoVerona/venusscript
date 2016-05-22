@@ -19,9 +19,9 @@
 
 package br.shura.venus.library.engine;
 
-import br.shura.venus.exception.InvalidFunctionParameterException;
-import br.shura.venus.exception.ScriptRuntimeException;
-import br.shura.venus.exception.UndefinedFunctionException;
+import br.shura.venus.exception.runtime.InvalidFunctionParameterException;
+import br.shura.venus.exception.runtime.ScriptRuntimeException;
+import br.shura.venus.exception.runtime.UndefinedFunctionException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.Method;

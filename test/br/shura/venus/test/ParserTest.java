@@ -22,7 +22,7 @@ package br.shura.venus.test;
 import br.shura.venus.component.Component;
 import br.shura.venus.component.Container;
 import br.shura.venus.component.Script;
-import br.shura.venus.exception.ScriptCompileException;
+import br.shura.venus.exception.compile.ScriptCompileException;
 import br.shura.venus.executor.ApplicationContext;
 import br.shura.venus.origin.ScriptOrigin;
 import br.shura.venus.origin.SimpleScriptOrigin;

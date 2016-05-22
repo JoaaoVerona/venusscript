@@ -19,8 +19,8 @@
 
 package br.shura.venus.library.std;
 
-import br.shura.venus.exception.InvalidValueTypeException;
-import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.exception.runtime.InvalidValueTypeException;
+import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.Method;

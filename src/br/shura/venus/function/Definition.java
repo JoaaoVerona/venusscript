@@ -20,7 +20,7 @@
 package br.shura.venus.function;
 
 import br.shura.venus.component.Container;
-import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;

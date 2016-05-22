@@ -22,7 +22,7 @@ package br.shura.venus.test;
 import br.shura.venus.compiler.Token;
 import br.shura.venus.compiler.Token.Type;
 import br.shura.venus.compiler.VenusLexer;
-import br.shura.venus.exception.UnexpectedInputException;
+import br.shura.venus.exception.compile.UnexpectedInputException;
 import br.shura.venus.origin.ScriptOrigin;
 import br.shura.venus.origin.SimpleScriptOrigin;
 import br.shura.x.logging.XLogger;

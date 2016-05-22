@@ -21,7 +21,7 @@ package br.shura.venus.library.crypto;
 
 import br.shura.crypto.IEncrypter;
 import br.shura.crypto.exception.CryptoException;
-import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.function.Function;
 import br.shura.venus.function.FunctionCallDescriptor;

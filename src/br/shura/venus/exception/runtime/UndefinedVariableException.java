@@ -17,24 +17,27 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.exception;
+package br.shura.venus.exception.runtime;
 
-import br.shura.x.exception.CatchableException;
+import br.shura.venus.executor.Context;
 
 /**
- * ScriptCompileException.java
+ * UndefinedVariableException.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 04:34
+ * @date 06/05/16 - 01:36
  * @since GAMMA - 0x3
  */
-public class ScriptCompileException extends CatchableException {
-  public ScriptCompileException(CharSequence message) {
-    super(message);
+public class UndefinedVariableException extends ScriptRuntimeException {
+  private final String variableName;
+
+  public UndefinedVariableException(Context context, String variableName) {
+    super(context, "Undefined variable \"" + variableName + "\"");
+    this.variableName = variableName;
   }
 
-  public ScriptCompileException(String scriptName, int currentLine, CharSequence message) {
-    this(message + " at line " + (currentLine + 1) + " of script \"" + scriptName + "\"");
+  public String getVariableName() {
+    return variableName;
   }
 }

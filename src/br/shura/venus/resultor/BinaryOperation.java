@@ -19,8 +19,8 @@
 
 package br.shura.venus.resultor;
 
-import br.shura.venus.exception.IncompatibleTypesException;
-import br.shura.venus.exception.ScriptRuntimeException;
+import br.shura.venus.exception.runtime.IncompatibleTypesException;
+import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.operator.BinaryOperator;
 import br.shura.venus.value.Value;

@@ -20,7 +20,7 @@
 package br.shura.venus.compiler;
 
 import br.shura.venus.compiler.Token.Type;
-import br.shura.venus.exception.UnexpectedInputException;
+import br.shura.venus.exception.compile.UnexpectedInputException;
 import br.shura.venus.origin.ScriptOrigin;
 import br.shura.x.charset.build.TextBuilder;
 import br.shura.x.charset.sequence.CharSet;

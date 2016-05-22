@@ -17,20 +17,24 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.exception;
+package br.shura.venus.exception.compile;
 
-import br.shura.venus.executor.Context;
+import br.shura.x.exception.CatchableException;
 
 /**
- * InvalidValueTypeException.java
+ * ScriptCompileException.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 02:12
+ * @date 06/05/16 - 04:34
  * @since GAMMA - 0x3
  */
-public class InvalidValueTypeException extends ScriptRuntimeException {
-  public InvalidValueTypeException(Context context, CharSequence message) {
-    super(context, message);
+public class ScriptCompileException extends CatchableException {
+  public ScriptCompileException(CharSequence message) {
+    super(message);
+  }
+
+  public ScriptCompileException(String scriptName, int currentLine, CharSequence message) {
+    this(message + " at line " + (currentLine + 1) + " of script \"" + scriptName + "\"");
   }
 }

@@ -17,20 +17,28 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.exception;
+package br.shura.venus.exception.runtime;
 
 import br.shura.venus.executor.Context;
+import br.shura.venus.function.Function;
 
 /**
- * IncompatibleTypesException.java
+ * InvalidFunctionParameterException.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 08/05/16 - 19:02
+ * @date 06/05/16 - 02:35
  * @since GAMMA - 0x3
  */
-public class IncompatibleTypesException extends ScriptRuntimeException {
-  public IncompatibleTypesException(Context context, CharSequence message) {
+public class InvalidFunctionParameterException extends ScriptRuntimeException {
+  private final Function function;
+
+  public InvalidFunctionParameterException(Context context, Function function, CharSequence message) {
     super(context, message);
+    this.function = function;
+  }
+
+  public Function getFunction() {
+    return function;
   }
 }

@@ -17,27 +17,22 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.exception;
+package br.shura.venus.exception.runtime;
 
 import br.shura.venus.executor.Context;
+import br.shura.venus.value.ValueType;
+import br.shura.x.collection.view.View;
 
 /**
- * UndefinedVariableException.java
+ * UndefinedFunctionException.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 01:36
+ * @date 06/05/16 - 15:50
  * @since GAMMA - 0x3
  */
-public class UndefinedVariableException extends ScriptRuntimeException {
-  private final String variableName;
-
-  public UndefinedVariableException(Context context, String variableName) {
-    super(context, "Undefined variable \"" + variableName + "\"");
-    this.variableName = variableName;
-  }
-
-  public String getVariableName() {
-    return variableName;
+public class UndefinedFunctionException extends ScriptRuntimeException {
+  public UndefinedFunctionException(Context context, String functionName, View<ValueType> argumentTypes) {
+    super(context, "No definition found for a function named \"" + functionName + "\" taking argument types: " + argumentTypes);
   }
 }

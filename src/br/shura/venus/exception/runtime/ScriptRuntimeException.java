@@ -17,20 +17,39 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.exception;
+package br.shura.venus.exception.runtime;
 
 import br.shura.venus.executor.Context;
+import br.shura.x.exception.CatchableException;
 
 /**
- * AssertionException.java
+ * ScriptRuntimeException.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 12/05/16 - 20:36
+ * @date 05/05/16 - 14:42
  * @since GAMMA - 0x3
  */
-public class AssertionException extends ScriptRuntimeException {
-  public AssertionException(Context context, CharSequence message) {
-    super(context, message);
+public class ScriptRuntimeException extends CatchableException {
+  private final Context context;
+
+  public ScriptRuntimeException(Context context, CharSequence message) {
+    super(message + " at line " + context.currentLine() + " in \"" + context.getOwner().getDisplayName() + "\"");
+    this.context = context;
+  }
+
+  public ScriptRuntimeException(Context context, CharSequence message, Throwable cause) {
+    super(message + " at line " + context.currentLine() + " in \"" + context.getOwner().getDisplayName() + "\"", cause);
+    this.context = context;
+  }
+
+  public ScriptRuntimeException(Context context, Throwable cause) {
+    super("Runtime error at line " + context.currentLine() + " in \"" + context.getOwner().getDisplayName() +
+      "\"", cause);
+    this.context = context;
+  }
+
+  public Context getContext() {
+    return context;
   }
 }

@@ -17,7 +17,7 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.exception;
+package br.shura.venus.exception.compile;
 
 /**
  * UnexpectedInputException.java

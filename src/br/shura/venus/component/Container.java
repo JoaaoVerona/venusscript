@@ -19,9 +19,9 @@
 
 package br.shura.venus.component;
 
-import br.shura.venus.exception.ScriptRuntimeException;
-import br.shura.venus.exception.UndefinedFunctionException;
-import br.shura.venus.exception.UndefinedVariableException;
+import br.shura.venus.exception.runtime.ScriptRuntimeException;
+import br.shura.venus.exception.runtime.UndefinedFunctionException;
+import br.shura.venus.exception.runtime.UndefinedVariableException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.function.Definition;
 import br.shura.venus.function.Function;

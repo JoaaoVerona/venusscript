@@ -17,28 +17,20 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.exception;
+package br.shura.venus.exception.runtime;
 
 import br.shura.venus.executor.Context;
-import br.shura.venus.function.Function;
 
 /**
- * InvalidFunctionParameterException.java
+ * AssertionException.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 02:35
+ * @date 12/05/16 - 20:36
  * @since GAMMA - 0x3
  */
-public class InvalidFunctionParameterException extends ScriptRuntimeException {
-  private final Function function;
-
-  public InvalidFunctionParameterException(Context context, Function function, CharSequence message) {
+public class AssertionException extends ScriptRuntimeException {
+  public AssertionException(Context context, CharSequence message) {
     super(context, message);
-    this.function = function;
-  }
-
-  public Function getFunction() {
-    return function;
   }
 }

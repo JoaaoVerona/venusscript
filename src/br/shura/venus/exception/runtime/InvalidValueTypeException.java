@@ -17,18 +17,20 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.exception;
+package br.shura.venus.exception.runtime;
+
+import br.shura.venus.executor.Context;
 
 /**
- * UnexpectedTokenException.java
+ * InvalidValueTypeException.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 18:21
+ * @date 06/05/16 - 02:12
  * @since GAMMA - 0x3
  */
-public class UnexpectedTokenException extends ScriptCompileException {
-  public UnexpectedTokenException(String scriptName, int currentLine, String message) {
-    super(scriptName, currentLine, message);
+public class InvalidValueTypeException extends ScriptRuntimeException {
+  public InvalidValueTypeException(Context context, CharSequence message) {
+    super(context, message);
   }
 }
