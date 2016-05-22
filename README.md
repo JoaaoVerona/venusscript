@@ -38,11 +38,12 @@ It is required Java 8+ and libraries:
 - Binary, decimal and hexadecimal literals
 - Execute other scripts, asynchronously or synchronously (e.g. ```async run("../basic.vs")```)
 - Useful libraries (rich cryptography ecosystem, dialogs, math, ...)
+- Homogeneous arrays
 
 ### To be implemented
 - Object-oriented programming (classes, attributes, methods)
 - Functional programming (lambdas, utility methods)
-- Collections (homogeneous arrays, heterogeneous arrays, lists, maps, sets)
+- Collections (heterogeneous arrays, lists, maps, sets)
 - Easier interoperability with Java
 - Enumerations?
 - User-defined value types
