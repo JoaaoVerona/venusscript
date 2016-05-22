@@ -251,79 +251,6 @@ public class VenusParser {
     }
   }
 
-  protected Resultor parseAttributionHelper(String name, Token operatorToken) throws ScriptCompileException {
-    String attribOperator = operatorToken.getValue();
-
-    if (attribOperator.equals("=")) {
-      return readResultor(Type.NEW_LINE);
-    }
-
-    attribOperator = readOperator(attribOperator);
-
-    if (attribOperator.endsWith("=")) {
-      String operatorIdentifier = attribOperator.substring(0, attribOperator.length() - 1);
-      Operator operator = OperatorList.forIdentifier(operatorIdentifier, false); // false for bye(excepted bin opr)
-
-      if (operator != null) {
-        if (operator instanceof BinaryOperator) {
-          Resultor resultor = readResultor(Type.NEW_LINE);
-
-          return new BinaryOperation((BinaryOperator) operator, new Variable(name), resultor);
-        }
-
-        bye(operatorToken, "expected an attribution with binary operator (+=, -=, ...)");
-      }
-      else {
-        bye(operatorToken, "expected a valid attribution operator (=, +=, -=, ...)");
-      }
-    }
-    else {
-      bye(operatorToken, "expected an attribution operator (=, +=, -=, ...)");
-    }
-
-    bye(operatorToken, "reached end of parseAttributionHelper");
-
-    return null; // Will not happen
-  }
-
-  protected void parseAttribution(String name, Token operatorToken) throws ScriptCompileException {
-    Resultor resultor = parseAttributionHelper(name, operatorToken);
-    Attribution attribution = new Attribution(name, resultor);
-
-    addComponent(attribution, false);
-  }
-
-  // This is called when we already parsed the name and the OPEN_BRACKET token (so we go
-  // directly to parsing the index)
-  protected void parseArrayAttribution(String name) throws ScriptCompileException {
-    Resultor index = readResultor(Type.CLOSE_BRACKET);
-    Token operatorToken = requireToken(Type.OPERATOR, "expected an attribution operator");
-    Resultor resultor = parseAttributionHelper(name, operatorToken);
-    ArrayAttribution attribution = new ArrayAttribution(name, index, resultor);
-
-    addComponent(attribution, false);
-  }
-
-  protected void parseAttributionOrFunctionCall(String name, boolean canBeFunctionCall) throws ScriptCompileException {
-    Token next = requireToken();
-
-    if (next.getType() == Type.OPEN_BRACKET) {
-      parseArrayAttribution(name);
-    }
-    else if (next.getType() == Type.OPERATOR) {
-      parseAttribution(name, next);
-    }
-    else if (next.getType() == Type.OPEN_PARENTHESE && canBeFunctionCall) {
-      Resultor[] arguments = readFunctionArguments();
-
-      requireNewLine();
-      addComponent(new FunctionCall(name, arguments), true);
-    }
-    else {
-      bye(next, "expected attribution operator or function call");
-    }
-  }
-
   protected void addComponent(Component component, boolean asyncable) throws UnexpectedTokenException {
     if (nextAsyncable && !asyncable) {
       this.nextAsyncable = false;
@@ -444,6 +371,79 @@ public class VenusParser {
     }
 
     return null;
+  }
+
+  // This is called when we already parsed the name and the OPEN_BRACKET token (so we go
+  // directly to parsing the index)
+  protected void parseArrayAttribution(String name) throws ScriptCompileException {
+    Resultor index = readResultor(Type.CLOSE_BRACKET);
+    Token operatorToken = requireToken(Type.OPERATOR, "expected an attribution operator");
+    Resultor resultor = parseAttributionHelper(name, operatorToken);
+    ArrayAttribution attribution = new ArrayAttribution(name, index, resultor);
+
+    addComponent(attribution, false);
+  }
+
+  protected void parseAttribution(String name, Token operatorToken) throws ScriptCompileException {
+    Resultor resultor = parseAttributionHelper(name, operatorToken);
+    Attribution attribution = new Attribution(name, resultor);
+
+    addComponent(attribution, false);
+  }
+
+  protected Resultor parseAttributionHelper(String name, Token operatorToken) throws ScriptCompileException {
+    String attribOperator = operatorToken.getValue();
+
+    if (attribOperator.equals("=")) {
+      return readResultor(Type.NEW_LINE);
+    }
+
+    attribOperator = readOperator(attribOperator);
+
+    if (attribOperator.endsWith("=")) {
+      String operatorIdentifier = attribOperator.substring(0, attribOperator.length() - 1);
+      Operator operator = OperatorList.forIdentifier(operatorIdentifier, false); // false for bye(excepted bin opr)
+
+      if (operator != null) {
+        if (operator instanceof BinaryOperator) {
+          Resultor resultor = readResultor(Type.NEW_LINE);
+
+          return new BinaryOperation((BinaryOperator) operator, new Variable(name), resultor);
+        }
+
+        bye(operatorToken, "expected an attribution with binary operator (+=, -=, ...)");
+      }
+      else {
+        bye(operatorToken, "expected a valid attribution operator (=, +=, -=, ...)");
+      }
+    }
+    else {
+      bye(operatorToken, "expected an attribution operator (=, +=, -=, ...)");
+    }
+
+    bye(operatorToken, "reached end of parseAttributionHelper");
+
+    return null; // Will not happen
+  }
+
+  protected void parseAttributionOrFunctionCall(String name, boolean canBeFunctionCall) throws ScriptCompileException {
+    Token next = requireToken();
+
+    if (next.getType() == Type.OPEN_BRACKET) {
+      parseArrayAttribution(name);
+    }
+    else if (next.getType() == Type.OPERATOR) {
+      parseAttribution(name, next);
+    }
+    else if (next.getType() == Type.OPEN_PARENTHESE && canBeFunctionCall) {
+      Resultor[] arguments = readFunctionArguments();
+
+      requireNewLine();
+      addComponent(new FunctionCall(name, arguments), true);
+    }
+    else {
+      bye(next, "expected attribution operator or function call");
+    }
   }
 
   protected void parseDefinition() throws ScriptCompileException {
@@ -626,21 +626,6 @@ public class VenusParser {
     return readResultors(Type.COMMA, Type.CLOSE_PARENTHESE);
   }
 
-  // This also consumes the last 'end' token
-  protected Resultor[] readResultors(Type separator, Type end) throws ScriptCompileException {
-    List<Resultor> result = new ArrayList<>();
-    Token token;
-
-    while ((token = requireToken()).getType() != end) {
-      lexer.reRead(token);
-      result.add(readResultor(
-        t -> t.getType() != end && t.getType() != separator,
-        t -> t.getType() == end));
-    }
-
-    return result.toArray();
-  }
-
   protected String readOperator(String start) throws ScriptCompileException {
     TextBuilder operatorStr = Pool.newBuilder();
     Token operatorToken;
@@ -776,6 +761,21 @@ public class VenusParser {
 
   protected Resultor readResultor(Type stopAt, Predicate<Token> reReadLast) throws ScriptCompileException {
     return readResultor(token -> token.getType() != stopAt, reReadLast);
+  }
+
+  // This also consumes the last 'end' token
+  protected Resultor[] readResultors(Type separator, Type end) throws ScriptCompileException {
+    List<Resultor> result = new ArrayList<>();
+    Token token;
+
+    while ((token = requireToken()).getType() != end) {
+      lexer.reRead(token);
+      result.add(readResultor(
+        t -> t.getType() != end && t.getType() != separator,
+        t -> t.getType() == end));
+    }
+
+    return result.toArray();
   }
 
   protected Value readValue() throws ScriptCompileException {

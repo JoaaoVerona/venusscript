@@ -24,6 +24,7 @@ import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.operator.BinaryOperator;
 import br.shura.venus.value.Value;
+import br.shura.x.util.layer.XApi;
 
 /**
  * BinaryOperation.java
@@ -39,6 +40,10 @@ public class BinaryOperation implements Resultor {
   private final Resultor right;
 
   public BinaryOperation(BinaryOperator operator, Resultor left, Resultor right) {
+    XApi.requireNonNull(left, "left");
+    XApi.requireNonNull(operator, "operator");
+    XApi.requireNonNull(right, "right");
+
     this.left = left;
     this.operator = operator;
     this.right = right;

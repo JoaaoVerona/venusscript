@@ -25,6 +25,7 @@ import br.shura.venus.value.ArrayValue;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.view.ArrayView;
 import br.shura.x.collection.view.View;
+import br.shura.x.util.layer.XApi;
 
 /**
  * ArrayDefine.java
@@ -38,6 +39,8 @@ public class ArrayDefine implements Resultor {
   private final Resultor[] resultors;
 
   public ArrayDefine(Resultor... resultors) {
+    XApi.requireNonNull(resultors, "resultors");
+
     this.resultors = resultors;
   }
 

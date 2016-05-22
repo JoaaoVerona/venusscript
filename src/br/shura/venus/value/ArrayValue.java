@@ -23,6 +23,7 @@ import br.shura.venus.exception.runtime.InvalidArrayAccessException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.x.util.comparator.SimpleEqualizer;
+import br.shura.x.util.layer.XApi;
 
 /**
  * ArrayValue.java
@@ -40,6 +41,8 @@ public class ArrayValue implements Value {
   }
 
   public ArrayValue(Value... values) {
+    XApi.requireNonNull(values, "values");
+
     this.values = values;
   }
 

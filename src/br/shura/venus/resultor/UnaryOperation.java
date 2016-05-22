@@ -24,6 +24,7 @@ import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.operator.UnaryOperator;
 import br.shura.venus.value.Value;
+import br.shura.x.util.layer.XApi;
 
 /**
  * UnaryOperation.java
@@ -38,6 +39,9 @@ public class UnaryOperation implements Resultor {
   private final Resultor resultor;
 
   public UnaryOperation(UnaryOperator operator, Resultor resultor) {
+    XApi.requireNonNull(operator, "operator");
+    XApi.requireNonNull(resultor, "resultor");
+
     this.operator = operator;
     this.resultor = resultor;
   }

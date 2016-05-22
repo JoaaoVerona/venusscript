@@ -26,6 +26,7 @@ import br.shura.venus.value.ArrayValue;
 import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
+import br.shura.x.util.layer.XApi;
 
 /**
  * ArrayAccess.java
@@ -40,6 +41,9 @@ public class ArrayAccess implements Resultor {
   private final String name;
 
   public ArrayAccess(String name, Resultor index) {
+    XApi.requireNonNull(index, "index");
+    XApi.requireNonNull(name, "name");
+
     this.index = index;
     this.name = name;
   }
