@@ -34,6 +34,7 @@ import br.shura.venus.component.branch.Continue;
 import br.shura.venus.component.branch.DoWhileContainer;
 import br.shura.venus.component.branch.ElseContainer;
 import br.shura.venus.component.branch.ElseIfContainer;
+import br.shura.venus.component.branch.ForEachContainer;
 import br.shura.venus.component.branch.ForRangeContainer;
 import br.shura.venus.component.branch.IfContainer;
 import br.shura.venus.component.branch.Return;
@@ -532,22 +533,32 @@ public class VenusParser {
     Token varNameToken = requireToken(Type.NAME_DEFINITION, "expected a variable name");
 
     requireToken(Type.NAME_DEFINITION, "expected 'in' token");
-    requireToken(Type.OPEN_PARENTHESE, "expected an open parenthese");
 
-    Resultor[] arguments = readFunctionArguments();
+    Token next = requireToken();
 
-    requireToken(Type.OPEN_BRACE, "expected an open brace");
+    if (next.getType() == Type.OPEN_PARENTHESE) {
+      Resultor[] arguments = readFunctionArguments();
 
-    if (arguments.length == 2 || arguments.length == 3) {
-      String varName = varNameToken.getValue();
-      ForRangeContainer forContainer = new ForRangeContainer(varName, arguments[0], arguments[1],
-        arguments.length == 3 ? arguments[2] : new BinaryOperation(OperatorList.PLUS, new Variable(varName),
-          new Constant(new IntegerValue(1))));
+      requireToken(Type.OPEN_BRACE, "expected an open brace");
 
-      addContainer(forContainer, true);
+      if (arguments.length == 2 || arguments.length == 3) {
+        String varName = varNameToken.getValue();
+        ForRangeContainer forContainer = new ForRangeContainer(varName, arguments[0], arguments[1],
+          arguments.length == 3 ? arguments[2] : new BinaryOperation(OperatorList.PLUS, new Variable(varName),
+            new Constant(new IntegerValue(1))));
+
+        addContainer(forContainer, true);
+      }
+      else {
+        bye("Expected 2 arguments to for definition; received " + arguments.length);
+      }
     }
     else {
-      bye("Expected 2 arguments to for definition; received " + arguments.length);
+      Resultor iterable = readResultor(Type.OPEN_BRACE);
+      String varName = varNameToken.getValue();
+      ForEachContainer forContainer = new ForEachContainer(varName, iterable);
+
+      addContainer(forContainer, true);
     }
   }
 
