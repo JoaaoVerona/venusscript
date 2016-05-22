@@ -19,31 +19,32 @@
 
 package br.shura.venus.library.std;
 
-import br.shura.venus.library.VenusLibrary;
+import br.shura.venus.exception.runtime.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.function.FunctionCallDescriptor;
+import br.shura.venus.function.Method;
+import br.shura.venus.function.annotation.MethodArgs;
+import br.shura.venus.function.annotation.MethodName;
+import br.shura.venus.value.ArrayValue;
+import br.shura.venus.value.IntegerValue;
+import br.shura.venus.value.Value;
+import br.shura.venus.value.ValueType;
 
 /**
- * StdLibrary.java
+ * Size.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 09/05/16 - 20:29
+ * @date 22/05/16 - 03:32
  * @since GAMMA - 0x3
  */
-public class StdLibrary extends VenusLibrary {
-  public StdLibrary() {
-    // Basic I/O
-    addAll(HasScan.class, Print.class, Println.class, Scan.class);
+@MethodArgs(ValueType.ARRAY)
+@MethodName("size")
+public class Size extends Method {
+  @Override
+  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+    ArrayValue array = (ArrayValue) descriptor.get(0);
 
-    // Collections
-    addAll(NewArray.class, Size.class);
-
-    // Desktop
-    addAll(Beep.class, Browse.class, Shell.class);
-
-    // Synchronous
-    addAll(Consume.class, Produce.class, WaitAttribution.class, WaitDefinition.class);
-
-    // Utilities
-    addAll(Assert.class, Millis.class, Sleep.class);
+    return new IntegerValue(array.size());
   }
 }
