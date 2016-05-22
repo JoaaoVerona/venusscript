@@ -46,12 +46,12 @@ import br.shura.venus.operator.BinaryOperator;
 import br.shura.venus.operator.Operator;
 import br.shura.venus.operator.OperatorList;
 import br.shura.venus.resultor.ArrayAccess;
+import br.shura.venus.resultor.ArrayDefine;
 import br.shura.venus.resultor.BinaryOperation;
 import br.shura.venus.resultor.Constant;
 import br.shura.venus.resultor.FunctionRef;
 import br.shura.venus.resultor.Resultor;
 import br.shura.venus.resultor.Variable;
-import br.shura.venus.value.ArrayValue;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.DecimalValue;
 import br.shura.venus.value.IntegerValue;
@@ -409,12 +409,6 @@ public class VenusParser {
       }
     }
 
-    if (token.getType() == Type.OPEN_BRACKET) {
-      Value[] values = readValues(Type.COMMA, Type.CLOSE_BRACKET);
-
-      return new ArrayValue(values);
-    }
-
     if (token.getType() == Type.OPERATOR && token.getValue().equals("*")) {
       Token next = requireToken();
 
@@ -628,26 +622,6 @@ public class VenusParser {
     return result.toArray();
   }
 
-  protected Value[] readValues(Type separator, Type end) throws ScriptCompileException {
-    List<Value> result = new ArrayList<>();
-    Token token;
-
-    while ((token = requireToken()).getType() != end) {
-      lexer.reRead(token);
-      result.add(readValue());
-
-      Token test = requireToken();
-
-      if (test.getType() == separator) {
-        continue;
-      }
-
-      lexer.reRead(test);
-    }
-
-    return result.toArray();
-  }
-
   protected String readOperator(String start) throws ScriptCompileException {
     TextBuilder operatorStr = Pool.newBuilder();
     Token operatorToken;
@@ -732,7 +706,9 @@ public class VenusParser {
           nameDef = null;
         }
         else {
-          bye(token, "expected a variable name before array bracket");
+          Resultor[] resultors = readResultors(Type.COMMA, Type.CLOSE_BRACKET);
+
+          resultor.addResultor(this, token, new ArrayDefine(resultors));
         }
       }
       else if (token.getType() == Type.OPEN_PARENTHESE) {
@@ -788,7 +764,7 @@ public class VenusParser {
     Value value = getValueOf(token);
 
     if (value == null) {
-      bye(token, "expected a value literal (boolean/char/number/string)");
+      bye(token, "expected a value literal (array/boolean/char/number/string/type)");
     }
 
     return value;
