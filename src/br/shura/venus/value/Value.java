@@ -43,7 +43,7 @@ public interface Value {
   }
 
   default BoolValue equals(Value value) {
-    return new BoolValue(value.value().equals(value()));
+    return new BoolValue(value().equals(value.value()));
   }
 
   default ValueType getType() {

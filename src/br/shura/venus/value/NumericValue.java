@@ -28,5 +28,6 @@ package br.shura.venus.value;
  * @since GAMMA - 0x3
  */
 public interface NumericValue extends Value {
+  @Override
   Number value();
 }
