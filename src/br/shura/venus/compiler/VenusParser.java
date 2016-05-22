@@ -66,7 +66,6 @@ import br.shura.venus.value.VariableRefValue;
 import br.shura.x.charset.build.TextBuilder;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
-import br.shura.x.logging.XLogger;
 import br.shura.x.math.number.BaseConverter;
 import br.shura.x.util.Pool;
 import br.shura.x.worker.ParseWorker;
@@ -689,7 +688,6 @@ public class VenusParser {
     Token token;
 
     while (process.test(token = requireToken())) {
-      XLogger.println("gotcha " + token);
       if (nameDef == null) {
         Value value;
 
@@ -797,7 +795,6 @@ public class VenusParser {
       }
     }
 
-    XLogger.println("done.last=" + token);
     if (nameDef != null) {
       if (arrayIndex != null) {
         resultor.addResultor(this, nameDefToken, new ArrayAccess(nameDef, arrayIndex));
