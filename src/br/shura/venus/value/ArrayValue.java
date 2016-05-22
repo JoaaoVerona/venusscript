@@ -100,8 +100,6 @@ public class ArrayValue implements IterableValue {
   private static <E> String toString(ArrayValue array) {
     TextBuilder builder = Pool.newBuilder().setSeparator(", ");
 
-    builder.append('[');
-
     for (Value value : array.value()) {
       if (value instanceof ArrayValue) {
         builder.append('[' + toString((ArrayValue) value) + ']');
@@ -111,8 +109,6 @@ public class ArrayValue implements IterableValue {
       }
     }
 
-    builder.append(']');
-
-    return builder.toString();
+    return '[' + builder.toString() + ']';
   }
 }
