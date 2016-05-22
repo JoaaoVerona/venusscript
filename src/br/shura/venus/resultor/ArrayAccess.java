@@ -24,6 +24,7 @@ import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.value.ArrayValue;
 import br.shura.venus.value.Value;
+import br.shura.venus.value.ValueType;
 
 /**
  * ArrayAccess.java
@@ -61,7 +62,7 @@ public class ArrayAccess implements Resultor {
     }
 
     throw new InvalidArrayAccessException(context, "Variable \"" + getArray().getName() + "\" is of type " +
-      value.getType() + "; expected to be an array");
+      value.getType() + "; expected to be an " + ValueType.ARRAY);
   }
 
   @Override
