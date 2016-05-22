@@ -66,6 +66,10 @@ public class Context {
   }
 
   public VariableStructure getStructure(String name) throws UndefinedVariableException {
+    if (name.length() > 1 && name.charAt(0) == '$') {
+      return getOwner().getApplicationContext().getStructure(name.substring(1));
+    }
+
     if (isOwnerOf(name)) {
       return getVariables().get(name);
     }
