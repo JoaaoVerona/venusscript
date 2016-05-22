@@ -1,6 +1,6 @@
 # VenusScript
 Welcome to the official GitHub repository of the dynamic, injectable, scripting language **VenusScript**.
-See the [examples directory](/tree/master/examples) to get a closer look in how the language works.
+See the [examples directory](https://github.com/BloodShura/VenusScript/tree/master/examples) to get a closer look in how the language works.
 
 ### Tech
 VenusScript is meant to be used within a Java application, although it's implementation is, since the beginning, already being made targeting different languages in the future.
