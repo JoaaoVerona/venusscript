@@ -22,6 +22,8 @@ package br.shura.venus.value;
 import br.shura.venus.exception.runtime.InvalidArrayAccessException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.x.charset.build.TextBuilder;
+import br.shura.x.util.Pool;
 import br.shura.x.util.comparator.SimpleEqualizer;
 import br.shura.x.util.layer.XApi;
 
@@ -80,5 +82,29 @@ public class ArrayValue implements Value {
   @Override
   public Value[] value() {
     return values;
+  }
+
+  @Override
+  public String toString() {
+    return toString(this);
+  }
+
+  private static <E> String toString(ArrayValue array) {
+    TextBuilder builder = Pool.newBuilder().setSeparator(", ");
+
+    builder.append('[');
+
+    for (Value value : array.value()) {
+      if (value instanceof ArrayValue) {
+        builder.append('[' + toString((ArrayValue) value) + ']');
+      }
+      else {
+        builder.append(value);
+      }
+    }
+
+    builder.append(']');
+
+    return builder.toString();
   }
 }
