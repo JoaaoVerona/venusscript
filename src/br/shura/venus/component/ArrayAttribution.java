@@ -31,16 +31,16 @@ import br.shura.venus.resultor.Resultor;
  */
 public class ArrayAttribution extends Component {
   private final String name;
-  private final int index;
+  private final Resultor index;
   private final Resultor resultor;
 
-  public ArrayAttribution(String name, int index, Resultor resultor) {
+  public ArrayAttribution(String name, Resultor index, Resultor resultor) {
     this.index = index;
     this.name = name;
     this.resultor = resultor;
   }
 
-  public int getIndex() {
+  public Resultor getIndex() {
     return index;
   }
 

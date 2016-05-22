@@ -44,6 +44,7 @@ import br.shura.venus.value.DecimalValue;
 import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.NumericValue;
 import br.shura.venus.value.Value;
+import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.ListIterator;
 import br.shura.x.collection.store.impl.Queue;
 import br.shura.x.logging.XLogger;
@@ -261,12 +262,21 @@ public class VenusExecutor {
 
         if (value instanceof ArrayValue) {
           ArrayValue array = (ArrayValue) value;
+          Value index = attribution.getIndex().resolve(context);
 
-          array.set(context, attribution.getIndex(), attribution.getResultor().resolve(context));
+          if (index instanceof IntegerValue) {
+            IntegerValue intIndex = (IntegerValue) index;
+
+            array.set(context, intIndex.value().intValue(), attribution.getResultor().resolve(context));
+          }
+          else {
+            throw new InvalidArrayAccessException(context, "Index \"" + index + "\" is of type " +
+              index.getType() + "; expected to be an " + ValueType.INTEGER);
+          }
         }
         else {
           throw new InvalidArrayAccessException(context, "Variable \"" + attribution.getName() + "\" is of type " +
-            value.getType() + "; expected to be an array");
+            value.getType() + "; expected to be an " + ValueType.ARRAY);
         }
       }
       else if (component instanceof Attribution) {
