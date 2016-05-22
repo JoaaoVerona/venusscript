@@ -1,5 +1,6 @@
 # VenusScript
 Welcome to the official GitHub repository of the dynamic, injectable, scripting language **VenusScript**.
+See the [examples directory](/tree/master/examples) to get a closer look in how the language works.
 
 ### Tech
 VenusScript is meant to be used within a Java application, although it's implementation is, since the beginning, already being made targeting different languages in the future.
@@ -35,6 +36,8 @@ It is required Java 8+ and libraries:
 - Basic standard libraries (random, input, output, cryptography, dialogs, math, runtime injection)
 - Interpret source code at runtime (e.g. ```interpret("println(3 + 5 + 2 - 1)")```)
 - Binary, decimal and hexadecimal literals
+- Execute other scripts, asynchronously or synchronously (e.g. ```async run("../basic.vs")```)
+- Useful libraries (rich cryptography ecosystem, dialogs, math, ...)
 
 ### To be implemented
 - Object-oriented programming (classes, attributes, methods)
@@ -44,4 +47,6 @@ It is required Java 8+ and libraries:
 - Enumerations?
 - User-defined value types
 - Debugging features (including, but not limited to, *breakpoints*)
+- More method libraries
+- Simple exception handling?
 - [... and many more...](https://github.com/BloodShura/VenusScript/issues?q=is%3Aissue+is%3Aopen+-label%3Abug)
