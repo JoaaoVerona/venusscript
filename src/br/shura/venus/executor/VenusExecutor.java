@@ -30,6 +30,7 @@ import br.shura.venus.component.branch.Continue;
 import br.shura.venus.component.branch.DoWhileContainer;
 import br.shura.venus.component.branch.ElseContainer;
 import br.shura.venus.component.branch.ElseIfContainer;
+import br.shura.venus.component.branch.ForEachContainer;
 import br.shura.venus.component.branch.ForRangeContainer;
 import br.shura.venus.component.branch.IfContainer;
 import br.shura.venus.component.branch.Return;
@@ -38,10 +39,12 @@ import br.shura.venus.exception.runtime.InvalidArrayAccessException;
 import br.shura.venus.exception.runtime.InvalidValueTypeException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.function.Definition;
+import br.shura.venus.resultor.Resultor;
 import br.shura.venus.value.ArrayValue;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.DecimalValue;
 import br.shura.venus.value.IntegerValue;
+import br.shura.venus.value.IterableValue;
 import br.shura.venus.value.NumericValue;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
@@ -123,6 +126,33 @@ public class VenusExecutor {
           asyncThreads.add(thread);
           thread.setDaemon(asyncContainer.isDaemon());
           thread.start();
+        }
+        else if (component instanceof ForEachContainer) {
+          ForEachContainer forContainer = (ForEachContainer) component;
+          Resultor resultor = forContainer.getIterable();
+          Value value = resultor.resolve(context);
+
+          if (value instanceof IterableValue) {
+            IterableValue iterable = (IterableValue) value;
+
+            for (Value element : iterable) {
+              context.setVar(forContainer.getVarName(), element);
+              run(forContainer);
+
+              if (breaking) {
+                this.breaking = false;
+
+                break;
+              }
+
+              if (continuing) {
+                this.continuing = false;
+              }
+            }
+          }
+          else {
+            throw new InvalidValueTypeException(context, "For value \"" + value + "\" is not iterable");
+          }
         }
         else if (component instanceof ForRangeContainer) {
           ForRangeContainer forContainer = (ForRangeContainer) component;
