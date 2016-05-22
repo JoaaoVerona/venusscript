@@ -17,14 +17,13 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.component;
+package br.shura.venus.resultor;
 
 import br.shura.venus.exception.runtime.InvalidFunctionParameterException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.function.Function;
 import br.shura.venus.function.FunctionCallDescriptor;
-import br.shura.venus.resultor.Resultor;
 import br.shura.venus.value.DecimalValue;
 import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.Value;
@@ -43,7 +42,7 @@ import br.shura.x.collection.view.View;
  * @date 06/05/16 - 17:13
  * @since GAMMA - 0x3
  */
-public class FunctionCall extends Component implements Resultor {
+public class FunctionCall implements Resultor {
   private final Resultor[] arguments;
   private final String functionName;
 
