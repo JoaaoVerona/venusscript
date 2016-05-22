@@ -129,6 +129,12 @@ public class Context {
   }
 
   protected boolean changeVar(String name, Value value) {
+    if (name.length() > 1 && name.charAt(0) == '$') {
+      getOwner().getApplicationContext().setVar(name.substring(1), value);
+
+      return true;
+    }
+
     if (isOwnerOf(name)) {
       getVariables().get(name).setValue(value);
 
