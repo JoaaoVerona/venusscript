@@ -20,13 +20,11 @@
 package br.shura.venus.compiler;
 
 import br.shura.venus.compiler.Token.Type;
-import br.shura.venus.component.ArrayAttribution;
 import br.shura.venus.component.AsyncContainer;
-import br.shura.venus.component.Attribution;
 import br.shura.venus.component.Component;
 import br.shura.venus.component.Container;
-import br.shura.venus.component.FunctionCall;
 import br.shura.venus.component.Script;
+import br.shura.venus.component.SimpleComponent;
 import br.shura.venus.component.SimpleContainer;
 import br.shura.venus.component.branch.Break;
 import br.shura.venus.component.branch.Breakable;
@@ -48,9 +46,12 @@ import br.shura.venus.operator.BinaryOperator;
 import br.shura.venus.operator.Operator;
 import br.shura.venus.operator.OperatorList;
 import br.shura.venus.resultor.ArrayAccess;
+import br.shura.venus.resultor.ArrayAttribution;
 import br.shura.venus.resultor.ArrayDefine;
+import br.shura.venus.resultor.Attribution;
 import br.shura.venus.resultor.BinaryOperation;
 import br.shura.venus.resultor.Constant;
+import br.shura.venus.resultor.FunctionCall;
 import br.shura.venus.resultor.FunctionRef;
 import br.shura.venus.resultor.Resultor;
 import br.shura.venus.resultor.Variable;
@@ -65,6 +66,7 @@ import br.shura.venus.value.VariableRefValue;
 import br.shura.x.charset.build.TextBuilder;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
+import br.shura.x.logging.XLogger;
 import br.shura.x.math.number.BaseConverter;
 import br.shura.x.util.Pool;
 import br.shura.x.worker.ParseWorker;
@@ -91,7 +93,7 @@ public class VenusParser {
     this.script = script;
   }
 
-  public void parse(VenusLexer lexer, Container target, boolean interactive) throws ScriptCompileException {
+  public void parse(VenusLexer lexer, Container target) throws ScriptCompileException {
     this.container = target;
     this.lexer = lexer;
 
@@ -100,9 +102,8 @@ public class VenusParser {
 
     while ((token = lexer.nextToken()) != null) {
       if (token.getType() == Type.DOLLAR_SIGN) {
-        Token next = requireToken(Type.NAME_DEFINITION, "expected a variable name");
-
-        parseAttributionOrFunctionCall('$' + next.getValue(), false);
+        lexer.reRead(token);
+        addComponent(readResultor(Type.NEW_LINE), true);
       }
       else if (token.getType() == Type.NAME_DEFINITION) {
         if (token.getValue().equals(KeywordDefinitions.ASYNC)) {
@@ -205,7 +206,8 @@ public class VenusParser {
           parseWhile();
         }
         else {
-          parseAttributionOrFunctionCall(token.getValue(), true);
+          lexer.reRead(token);
+          addComponent(readResultor(Type.NEW_LINE), true);
         }
 
         justExitedIfContainer = false;
@@ -247,17 +249,8 @@ public class VenusParser {
         }
       }
       else if (token.getType() != Type.NEW_LINE) {
-        if (interactive) {
-          lexer.reRead(token);
-
-          Resultor resultor = readResultor(Type.NEW_LINE);
-          FunctionCall functionCall = new FunctionCall("println", resultor);
-
-          addComponent(functionCall, true);
-        }
-        else {
-          bye(token, "expected a name definition or close brace");
-        }
+        lexer.reRead(token);
+        addComponent(readResultor(Type.NEW_LINE), true);
       }
     }
   }
@@ -283,6 +276,10 @@ public class VenusParser {
       component.setSourceLine(lexer.currentLine());
       container.getChildren().add(component);
     }
+  }
+
+  protected void addComponent(Resultor resultor, boolean asyncable) throws UnexpectedTokenException {
+    addComponent(new SimpleComponent(resultor), asyncable);
   }
 
   protected void addContainer(Container container, boolean asyncable) throws UnexpectedTokenException {
@@ -395,11 +392,45 @@ public class VenusParser {
     addComponent(attribution, false);
   }
 
-  protected void parseAttribution(String name, Token operatorToken) throws ScriptCompileException {
-    Resultor resultor = parseAttributionHelper(name, operatorToken);
-    Attribution attribution = new Attribution(name, resultor);
+  protected Object parseArrayElementOperation(String currentNameDef, Resultor index, String operatorStr, Token errorToken, boolean mustBeUnary) throws ScriptCompileException {
+    if (operatorStr.equals("=")) {
+      Resultor resultor = readResultor(token -> token.getType() != Type.NEW_LINE && token.getType() != Type.CLOSE_PARENTHESE,
+        token -> true);
 
-    addComponent(attribution, false);
+      return new ArrayAttribution(currentNameDef, index, resultor);
+    }
+
+    Operator opr = OperatorList.forIdentifier(operatorStr, mustBeUnary);
+
+    if (opr != null) {
+      return opr;
+    }
+
+    // Is attribution
+    if (operatorStr.endsWith("=")) {
+      String operatorIdentifier = operatorStr.substring(0, operatorStr.length() - 1);
+      Operator operator = OperatorList.forIdentifier(operatorIdentifier, false); // false for bye(excepted bin opr)
+
+      if (operator != null) {
+        if (operator instanceof BinaryOperator) {
+          Resultor resultor = readResultor(token -> token.getType() != Type.NEW_LINE && token.getType() != Type.CLOSE_PARENTHESE,
+            token -> true);
+          BinaryOperation operation = new BinaryOperation((BinaryOperator) operator,
+            new ArrayAccess(currentNameDef, index), resultor);
+
+          return new ArrayAttribution(currentNameDef, index, operation);
+        }
+
+        bye(errorToken, "expected an attribution with binary operator (+=, -=, ...)");
+      }
+      else {
+        bye(errorToken, "expected a valid attribution operator (=, +=, -=, ...)");
+      }
+    }
+
+    bye(errorToken, "expected a valid " + (mustBeUnary ? "unary operator" : "operator") + " (+, -, *, /, %, ...)");
+
+    return null; // Will not happen
   }
 
   protected Resultor parseAttributionHelper(String name, Token operatorToken) throws ScriptCompileException {
@@ -435,26 +466,6 @@ public class VenusParser {
     bye(operatorToken, "reached end of parseAttributionHelper");
 
     return null; // Will not happen
-  }
-
-  protected void parseAttributionOrFunctionCall(String name, boolean canBeFunctionCall) throws ScriptCompileException {
-    Token next = requireToken();
-
-    if (next.getType() == Type.OPEN_BRACKET) {
-      parseArrayAttribution(name);
-    }
-    else if (next.getType() == Type.OPERATOR) {
-      parseAttribution(name, next);
-    }
-    else if (next.getType() == Type.OPEN_PARENTHESE && canBeFunctionCall) {
-      Resultor[] arguments = readFunctionArguments();
-
-      requireNewLine();
-      addComponent(new FunctionCall(name, arguments), true);
-    }
-    else {
-      bye(next, "expected attribution operator or function call");
-    }
   }
 
   protected void parseDefinition() throws ScriptCompileException {
@@ -609,6 +620,46 @@ public class VenusParser {
     }
   }
 
+  protected Object parseOperation(String currentNameDef, String operatorStr, Token errorToken, boolean mustBeUnary) throws ScriptCompileException {
+    if (operatorStr.equals("=")) {
+      Resultor resultor = readResultor(token -> token.getType() != Type.NEW_LINE && token.getType() != Type.CLOSE_PARENTHESE,
+        token -> true);
+
+      return new Attribution(currentNameDef, resultor);
+    }
+
+    Operator opr = OperatorList.forIdentifier(operatorStr, mustBeUnary);
+
+    if (opr != null) {
+      return opr;
+    }
+
+    // Is attribution
+    if (operatorStr.endsWith("=")) {
+      String operatorIdentifier = operatorStr.substring(0, operatorStr.length() - 1);
+      Operator operator = OperatorList.forIdentifier(operatorIdentifier, false); // false for bye(excepted bin opr)
+
+      if (operator != null) {
+        if (operator instanceof BinaryOperator) {
+          Resultor resultor = readResultor(token -> token.getType() != Type.NEW_LINE && token.getType() != Type.CLOSE_PARENTHESE,
+            token -> true);
+          BinaryOperation operation = new BinaryOperation((BinaryOperator) operator, new Variable(currentNameDef), resultor);
+
+          return new Attribution(currentNameDef, operation);
+        }
+
+        bye(errorToken, "expected an attribution with binary operator (+=, -=, ...)");
+      }
+      else {
+        bye(errorToken, "expected a valid attribution operator (=, +=, -=, ...)");
+      }
+    }
+
+    bye(errorToken, "expected a valid " + (mustBeUnary ? "unary operator" : "operator") + " (+, -, *, /, %, ...)");
+
+    return null; // Will not happen
+  }
+
   protected void parseReturn() throws ScriptCompileException {
     Token test = lexer.nextToken();
 
@@ -679,10 +730,12 @@ public class VenusParser {
   protected Resultor readResultor(Predicate<Token> process, Predicate<Token> reReadLast) throws ScriptCompileException {
     BuildingResultor resultor = new BuildingResultor();
     String nameDef = null;
+    Resultor arrayIndex = null;
     Token nameDefToken = null;
     Token token;
 
     while (process.test(token = requireToken())) {
+      XLogger.println("gotcha " + token);
       if (nameDef == null) {
         Value value;
 
@@ -705,32 +758,61 @@ public class VenusParser {
         resultor.addResultor(this, next, new FunctionRef(next.getValue()));
       }
       else if (token.getType() == Type.DOLLAR_SIGN) {
+        if (nameDef != null) {
+          bye(token, "expected open parenthese (function) or operator after a name definition");
+        }
+
         Token next = requireToken(Type.NAME_DEFINITION, "expected a variable name");
 
-        resultor.addResultor(this, next, new Variable(token.getValue() + next.getValue()));
+        nameDef = token.getValue() + next.getValue();
+        nameDefToken = next;
       }
       else if (token.getType() == Type.OPERATOR) {
+        String operator = readOperator(token.getValue());
+
         if (nameDef != null) {
-          resultor.addResultor(this, nameDefToken, new Variable(nameDef));
+          Object r;
+
+          if (arrayIndex != null) {
+            r = parseArrayElementOperation(nameDef, arrayIndex, operator, token, false);
+          }
+          else {
+            r = parseOperation(nameDef, operator, token, false);
+          }
+
+          if (r instanceof Resultor) {
+            resultor.addResultor(this, token, (Resultor) r);
+          }
+          else if (r instanceof Operator) {
+            resultor.addResultor(this, nameDefToken, arrayIndex != null ? new ArrayAccess(nameDef, arrayIndex) : new Variable(nameDef));
+            resultor.addOperator(this, token, (Operator) r);
+          }
+          else {
+            bye(token, "unknown type " + r.getClass().getName());
+          }
+
+          arrayIndex = null;
           nameDef = null;
         }
-
-        String operatorStr = readOperator(token.getValue());
-        Operator operator = OperatorList.forIdentifier(operatorStr, !resultor.hasResultor());
-
-        if (operator != null) {
-          resultor.addOperator(this, token, operator);
-        }
         else {
-          bye(token, "expected a valid attribution operator (=, +=, -=, ...)");
+          Object r = parseOperation(null, operator, token, !resultor.hasResultor());
+
+          if (r instanceof Operator) {
+            resultor.addOperator(this, token, (Operator) r);
+          }
+          else {
+            bye(token, "unknown type " + r.getClass().getName());
+          }
         }
       }
       else if (token.getType() == Type.OPEN_BRACKET) {
         if (nameDef != null) {
-          Resultor index = readResultor(Type.CLOSE_BRACKET);
-
-          resultor.addResultor(this, nameDefToken, new ArrayAccess(nameDef, index));
-          nameDef = null;
+          if (arrayIndex == null) {
+            arrayIndex = readResultor(Type.CLOSE_BRACKET);
+          }
+          else {
+            bye(token, "already has index resultor");
+          }
         }
         else {
           Resultor[] resultors = readResultors(Type.COMMA, Type.CLOSE_BRACKET);
@@ -749,20 +831,26 @@ public class VenusParser {
           resultor.addResultor(this, token, readResultor(Type.CLOSE_PARENTHESE));
         }
       }
+      else if (nameDef != null) {
+        bye(token, "expected open parenthese (function) or operator after a name definition");
+      }
       else if (token.getType() == Type.NAME_DEFINITION) {
         nameDef = token.getValue();
         nameDefToken = token;
-      }
-      else if (nameDef != null) {
-        bye(token, "expected open parenthese (function) or operator after a name definition");
       }
       else if (token.getType() != Type.NEW_LINE) {
         bye(token, "unexpected token");
       }
     }
 
+    XLogger.println("done.last=" + token);
     if (nameDef != null) {
-      resultor.addResultor(this, nameDefToken, new Variable(nameDef));
+      if (arrayIndex != null) {
+        resultor.addResultor(this, nameDefToken, new ArrayAccess(nameDef, arrayIndex));
+      }
+      else {
+        resultor.addResultor(this, nameDefToken, new Variable(nameDef));
+      }
     }
 
     if (reReadLast.test(token)) {
