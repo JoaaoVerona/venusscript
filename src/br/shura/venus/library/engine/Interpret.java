@@ -64,7 +64,7 @@ public class Interpret extends VoidMethod {
       context.currentExecutor().run(container);
     }
     catch (IOException | ScriptCompileException exception) {
-      throw new ScriptRuntimeException(context, "Failed to interpret script", exception);
+      throw new ScriptRuntimeException(context, "Failed to compile script", exception);
     }
   }
 }

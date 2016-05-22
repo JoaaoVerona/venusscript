@@ -69,7 +69,7 @@ public class Evaluate extends Method {
       return result != null ? result : new BoolValue(false);
     }
     catch (IOException | ScriptCompileException exception) {
-      throw new ScriptRuntimeException(context, "Failed to interpret script", exception);
+      throw new ScriptRuntimeException(context, "Failed to compile script", exception);
     }
   }
 }
