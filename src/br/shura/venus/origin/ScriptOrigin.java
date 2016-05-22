@@ -51,7 +51,7 @@ public interface ScriptOrigin {
     Script script = new Script(applicationContext, this);
     VenusParser parser = script.getParser();
 
-    parser.parse(lexer, script);
+    parser.parse(lexer, script, false);
 
     return script;
   }

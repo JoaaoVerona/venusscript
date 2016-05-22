@@ -60,7 +60,7 @@ public class Interpret extends VoidMethod {
     container.setParent(context.getOwner());
 
     try {
-      parser.parse(new VenusLexer(origin), container);
+      parser.parse(new VenusLexer(origin), container, true);
       context.currentExecutor().run(container);
     }
     catch (IOException | ScriptCompileException exception) {

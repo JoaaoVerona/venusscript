@@ -62,7 +62,7 @@ public class Evaluate extends Method {
     container.setParent(context.getOwner());
 
     try {
-      parser.parse(new VenusLexer(origin), container);
+      parser.parse(new VenusLexer(origin), container, true);
 
       Value result = context.currentExecutor().run(container);
 

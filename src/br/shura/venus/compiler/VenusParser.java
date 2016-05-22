@@ -91,8 +91,8 @@ public class VenusParser {
     this.script = script;
   }
 
-  public void parse(VenusLexer lexer, Container c) throws ScriptCompileException {
-    this.container = c;
+  public void parse(VenusLexer lexer, Container target, boolean interactive) throws ScriptCompileException {
+    this.container = target;
     this.lexer = lexer;
 
     Token token;
@@ -247,7 +247,17 @@ public class VenusParser {
         }
       }
       else if (token.getType() != Type.NEW_LINE) {
-        bye(token, "expected a name definition or close brace");
+        if (interactive) {
+          lexer.reRead(token);
+
+          Resultor resultor = readResultor(Type.NEW_LINE);
+          FunctionCall functionCall = new FunctionCall("println", resultor);
+
+          addComponent(functionCall, true);
+        }
+        else {
+          bye(token, "expected a name definition or close brace");
+        }
       }
     }
   }
