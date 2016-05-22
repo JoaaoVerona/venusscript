@@ -36,6 +36,7 @@ import br.shura.x.worker.UtilWorker;
  * @since GAMMA - 0x3
  */
 public enum ValueType {
+  ARRAY("array", ArrayValue.class, Value[].class),
   BOOLEAN("bool", BoolValue.class, Boolean.class),
   DECIMAL("decimal", DecimalValue.class, Double.class, Float.class),
   FUNCTION_REFERENCE("ref", FunctionRefValue.class, Function.class),
