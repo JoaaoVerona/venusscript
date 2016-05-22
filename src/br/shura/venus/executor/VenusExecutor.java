@@ -19,12 +19,10 @@
 
 package br.shura.venus.executor;
 
-import br.shura.venus.component.ArrayAttribution;
 import br.shura.venus.component.AsyncContainer;
-import br.shura.venus.component.Attribution;
 import br.shura.venus.component.Component;
 import br.shura.venus.component.Container;
-import br.shura.venus.component.FunctionCall;
+import br.shura.venus.component.SimpleComponent;
 import br.shura.venus.component.branch.Break;
 import br.shura.venus.component.branch.Continue;
 import br.shura.venus.component.branch.DoWhileContainer;
@@ -35,19 +33,17 @@ import br.shura.venus.component.branch.ForRangeContainer;
 import br.shura.venus.component.branch.IfContainer;
 import br.shura.venus.component.branch.Return;
 import br.shura.venus.component.branch.WhileContainer;
-import br.shura.venus.exception.runtime.InvalidArrayAccessException;
 import br.shura.venus.exception.runtime.InvalidValueTypeException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.function.Definition;
+import br.shura.venus.origin.ScriptMode;
 import br.shura.venus.resultor.Resultor;
-import br.shura.venus.value.ArrayValue;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.DecimalValue;
 import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.IterableValue;
 import br.shura.venus.value.NumericValue;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.ListIterator;
 import br.shura.x.collection.store.impl.Queue;
 import br.shura.x.logging.XLogger;
@@ -77,15 +73,15 @@ public class VenusExecutor {
     this.shouldRun = true;
   }
 
-  public Value run(Container container) throws ScriptRuntimeException {
-    return run(container, () -> shouldRun);
+  public Value run(Container container, ScriptMode mode) throws ScriptRuntimeException {
+    return run(container, mode, () -> shouldRun);
   }
 
   public void stop() {
     this.shouldRun = true;
   }
 
-  protected Value run(Container container, Supplier<Boolean> shouldRun) throws ScriptRuntimeException {
+  protected Value run(Container container, ScriptMode mode, Supplier<Boolean> shouldRun) throws ScriptRuntimeException {
     Context context = container.getContext();
     ListIterator<Component> iterator = container.getChildren().iterator();
     Value result = null;
@@ -113,7 +109,7 @@ public class VenusExecutor {
             VenusExecutor executor = new VenusExecutor();
 
             try {
-              executor.run(asyncContainer, () -> VenusExecutor.this.shouldRun);
+              executor.run(asyncContainer, mode, () -> VenusExecutor.this.shouldRun);
             }
             catch (ScriptRuntimeException exception) {
               asyncExceptions.push(exception);
@@ -137,7 +133,7 @@ public class VenusExecutor {
 
             for (Value element : iterable) {
               context.setVar(forContainer.getVarName(), element);
-              run(forContainer);
+              run(forContainer, mode, shouldRun);
 
               if (breaking) {
                 this.breaking = false;
@@ -169,7 +165,7 @@ public class VenusExecutor {
 
               while (count.lowerEqualThan(to).value()) {
                 context.setVar(forContainer.getVarName(), count);
-                run(forContainer);
+                run(forContainer, mode, shouldRun);
 
                 if (breaking) {
                   this.breaking = false;
@@ -202,7 +198,7 @@ public class VenusExecutor {
               BoolValue boolValue = (BoolValue) value;
 
               if (boolValue.value()) {
-                run(whileContainer);
+                run(whileContainer, mode, shouldRun);
 
                 if (breaking) {
                   this.breaking = false;
@@ -227,7 +223,7 @@ public class VenusExecutor {
           DoWhileContainer doWhileContainer = (DoWhileContainer) component;
 
           while (true) {
-            run(doWhileContainer);
+            run(doWhileContainer, mode, shouldRun);
 
             if (breaking) {
               this.breaking = false;
@@ -265,7 +261,7 @@ public class VenusExecutor {
             BoolValue boolValue = (BoolValue) value;
 
             if (boolValue.value()) {
-              run(ifContainer);
+              run(ifContainer, mode, shouldRun);
             }
             else {
               hadIfAndNotProceed = true;
@@ -279,54 +275,18 @@ public class VenusExecutor {
         }
         else if (component instanceof ElseContainer) {
           if (hadIfAndNotProceed) {
-            run((Container) component);
+            run((Container) component, mode, shouldRun);
           }
         }
         else if (!(component instanceof Definition)) {
-          run((Container) component);
+          run((Container) component, mode, shouldRun);
         }
-      }
-      else if (component instanceof ArrayAttribution) {
-        ArrayAttribution attribution = (ArrayAttribution) component;
-        Value value = context.getVar(attribution.getName());
-
-        if (value instanceof ArrayValue) {
-          ArrayValue array = (ArrayValue) value;
-          Value index = attribution.getIndex().resolve(context);
-
-          if (index instanceof IntegerValue) {
-            IntegerValue intIndex = (IntegerValue) index;
-
-            array.set(context, intIndex.value().intValue(), attribution.getResultor().resolve(context));
-          }
-          else {
-            throw new InvalidArrayAccessException(context, "Index \"" + index + "\" is of type " +
-              index.getType() + "; expected to be an " + ValueType.INTEGER);
-          }
-        }
-        else {
-          throw new InvalidArrayAccessException(context, "Variable \"" + attribution.getName() + "\" is of type " +
-            value.getType() + "; expected to be an " + ValueType.ARRAY);
-        }
-      }
-      else if (component instanceof Attribution) {
-        Attribution attribution = (Attribution) component;
-
-        context.setVar(attribution.getName(), attribution.getResultor().resolve(context));
       }
       else if (component instanceof Break) {
         this.breaking = true;
       }
       else if (component instanceof Continue) {
         this.continuing = true;
-      }
-      else if (component instanceof FunctionCall) {
-        FunctionCall functionCall = (FunctionCall) component;
-        Value value = functionCall.resolve(context);
-
-        if (value != null) {
-          result = value;
-        }
       }
       else if (component instanceof Return) {
         Return returner = (Return) component;
@@ -337,6 +297,20 @@ public class VenusExecutor {
         }
 
         break;
+      }
+      else if (component instanceof SimpleComponent) {
+        SimpleComponent simple = (SimpleComponent) component;
+        Value value = simple.getResultor().resolve(context);
+
+        if (value != null) {
+          if (mode == ScriptMode.EVALUATION) {
+            result = value;
+          }
+          else if (mode == ScriptMode.INTERACTIVE) {
+            result = value;
+            XLogger.println(value);
+          }
+        }
       }
 
       hadIfAndNotProceed = false;
