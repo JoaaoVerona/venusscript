@@ -28,6 +28,7 @@ package br.shura.venus.origin;
  * @since GAMMA - 0x3
  */
 public enum ScriptMode {
+  EVALUATION,
   INTERACTIVE,
   NORMAL
 }
