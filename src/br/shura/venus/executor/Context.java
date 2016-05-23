@@ -41,11 +41,13 @@ public class Context {
   private VenusExecutor executor;
   private final Container owner;
   private final Context parent;
+  private final Map<String, Object> userData;
   private final Map<String, VariableStructure> variables;
 
   public Context(Container owner, Context parent) {
     this.owner = owner;
     this.parent = parent;
+    this.userData = new LinkedMap<>();
     this.variables = new LinkedMap<>();
   }
 
@@ -89,6 +91,16 @@ public class Context {
     return getStructure(variable.getName());
   }
 
+  public <E> E getUserData(String name, Class<E> type) throws UndefinedVariableException {
+    Object value = userData.get(name);
+
+    if (value != null && type.isAssignableFrom(value.getClass())) {
+      return (E) value;
+    }
+
+    throw new UndefinedVariableException(this, name);
+  }
+
   public Value getVar(String name) throws UndefinedVariableException {
     XApi.requireNonNull(name, "name");
 
@@ -115,6 +127,10 @@ public class Context {
 
   public boolean isOwnerOf(String name) {
     return getVariables().containsKey(name);
+  }
+
+  public void setUserData(String name, Object value) {
+    userData.set(name, value);
   }
 
   public void setVar(String name, Value value) {
