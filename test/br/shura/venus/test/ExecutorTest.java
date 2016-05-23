@@ -71,7 +71,7 @@ public class ExecutorTest {
   public static Collection<Object[]> data() throws IOException {
     List<Object[]> data = new ArrayList<>();
 
-    DIRECTORY.getFiles(file -> data.add(new Object[] { file }));
+    DIRECTORY.getAllFiles(file -> !file.getName().endsWith("_i"), file -> data.add(new Object[] { file }));
 
     return data.asCollection(java.util.ArrayList.class);
   }
