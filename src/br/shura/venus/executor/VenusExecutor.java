@@ -84,7 +84,7 @@ public class VenusExecutor {
   protected Value run(Container container, ScriptMode mode, Supplier<Boolean> shouldRun) throws ScriptRuntimeException {
     Context context = container.getContext();
     ListIterator<Component> iterator = container.getChildren().iterator();
-    Value result = null;
+    Value result = new IntegerValue(0);
     boolean hadIfAndNotProceed = false;
 
     context.setExecutor(this);

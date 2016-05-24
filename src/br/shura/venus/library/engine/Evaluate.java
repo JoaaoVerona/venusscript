@@ -31,7 +31,6 @@ import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.function.annotation.MethodVarArgs;
 import br.shura.venus.origin.ScriptMode;
 import br.shura.venus.origin.SimpleScriptOrigin;
-import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.Value;
 import br.shura.x.charset.build.TextBuilder;
 import br.shura.x.util.Pool;
@@ -65,9 +64,7 @@ public class Evaluate extends Method {
     try {
       parser.parse(new VenusLexer(origin), container);
 
-      Value result = context.currentExecutor().run(container, ScriptMode.EVALUATION);
-
-      return result != null ? result : new BoolValue(false);
+      return context.currentExecutor().run(container, ScriptMode.EVALUATION);
     }
     catch (IOException | ScriptCompileException exception) {
       throw new ScriptRuntimeException(context, "Failed to compile script", exception);
