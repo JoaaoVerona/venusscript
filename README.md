@@ -16,6 +16,7 @@ It is required Java 8+ and libraries:
 | **0.2** | Variable references, dynamic injection, runtime interpretation, multithreading, arrays, lists, dictionaries, sync. features |
 | 0.3     | Object-oriented features, Java interoperability, user-defined value types |
 | 0.4     | Functional features, enumerations, debugging utilities and breakpoints |
+| 0.5     | Improved performance, own bytecode compiler and interpreter |
 
 ### Definition
 - Highly extensible
