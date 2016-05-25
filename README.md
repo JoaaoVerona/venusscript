@@ -9,6 +9,14 @@ It is required Java 8+ and libraries:
 - [ShuraX Cryptography](todo): required if enabling CryptoLibrary
 - [ShuraX Dialogs](todo): required if enabling DialogsLibrary
 
+### Version Planning
+| Version | Description             |
+| ------- | -----------             |
+| 0.1     | Definitions, methods, value types, function references, standard library, loop containers, branching components |
+| **0.2** | Variable references, dynamic injection, runtime interpretation, multithreading, arrays, lists, dictionaries, sync. features |
+| 0.3     | Object-oriented features, Java interoperability, user-defined value types |
+| 0.4     | Functional features, enumerations, debugging utilities and breakpoints |
+
 ### Definition
 - Highly extensible
 - Dynamic typing
@@ -18,7 +26,6 @@ It is required Java 8+ and libraries:
 - Runtime injections (of libraries, overriding functions, new functions, ...)
 - Multithreaded
 - Easy to learn
-- Decent performance
 
 ### Already implemented
 - Asynchronous features: async. scopes
@@ -37,7 +44,6 @@ It is required Java 8+ and libraries:
 - Interpret source code at runtime (e.g. ```interpret("println(3 + 5 + 2 - 1)")```)
 - Binary, decimal and hexadecimal literals
 - Execute other scripts, asynchronously or synchronously (e.g. ```async run("../basic.vs")```)
-- Useful libraries (rich cryptography ecosystem, dialogs, math, ...)
 - Homogeneous arrays
 
 ### To be implemented
