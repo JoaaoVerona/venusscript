@@ -50,7 +50,7 @@ import java.io.IOException;
 public class Evaluate extends Method {
   @Override
   public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    VenusParser parser = context.getOwner().getScript().getParser();
+    VenusParser parser = context.getScript().getParser();
     TextBuilder builder = Pool.newBuilder();
 
     builder.appendln(descriptor.getValues());

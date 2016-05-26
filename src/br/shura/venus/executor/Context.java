@@ -20,6 +20,7 @@
 package br.shura.venus.executor;
 
 import br.shura.venus.component.Container;
+import br.shura.venus.component.Script;
 import br.shura.venus.exception.runtime.UndefinedVariableException;
 import br.shura.venus.resultor.Variable;
 import br.shura.venus.value.Value;
@@ -65,6 +66,10 @@ public class Context {
 
   public Context getParent() {
     return parent;
+  }
+
+  public Script getScript() {
+    return getOwner().getScript();
   }
 
   public VariableStructure getStructure(String name) throws UndefinedVariableException {

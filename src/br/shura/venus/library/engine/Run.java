@@ -49,7 +49,7 @@ public class Run extends Method {
   @Override
   public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
     StringValue path = (StringValue) descriptor.get(0);
-    Script current = context.getOwner().getScript();
+    Script current = context.getScript();
     ScriptOrigin origin = current.getOrigin().findRelative(path.value());
 
     if (origin != null) {

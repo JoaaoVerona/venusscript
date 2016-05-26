@@ -49,7 +49,7 @@ import java.io.IOException;
 public class Interpret extends VoidMethod {
   @Override
   public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    VenusParser parser = context.getOwner().getScript().getParser();
+    VenusParser parser = context.getScript().getParser();
     TextBuilder builder = Pool.newBuilder();
 
     builder.appendln(descriptor.getValues());

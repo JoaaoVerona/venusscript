@@ -46,7 +46,7 @@ public class DynamicInclude extends VoidMethod {
   public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
     StringValue includeName = (StringValue) descriptor.get(0);
     BoolValue maybe = (BoolValue) descriptor.get(1);
-    Script script = context.getOwner().getScript();
+    Script script = context.getScript();
 
     try {
       script.include(includeName.value(), maybe.value());

@@ -46,7 +46,7 @@ public class DynamicUsing extends VoidMethod {
   @Override
   public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
     StringValue libraryName = (StringValue) descriptor.get(0);
-    Script script = context.getOwner().getScript();
+    Script script = context.getScript();
     Supplier<VenusLibrary> supplier = script.getApplicationContext().getLibrarySuppliers().get(libraryName.value());
     VenusLibrary library;
 
