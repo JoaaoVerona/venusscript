@@ -125,8 +125,8 @@ public class VenusParser {
               break;
             }
 
-            // If there is a definition, at run-time it will be another context,
-            // so do not let lookuping parents
+            // If there is a definition, at run-time it will be in a single context,
+            // so do not let lookuping a definition's parents
             if (lookup instanceof Definition) {
               break;
             }

@@ -45,14 +45,14 @@ public abstract class Component {
     return parent;
   }
 
-  public final int getSourceLine() {
-    return sourceLine;
-  }
-
   public Script getScript() {
     XApi.requireState(getParent() != null, "Could not retrieve script; no parent available");
 
     return getParent().getScript();
+  }
+
+  public final int getSourceLine() {
+    return sourceLine;
   }
 
   public final boolean hasParent() {
@@ -60,13 +60,13 @@ public abstract class Component {
   }
 
   @Internal
-  public void setSourceLine(int sourceLine) {
-    this.sourceLine = sourceLine;
+  public void setParent(Container parent) {
+    this.parent = parent;
   }
 
   @Internal
-  public void setParent(Container parent) {
-    this.parent = parent;
+  public void setSourceLine(int sourceLine) {
+    this.sourceLine = sourceLine;
   }
 
   @Override

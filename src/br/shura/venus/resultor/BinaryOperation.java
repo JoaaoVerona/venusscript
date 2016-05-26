@@ -77,6 +77,6 @@ public class BinaryOperation implements Resultor {
 
   @Override
   public String toString() {
-    return "operation([" + getLeft() + "] " + getOperator() + " [" + getRight() + "])";
+    return "bioperation([" + getLeft() + "] " + getOperator() + " [" + getRight() + "])";
   }
 }

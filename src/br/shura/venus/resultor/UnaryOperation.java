@@ -68,6 +68,6 @@ public class UnaryOperation implements Resultor {
 
   @Override
   public String toString() {
-    return "operation(" + getOperator() + " [" + getResultor() + "])";
+    return "unioperation(" + getOperator() + " [" + getResultor() + "])";
   }
 }

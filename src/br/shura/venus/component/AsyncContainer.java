@@ -38,7 +38,7 @@ public class AsyncContainer extends Container {
 
   @Override
   public String getDisplayName() {
-    return "async()";
+    return isDaemon() ? "async(daemon)" : "async()";
   }
 
   public boolean isDaemon() {
