@@ -41,16 +41,16 @@ public class DoWhileContainer extends Container implements Breakable {
     return condition;
   }
 
-  @Override
-  public String getDisplayName() {
-    return "dowhile(" + getCondition() + ')';
-  }
-
   public boolean hasCondition() {
     return getCondition() != null;
   }
 
   public void setCondition(Resultor condition) {
     this.condition = condition;
+  }
+
+  @Override
+  public String toString() {
+    return "dowhile(" + getCondition() + ')';
   }
 }

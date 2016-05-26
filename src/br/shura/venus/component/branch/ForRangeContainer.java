@@ -47,11 +47,6 @@ public class ForRangeContainer extends Container implements Breakable {
     return adjustment;
   }
 
-  @Override
-  public String getDisplayName() {
-    return "for(" + getVarName() + " in [" + getFrom() + ", " + getTo() + "])";
-  }
-
   public Resultor getFrom() {
     return from;
   }
@@ -62,5 +57,10 @@ public class ForRangeContainer extends Container implements Breakable {
 
   public String getVarName() {
     return varName;
+  }
+
+  @Override
+  public String toString() {
+    return "for(" + getVarName() + " in [" + getFrom() + ", " + getTo() + "] with " + getAdjustment() + ')';
   }
 }

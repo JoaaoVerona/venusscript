@@ -31,7 +31,7 @@ import br.shura.venus.component.Container;
  */
 public class ElseContainer extends Container {
   @Override
-  public String getDisplayName() {
+  public String toString() {
     return "else";
   }
 }

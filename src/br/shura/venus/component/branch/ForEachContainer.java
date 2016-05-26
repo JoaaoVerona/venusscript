@@ -39,16 +39,16 @@ public class ForEachContainer extends Container implements Breakable {
     this.varName = varName;
   }
 
-  @Override
-  public String getDisplayName() {
-    return "foreach(" + getVarName() + " in " + getIterable() + ')';
-  }
-
   public Resultor getIterable() {
     return iterable;
   }
 
   public String getVarName() {
     return varName;
+  }
+
+  @Override
+  public String toString() {
+    return "foreach(" + getVarName() + " in " + getIterable() + ')';
   }
 }

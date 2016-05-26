@@ -86,7 +86,6 @@ public class Script extends Container {
     return appContext;
   }
 
-  @Override
   public String getDisplayName() {
     return getOrigin().getScriptName();
   }

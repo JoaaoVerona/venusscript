@@ -50,7 +50,7 @@ public class ApplicationContext extends Context {
   public ApplicationContext() {
     super(new Container() {
       @Override
-      public String getDisplayName() {
+      public String toString() {
         return "APPLICATION";
       }
     }, null);

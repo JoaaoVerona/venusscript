@@ -36,11 +36,6 @@ public class AsyncContainer extends Container {
     this.daemon = daemon;
   }
 
-  @Override
-  public String getDisplayName() {
-    return isDaemon() ? "async(daemon)" : "async()";
-  }
-
   public boolean isDaemon() {
     return daemon;
   }
@@ -49,5 +44,10 @@ public class AsyncContainer extends Container {
   public void setParent(Container parent) {
     super.setParent(parent);
     this.context = new Context(this, parent.getContext());
+  }
+
+  @Override
+  public String toString() {
+    return isDaemon() ? "async(daemon)" : "async()";
   }
 }

@@ -72,11 +72,6 @@ public final class Definition extends Container implements Function {
   }
 
   @Override
-  public String getDisplayName() {
-    return '@' + getName();
-  }
-
-  @Override
   public String getName() {
     return name;
   }

@@ -35,7 +35,7 @@ public class ElseIfContainer extends IfContainer {
   }
 
   @Override
-  public String getDisplayName() {
+  public String toString() {
     return "elseif(" + getCondition() + ')';
   }
 }

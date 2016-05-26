@@ -42,7 +42,7 @@ public class WhileContainer extends Container implements Breakable {
   }
 
   @Override
-  public String getDisplayName() {
+  public String toString() {
     return "while(" + getCondition() + ')';
   }
 }
