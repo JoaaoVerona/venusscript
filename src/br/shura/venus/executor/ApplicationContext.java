@@ -19,7 +19,7 @@
 
 package br.shura.venus.executor;
 
-import br.shura.venus.component.Container;
+import br.shura.venus.component.SimpleContainer;
 import br.shura.venus.library.VenusLibrary;
 import br.shura.venus.library.crypto.CryptoLibrary;
 import br.shura.venus.library.dialogs.DialogsLibrary;
@@ -48,12 +48,7 @@ public class ApplicationContext extends Context {
   private final Map<String, Supplier<VenusLibrary>> librarySuppliers;
 
   public ApplicationContext() {
-    super(new Container() {
-      @Override
-      public String toString() {
-        return "APPLICATION";
-      }
-    }, null);
+    super(new SimpleContainer("APPLICATION"), null);
     this.librarySuppliers = new LinkedMap<>();
 
     getLibrarySuppliers().add("crypto", CryptoLibrary::new);

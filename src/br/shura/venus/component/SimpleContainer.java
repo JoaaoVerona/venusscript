@@ -19,6 +19,8 @@
 
 package br.shura.venus.component;
 
+import br.shura.x.util.layer.XApi;
+
 /**
  * SimpleContainer.java
  *
@@ -28,8 +30,20 @@ package br.shura.venus.component;
  * @since GAMMA - 0x3
  */
 public class SimpleContainer extends Container {
+  private final String name;
+
+  public SimpleContainer() {
+    this("container");
+  }
+
+  public SimpleContainer(String name) {
+    XApi.requireNonNull(name, "name");
+
+    this.name = name;
+  }
+
   @Override
   public String toString() {
-    return "container()";
+    return name + "()";
   }
 }
