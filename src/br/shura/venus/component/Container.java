@@ -21,7 +21,6 @@ package br.shura.venus.component;
 
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.exception.runtime.UndefinedFunctionException;
-import br.shura.venus.exception.runtime.UndefinedVariableException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.function.Definition;
 import br.shura.venus.function.Function;
@@ -54,16 +53,14 @@ public abstract class Container extends Component {
   public Function findFunction(Context context, String name, View<ValueType> argumentTypes) throws ScriptRuntimeException {
     XApi.requireNonNull(name, "name");
 
-    try {
-      Value value = context.getVar(name);
-
+    if (context.hasVar(name)) {
+      Value value = context.getVarValue(name); // Should not need to catch UndefinedVariableException since we already
+                                               // checked that the variable exists
       if (value instanceof FunctionRefValue) {
         FunctionRefValue reference = (FunctionRefValue) value;
 
         return context.getOwner().findFunction(context, reference.value(), null);
       }
-    }
-    catch (UndefinedVariableException exception) {
     }
 
     Definition foundVarArgs = null;
