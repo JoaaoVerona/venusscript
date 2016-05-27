@@ -52,11 +52,11 @@ import br.shura.venus.resultor.Attribution;
 import br.shura.venus.resultor.BinaryOperation;
 import br.shura.venus.resultor.Constant;
 import br.shura.venus.resultor.FunctionCall;
-import br.shura.venus.resultor.FunctionRef;
 import br.shura.venus.resultor.Resultor;
 import br.shura.venus.resultor.Variable;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.DecimalValue;
+import br.shura.venus.value.FunctionRefValue;
 import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.StringValue;
 import br.shura.venus.value.TypeValue;
@@ -298,6 +298,16 @@ public class VenusParser {
 
   protected Value getValueOf(Token token) throws ScriptCompileException {
     String value = token.getValue();
+
+    if (token.getType() == Type.AT_SIGN) {
+      Token next = requireToken();
+
+      if (next.getType() == Type.NAME_DEFINITION) {
+        return new FunctionRefValue(next.getValue());
+      }
+
+      lexer.reRead(next);
+    }
 
     if (token.getType() == Type.BINARY_LITERAL) {
       try {
@@ -704,12 +714,7 @@ public class VenusParser {
         }
       }
 
-      if (token.getType() == Type.AT_SIGN) {
-        Token next = requireToken(Type.NAME_DEFINITION, "expected a function name as reference");
-
-        resultor.addResultor(this, next, new FunctionRef(next.getValue()));
-      }
-      else if (token.getType() == Type.DOLLAR_SIGN) {
+      if (token.getType() == Type.DOLLAR_SIGN) {
         if (nameDef != null) {
           bye(token, "expected open parenthese (function) or operator after a name definition");
         }
