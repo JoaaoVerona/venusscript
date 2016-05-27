@@ -56,7 +56,7 @@ public class WaitAttribution extends VoidMethod {
     Object lock = new Object();
 
     scan(context, resultor, list);
-    list.forEachExceptional(variable -> context.getStructure(variable).addChangeMonitor(lock));
+    list.forEachExceptional(variable -> context.getVar(variable).addChangeMonitor(lock));
 
     Value value = resultor.resolve(context); // Maybe value changed after it was resolved.
 
@@ -75,7 +75,7 @@ public class WaitAttribution extends VoidMethod {
       value = resultor.resolve(context);
     }
 
-    list.forEachExceptional(variable -> context.getStructure(variable).removeChangeMonitor(lock));
+    list.forEachExceptional(variable -> context.getVar(variable).removeChangeMonitor(lock));
   }
 
   private void scan(Context context, Resultor resultor, List<Variable> list) throws ScriptRuntimeException {

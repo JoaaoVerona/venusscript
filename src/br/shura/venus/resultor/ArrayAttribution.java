@@ -60,7 +60,7 @@ public class ArrayAttribution implements Resultor {
 
   @Override
   public Value resolve(Context context) throws ScriptRuntimeException {
-    Value value = context.getVar(getName());
+    Value value = context.getVarValue(getName());
 
     if (value instanceof ArrayValue) {
       ArrayValue array = (ArrayValue) value;

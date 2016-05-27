@@ -72,30 +72,6 @@ public class Context {
     return getOwner().getScript();
   }
 
-  public VariableStructure getStructure(String name) throws UndefinedVariableException {
-    if (name.length() > 1 && name.charAt(0) == '$') {
-      return getOwner().getApplicationContext().getStructure(name.substring(1));
-    }
-
-    if (isOwnerOf(name)) {
-      return getVariables().get(name);
-    }
-
-    if (hasParent()) {
-      try {
-        return getParent().getStructure(name);
-      }
-      catch (UndefinedVariableException exception) {
-      }
-    }
-
-    throw new UndefinedVariableException(this, name);
-  }
-
-  public VariableStructure getStructure(Variable variable) throws UndefinedVariableException {
-    return getStructure(variable.getName());
-  }
-
   public <E> E getUserData(String name, Class<E> type) throws UndefinedVariableException {
     Object value = userData.get(name);
 
@@ -106,14 +82,38 @@ public class Context {
     throw new UndefinedVariableException(this, name);
   }
 
-  public Value getVar(String name) throws UndefinedVariableException {
-    XApi.requireNonNull(name, "name");
+  public VariableStructure getVar(String name) throws UndefinedVariableException {
+    if (name.length() > 1 && name.charAt(0) == '$') {
+      return getOwner().getApplicationContext().getVar(name.substring(1));
+    }
 
-    return getStructure(name).getValue();
+    if (isOwnerOf(name)) {
+      return getVariables().get(name);
+    }
+
+    if (hasParent()) {
+      try {
+        return getParent().getVar(name);
+      }
+      catch (UndefinedVariableException exception) {
+      }
+    }
+
+    throw new UndefinedVariableException(this, name);
   }
 
-  public Value getVar(Variable variable) throws UndefinedVariableException {
+  public VariableStructure getVar(Variable variable) throws UndefinedVariableException {
     return getVar(variable.getName());
+  }
+
+  public Value getVarValue(String name) throws UndefinedVariableException {
+    XApi.requireNonNull(name, "name");
+
+    return getVar(name).getValue();
+  }
+
+  public Value getVarValue(Variable variable) throws UndefinedVariableException {
+    return getVarValue(variable.getName());
   }
 
   public Map<String, VariableStructure> getVariables() {
@@ -125,7 +125,9 @@ public class Context {
   }
 
   public boolean hasVar(String name) throws UndefinedVariableException {
-    XApi.requireNonNull(name, "name");
+    if (name.length() > 1 && name.charAt(0) == '$') {
+      return getOwner().getApplicationContext().hasVar(name.substring(1));
+    }
 
     return isOwnerOf(name) || (hasParent() && getParent().hasVar(name));
   }

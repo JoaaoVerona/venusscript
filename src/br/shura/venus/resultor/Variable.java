@@ -47,7 +47,7 @@ public class Variable implements Resultor {
 
   @Override
   public Value resolve(Context context) throws ScriptRuntimeException {
-    return context.getVar(getName());
+    return context.getVarValue(getName());
   }
 
   @Override

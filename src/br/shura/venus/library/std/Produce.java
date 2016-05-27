@@ -48,7 +48,7 @@ public class Produce extends VoidMethod {
     Variable variable = reference.value();
     Object monitor;
 
-    synchronized ((monitor = context.getStructure(variable).getLockMonitor())) {
+    synchronized ((monitor = context.getVar(variable).getLockMonitor())) {
       Value value = variable.resolve(context);
 
       context.setVar(variable.getName(), value.plus(new IntegerValue(1)));
