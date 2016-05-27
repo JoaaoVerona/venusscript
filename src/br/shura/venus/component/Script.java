@@ -111,8 +111,8 @@ public class Script extends Container {
     return this;
   }
 
-  public void include(String includeName, boolean maybe) throws ScriptCompileException {
-    ScriptOrigin origin = getOrigin().findRelative(includeName);
+  public void include(String includePath, boolean maybe) throws ScriptCompileException {
+    ScriptOrigin origin = getOrigin().findRelative(includePath);
 
     if (origin != null) {
       Script script = origin.compile(getApplicationContext());
@@ -120,10 +120,10 @@ public class Script extends Container {
       getIncludes().add(script);
     }
     else if (maybe) {
-      XLogger.debugln("Not found include script \"" + includeName + "\", but it was marked as maybe.");
+      XLogger.debugln("Not found include script \"" + includePath + "\", but it was marked as maybe.");
     }
     else {
-      throw new ScriptCompileException("Could not find script \"" + includeName + "\"");
+      throw new ScriptCompileException("Could not find script \"" + includePath + "\"");
     }
   }
 

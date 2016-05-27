@@ -56,14 +56,10 @@ public interface ScriptOrigin {
     return script;
   }
 
-  default ScriptOrigin findRelative(String includeName) {
-    PathResource resource = new PathResource(includeName);
+  default ScriptOrigin findRelative(String includePath) {
+    PathResource resource = new PathResource(includePath);
 
-    if (resource.exists()) {
-      return new StreamScriptOrigin(includeName, resource);
-    }
-
-    return null;
+    return resource.exists() ? new StreamScriptOrigin(includePath, resource) : null;
   }
 
   String getScriptName();
