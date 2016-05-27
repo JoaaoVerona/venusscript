@@ -24,8 +24,8 @@ import br.shura.venus.resultor.Variable;
 import br.shura.x.collection.view.ArrayView;
 import br.shura.x.collection.view.View;
 import br.shura.x.util.layer.XApi;
-import br.shura.x.worker.StringWorker;
 import br.shura.x.worker.UtilWorker;
+import br.shura.x.worker.enumeration.Enumerations;
 
 /**
  * ValueType.java
@@ -36,6 +36,7 @@ import br.shura.x.worker.UtilWorker;
  * @since GAMMA - 0x3
  */
 public enum ValueType {
+  ANY("any", Value.class, Object.class),
   ARRAY("array", ArrayValue.class, Value[].class),
   BOOLEAN("bool", BoolValue.class, Boolean.class),
   DECIMAL("decimal", DecimalValue.class, Double.class, Float.class),
@@ -43,17 +44,14 @@ public enum ValueType {
   INTEGER("int", IntegerValue.class, Integer.class, Long.class),
   STRING("string", StringValue.class, String.class),
   TYPE("type", TypeValue.class, ValueType.class),
-  VARIABLE_REFERENCE("var", VariableRefValue.class, Variable.class),
-  ANY("any", Value.class, Object.class); // Should be after all other types
+  VARIABLE_REFERENCE("var", VariableRefValue.class, Variable.class);
 
   private final String identifier;
-  private final String name;
   private final Class<?>[] objectTypes;
   private final Class<? extends Value> type;
 
   private ValueType(String identifier, Class<? extends Value> type, Class<?>... objectTypes) {
     this.identifier = identifier;
-    this.name = StringWorker.capitalize(StringWorker.replace(name(), '_', ' '));
     this.objectTypes = objectTypes;
     this.type = type;
   }
@@ -84,13 +82,13 @@ public enum ValueType {
 
   @Override
   public String toString() {
-    return name;
+    return getIdentifier();
   }
 
   public static ValueType forIdentifier(String identifier) {
     XApi.requireNonNull(identifier, "identifier");
 
-    for (ValueType value : values()) {
+    for (ValueType value : valuesView()) {
       if (value.getIdentifier().equals(identifier)) {
         return value;
       }
@@ -102,30 +100,34 @@ public enum ValueType {
   public static ValueType forObjectType(Class<?> type) {
     XApi.requireNonNull(type, "type");
 
-    for (ValueType value : values()) {
-      if (value.objectAccepts(type)) {
+    for (ValueType value : valuesView()) {
+      if (value != ANY && value.objectAccepts(type)) {
         return value;
       }
     }
 
-    return null;
+    return ANY;
   }
 
   public static ValueType forType(Class<? extends Value> type) {
     XApi.requireNonNull(type, "type");
 
-    for (ValueType value : values()) {
-      if (value.accepts(type)) {
+    for (ValueType value : valuesView()) {
+      if (value != ANY && value.accepts(type)) {
         return value;
       }
     }
 
-    return null;
+    return ANY;
   }
 
   public static ValueType forValue(Value value) {
     XApi.requireNonNull(value, "value");
 
     return forType(value.getClass());
+  }
+
+  public static View<ValueType> valuesView() {
+    return Enumerations.values(ValueType.class);
   }
 }
