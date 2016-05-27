@@ -19,7 +19,6 @@
 
 package br.shura.venus.value;
 
-import br.shura.venus.function.Function;
 import br.shura.x.util.layer.XApi;
 
 /**
@@ -31,16 +30,16 @@ import br.shura.x.util.layer.XApi;
  * @since GAMMA - 0x3
  */
 public class FunctionRefValue implements Value {
-  private final Function value;
+  private final String value;
 
-  public FunctionRefValue(Function value) {
+  public FunctionRefValue(String value) {
     XApi.requireNonNull(value, "value");
 
     this.value = value;
   }
 
   @Override
-  public Function value() {
+  public String value() {
     return value;
   }
 }
