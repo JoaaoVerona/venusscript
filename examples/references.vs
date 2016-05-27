@@ -19,7 +19,7 @@ sendName("João Vitor", @plusSupername)
 ################
 
 def tryout(ref callback) {
-    callback(2, 20)
+    return callback(2, 20)
 }
 
 println("Rand int=" + tryout(@randInt))
