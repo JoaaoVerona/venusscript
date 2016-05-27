@@ -60,7 +60,7 @@ public abstract class Container extends Component {
       if (value instanceof FunctionRefValue) {
         FunctionRefValue reference = (FunctionRefValue) value;
 
-        return reference.value();
+        return context.getOwner().findFunction(context, reference.value(), null);
       }
     }
     catch (UndefinedVariableException exception) {
