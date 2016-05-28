@@ -19,31 +19,25 @@
 
 package br.shura.venus.library.std;
 
-import br.shura.venus.library.VenusLibrary;
+import br.shura.venus.exception.runtime.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.function.FunctionCallDescriptor;
+import br.shura.venus.function.VoidMethod;
+import br.shura.venus.function.annotation.MethodName;
+import br.shura.x.sys.XSystem;
 
 /**
- * StdLibrary.java
+ * Exit.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 09/05/16 - 20:29
+ * @date 27/05/16 - 22:48
  * @since GAMMA - 0x3
  */
-public class StdLibrary extends VenusLibrary {
-  public StdLibrary() {
-    // Basic I/O
-    addAll(HasScan.class, Print.class, Println.class, Scan.class);
-
-    // Collections
-    addAll(NewArray.class, Size.class);
-
-    // Desktop
-    addAll(Beep.class, Browse.class, Shell.class);
-
-    // Synchronous
-    addAll(Consume.class, Produce.class, WaitAttribution.class, WaitDefinition.class);
-
-    // Utilities
-    addAll(Assert.class, Exit.class, Millis.class, Sleep.class);
+@MethodName("exit")
+public class Exit extends VoidMethod {
+  @Override
+  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+    XSystem.exit();
   }
 }
