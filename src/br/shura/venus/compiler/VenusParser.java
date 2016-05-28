@@ -92,7 +92,7 @@ public class VenusParser {
     this.script = script;
   }
 
-  public void parse(VenusLexer lexer, Container target) throws ScriptCompileException {
+  public synchronized void parse(VenusLexer lexer, Container target) throws ScriptCompileException {
     this.container = target;
     this.lexer = lexer;
 
