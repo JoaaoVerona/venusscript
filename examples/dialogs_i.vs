@@ -4,6 +4,7 @@
 # workflow manipulation of loop containers.
 
 using dialogs
+using std
 
 setTheme("system")
 
@@ -26,3 +27,4 @@ while true {
 }
 
 dialog("Well...", "Bye bye!")
+exit(666)
