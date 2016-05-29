@@ -24,6 +24,7 @@ import br.shura.venus.operator.BinaryOperator;
 import br.shura.venus.operator.Operator;
 import br.shura.venus.operator.UnaryOperator;
 import br.shura.venus.resultor.BinaryOperation;
+import br.shura.venus.resultor.InContext;
 import br.shura.venus.resultor.Resultor;
 import br.shura.venus.resultor.UnaryOperation;
 import br.shura.x.collection.store.impl.Stack;
@@ -37,12 +38,21 @@ import br.shura.x.collection.store.impl.Stack;
  * @since GAMMA - 0x3
  */
 public class BuildingResultor {
+  private String inContext;
   private Operator operator;
   private Resultor resultor;
   private final Stack<UnaryOperator> unaryWhenAlready;
 
   public BuildingResultor() {
     this.unaryWhenAlready = new Stack<>();
+  }
+
+  public void addInContext(VenusParser parser, Token owner, String context) throws UnexpectedTokenException {
+    if (inContext != null) {
+      parser.bye(owner, "already in object access \"" + inContext + "\"");
+    }
+
+    this.inContext = context;
   }
 
   public void addOperator(VenusParser parser, Token owner, Operator op) throws UnexpectedTokenException {
@@ -75,10 +85,10 @@ public class BuildingResultor {
           rslt = new UnaryOperation(unaryWhenAlready.pop(), rslt);
         }
 
-        this.resultor = new UnaryOperation((UnaryOperator) operator, rslt);
+        setResultor(new UnaryOperation((UnaryOperator) operator, rslt));
       }
       else {
-        this.resultor = rslt;
+        setResultor(rslt);
       }
     }
     else if (hasOperator()) {
@@ -87,7 +97,7 @@ public class BuildingResultor {
           rslt = new UnaryOperation(unaryWhenAlready.pop(), rslt);
         }
 
-        this.resultor = new BinaryOperation((BinaryOperator) operator, resultor, rslt);
+        setResultor(new BinaryOperation((BinaryOperator) operator, resultor, rslt));
       }
       else {
         parser.bye("Excepted a binary or unary operator, received " + operator.getClass().getSimpleName());
@@ -110,5 +120,16 @@ public class BuildingResultor {
 
   public boolean hasResultor() {
     return resultor != null;
+  }
+
+  private void setResultor(Resultor resultor) {
+    if (inContext != null) {
+      this.resultor = new InContext(inContext, resultor);
+
+      this.inContext = null;
+    }
+    else {
+      this.resultor = resultor;
+    }
   }
 }
