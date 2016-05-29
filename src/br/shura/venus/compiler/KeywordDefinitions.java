@@ -47,6 +47,8 @@ public class KeywordDefinitions {
   public static final String IF = "if";
   public static final String IN = "in";
   public static final String INCLUDE = "include";
+  public static final String OBJECT = "object";
+  public static final char OBJECT_ACCESS = '.';
   public static final String RETURN = "return";
   public static final String TRUE = "true";
   public static final String USING = "using";
