@@ -19,7 +19,7 @@
 
 package br.shura.venus.component.object;
 
-import br.shura.venus.type.Type;
+import br.shura.venus.resultor.Resultor;
 import br.shura.x.object.Base;
 
 /**
@@ -31,24 +31,30 @@ import br.shura.x.object.Base;
  * @since GAMMA - 0x3
  */
 public class Attribute extends Base {
+  private final Resultor defaultResultor;
   private final String name;
-  private final Type type;
+  private final String type;
 
-  public Attribute(String name, Type type) {
+  public Attribute(String name, String type, Resultor defaultResultor) {
+    this.defaultResultor = defaultResultor;
     this.name = name;
     this.type = type;
+  }
+
+  public Resultor getDefaultResultor() {
+    return defaultResultor;
   }
 
   public String getName() {
     return name;
   }
 
-  public Type getType() {
+  public String getType() {
     return type;
   }
 
   @Override
   protected Object[] stringValues() {
-    return new Object[] { getName(), getType() };
+    return new Object[] { getName(), getType(), getDefaultResultor() };
   }
 }
