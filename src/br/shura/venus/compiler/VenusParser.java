@@ -37,6 +37,8 @@ import br.shura.venus.component.branch.ForRangeContainer;
 import br.shura.venus.component.branch.IfContainer;
 import br.shura.venus.component.branch.Return;
 import br.shura.venus.component.branch.WhileContainer;
+import br.shura.venus.component.object.Attribute;
+import br.shura.venus.component.object.ObjectDefinition;
 import br.shura.venus.exception.compile.ScriptCompileException;
 import br.shura.venus.exception.compile.UnexpectedTokenException;
 import br.shura.venus.function.Argument;
@@ -100,6 +102,33 @@ public class VenusParser {
     boolean justExitedIfContainer = false;
 
     while ((token = lexer.nextToken()) != null) {
+      if (container instanceof ObjectDefinition) {
+        if (token.getType() == Type.NAME_DEFINITION) {
+          ValueType type = ValueType.forIdentifier(token.getValue());
+
+          if (type != null) {
+            Token attribNameToken = requireToken(Type.NAME_DEFINITION, "expected an attribute name");
+
+            requireNewLine();
+
+            ObjectDefinition definition = (ObjectDefinition) container;
+
+            definition.getAttributes().add(new Attribute(attribNameToken.getValue(), type));
+          }
+          else if (token.getValue().equals(KeywordDefinitions.DEFINE)) {
+            parseDefinition();
+          }
+          else {
+            bye(token, "expected an attribute or definition");
+          }
+
+          continue;
+        }
+        else if (token.getType() != Type.CLOSE_BRACE && token.getType() != Type.NEW_LINE) {
+          bye(token, "expected an attribute or definition");
+        }
+      }
+
       if (token.getType() == Type.GLOBAL_ACCESS) {
         lexer.reRead(token);
         addComponent(readResultor(Type.NEW_LINE), true);
@@ -189,6 +218,9 @@ public class VenusParser {
           else {
             bye(token, "cannot use 'import' keyword inside container");
           }
+        }
+        else if (token.getValue().equals(KeywordDefinitions.OBJECT)) {
+          parseObject();
         }
         else if (token.getValue().equals(KeywordDefinitions.RETURN)) {
           parseReturn();
@@ -553,6 +585,13 @@ public class VenusParser {
     IfContainer ifContainer = isElseIf ? new ElseIfContainer(resultor) : new IfContainer(resultor);
 
     addContainer(ifContainer, false);
+  }
+
+  protected void parseObject() throws ScriptCompileException {
+    Token nameToken = requireToken(Type.NAME_DEFINITION, "expected an object name");
+
+    requireToken(Type.OPEN_BRACE, "expected an open brace");
+    addContainer(new ObjectDefinition(nameToken.getValue()), false);
   }
 
   protected void parseInclude() throws ScriptCompileException {
