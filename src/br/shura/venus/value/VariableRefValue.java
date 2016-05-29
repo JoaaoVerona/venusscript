@@ -19,6 +19,7 @@
 
 package br.shura.venus.value;
 
+import br.shura.venus.compiler.KeywordDefinitions;
 import br.shura.x.util.layer.XApi;
 
 /**
@@ -36,6 +37,11 @@ public class VariableRefValue implements Value {
     XApi.requireNonNull(value, "value");
 
     this.value = value;
+  }
+
+  @Override
+  public String toString() {
+    return KeywordDefinitions.VARIABLE_REFERENCE + value();
   }
 
   @Override
