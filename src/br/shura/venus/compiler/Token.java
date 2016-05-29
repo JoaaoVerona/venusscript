@@ -82,6 +82,7 @@ public class Token extends Base {
     FUNC_REF,
     NEW_LINE,
     VAR_REF,
-    GLOBAL_ACCESS
+    GLOBAL_ACCESS,
+    OBJECT_ACCESS
   }
 }
