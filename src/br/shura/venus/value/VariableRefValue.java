@@ -48,7 +48,7 @@ public class VariableRefValue extends Value {
 
   @Override
   public String toString() {
-    return KeywordDefinitions.VARIABLE_REFERENCE + value();
+    return KeywordDefinitions.COLON + value();
   }
 
   @Override
