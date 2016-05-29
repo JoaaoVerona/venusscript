@@ -42,12 +42,15 @@ public class KeywordDefinitions {
   public static final String EXPORT = "export";
   public static final String FALSE = "false";
   public static final String FOR = "for";
+  public static final char FUNCTION_REFERENCE = '@';
+  public static final char GLOBAL_ACCESS = '$';
   public static final String IF = "if";
   public static final String IN = "in";
   public static final String INCLUDE = "include";
   public static final String RETURN = "return";
   public static final String TRUE = "true";
   public static final String USING = "using";
+  public static final char VARIABLE_REFERENCE = ':';
   public static final String WHILE = "while";
 
   public static boolean isKeyword(String definition) {
