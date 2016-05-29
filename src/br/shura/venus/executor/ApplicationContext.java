@@ -20,6 +20,7 @@
 package br.shura.venus.executor;
 
 import br.shura.venus.component.SimpleContainer;
+import br.shura.venus.exception.runtime.UndefinedVariableException;
 import br.shura.venus.library.VenusLibrary;
 import br.shura.venus.library.crypto.CryptoLibrary;
 import br.shura.venus.library.dialogs.DialogsLibrary;
@@ -46,10 +47,12 @@ import java.util.function.Supplier;
  */
 public class ApplicationContext extends Context {
   private final Map<String, Supplier<VenusLibrary>> librarySuppliers;
+  private final Map<String, Object> userData;
 
   public ApplicationContext() {
     super(new SimpleContainer("APPLICATION"), null);
     this.librarySuppliers = new LinkedMap<>();
+    this.userData = new LinkedMap<>();
 
     getLibrarySuppliers().add("crypto", CryptoLibrary::new);
     getLibrarySuppliers().add("dialogs", DialogsLibrary::new);
@@ -64,5 +67,19 @@ public class ApplicationContext extends Context {
 
   public Map<String, Supplier<VenusLibrary>> getLibrarySuppliers() {
     return librarySuppliers;
+  }
+
+  public <E> E getUserData(String name, Class<E> type) throws UndefinedVariableException {
+    Object value = userData.get(name);
+
+    if (value != null && type.isAssignableFrom(value.getClass())) {
+      return (E) value;
+    }
+
+    throw new UndefinedVariableException(this, name);
+  }
+
+  public void setUserData(String name, Object value) {
+    userData.set(name, value);
   }
 }
