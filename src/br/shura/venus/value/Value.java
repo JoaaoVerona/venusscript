@@ -19,7 +19,8 @@
 
 package br.shura.venus.value;
 
-import br.shura.x.util.layer.XApi;
+import br.shura.venus.type.Type;
+import br.shura.x.lang.ICloneable;
 
 /**
  * Value.java
@@ -29,72 +30,81 @@ import br.shura.x.util.layer.XApi;
  * @date 08/05/16 - 18:33
  * @since GAMMA - 0x3
  */
-public interface Value {
-  default Value and(Value value) {
+public abstract class Value implements ICloneable<Value> {
+  private final Type type;
+
+  public Value(Type type) {
+    this.type = type;
+  }
+
+  public Value and(Value value) {
     return null;
   }
 
-  default Integer compareTo(Value value) {
+  @Override
+  public abstract Value clone();
+
+  public Integer compareTo(Value value) {
     return null;
   }
 
-  default NumericValue divide(Value value) {
+  public NumericValue divide(Value value) {
     return null;
   }
 
-  default BoolValue equals(Value value) {
+  public BoolValue equals(Value value) {
     return new BoolValue(value().equals(value.value()));
   }
 
-  default ValueType getType() {
-    return ValueType.forValue(this);
+  public final Type getType() {
+    return type;
   }
 
-  default BoolValue higherEqualThan(Value value) {
+  public BoolValue higherEqualThan(Value value) {
     Integer comparation = compareTo(value);
 
     return comparation != null ? new BoolValue(comparation >= 0) : null;
   }
 
-  default BoolValue higherThan(Value value) {
+  public BoolValue higherThan(Value value) {
     Integer comparation = compareTo(value);
 
     return comparation != null ? new BoolValue(comparation > 0) : null;
   }
 
-  default BoolValue lowerEqualThan(Value value) {
+  public BoolValue lowerEqualThan(Value value) {
     Integer comparation = compareTo(value);
 
     return comparation != null ? new BoolValue(comparation <= 0) : null;
   }
 
-  default BoolValue lowerThan(Value value) {
+  public BoolValue lowerThan(Value value) {
     Integer comparation = compareTo(value);
 
     return comparation != null ? new BoolValue(comparation < 0) : null;
   }
 
-  default NumericValue minus(Value value) {
+  public NumericValue minus(Value value) {
     return null;
   }
 
-  default NumericValue multiply(Value value) {
+  public NumericValue multiply(Value value) {
     return null;
   }
 
-  default Value negate() {
+  public Value negate() {
     return null;
   }
 
-  default Value not() {
+  public Value not() {
     return null;
   }
 
-  default Value or(Value value) {
+  public Value or(Value value) {
     return null;
   }
 
-  default Value plus(Value value) {
+  public Value plus(Value value) {
     if (value instanceof StringValue) {
       StringValue string = (StringValue) value;
 
@@ -104,22 +114,14 @@ public interface Value {
     return null;
   }
 
-  default Value remainder(Value value) {
+  public Value remainder(Value value) {
     return null;
   }
 
-  Object value();
-
-  static Value clone(Value value) {
-    Value result = construct(value.value());
-
-    XApi.require(result != null, "Could not clone value of type " + value.getType());
-
-    return result;
-  }
+  public abstract Object value();
 
   // TODO Not OO, but fast (no need to use Reflection, etc)
-  static Value construct(Object object) {
+  public static Value construct(Object object) {
     if (object instanceof Boolean) {
       return new BoolValue((Boolean) object);
     }
@@ -136,8 +138,8 @@ public interface Value {
       return new IntegerValue(((Number) object).longValue());
     }
 
-    if (object instanceof ValueType) {
-      return new TypeValue((ValueType) object);
+    if (object instanceof Type) {
+      return new TypeValue((Type) object);
     }
 
     return null;
