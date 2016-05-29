@@ -33,6 +33,7 @@ import br.shura.x.worker.enumeration.Enumerations;
 public class KeywordDefinitions {
   public static final String ASYNC = "async";
   public static final String BREAK = "break";
+  public static final char COLON = ':';
   public static final char COMMENTER = '#';
   public static final String CONTINUE = "continue";
   public static final String DAEMON = "daemon";
@@ -47,12 +48,12 @@ public class KeywordDefinitions {
   public static final String IF = "if";
   public static final String IN = "in";
   public static final String INCLUDE = "include";
+  public static final String NEW = "new";
   public static final String OBJECT = "object";
   public static final char OBJECT_ACCESS = '.';
   public static final String RETURN = "return";
   public static final String TRUE = "true";
   public static final String USING = "using";
-  public static final char VARIABLE_REFERENCE = ':';
   public static final String WHILE = "while";
 
   public static boolean isKeyword(String definition) {
