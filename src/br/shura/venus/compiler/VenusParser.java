@@ -53,6 +53,7 @@ import br.shura.venus.resultor.Attribution;
 import br.shura.venus.resultor.BinaryOperation;
 import br.shura.venus.resultor.Constant;
 import br.shura.venus.resultor.FunctionCall;
+import br.shura.venus.resultor.NewObject;
 import br.shura.venus.resultor.Resultor;
 import br.shura.venus.resultor.Variable;
 import br.shura.venus.type.PrimitiveType;
@@ -68,6 +69,8 @@ import br.shura.venus.value.VariableRefValue;
 import br.shura.x.charset.build.TextBuilder;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
+import br.shura.x.collection.map.Map;
+import br.shura.x.collection.map.impl.LinkedMap;
 import br.shura.x.math.number.BaseConverter;
 import br.shura.x.util.Pool;
 import br.shura.x.worker.ParseWorker;
@@ -104,22 +107,26 @@ public class VenusParser {
     while ((token = lexer.nextToken()) != null) {
       if (container instanceof ObjectDefinition) {
         if (token.getType() == Token.Type.NAME_DEFINITION) {
-          Type type = PrimitiveType.forIdentifier(token.getValue());
-
-          if (type != null) {
+          if (token.getValue().equals(KeywordDefinitions.DEFINE)) {
+            parseDefinition();
+          }
+          else {
             Token attribNameToken = requireToken(Token.Type.NAME_DEFINITION, "expected an attribute name");
+            Token next = requireToken();
+            Resultor defaultResultor = null;
+
+            if (next.getType() == Token.Type.COLON) {
+              defaultResultor = readResultor(Token.Type.NEW_LINE, t -> true);
+            }
+            else {
+              lexer.reRead(next);
+            }
 
             requireNewLine();
 
             ObjectDefinition definition = (ObjectDefinition) container;
 
-            definition.getAttributes().add(new Attribute(attribNameToken.getValue(), type));
-          }
-          else if (token.getValue().equals(KeywordDefinitions.DEFINE)) {
-            parseDefinition();
-          }
-          else {
-            bye(token, "expected an attribute or definition");
+            definition.getAttributes().add(new Attribute(attribNameToken.getValue(), token.getValue(), defaultResultor));
           }
 
           continue;
@@ -350,7 +357,7 @@ public class VenusParser {
       }
     }
 
-    if (token.getType() == Token.Type.VAR_REF) {
+    if (token.getType() == Token.Type.COLON) {
       Token next = requireToken();
 
       if (next.getType() == Token.Type.GLOBAL_ACCESS) {
@@ -753,7 +760,17 @@ public class VenusParser {
         }
       }
 
-      if (token.getType() == Token.Type.GLOBAL_ACCESS) {
+      if (token.getType() == Token.Type.OBJECT_ACCESS) {
+        if (nameDef != null) {
+          resultor.addInContext(this, nameDefToken, nameDef);
+          arrayIndex = null;
+          nameDef = null;
+        }
+        else {
+          bye(token, "expected a name definition before object access");
+        }
+      }
+      else if (token.getType() == Token.Type.GLOBAL_ACCESS) {
         if (nameDef != null) {
           bye(token, "expected open parenthese (function) or operator after a name definition");
         }
@@ -831,8 +848,39 @@ public class VenusParser {
         bye(token, "expected open parenthese (function) or operator after a name definition");
       }
       else if (token.getType() == Token.Type.NAME_DEFINITION) {
-        nameDef = token.getValue();
-        nameDefToken = token;
+        if (token.getValue().equals(KeywordDefinitions.NEW)) {
+          Token objectTypeToken = requireToken(Token.Type.NAME_DEFINITION, "expected an object name");
+
+          requireToken(Token.Type.OPEN_PARENTHESE, "expected an open parenthese");
+
+          Map<String, Resultor> attributes = new LinkedMap<>();
+
+          while (true) {
+            Token t = requireToken();
+
+            if (t.getType() == Token.Type.CLOSE_PARENTHESE) {
+              break;
+            }
+
+            if (t.getType() == Token.Type.NAME_DEFINITION) {
+              requireToken(Token.Type.COLON, "expected an attribute separator (colon)");
+
+              Resultor attribResultor = readResultor(o -> o.getType() != Token.Type.COMMA && o.getType() != Token.Type.CLOSE_PARENTHESE,
+                o -> o.getType() == Token.Type.CLOSE_PARENTHESE);
+
+              attributes.add(t.getValue(), attribResultor);
+            }
+            else {
+              bye(t, "expected an attribute name");
+            }
+          }
+
+          resultor.addResultor(this, token, new NewObject(objectTypeToken.getValue(), attributes));
+        }
+        else {
+          nameDef = token.getValue();
+          nameDefToken = token;
+        }
       }
       else if (token.getType() != Token.Type.NEW_LINE) {
         bye(token, "unexpected token");
