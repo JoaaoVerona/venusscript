@@ -115,7 +115,7 @@ public final class PrimitiveType extends Type {
     return ANY;
   }
 
-  public static View<Type> valuesView() {
-    return Enumerations.values(Type.class);
+  public static View<PrimitiveType> valuesView() {
+    return Enumerations.values(PrimitiveType.class);
   }
 }
