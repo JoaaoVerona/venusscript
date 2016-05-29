@@ -28,7 +28,6 @@ import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.StringValue;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 import br.shura.x.sys.XSystem;
 
 import java.io.IOException;
@@ -41,7 +40,7 @@ import java.io.IOException;
  * @date 13/05/16 - 17:41
  * @since GAMMA - 0x3
  */
-@MethodArgs({ ValueType.STRING, ValueType.BOOLEAN })
+@MethodArgs({ StringValue.class, BoolValue.class })
 @MethodName("shell")
 public class Shell extends Method {
   @Override

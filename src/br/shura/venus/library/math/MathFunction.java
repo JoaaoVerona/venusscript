@@ -23,6 +23,8 @@ import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.function.Function;
 import br.shura.venus.function.FunctionCallDescriptor;
+import br.shura.venus.type.PrimitiveTypes;
+import br.shura.venus.type.Type;
 import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
@@ -36,8 +38,6 @@ import br.shura.x.worker.UtilWorker;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import static br.shura.venus.value.ValueType.forObjectType;
-
 /**
  * MathFunction.java
  *
@@ -47,7 +47,7 @@ import static br.shura.venus.value.ValueType.forObjectType;
  * @since GAMMA - 0x3
  */
 public class MathFunction implements Function {
-  private final List<ValueType> arguments;
+  private final List<Type> arguments;
   private final IMath instance;
   private final Method method;
   private final String name;
@@ -59,7 +59,7 @@ public class MathFunction implements Function {
     this.name = method.getName();
 
     for (Class<?> arg : method.getParameterTypes()) {
-      arguments.add(forObjectType(arg));
+      arguments.add(PrimitiveTypes.forObjectType(arg));
     }
   }
 
@@ -100,7 +100,7 @@ public class MathFunction implements Function {
   }
 
   @Override
-  public View<ValueType> getArgumentTypes() {
+  public View<Type> getArgumentTypes() {
     return new BasicView<>(arguments);
   }
 

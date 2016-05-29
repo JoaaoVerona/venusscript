@@ -29,7 +29,6 @@ import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.StringValue;
-import br.shura.venus.value.ValueType;
 
 /**
  * DynamicInclude.java
@@ -39,7 +38,7 @@ import br.shura.venus.value.ValueType;
  * @date 14/05/16 - 00:16
  * @since GAMMA - 0x3
  */
-@MethodArgs({ ValueType.STRING, ValueType.BOOLEAN })
+@MethodArgs({ StringValue.class, BoolValue.class })
 @MethodName("dynamicInclude")
 public class DynamicInclude extends VoidMethod {
   @Override

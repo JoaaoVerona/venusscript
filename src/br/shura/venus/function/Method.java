@@ -22,8 +22,11 @@ package br.shura.venus.function;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.function.annotation.MethodVarArgs;
-import br.shura.venus.value.ValueType;
+import br.shura.venus.type.PrimitiveTypes;
+import br.shura.venus.type.Type;
+import br.shura.venus.value.Value;
 import br.shura.x.collection.view.ArrayView;
+import br.shura.x.collection.view.BasicView;
 import br.shura.x.collection.view.View;
 import br.shura.x.util.layer.XApi;
 
@@ -36,7 +39,7 @@ import br.shura.x.util.layer.XApi;
  * @since GAMMA - 0x3
  */
 public abstract class Method implements Function {
-  private final ValueType[] arguments;
+  private final View<Type> arguments;
   private final String name;
   private final boolean varArgs;
 
@@ -48,14 +51,22 @@ public abstract class Method implements Function {
     XApi.requireState(!hasMethodArgs || (hasMethodArgs != isMethodVarArgs), "Must contain either @MethodArgs or @MethodVarArgs");
     XApi.requireState(hasMethodName, "No @MethodName found");
 
-    this.arguments = hasMethodArgs ? getClass().getAnnotation(MethodArgs.class).value() : new ValueType[0];
+    if (hasMethodArgs) {
+      Class<? extends Value>[] args = getClass().getAnnotation(MethodArgs.class).value();
+
+      this.arguments = new ArrayView<>(args).reduce(PrimitiveTypes::forType);
+    }
+    else {
+      this.arguments = new BasicView<>();
+    }
+
     this.name = getClass().getAnnotation(MethodName.class).value();
     this.varArgs = isMethodVarArgs;
   }
 
   @Override
-  public final View<ValueType> getArgumentTypes() {
-    return new ArrayView<>(arguments);
+  public final View<Type> getArgumentTypes() {
+    return arguments;
   }
 
   @Override

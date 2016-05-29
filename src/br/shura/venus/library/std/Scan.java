@@ -26,13 +26,14 @@ import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.Method;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
+import br.shura.venus.type.PrimitiveTypes;
+import br.shura.venus.type.Type;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.DecimalValue;
 import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.StringValue;
 import br.shura.venus.value.TypeValue;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 import br.shura.x.logging.XLogger;
 import br.shura.x.worker.ParseWorker;
 import br.shura.x.worker.exception.InvalidParseException;
@@ -45,36 +46,36 @@ import br.shura.x.worker.exception.InvalidParseException;
  * @date 13/05/16 - 02:45
  * @since GAMMA - 0x3
  */
-@MethodArgs(ValueType.TYPE)
+@MethodArgs(TypeValue.class)
 @MethodName("scan")
 public class Scan extends Method {
   @Override
   public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
     TypeValue value = (TypeValue) descriptor.get(0);
-    ValueType type = value.value();
+    Type type = value.value();
 
     while (true) {
       try {
         String line = XLogger.scan();
 
-        if (type == ValueType.BOOLEAN) {
+        if (type == PrimitiveTypes.BOOLEAN) {
           return new BoolValue(ParseWorker.toBoolean(line));
         }
 
-        if (type == ValueType.DECIMAL) {
+        if (type == PrimitiveTypes.DECIMAL) {
           return new DecimalValue(ParseWorker.toDouble(line));
         }
 
-        if (type == ValueType.INTEGER) {
+        if (type == PrimitiveTypes.INTEGER) {
           return new IntegerValue(ParseWorker.toLong(line));
         }
 
-        if (type == ValueType.STRING) {
+        if (type == PrimitiveTypes.STRING) {
           return new StringValue(line);
         }
 
-        if (type == ValueType.TYPE) {
-          ValueType lookup = ValueType.forIdentifier(line);
+        if (type == PrimitiveTypes.TYPE) {
+          Type lookup = PrimitiveTypes.forIdentifier(line);
 
           if (lookup != null) {
             return new TypeValue(lookup);

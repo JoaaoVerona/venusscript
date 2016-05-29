@@ -26,7 +26,6 @@ import br.shura.venus.function.VoidMethod;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.value.IntegerValue;
-import br.shura.venus.value.ValueType;
 
 /**
  * ExitWithCode.java
@@ -36,7 +35,7 @@ import br.shura.venus.value.ValueType;
  * @date 27/05/16 - 22:48
  * @since GAMMA - 0x3
  */
-@MethodArgs(ValueType.INTEGER)
+@MethodArgs(IntegerValue.class)
 @MethodName("exit")
 public class ExitWithCode extends VoidMethod {
   @Override

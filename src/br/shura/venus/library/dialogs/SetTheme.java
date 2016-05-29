@@ -28,7 +28,6 @@ import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.StringValue;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -41,7 +40,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @date 14/05/16 - 20:34
  * @since GAMMA - 0x3
  */
-@MethodArgs(ValueType.STRING)
+@MethodArgs(StringValue.class)
 @MethodName("setTheme")
 public class SetTheme extends Method {
   @Override

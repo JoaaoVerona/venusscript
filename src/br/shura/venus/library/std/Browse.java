@@ -28,7 +28,6 @@ import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.StringValue;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 import br.shura.x.io.Url;
 import br.shura.x.io.exception.UrlException;
 import br.shura.x.sys.XSystem;
@@ -41,7 +40,7 @@ import br.shura.x.sys.XSystem;
  * @date 13/05/16 - 17:40
  * @since GAMMA - 0x3
  */
-@MethodArgs(ValueType.STRING)
+@MethodArgs(StringValue.class)
 @MethodName("browse")
 public class Browse extends Method {
   @Override

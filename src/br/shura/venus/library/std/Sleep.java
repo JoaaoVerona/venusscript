@@ -26,7 +26,6 @@ import br.shura.venus.function.VoidMethod;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.value.IntegerValue;
-import br.shura.venus.value.ValueType;
 import br.shura.x.worker.UtilWorker;
 
 /**
@@ -37,7 +36,7 @@ import br.shura.x.worker.UtilWorker;
  * @date 11/05/16 - 19:12
  * @since GAMMA - 0x3
  */
-@MethodArgs(ValueType.INTEGER)
+@MethodArgs(IntegerValue.class)
 @MethodName("sleep")
 public class Sleep extends VoidMethod {
   @Override

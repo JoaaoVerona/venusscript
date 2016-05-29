@@ -28,7 +28,6 @@ import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 import br.shura.venus.value.VariableRefValue;
 import br.shura.x.logging.XLogger;
 
@@ -40,7 +39,7 @@ import br.shura.x.logging.XLogger;
  * @date 16/05/16 - 00:59
  * @since GAMMA - 0x3
  */
-@MethodArgs(ValueType.VARIABLE_REFERENCE)
+@MethodArgs(VariableRefValue.class)
 @MethodName("consume")
 public class Consume extends VoidMethod {
   @Override

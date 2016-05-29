@@ -27,7 +27,6 @@ import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 import br.shura.x.math.random.XRandom;
 
 /**
@@ -38,7 +37,7 @@ import br.shura.x.math.random.XRandom;
  * @date 17/05/16 - 13:52
  * @since GAMMA - 0x3
  */
-@MethodArgs({ ValueType.INTEGER, ValueType.INTEGER })
+@MethodArgs({ IntegerValue.class, IntegerValue.class })
 @MethodName("randInt")
 public class RandInt extends Method {
   @Override

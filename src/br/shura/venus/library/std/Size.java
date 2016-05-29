@@ -28,7 +28,6 @@ import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.value.ArrayValue;
 import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 
 /**
  * Size.java
@@ -38,7 +37,7 @@ import br.shura.venus.value.ValueType;
  * @date 22/05/16 - 03:32
  * @since GAMMA - 0x3
  */
-@MethodArgs(ValueType.ARRAY)
+@MethodArgs(ArrayValue.class)
 @MethodName("size")
 public class Size extends Method {
   @Override

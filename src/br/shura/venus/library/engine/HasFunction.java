@@ -27,10 +27,10 @@ import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.Method;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.function.annotation.MethodVarArgs;
+import br.shura.venus.type.Type;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.TypeValue;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.collection.view.BasicView;
@@ -53,7 +53,7 @@ public class HasFunction extends Method {
     }
 
     String name = descriptor.get(0).toString();
-    List<ValueType> types = new ArrayList<>();
+    List<Type> types = new ArrayList<>();
 
     for (int i = 1; i < descriptor.count(); i++) {
       Value value = descriptor.get(i);

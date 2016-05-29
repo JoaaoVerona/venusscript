@@ -33,7 +33,6 @@ import br.shura.venus.resultor.UnaryOperation;
 import br.shura.venus.resultor.Variable;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.logging.XLogger;
@@ -46,7 +45,7 @@ import br.shura.x.logging.XLogger;
  * @date 20/05/16 - 20:19
  * @since GAMMA - 0x3
  */
-@MethodArgs(ValueType.ANY)
+@MethodArgs(Value.class)
 @MethodName("wait")
 public class WaitAttribution extends VoidMethod {
   @Override

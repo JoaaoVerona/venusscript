@@ -27,7 +27,6 @@ import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.value.StringValue;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 import br.shura.x.sys.XSystem;
 
 /**
@@ -38,7 +37,7 @@ import br.shura.x.sys.XSystem;
  * @date 13/05/16 - 18:32
  * @since GAMMA - 0x3
  */
-@MethodArgs({ ValueType.STRING, ValueType.ANY })
+@MethodArgs({ StringValue.class, Value.class })
 @MethodName("getEnvVar")
 public class GetEnvVar extends Method {
   @Override

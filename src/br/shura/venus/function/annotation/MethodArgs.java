@@ -19,7 +19,7 @@
 
 package br.shura.venus.function.annotation;
 
-import br.shura.venus.value.ValueType;
+import br.shura.venus.value.Value;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -37,5 +37,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface MethodArgs {
-  ValueType[] value();
+  Class<? extends Value>[] value();
 }

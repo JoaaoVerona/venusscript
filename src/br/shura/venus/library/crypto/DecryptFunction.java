@@ -25,10 +25,11 @@ import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.function.Function;
 import br.shura.venus.function.FunctionCallDescriptor;
+import br.shura.venus.type.PrimitiveTypes;
+import br.shura.venus.type.Type;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.StringValue;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 import br.shura.venus.value.VariableRefValue;
 import br.shura.x.collection.view.ArrayView;
 import br.shura.x.collection.view.View;
@@ -42,12 +43,12 @@ import br.shura.x.collection.view.View;
  * @since GAMMA - 0x3
  */
 public class DecryptFunction implements Function {
-  private final View<ValueType> argumentTypes;
+  private final View<Type> argumentTypes;
   private final IDecrypter decrypter;
   private final String name;
 
   public DecryptFunction(String name, IDecrypter decrypter) {
-    this.argumentTypes = new ArrayView<>(ValueType.STRING, ValueType.VARIABLE_REFERENCE);
+    this.argumentTypes = new ArrayView<>(PrimitiveTypes.STRING, PrimitiveTypes.VARIABLE_REFERENCE);
     this.decrypter = decrypter;
     this.name = name;
   }
@@ -70,7 +71,7 @@ public class DecryptFunction implements Function {
   }
 
   @Override
-  public View<ValueType> getArgumentTypes() {
+  public View<Type> getArgumentTypes() {
     return argumentTypes;
   }
 

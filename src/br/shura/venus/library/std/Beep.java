@@ -27,7 +27,6 @@ import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.value.DecimalValue;
 import br.shura.venus.value.IntegerValue;
-import br.shura.venus.value.ValueType;
 import br.shura.x.sys.XSystem;
 
 /**
@@ -38,7 +37,7 @@ import br.shura.x.sys.XSystem;
  * @date 13/05/16 - 17:37
  * @since GAMMA - 0x3
  */
-@MethodArgs({ ValueType.DECIMAL, ValueType.INTEGER })
+@MethodArgs({ DecimalValue.class, IntegerValue.class })
 @MethodName("beep")
 public class Beep extends VoidMethod {
   @Override

@@ -28,7 +28,6 @@ import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.library.VenusLibrary;
 import br.shura.venus.value.StringValue;
-import br.shura.venus.value.ValueType;
 
 import java.util.function.Supplier;
 
@@ -40,7 +39,7 @@ import java.util.function.Supplier;
  * @date 14/05/16 - 00:40
  * @since GAMMA - 0x3
  */
-@MethodArgs(ValueType.STRING)
+@MethodArgs(StringValue.class)
 @MethodName("dynamicUsing")
 public class DynamicUsing extends VoidMethod {
   @Override

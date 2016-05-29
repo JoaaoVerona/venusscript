@@ -38,7 +38,7 @@ import br.shura.venus.value.ValueType;
  * @date 12/05/16 - 20:33
  * @since GAMMA - 0x3
  */
-@MethodArgs(ValueType.ANY)
+@MethodArgs(Value.class)
 @MethodName("assert")
 public class Assert extends Method {
   @Override

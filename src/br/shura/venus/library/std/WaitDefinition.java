@@ -25,7 +25,6 @@ import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.VoidMethod;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
-import br.shura.venus.value.ValueType;
 import br.shura.venus.value.VariableRefValue;
 import br.shura.x.worker.UtilWorker;
 
@@ -37,7 +36,7 @@ import br.shura.x.worker.UtilWorker;
  * @date 20/05/16 - 20:49
  * @since GAMMA - 0x3
  */
-@MethodArgs(ValueType.VARIABLE_REFERENCE)
+@MethodArgs(VariableRefValue.class)
 @MethodName("wait")
 public class WaitDefinition extends VoidMethod {
   @Override

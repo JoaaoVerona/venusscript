@@ -33,7 +33,6 @@ import br.shura.venus.origin.ScriptOrigin;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.StringValue;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 
 /**
  * Run.java
@@ -43,7 +42,7 @@ import br.shura.venus.value.ValueType;
  * @date 22/05/16 - 01:04
  * @since GAMMA - 0x3
  */
-@MethodArgs(ValueType.STRING)
+@MethodArgs(StringValue.class)
 @MethodName("run")
 public class Run extends Method {
   @Override

@@ -28,7 +28,6 @@ import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.value.ArrayValue;
 import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 import br.shura.x.worker.ArrayWorker;
 
 /**
@@ -39,7 +38,7 @@ import br.shura.x.worker.ArrayWorker;
  * @date 22/05/16 - 03:29
  * @since GAMMA - 0x3
  */
-@MethodArgs({ ValueType.INTEGER, ValueType.ANY })
+@MethodArgs({ IntegerValue.class, Value.class })
 @MethodName("newArray")
 public class NewArray extends Method {
   @Override
