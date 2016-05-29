@@ -73,4 +73,9 @@ public class VariableStructure {
       }
     }
   }
+
+  @Override
+  public String toString() {
+    return getValue().toString();
+  }
 }
