@@ -93,6 +93,24 @@ public abstract class Container extends Component {
     throw new UndefinedFunctionException(context, name, argumentTypes);
   }
 
+  public ObjectDefinition findObjectDefinition(Context context, String name) throws ScriptRuntimeException {
+    for (ObjectDefinition definition : getChildren().selectType(ObjectDefinition.class)) {
+      if (definition.getName().equals(name)) {
+        return definition;
+      }
+    }
+
+    if (hasParent()) {
+      try {
+        return getParent().findObjectDefinition(context, name);
+      }
+      catch (UndefinedValueTypeException exception) {
+      }
+    }
+
+    throw new UndefinedValueTypeException(context, name);
+  }
+
   public Type findType(Context context, String name) throws ScriptRuntimeException {
     for (ObjectDefinition definition : getChildren().selectType(ObjectDefinition.class)) {
       if (definition.getName().equals(name)) {
