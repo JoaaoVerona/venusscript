@@ -57,4 +57,9 @@ public class ObjectValue extends Value {
   public Object value() {
     return this;
   }
+
+  @Override
+  public String toString() {
+    return getDefinition().getName() + "(" + getContext().getVariables() + ')';
+  }
 }
