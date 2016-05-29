@@ -240,16 +240,16 @@ public class VenusLexer {
               return new Token(Type.COMMA, ch);
             }
 
-            if (ch == '@') {
-              return new Token(Type.AT_SIGN, ch);
+            if (ch == KeywordDefinitions.FUNCTION_REFERENCE) {
+              return new Token(Type.FUNC_REF, ch);
             }
 
-            if (ch == ':') {
-              return new Token(Type.COLON, ch);
+            if (ch == KeywordDefinitions.VARIABLE_REFERENCE) {
+              return new Token(Type.VAR_REF, ch);
             }
 
-            if (ch == '$') {
-              return new Token(Type.DOLLAR_SIGN, ch);
+            if (ch == KeywordDefinitions.GLOBAL_ACCESS) {
+              return new Token(Type.GLOBAL_ACCESS, ch);
             }
 
             if (ch == '{') {
