@@ -21,8 +21,9 @@ package br.shura.venus.function;
 
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.type.PrimitiveTypes;
+import br.shura.venus.type.Type;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 import br.shura.x.collection.view.View;
 import br.shura.x.lang.INameable;
 import br.shura.x.util.layer.XApi;
@@ -36,7 +37,7 @@ import br.shura.x.util.layer.XApi;
  * @since GAMMA - 0x3
  */
 public interface Function extends INameable {
-  default boolean accepts(String name, View<ValueType> argumentTypes) {
+  default boolean accepts(String name, View<Type> argumentTypes) {
     XApi.requireNonNull(name, "name");
 
     if (getName().equals(name)) {
@@ -46,10 +47,10 @@ public interface Function extends INameable {
 
       if (getArgumentCount() == argumentTypes.size()) {
         for (int i = 0; i < getArgumentCount(); i++) {
-          ValueType required = getArgumentTypes().at(i);
-          ValueType found = argumentTypes.at(i);
+          Type required = getArgumentTypes().at(i);
+          Type found = argumentTypes.at(i);
 
-          if (!required.accepts(found) && (required != ValueType.DECIMAL || found != ValueType.INTEGER)) {
+          if (!required.accepts(found) && (required != PrimitiveTypes.DECIMAL || found != PrimitiveTypes.INTEGER)) {
             return false;
           }
         }
@@ -70,7 +71,7 @@ public interface Function extends INameable {
     return getArgumentTypes().size();
   }
 
-  View<ValueType> getArgumentTypes();
+  View<Type> getArgumentTypes();
 
   boolean isVarArgs();
 }

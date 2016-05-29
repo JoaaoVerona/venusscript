@@ -19,7 +19,7 @@
 
 package br.shura.venus.function;
 
-import br.shura.venus.value.ValueType;
+import br.shura.venus.type.Type;
 import br.shura.x.object.Base;
 
 /**
@@ -32,9 +32,9 @@ import br.shura.x.object.Base;
  */
 public class Argument extends Base {
   private final String name;
-  private final ValueType type;
+  private final Type type;
 
-  public Argument(String name, ValueType type) {
+  public Argument(String name, Type type) {
     this.name = name;
     this.type = type;
   }
@@ -43,7 +43,7 @@ public class Argument extends Base {
     return name;
   }
 
-  public ValueType getType() {
+  public Type getType() {
     return type;
   }
 

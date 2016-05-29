@@ -23,8 +23,8 @@ import br.shura.venus.component.Container;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.origin.ScriptMode;
+import br.shura.venus.type.Type;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.view.BasicView;
 import br.shura.x.collection.view.View;
@@ -63,7 +63,7 @@ public final class Definition extends Container implements Function {
   }
 
   @Override
-  public View<ValueType> getArgumentTypes() {
+  public View<Type> getArgumentTypes() {
     return getArguments().reduce(Argument::getType);
   }
 

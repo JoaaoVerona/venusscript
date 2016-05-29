@@ -20,7 +20,7 @@
 package br.shura.venus.library;
 
 import br.shura.venus.function.Function;
-import br.shura.venus.value.ValueType;
+import br.shura.venus.type.Type;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.collection.view.View;
 import br.shura.x.util.layer.XApi;
@@ -34,7 +34,7 @@ import br.shura.x.util.layer.XApi;
  * @since GAMMA - 0x3
  */
 public class LibraryList extends ArrayList<VenusLibrary> {
-  public Function findFunction(String name, View<ValueType> argumentTypes) {
+  public Function findFunction(String name, View<Type> argumentTypes) {
     XApi.requireNonNull(name, "name");
 
     Function found = null;

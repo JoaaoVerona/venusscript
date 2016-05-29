@@ -27,7 +27,7 @@ import br.shura.venus.executor.Context;
 import br.shura.venus.function.Function;
 import br.shura.venus.library.LibraryList;
 import br.shura.venus.origin.ScriptOrigin;
-import br.shura.venus.value.ValueType;
+import br.shura.venus.type.Type;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.collection.view.View;
@@ -58,7 +58,7 @@ public class Script extends Container {
   }
 
   @Override
-  public Function findFunction(Context context, String name, View<ValueType> argumentTypes) throws ScriptRuntimeException {
+  public Function findFunction(Context context, String name, View<Type> argumentTypes) throws ScriptRuntimeException {
     try {
       return super.findFunction(context, name, argumentTypes);
     }
