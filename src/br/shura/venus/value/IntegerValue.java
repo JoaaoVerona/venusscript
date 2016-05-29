@@ -19,7 +19,7 @@
 
 package br.shura.venus.value;
 
-import br.shura.venus.type.PrimitiveTypes;
+import br.shura.venus.type.PrimitiveType;
 
 /**
  * IntegerValue.java
@@ -33,7 +33,7 @@ public class IntegerValue extends NumericValue {
   private final long value;
 
   public IntegerValue(long value) {
-    super(PrimitiveTypes.INTEGER);
+    super(PrimitiveType.INTEGER);
     this.value = value;
   }
 

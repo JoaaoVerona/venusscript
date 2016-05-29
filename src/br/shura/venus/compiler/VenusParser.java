@@ -55,7 +55,7 @@ import br.shura.venus.resultor.Constant;
 import br.shura.venus.resultor.FunctionCall;
 import br.shura.venus.resultor.Resultor;
 import br.shura.venus.resultor.Variable;
-import br.shura.venus.type.PrimitiveTypes;
+import br.shura.venus.type.PrimitiveType;
 import br.shura.venus.type.Type;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.DecimalValue;
@@ -104,7 +104,7 @@ public class VenusParser {
     while ((token = lexer.nextToken()) != null) {
       if (container instanceof ObjectDefinition) {
         if (token.getType() == Token.Type.NAME_DEFINITION) {
-          Type type = PrimitiveTypes.forIdentifier(token.getValue());
+          Type type = PrimitiveType.forIdentifier(token.getValue());
 
           if (type != null) {
             Token attribNameToken = requireToken(Token.Type.NAME_DEFINITION, "expected an attribute name");
@@ -409,7 +409,7 @@ public class VenusParser {
 
       if (next.getType() == Token.Type.NAME_DEFINITION) {
         String keyword = next.getValue();
-        Type type = PrimitiveTypes.forIdentifier(keyword);
+        Type type = PrimitiveType.forIdentifier(keyword);
 
         if (type != null) {
           return new TypeValue(type);
@@ -474,7 +474,7 @@ public class VenusParser {
 
     while ((reading = requireToken()).getType() != Token.Type.CLOSE_PARENTHESE) { // Reads definition arguments
       if (reading.getType() == Token.Type.NAME_DEFINITION) {
-        Type argumentType = PrimitiveTypes.forIdentifier(reading.getValue());
+        Type argumentType = PrimitiveType.forIdentifier(reading.getValue());
 
         if (argumentType != null) {
           Token argumentToken = requireToken(Token.Type.NAME_DEFINITION, "expected an argument name");
@@ -498,7 +498,7 @@ public class VenusParser {
           }
         }
         else {
-          bye(reading, "expected an argument value type (" + PrimitiveTypes.valuesView().toString(", ") + ") or object type");
+          bye(reading, "expected an argument value type (" + PrimitiveType.valuesView().toString(", ") + ") or object type");
         }
       }
       else {

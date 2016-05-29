@@ -20,7 +20,7 @@
 package br.shura.venus.value;
 
 import br.shura.venus.compiler.KeywordDefinitions;
-import br.shura.venus.type.PrimitiveTypes;
+import br.shura.venus.type.PrimitiveType;
 import br.shura.x.util.layer.XApi;
 
 /**
@@ -35,7 +35,7 @@ public class FunctionRefValue extends Value {
   private final String value;
 
   public FunctionRefValue(String value) {
-    super(PrimitiveTypes.FUNCTION_REFERENCE);
+    super(PrimitiveType.FUNCTION_REFERENCE);
     XApi.requireNonNull(value, "value");
 
     this.value = value;

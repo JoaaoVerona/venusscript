@@ -20,7 +20,7 @@
 package br.shura.venus.value;
 
 import br.shura.venus.compiler.KeywordDefinitions;
-import br.shura.venus.type.PrimitiveTypes;
+import br.shura.venus.type.PrimitiveType;
 
 /**
  * BoolValue.java
@@ -34,7 +34,7 @@ public class BoolValue extends Value {
   private final boolean value;
 
   public BoolValue(boolean value) {
-    super(PrimitiveTypes.BOOLEAN);
+    super(PrimitiveType.BOOLEAN);
     this.value = value;
   }
 

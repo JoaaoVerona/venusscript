@@ -19,7 +19,7 @@
 
 package br.shura.venus.value;
 
-import br.shura.venus.type.PrimitiveTypes;
+import br.shura.venus.type.PrimitiveType;
 import br.shura.x.util.layer.XApi;
 
 /**
@@ -34,7 +34,7 @@ public class StringValue extends Value {
   private final String value;
 
   public StringValue(String value) {
-    super(PrimitiveTypes.STRING);
+    super(PrimitiveType.STRING);
     XApi.requireNonNull(value, "value");
 
     this.value = value;

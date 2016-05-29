@@ -19,7 +19,7 @@
 
 package br.shura.venus.value;
 
-import br.shura.venus.type.PrimitiveTypes;
+import br.shura.venus.type.PrimitiveType;
 
 /**
  * DecimalValue.java
@@ -33,7 +33,7 @@ public class DecimalValue extends NumericValue {
   private final double value;
 
   public DecimalValue(double value) {
-    super(PrimitiveTypes.DECIMAL);
+    super(PrimitiveType.DECIMAL);
     this.value = value;
   }
 

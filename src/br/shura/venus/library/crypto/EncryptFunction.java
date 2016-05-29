@@ -25,7 +25,7 @@ import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.function.Function;
 import br.shura.venus.function.FunctionCallDescriptor;
-import br.shura.venus.type.PrimitiveTypes;
+import br.shura.venus.type.PrimitiveType;
 import br.shura.venus.type.Type;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.StringValue;
@@ -48,7 +48,7 @@ public class EncryptFunction implements Function {
   private final String name;
 
   public EncryptFunction(String name, IEncrypter encrypter) {
-    this.argumentTypes = new ArrayView<>(PrimitiveTypes.STRING, PrimitiveTypes.VARIABLE_REFERENCE);
+    this.argumentTypes = new ArrayView<>(PrimitiveType.STRING, PrimitiveType.VARIABLE_REFERENCE);
     this.encrypter = encrypter;
     this.name = name;
   }

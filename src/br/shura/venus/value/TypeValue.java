@@ -19,7 +19,7 @@
 
 package br.shura.venus.value;
 
-import br.shura.venus.type.PrimitiveTypes;
+import br.shura.venus.type.PrimitiveType;
 import br.shura.venus.type.Type;
 import br.shura.x.util.layer.XApi;
 
@@ -35,7 +35,7 @@ public class TypeValue extends Value {
   private final Type value;
 
   public TypeValue(Type value) {
-    super(PrimitiveTypes.TYPE);
+    super(PrimitiveType.TYPE);
     XApi.requireNonNull(value, "value");
 
     this.value = value;

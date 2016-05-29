@@ -22,7 +22,7 @@ package br.shura.venus.function;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.function.annotation.MethodVarArgs;
-import br.shura.venus.type.PrimitiveTypes;
+import br.shura.venus.type.PrimitiveType;
 import br.shura.venus.type.Type;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.view.ArrayView;
@@ -54,7 +54,7 @@ public abstract class Method implements Function {
     if (hasMethodArgs) {
       Class<? extends Value>[] args = getClass().getAnnotation(MethodArgs.class).value();
 
-      this.arguments = new ArrayView<>(args).reduce(PrimitiveTypes::forType);
+      this.arguments = new ArrayView<>(args).reduce(PrimitiveType::forType);
     }
     else {
       this.arguments = new BasicView<>();

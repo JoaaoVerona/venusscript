@@ -24,7 +24,7 @@ import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.function.Function;
 import br.shura.venus.function.FunctionCallDescriptor;
-import br.shura.venus.type.PrimitiveTypes;
+import br.shura.venus.type.PrimitiveType;
 import br.shura.venus.type.Type;
 import br.shura.venus.value.DecimalValue;
 import br.shura.venus.value.IntegerValue;
@@ -78,7 +78,7 @@ public class FunctionCall implements Resultor {
       if (!function.isVarArgs()) {
         Type required = function.getArgumentTypes().at(i);
 
-        if (value.getType() == PrimitiveTypes.INTEGER && required == PrimitiveTypes.DECIMAL) {
+        if (value.getType() == PrimitiveType.INTEGER && required == PrimitiveType.DECIMAL) {
           value = new DecimalValue(((IntegerValue) value).value());
         }
 

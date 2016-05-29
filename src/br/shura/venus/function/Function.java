@@ -21,7 +21,7 @@ package br.shura.venus.function;
 
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
-import br.shura.venus.type.PrimitiveTypes;
+import br.shura.venus.type.PrimitiveType;
 import br.shura.venus.type.Type;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.view.View;
@@ -50,7 +50,7 @@ public interface Function extends INameable {
           Type required = getArgumentTypes().at(i);
           Type found = argumentTypes.at(i);
 
-          if (!required.accepts(found) && (required != PrimitiveTypes.DECIMAL || found != PrimitiveTypes.INTEGER)) {
+          if (!required.accepts(found) && (required != PrimitiveType.DECIMAL || found != PrimitiveType.INTEGER)) {
             return false;
           }
         }

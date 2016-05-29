@@ -22,7 +22,7 @@ package br.shura.venus.value;
 import br.shura.venus.exception.runtime.InvalidArrayAccessException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
-import br.shura.venus.type.PrimitiveTypes;
+import br.shura.venus.type.PrimitiveType;
 import br.shura.x.charset.build.TextBuilder;
 import br.shura.x.util.Pool;
 import br.shura.x.util.comparator.SimpleEqualizer;
@@ -48,7 +48,7 @@ public class ArrayValue extends IterableValue {
   }
 
   public ArrayValue(Value... values) {
-    super(PrimitiveTypes.ARRAY);
+    super(PrimitiveType.ARRAY);
     XApi.requireNonNull(values, "values");
 
     this.values = values;

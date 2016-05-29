@@ -20,9 +20,6 @@
 package br.shura.venus.type;
 
 import br.shura.venus.value.Value;
-import br.shura.x.collection.view.ArrayView;
-import br.shura.x.collection.view.View;
-import br.shura.x.worker.UtilWorker;
 
 /**
  * Type.java
@@ -32,40 +29,22 @@ import br.shura.x.worker.UtilWorker;
  * @date 29/05/16 - 02:15
  * @since GAMMA - 0x3
  */
-public final class Type {
+public abstract class Type {
   private final String identifier;
-  private final Class<?>[] objectTypes;
-  private final Class<? extends Value> valueClass;
 
-  public Type(String identifier, Class<? extends Value> valueClass, Class<?>... objectTypes) {
+  public Type(String identifier) {
     this.identifier = identifier;
-    this.objectTypes = objectTypes;
-    this.valueClass = valueClass;
   }
 
-  public boolean accepts(Class<? extends Value> valueClass) {
-    return getValueClass().isAssignableFrom(valueClass);
-  }
+  public abstract boolean accepts(Class<? extends Value> valueClass);
 
-  public boolean accepts(Type type) {
-    return accepts(type.getValueClass());
-  }
+  public abstract boolean accepts(Type type);
 
-  public String getIdentifier() {
+  public final String getIdentifier() {
     return identifier;
   }
 
-  public View<Class<?>> getObjectTypes() {
-    return new ArrayView<>(objectTypes);
-  }
-
-  public Class<? extends Value> getValueClass() {
-    return valueClass;
-  }
-
-  public boolean objectAccepts(Class<?> type) {
-    return getObjectTypes().any(object -> object.isAssignableFrom(UtilWorker.fixPrimitiveClass(type)));
-  }
+  public abstract boolean objectAccepts(Class<?> type);
 
   @Override
   public String toString() {

@@ -29,30 +29,55 @@ import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.StringValue;
 import br.shura.venus.value.TypeValue;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 import br.shura.venus.value.VariableRefValue;
+import br.shura.x.collection.view.ArrayView;
 import br.shura.x.collection.view.View;
 import br.shura.x.util.layer.XApi;
+import br.shura.x.worker.UtilWorker;
 import br.shura.x.worker.enumeration.Enumerations;
 
 /**
- * PrimitiveTypes.java
+ * PrimitiveType.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
  * @date 29/05/16 - 17:40
  * @since GAMMA - 0x3
  */
-public final class PrimitiveTypes {
-  public static final Type ANY = new Type("any", Value.class, Object.class);
-  public static final Type ARRAY = new Type("array", ArrayValue.class, Value[].class);
-  public static final Type BOOLEAN = new Type("bool", BoolValue.class, Boolean.class);
-  public static final Type DECIMAL = new Type("decimal", DecimalValue.class, Double.class, Float.class);
-  public static final Type FUNCTION_REFERENCE = new Type("ref", FunctionRefValue.class, Function.class);
-  public static final Type INTEGER = new Type("int", IntegerValue.class, Integer.class, Long.class);
-  public static final Type STRING = new Type("string", StringValue.class, String.class);
-  public static final Type TYPE = new Type("type", TypeValue.class, ValueType.class);
-  public static final Type VARIABLE_REFERENCE = new Type("var", VariableRefValue.class, Variable.class);
+public final class PrimitiveType extends Type {
+  public static final Type ANY = new PrimitiveType("any", Value.class, Object.class);
+  public static final Type ARRAY = new PrimitiveType("array", ArrayValue.class, Value[].class);
+  public static final Type BOOLEAN = new PrimitiveType("bool", BoolValue.class, Boolean.class);
+  public static final Type DECIMAL = new PrimitiveType("decimal", DecimalValue.class, Double.class, Float.class);
+  public static final Type FUNCTION_REFERENCE = new PrimitiveType("ref", FunctionRefValue.class, Function.class);
+  public static final Type INTEGER = new PrimitiveType("int", IntegerValue.class, Integer.class, Long.class);
+  public static final Type STRING = new PrimitiveType("string", StringValue.class, String.class);
+  public static final Type TYPE = new PrimitiveType("type", TypeValue.class, Type.class);
+  public static final Type VARIABLE_REFERENCE = new PrimitiveType("var", VariableRefValue.class, Variable.class);
+
+  private final View<Class<?>> objectTypes;
+  private final Class<? extends Value> valueClass;
+
+  private PrimitiveType(String identifier, Class<? extends Value> valueClass, Class<?>... objectTypes) {
+    super(identifier);
+    this.objectTypes = new ArrayView<>(objectTypes);
+    this.valueClass = valueClass;
+  }
+
+  @Override
+  public boolean accepts(Class<? extends Value> valueClass) {
+    return valueClass.isAssignableFrom(valueClass);
+  }
+
+  @Override
+  public boolean accepts(Type type) {
+    return type instanceof PrimitiveType && accepts(((PrimitiveType) type).valueClass);
+  }
+
+  @Override
+  public boolean objectAccepts(Class<?> type) {
+    return objectTypes.any(object -> object.isAssignableFrom(UtilWorker.fixPrimitiveClass(type)));
+  }
 
   public static Type forIdentifier(String identifier) {
     XApi.requireNonNull(identifier, "identifier");

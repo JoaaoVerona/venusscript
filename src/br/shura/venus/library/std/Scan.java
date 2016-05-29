@@ -26,7 +26,7 @@ import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.Method;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
-import br.shura.venus.type.PrimitiveTypes;
+import br.shura.venus.type.PrimitiveType;
 import br.shura.venus.type.Type;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.DecimalValue;
@@ -58,24 +58,24 @@ public class Scan extends Method {
       try {
         String line = XLogger.scan();
 
-        if (type == PrimitiveTypes.BOOLEAN) {
+        if (type == PrimitiveType.BOOLEAN) {
           return new BoolValue(ParseWorker.toBoolean(line));
         }
 
-        if (type == PrimitiveTypes.DECIMAL) {
+        if (type == PrimitiveType.DECIMAL) {
           return new DecimalValue(ParseWorker.toDouble(line));
         }
 
-        if (type == PrimitiveTypes.INTEGER) {
+        if (type == PrimitiveType.INTEGER) {
           return new IntegerValue(ParseWorker.toLong(line));
         }
 
-        if (type == PrimitiveTypes.STRING) {
+        if (type == PrimitiveType.STRING) {
           return new StringValue(line);
         }
 
-        if (type == PrimitiveTypes.TYPE) {
-          Type lookup = PrimitiveTypes.forIdentifier(line);
+        if (type == PrimitiveType.TYPE) {
+          Type lookup = PrimitiveType.forIdentifier(line);
 
           if (lookup != null) {
             return new TypeValue(lookup);
