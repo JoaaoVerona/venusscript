@@ -19,14 +19,16 @@
 
 package br.shura.venus.component;
 
+import br.shura.venus.component.object.ObjectDefinition;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.exception.runtime.UndefinedFunctionException;
+import br.shura.venus.exception.runtime.UndefinedValueTypeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.function.Definition;
 import br.shura.venus.function.Function;
+import br.shura.venus.type.Type;
 import br.shura.venus.value.FunctionRefValue;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.collection.view.View;
@@ -50,7 +52,7 @@ public abstract class Container extends Component {
     getChildren().addInsertionListener(component -> component.setParent(this));
   }
 
-  public Function findFunction(Context context, String name, View<ValueType> argumentTypes) throws ScriptRuntimeException {
+  public Function findFunction(Context context, String name, View<Type> argumentTypes) throws ScriptRuntimeException {
     XApi.requireNonNull(name, "name");
 
     if (context.hasVar(name)) {
@@ -89,6 +91,24 @@ public abstract class Container extends Component {
     }
 
     throw new UndefinedFunctionException(context, name, argumentTypes);
+  }
+
+  public Type findType(Context context, String name) throws ScriptRuntimeException {
+    for (ObjectDefinition definition : getChildren().selectType(ObjectDefinition.class)) {
+      if (definition.getName().equals(name)) {
+        return definition.getType();
+      }
+    }
+
+    if (hasParent()) {
+      try {
+        return getParent().findType(context, name);
+      }
+      catch (UndefinedValueTypeException exception) {
+      }
+    }
+
+    throw new UndefinedValueTypeException(context, name);
   }
 
   public List<Component> getChildren() {
