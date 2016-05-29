@@ -62,7 +62,7 @@ public class Context implements ICloneable<Context> {
   }
 
   public VenusExecutor currentExecutor() {
-    return executor;
+    return executor != null ? executor : hasParent() ? getParent().currentExecutor() : null;
   }
 
   public int currentLine() {
