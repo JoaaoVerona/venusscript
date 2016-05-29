@@ -100,7 +100,7 @@ public class VenusParser {
     boolean justExitedIfContainer = false;
 
     while ((token = lexer.nextToken()) != null) {
-      if (token.getType() == Type.DOLLAR_SIGN) {
+      if (token.getType() == Type.GLOBAL_ACCESS) {
         lexer.reRead(token);
         addComponent(readResultor(Type.NEW_LINE), true);
       }
@@ -299,7 +299,7 @@ public class VenusParser {
   protected Value getValueOf(Token token) throws ScriptCompileException {
     String value = token.getValue();
 
-    if (token.getType() == Type.AT_SIGN) {
+    if (token.getType() == Type.FUNC_REF) {
       Token next = requireToken();
 
       if (next.getType() == Type.NAME_DEFINITION) {
@@ -318,20 +318,20 @@ public class VenusParser {
       }
     }
 
-    if (token.getType() == Type.COLON) {
+    if (token.getType() == Type.VAR_REF) {
       Token next = requireToken();
 
-      if (next.getType() == Type.DOLLAR_SIGN) {
+      if (next.getType() == Type.GLOBAL_ACCESS) {
         Token next2 = requireToken();
 
         if (next2.getType() == Type.NAME_DEFINITION) {
-          return new VariableRefValue(new Variable(next.getValue() + next2.getValue()));
+          return new VariableRefValue(next.getValue() + next2.getValue());
         }
 
         lexer.reRead(next2);
       }
       else if (next.getType() == Type.NAME_DEFINITION) {
-        return new VariableRefValue(new Variable(next.getValue()));
+        return new VariableRefValue(next.getValue());
       }
 
       lexer.reRead(next);
@@ -714,7 +714,7 @@ public class VenusParser {
         }
       }
 
-      if (token.getType() == Type.DOLLAR_SIGN) {
+      if (token.getType() == Type.GLOBAL_ACCESS) {
         if (nameDef != null) {
           bye(token, "expected open parenthese (function) or operator after a name definition");
         }
