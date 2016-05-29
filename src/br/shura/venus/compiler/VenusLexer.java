@@ -244,8 +244,8 @@ public class VenusLexer {
               return new Token(Type.FUNC_REF, ch);
             }
 
-            if (ch == KeywordDefinitions.VARIABLE_REFERENCE) {
-              return new Token(Type.VAR_REF, ch);
+            if (ch == KeywordDefinitions.COLON) {
+              return new Token(Type.COLON, ch);
             }
 
             if (ch == KeywordDefinitions.GLOBAL_ACCESS) {
