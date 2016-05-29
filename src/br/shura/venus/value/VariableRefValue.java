@@ -20,6 +20,7 @@
 package br.shura.venus.value;
 
 import br.shura.venus.compiler.KeywordDefinitions;
+import br.shura.venus.type.PrimitiveTypes;
 import br.shura.x.util.layer.XApi;
 
 /**
@@ -30,13 +31,19 @@ import br.shura.x.util.layer.XApi;
  * @date 16/05/16 - 00:29
  * @since GAMMA - 0x3
  */
-public class VariableRefValue implements Value {
+public class VariableRefValue extends Value {
   private final String value;
 
   public VariableRefValue(String value) {
+    super(PrimitiveTypes.VARIABLE_REFERENCE);
     XApi.requireNonNull(value, "value");
 
     this.value = value;
+  }
+
+  @Override
+  public VariableRefValue clone() {
+    return new VariableRefValue(value());
   }
 
   @Override

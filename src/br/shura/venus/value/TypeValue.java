@@ -19,6 +19,8 @@
 
 package br.shura.venus.value;
 
+import br.shura.venus.type.PrimitiveTypes;
+import br.shura.venus.type.Type;
 import br.shura.x.util.layer.XApi;
 
 /**
@@ -29,13 +31,19 @@ import br.shura.x.util.layer.XApi;
  * @date 12/05/16 - 21:06
  * @since GAMMA - 0x3
  */
-public class TypeValue implements Value {
-  private final ValueType value;
+public class TypeValue extends Value {
+  private final Type value;
 
-  public TypeValue(ValueType value) {
+  public TypeValue(Type value) {
+    super(PrimitiveTypes.TYPE);
     XApi.requireNonNull(value, "value");
 
     this.value = value;
+  }
+
+  @Override
+  public TypeValue clone() {
+    return new TypeValue(value());
   }
 
   @Override
@@ -44,7 +52,7 @@ public class TypeValue implements Value {
   }
 
   @Override
-  public ValueType value() {
+  public Type value() {
     return value;
   }
 }

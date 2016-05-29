@@ -22,11 +22,13 @@ package br.shura.venus.value;
 import br.shura.venus.exception.runtime.InvalidArrayAccessException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.type.PrimitiveTypes;
 import br.shura.x.charset.build.TextBuilder;
 import br.shura.x.util.Pool;
 import br.shura.x.util.comparator.SimpleEqualizer;
 import br.shura.x.util.iterator.ArrayIterator;
 import br.shura.x.util.layer.XApi;
+import br.shura.x.worker.ArrayWorker;
 
 import java.util.Iterator;
 
@@ -38,7 +40,7 @@ import java.util.Iterator;
  * @date 22/05/16 - 02:05
  * @since GAMMA - 0x3
  */
-public class ArrayValue implements IterableValue {
+public class ArrayValue extends IterableValue {
   private final Value[] values;
 
   public ArrayValue(int size) {
@@ -46,9 +48,15 @@ public class ArrayValue implements IterableValue {
   }
 
   public ArrayValue(Value... values) {
+    super(PrimitiveTypes.ARRAY);
     XApi.requireNonNull(values, "values");
 
     this.values = values;
+  }
+
+  @Override
+  public ArrayValue clone() {
+    return new ArrayValue(ArrayWorker.copyOf(value()));
   }
 
   @Override

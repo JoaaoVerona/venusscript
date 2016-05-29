@@ -20,6 +20,7 @@
 package br.shura.venus.value;
 
 import br.shura.venus.compiler.KeywordDefinitions;
+import br.shura.venus.type.PrimitiveTypes;
 import br.shura.x.util.layer.XApi;
 
 /**
@@ -30,13 +31,19 @@ import br.shura.x.util.layer.XApi;
  * @date 14/05/16 - 02:38
  * @since GAMMA - 0x3
  */
-public class FunctionRefValue implements Value {
+public class FunctionRefValue extends Value {
   private final String value;
 
   public FunctionRefValue(String value) {
+    super(PrimitiveTypes.FUNCTION_REFERENCE);
     XApi.requireNonNull(value, "value");
 
     this.value = value;
+  }
+
+  @Override
+  public FunctionRefValue clone() {
+    return new FunctionRefValue(value());
   }
 
   @Override

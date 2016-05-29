@@ -19,6 +19,8 @@
 
 package br.shura.venus.value;
 
+import br.shura.venus.type.PrimitiveTypes;
+
 /**
  * IntegerValue.java
  *
@@ -27,10 +29,11 @@ package br.shura.venus.value;
  * @date 09/05/16 - 01:48
  * @since GAMMA - 0x3
  */
-public class IntegerValue implements NumericValue {
+public class IntegerValue extends NumericValue {
   private final long value;
 
   public IntegerValue(long value) {
+    super(PrimitiveTypes.INTEGER);
     this.value = value;
   }
 
@@ -41,6 +44,11 @@ public class IntegerValue implements NumericValue {
     }
 
     return null;
+  }
+
+  @Override
+  public IntegerValue clone() {
+    return new IntegerValue(value());
   }
 
   @Override
@@ -109,7 +117,7 @@ public class IntegerValue implements NumericValue {
       return new IntegerValue(value() + numeric.value().longValue());
     }
 
-    return NumericValue.super.plus(value);
+    return super.plus(value);
   }
 
   @Override
@@ -124,12 +132,12 @@ public class IntegerValue implements NumericValue {
   }
 
   @Override
-  public Long value() {
-    return value;
+  public String toString() {
+    return Long.toString(value());
   }
 
   @Override
-  public String toString() {
-    return Long.toString(value());
+  public Long value() {
+    return value;
   }
 }

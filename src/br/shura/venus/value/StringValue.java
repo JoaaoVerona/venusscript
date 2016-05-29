@@ -19,6 +19,7 @@
 
 package br.shura.venus.value;
 
+import br.shura.venus.type.PrimitiveTypes;
 import br.shura.x.util.layer.XApi;
 
 /**
@@ -29,13 +30,19 @@ import br.shura.x.util.layer.XApi;
  * @date 08/05/16 - 20:47
  * @since GAMMA - 0x3
  */
-public class StringValue implements Value {
+public class StringValue extends Value {
   private final String value;
 
   public StringValue(String value) {
+    super(PrimitiveTypes.STRING);
     XApi.requireNonNull(value, "value");
 
     this.value = value;
+  }
+
+  @Override
+  public StringValue clone() {
+    return new StringValue(value());
   }
 
   @Override
@@ -65,12 +72,12 @@ public class StringValue implements Value {
   }
 
   @Override
-  public String value() {
-    return value;
+  public String toString() {
+    return value();
   }
 
   @Override
-  public String toString() {
-    return value();
+  public String value() {
+    return value;
   }
 }

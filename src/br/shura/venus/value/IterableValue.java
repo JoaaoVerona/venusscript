@@ -19,6 +19,8 @@
 
 package br.shura.venus.value;
 
+import br.shura.venus.type.Type;
+
 /**
  * IterableValue.java
  *
@@ -27,5 +29,8 @@ package br.shura.venus.value;
  * @date 22/05/16 - 03:40
  * @since GAMMA - 0x3
  */
-public interface IterableValue extends Iterable<Value>, Value {
+public abstract class IterableValue extends Value implements Iterable<Value> {
+  public IterableValue(Type type) {
+    super(type);
+  }
 }

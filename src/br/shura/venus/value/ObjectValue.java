@@ -30,13 +30,19 @@ import br.shura.venus.executor.Context;
  * @date 29/05/16 - 01:09
  * @since GAMMA - 0x3
  */
-public class ObjectValue implements Value {
+public class ObjectValue extends Value {
   private final Context context;
   private final ObjectDefinition definition;
 
   public ObjectValue(ObjectDefinition definition, Context context) {
+    super(definition.getType());
     this.context = context;
     this.definition = definition;
+  }
+
+  @Override
+  public ObjectValue clone() {
+    return new ObjectValue(getDefinition(), getContext().clone());
   }
 
   public Context getContext() {

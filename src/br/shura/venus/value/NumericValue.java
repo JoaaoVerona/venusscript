@@ -19,6 +19,8 @@
 
 package br.shura.venus.value;
 
+import br.shura.venus.type.Type;
+
 /**
  * NumericValue.java
  *
@@ -27,7 +29,11 @@ package br.shura.venus.value;
  * @date 09/05/16 - 01:49
  * @since GAMMA - 0x3
  */
-public interface NumericValue extends Value {
+public abstract class NumericValue extends Value {
+  public NumericValue(Type type) {
+    super(type);
+  }
+
   @Override
-  Number value();
+  public abstract Number value();
 }

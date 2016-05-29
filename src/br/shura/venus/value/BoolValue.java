@@ -20,6 +20,7 @@
 package br.shura.venus.value;
 
 import br.shura.venus.compiler.KeywordDefinitions;
+import br.shura.venus.type.PrimitiveTypes;
 
 /**
  * BoolValue.java
@@ -29,10 +30,11 @@ import br.shura.venus.compiler.KeywordDefinitions;
  * @date 08/05/16 - 18:36
  * @since GAMMA - 0x3
  */
-public class BoolValue implements Value {
+public class BoolValue extends Value {
   private final boolean value;
 
   public BoolValue(boolean value) {
+    super(PrimitiveTypes.BOOLEAN);
     this.value = value;
   }
 
@@ -45,6 +47,11 @@ public class BoolValue implements Value {
     }
 
     return null;
+  }
+
+  @Override
+  public BoolValue clone() {
+    return new BoolValue(value());
   }
 
   @Override

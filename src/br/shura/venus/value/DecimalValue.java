@@ -19,6 +19,8 @@
 
 package br.shura.venus.value;
 
+import br.shura.venus.type.PrimitiveTypes;
+
 /**
  * DecimalValue.java
  *
@@ -27,11 +29,17 @@ package br.shura.venus.value;
  * @date 08/05/16 - 18:41
  * @since GAMMA - 0x3
  */
-public class DecimalValue implements NumericValue {
+public class DecimalValue extends NumericValue {
   private final double value;
 
   public DecimalValue(double value) {
+    super(PrimitiveTypes.DECIMAL);
     this.value = value;
+  }
+
+  @Override
+  public DecimalValue clone() {
+    return new DecimalValue(value());
   }
 
   @Override
@@ -91,7 +99,7 @@ public class DecimalValue implements NumericValue {
       return new DecimalValue(value() + numeric.value().doubleValue());
     }
 
-    return NumericValue.super.plus(value);
+    return super.plus(value);
   }
 
   @Override
