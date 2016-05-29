@@ -78,6 +78,18 @@ public final class PrimitiveTypes {
     return ANY;
   }
 
+  public static Type forType(Class<? extends Value> type) {
+    XApi.requireNonNull(type, "type");
+
+    for (Type value : valuesView()) {
+      if (value != ANY && value.accepts(type)) {
+        return value;
+      }
+    }
+
+    return ANY;
+  }
+
   public static View<Type> valuesView() {
     return Enumerations.values(Type.class);
   }
