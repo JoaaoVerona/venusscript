@@ -22,10 +22,10 @@ package br.shura.venus.resultor;
 import br.shura.venus.exception.runtime.InvalidArrayAccessException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.type.PrimitiveType;
 import br.shura.venus.value.ArrayValue;
 import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 import br.shura.x.util.layer.XApi;
 
 /**
@@ -71,11 +71,11 @@ public class ArrayAccess implements Resultor {
       }
 
       throw new InvalidArrayAccessException(context, "Index \"" + index + "\" is of type " +
-        index.getType() + "; expected to be an " + ValueType.INTEGER);
+        index.getType() + "; expected to be an " + PrimitiveType.INTEGER);
     }
 
     throw new InvalidArrayAccessException(context, "Variable \"" + getName() + "\" is of type " +
-      value.getType() + "; expected to be an " + ValueType.ARRAY);
+      value.getType() + "; expected to be an " + PrimitiveType.ARRAY);
   }
 
   @Override

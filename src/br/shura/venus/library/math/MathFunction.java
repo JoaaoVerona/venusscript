@@ -23,11 +23,10 @@ import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.function.Function;
 import br.shura.venus.function.FunctionCallDescriptor;
-import br.shura.venus.type.PrimitiveTypes;
+import br.shura.venus.type.PrimitiveType;
 import br.shura.venus.type.Type;
 import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.collection.view.BasicView;
@@ -59,7 +58,7 @@ public class MathFunction implements Function {
     this.name = method.getName();
 
     for (Class<?> arg : method.getParameterTypes()) {
-      arguments.add(PrimitiveTypes.forObjectType(arg));
+      arguments.add(PrimitiveType.forObjectType(arg));
     }
   }
 
@@ -123,12 +122,12 @@ public class MathFunction implements Function {
   }
 
   public static boolean validate(Method method) {
-    if (ValueType.forObjectType(method.getReturnType()) == null) {
+    if (PrimitiveType.forObjectType(method.getReturnType()) == null) {
       return false;
     }
 
     for (Class<?> arg : method.getParameterTypes()) {
-      if (ValueType.forObjectType(arg) == null) {
+      if (PrimitiveType.forObjectType(arg) == null) {
         return false;
       }
     }

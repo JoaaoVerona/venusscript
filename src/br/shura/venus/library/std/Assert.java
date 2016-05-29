@@ -26,9 +26,9 @@ import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.Method;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
+import br.shura.venus.type.PrimitiveType;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 
 /**
  * Assert.java
@@ -55,6 +55,6 @@ public class Assert extends Method {
       throw new AssertionException(context, "Assertion failed");
     }
 
-    throw new AssertionException(context, "Assertion expected a value of type " + ValueType.BOOLEAN + "; received " + value.getType());
+    throw new AssertionException(context, "Assertion expected a value of type " + PrimitiveType.BOOLEAN + "; received " + value.getType());
   }
 }
