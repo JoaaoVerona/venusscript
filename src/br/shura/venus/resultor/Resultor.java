@@ -21,8 +21,8 @@ package br.shura.venus.resultor;
 
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.type.Type;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 
 /**
  * Resultor.java
@@ -35,7 +35,7 @@ import br.shura.venus.value.ValueType;
 public interface Resultor {
   Value resolve(Context context) throws ScriptRuntimeException;
 
-  default ValueType resolveType(Context context) throws ScriptRuntimeException {
+  default Type resolveType(Context context) throws ScriptRuntimeException {
     return resolve(context).getType();
   }
 }

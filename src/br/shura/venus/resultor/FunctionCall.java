@@ -24,10 +24,11 @@ import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
 import br.shura.venus.function.Function;
 import br.shura.venus.function.FunctionCallDescriptor;
+import br.shura.venus.type.PrimitiveTypes;
+import br.shura.venus.type.Type;
 import br.shura.venus.value.DecimalValue;
 import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.Value;
-import br.shura.venus.value.ValueType;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.collection.view.ArrayView;
@@ -62,7 +63,7 @@ public class FunctionCall implements Resultor {
   @Override
   public Value resolve(Context context) throws ScriptRuntimeException {
     View<Value> values = getArguments().reduceExceptional(resultor -> resultor.resolve(context));
-    View<ValueType> types = values.reduce(Value::getType);
+    View<Type> types = values.reduce(Value::getType);
     Function function = context.getOwner().findFunction(context, getFunctionName(), types);
     List<Value> list = new ArrayList<>();
     int i = 0;
@@ -75,9 +76,9 @@ public class FunctionCall implements Resultor {
 
     for (Value value : values) {
       if (!function.isVarArgs()) {
-        ValueType required = function.getArgumentTypes().at(i);
+        Type required = function.getArgumentTypes().at(i);
 
-        if (value.getType() == ValueType.INTEGER && required == ValueType.DECIMAL) {
+        if (value.getType() == PrimitiveTypes.INTEGER && required == PrimitiveTypes.DECIMAL) {
           value = new DecimalValue(((IntegerValue) value).value());
         }
 
