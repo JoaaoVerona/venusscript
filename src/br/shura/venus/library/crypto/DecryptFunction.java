@@ -60,7 +60,7 @@ public class DecryptFunction implements Function {
     try {
       String result = getDecrypter().decryptToStr(value.value());
 
-      context.setVar(reference.value().getName(), new StringValue(result));
+      context.setVar(reference.value(), new StringValue(result));
 
       return new BoolValue(true);
     }

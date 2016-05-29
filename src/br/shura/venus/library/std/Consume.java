@@ -21,11 +21,11 @@ package br.shura.venus.library.std;
 
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.executor.VariableStructure;
 import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.VoidMethod;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
-import br.shura.venus.resultor.Variable;
 import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.Value;
 import br.shura.venus.value.ValueType;
@@ -46,11 +46,11 @@ public class Consume extends VoidMethod {
   @Override
   public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
     VariableRefValue reference = (VariableRefValue) descriptor.get(0);
-    Variable variable = reference.value();
+    VariableStructure variable = context.getVar(reference.value());
     Object monitor;
 
-    synchronized ((monitor = context.getVar(variable).getLockMonitor())) {
-      Value value = variable.resolve(context);
+    synchronized ((monitor = variable.getLockMonitor())) {
+      Value value = variable.getValue();
       long val = 0;
 
       if (value instanceof IntegerValue) {
@@ -62,7 +62,7 @@ public class Consume extends VoidMethod {
       if (val <= 0) {
         try {
           monitor.wait();
-          context.setVar(variable.getName(), value.minus(new IntegerValue(1)));
+          context.setVar(reference.value(), value.minus(new IntegerValue(1)));
         }
         catch (InterruptedException exception) {
           XLogger.warnln("Thread " + Thread.currentThread() + " interrupted while 'consume' was locking.");

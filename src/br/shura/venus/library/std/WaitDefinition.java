@@ -44,7 +44,7 @@ public class WaitDefinition extends VoidMethod {
   public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
     VariableRefValue reference = (VariableRefValue) descriptor.get(0);
 
-    while (!context.hasVar(reference.value().getName())) {
+    while (!context.hasVar(reference.value())) {
       UtilWorker.stay(50L);
     }
   }

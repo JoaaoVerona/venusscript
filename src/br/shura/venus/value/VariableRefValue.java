@@ -19,7 +19,6 @@
 
 package br.shura.venus.value;
 
-import br.shura.venus.resultor.Variable;
 import br.shura.x.util.layer.XApi;
 
 /**
@@ -31,16 +30,16 @@ import br.shura.x.util.layer.XApi;
  * @since GAMMA - 0x3
  */
 public class VariableRefValue implements Value {
-  private final Variable value;
+  private final String value;
 
-  public VariableRefValue(Variable value) {
+  public VariableRefValue(String value) {
     XApi.requireNonNull(value, "value");
 
     this.value = value;
   }
 
   @Override
-  public Variable value() {
+  public String value() {
     return value;
   }
 }

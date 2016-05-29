@@ -60,7 +60,7 @@ public class EncryptFunction implements Function {
     try {
       String result = getEncrypter().encryptToStr(value.value());
 
-      context.setVar(reference.value().getName(), new StringValue(result));
+      context.setVar(reference.value(), new StringValue(result));
 
       return new BoolValue(true);
     }
