@@ -21,6 +21,8 @@ package br.shura.venus.component.object;
 
 import br.shura.venus.component.Container;
 import br.shura.venus.executor.Context;
+import br.shura.venus.type.ObjectType;
+import br.shura.venus.type.Type;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
 
@@ -35,10 +37,12 @@ import br.shura.x.collection.list.impl.ArrayList;
 public class ObjectDefinition extends Container {
   private final List<Attribute> attributes;
   private final String name;
+  private final Type type;
 
   public ObjectDefinition(String name) {
     this.attributes = new ArrayList<>();
     this.name = name;
+    this.type = new ObjectType(name);
   }
 
   public List<Attribute> getAttributes() {
@@ -47,6 +51,10 @@ public class ObjectDefinition extends Container {
 
   public String getName() {
     return name;
+  }
+
+  public Type getType() {
+    return type;
   }
 
   @Override
