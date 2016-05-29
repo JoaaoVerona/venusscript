@@ -252,6 +252,10 @@ public class VenusLexer {
               return new Token(Type.GLOBAL_ACCESS, ch);
             }
 
+            if (ch == KeywordDefinitions.OBJECT_ACCESS) {
+              return new Token(Type.OBJECT_ACCESS, ch);
+            }
+
             if (ch == '{') {
               return new Token(Type.OPEN_BRACE, ch);
             }
