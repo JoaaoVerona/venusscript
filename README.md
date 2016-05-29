@@ -10,13 +10,12 @@ It is required Java 8+ and libraries:
 - [ShuraX Dialogs](todo): required if enabling DialogsLibrary
 
 ### Version Planning
-| Version | Description             |
-| ------- | -----------             |
-| 0.1     | Definitions, methods, value types, function references, standard library, loop containers, branching components |
-| **0.2** | Variable references, dynamic injection, runtime interpretation, multithreading, arrays, lists, dictionaries, sync. features |
-| 0.3     | Object-oriented features, Java interoperability, user-defined value types |
-| 0.4     | Functional features, enumerations, debugging utilities and breakpoints |
-| 0.5     | Improved performance, own bytecode compiler and interpreter |
+| Version | State     | Description             |
+| ------- | --------- | ----------------------- |
+| 0.1     | **done**  | Definitions, methods, function references, standard library, loop containers, branching components, variable references, initial dynamic injection, runtime interpretation, asynchronous features, synchronous features, homogeneous arrays |
+| 0.2     | *current* | Object-oriented features (user-defined object types), Java interoperability, lists, dictionaries, heterogeneous arrays |
+| 0.3     | planned   | Functional features, enumerations, debugging utilities and breakpoints |
+| 0.4     | planned   | Improved performance, own bytecode compiler and interpreter |
 
 ### Definition
 - Highly extensible
