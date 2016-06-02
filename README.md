@@ -2,6 +2,10 @@
 Welcome to the official GitHub repository of the dynamic, injectable, scripting language **VenusScript**.
 See the [examples directory](https://github.com/BloodShura/VenusScript/tree/master/examples) to get a closer look in how the language works.
 
+### Why?
+This is, currently, a module of the [MPS Bot](https://github.com/BloodShura/MPSBot) project, which is being built for the Applications Programming course @ CS, UTFPR.
+After it gets ready and finished for the needs of the project, it will proceed as an independent project. Probably will turn into a JVM bytecode-compiled language in the future.
+
 ### Tech
 VenusScript is meant to be used within a Java application, although it's implementation is, since the beginning, already being made targeting different languages in the future.
 It is required Java 8+ and libraries:
