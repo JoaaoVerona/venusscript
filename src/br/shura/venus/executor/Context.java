@@ -39,13 +39,16 @@ import br.shura.x.util.layer.XApi;
  * @since GAMMA - 0x3
  */
 public class Context implements ICloneable<Context> {
+  private static int NEXT_ID = 0;
   private int currentLine;
   private VenusExecutor executor;
   private final Container owner;
   private final Context parent;
   private final Map<String, VariableStructure> variables;
+  private final int id;
 
   public Context(Container owner, Context parent) {
+    this.id = NEXT_ID++;
     this.owner = owner;
     this.parent = parent;
     this.variables = new LinkedMap<>();
@@ -53,7 +56,11 @@ public class Context implements ICloneable<Context> {
 
   @Override
   public Context clone() {
-    Context context = new Context(getOwner(), getParent());
+    return cloneWith(getOwner(), getParent());
+  }
+
+  public Context cloneWith(Container owner, Context parent) {
+    Context context = new Context(owner, parent);
 
     context.getVariables().addAll(getVariables());
     context.setCurrentLine(currentLine());
@@ -141,9 +148,13 @@ public class Context implements ICloneable<Context> {
     }
   }
 
+  public String toDetailedString() {
+    return "context(owner=" + getOwner() + ", vars=" + getVariables() + ", parent=" + getParent() + ')';
+  }
+
   @Override
   public String toString() {
-    return "context(owner=" + getOwner() + ", vars=" + getVariables() + ", parent=" + getParent() + ')';
+    return "#" + id;
   }
 
   protected boolean changeVar(String name, Value value) {
