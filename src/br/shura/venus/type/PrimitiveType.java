@@ -65,8 +65,8 @@ public final class PrimitiveType extends Type {
   }
 
   @Override
-  public boolean accepts(Class<? extends Value> valueClass) {
-    return valueClass.isAssignableFrom(valueClass);
+  public boolean accepts(Class<? extends Value> valueCl) {
+    return valueClass.isAssignableFrom(valueCl);
   }
 
   @Override
