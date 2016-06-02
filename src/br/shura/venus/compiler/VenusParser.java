@@ -594,13 +594,6 @@ public class VenusParser {
     addContainer(ifContainer, false);
   }
 
-  protected void parseObject() throws ScriptCompileException {
-    Token nameToken = requireToken(Token.Type.NAME_DEFINITION, "expected an object name");
-
-    requireToken(Token.Type.OPEN_BRACE, "expected an open brace");
-    addContainer(new ObjectDefinition(nameToken.getValue()), false);
-  }
-
   protected void parseInclude() throws ScriptCompileException {
     Token next = requireToken(Token.Type.STRING_LITERAL, "expected a string literal as including script");
     String includeName = next.getValue();
@@ -627,6 +620,13 @@ public class VenusParser {
     catch (ScriptCompileException exception) {
       bye('"' + exception.getMessage() + '"');
     }
+  }
+
+  protected void parseObject() throws ScriptCompileException {
+    Token nameToken = requireToken(Token.Type.NAME_DEFINITION, "expected an object name");
+
+    requireToken(Token.Type.OPEN_BRACE, "expected an open brace");
+    addContainer(new ObjectDefinition(nameToken.getValue()), false);
   }
 
   protected Object parseOperation(String currentNameDef, String operatorStr, Token errorToken, boolean mustBeUnary) throws ScriptCompileException {

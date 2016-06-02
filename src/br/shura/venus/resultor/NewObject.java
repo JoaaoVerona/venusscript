@@ -29,7 +29,6 @@ import br.shura.venus.value.ObjectValue;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.map.Map;
 import br.shura.x.collection.tuple.Pair;
-import br.shura.x.logging.XLogger;
 
 /**
  * NewObject.java
@@ -86,7 +85,6 @@ public class NewObject implements Resultor {
       }
     }
 
-    XLogger.println("New object value. context=" + c);
     return new ObjectValue(definition, c);
   }
 
