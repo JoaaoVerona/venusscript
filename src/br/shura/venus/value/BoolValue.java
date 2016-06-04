@@ -39,14 +39,14 @@ public class BoolValue extends Value {
   }
 
   @Override
-  public BoolValue and(Value value) {
+  public Value and(Value value) {
     if (value instanceof BoolValue) {
       BoolValue bool = (BoolValue) value;
 
       return new BoolValue(value() && bool.value());
     }
 
-    return null;
+    return super.and(value);
   }
 
   @Override
@@ -55,19 +55,19 @@ public class BoolValue extends Value {
   }
 
   @Override
-  public BoolValue not() {
+  public Value not() {
     return new BoolValue(!value());
   }
 
   @Override
-  public BoolValue or(Value value) {
+  public Value or(Value value) {
     if (value instanceof BoolValue) {
       BoolValue bool = (BoolValue) value;
 
       return new BoolValue(value() || bool.value());
     }
 
-    return null;
+    return super.or(value);
   }
 
   @Override

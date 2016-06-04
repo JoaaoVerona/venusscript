@@ -52,7 +52,7 @@ public abstract class Value implements ICloneable<Value> {
     return null;
   }
 
-  public Value equals(Value value) {
+  public BoolValue equals(Value value) {
     return new BoolValue(value().equals(value.value()));
   }
 

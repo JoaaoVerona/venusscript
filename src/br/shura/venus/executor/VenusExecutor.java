@@ -163,7 +163,7 @@ public class VenusExecutor {
               Value count = isDecimal ? new DecimalValue(numericFrom.value().doubleValue()) :
                             new IntegerValue(numericFrom.value().longValue());
 
-              while (count.lowerEqualThan(to).value()) {
+              while (count.lowerEqualThan(to).value().equals(true)) {
                 context.setVar(forContainer.getVarName(), count);
                 run(forContainer, mode, shouldRun);
 

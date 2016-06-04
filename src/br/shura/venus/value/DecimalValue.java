@@ -54,40 +54,40 @@ public class DecimalValue extends NumericValue {
   }
 
   @Override
-  public DecimalValue divide(Value value) {
+  public Value divide(Value value) {
     if (value instanceof NumericValue) {
       NumericValue numeric = (NumericValue) value;
 
       return new DecimalValue(value() / numeric.value().doubleValue());
     }
 
-    return null;
+    return super.divide(value);
   }
 
   @Override
-  public DecimalValue minus(Value value) {
+  public Value minus(Value value) {
     if (value instanceof NumericValue) {
       NumericValue numeric = (NumericValue) value;
 
       return new DecimalValue(value() - numeric.value().doubleValue());
     }
 
-    return null;
+    return super.minus(value);
   }
 
   @Override
-  public DecimalValue multiply(Value value) {
+  public Value multiply(Value value) {
     if (value instanceof NumericValue) {
       NumericValue numeric = (NumericValue) value;
 
       return new DecimalValue(value() * numeric.value().doubleValue());
     }
 
-    return null;
+    return super.multiply(value);
   }
 
   @Override
-  public DecimalValue negate() {
+  public Value negate() {
     return new DecimalValue(-value());
   }
 
@@ -103,14 +103,14 @@ public class DecimalValue extends NumericValue {
   }
 
   @Override
-  public DecimalValue remainder(Value value) {
+  public Value remainder(Value value) {
     if (value instanceof NumericValue) {
       NumericValue numeric = (NumericValue) value;
 
       return new DecimalValue(value() % numeric.value().doubleValue());
     }
 
-    return null;
+    return super.remainder(value);
   }
 
   @Override

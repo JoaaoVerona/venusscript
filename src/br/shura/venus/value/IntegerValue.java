@@ -38,12 +38,12 @@ public class IntegerValue extends NumericValue {
   }
 
   @Override
-  public IntegerValue and(Value value) {
+  public Value and(Value value) {
     if (value instanceof IntegerValue) {
       return new IntegerValue(value() & ((IntegerValue) value).value());
     }
 
-    return null;
+    return super.and(value);
   }
 
   @Override
@@ -59,54 +59,76 @@ public class IntegerValue extends NumericValue {
       return value().compareTo(numeric.value().longValue());
     }
 
-    return null;
+    return super.compareTo(value);
   }
 
   @Override
-  public IntegerValue divide(Value value) {
+  public Value divide(Value value) {
     if (value instanceof NumericValue) {
       NumericValue numeric = (NumericValue) value;
 
       return new IntegerValue(value() / numeric.value().longValue());
     }
 
-    return null;
+    return super.divide(value);
   }
 
   @Override
-  public IntegerValue minus(Value value) {
+  public Value minus(Value value) {
     if (value instanceof NumericValue) {
       NumericValue numeric = (NumericValue) value;
 
       return new IntegerValue(value() - numeric.value().longValue());
     }
 
-    return null;
+    return super.minus(value);
   }
 
   @Override
-  public IntegerValue multiply(Value value) {
+  public Value multiply(Value value) {
     if (value instanceof NumericValue) {
       NumericValue numeric = (NumericValue) value;
 
       return new IntegerValue(value() * numeric.value().longValue());
     }
 
-    return null;
+    return super.multiply(value);
   }
 
   @Override
-  public IntegerValue negate() {
+  public Value negate() {
     return new IntegerValue(-value());
   }
 
   @Override
-  public IntegerValue or(Value value) {
+  public Value or(Value value) {
     if (value instanceof IntegerValue) {
       return new IntegerValue(value() | ((IntegerValue) value).value());
     }
 
-    return null;
+    return super.or(value);
+  }
+
+  @Override
+  public Value plus(Value value) {
+    if (value instanceof NumericValue) {
+      NumericValue numeric = (NumericValue) value;
+
+      return new IntegerValue(value() + numeric.value().longValue());
+    }
+
+    return super.plus(value);
+  }
+
+  @Override
+  public Value remainder(Value value) {
+    if (value instanceof NumericValue) {
+      NumericValue numeric = (NumericValue) value;
+
+      return new IntegerValue(value() % numeric.value().longValue());
+    }
+
+    return super.remainder(value);
   }
 
   @Override
@@ -129,28 +151,6 @@ public class IntegerValue extends NumericValue {
     }
 
     return super.shiftRight(value);
-  }
-
-  @Override
-  public Value plus(Value value) {
-    if (value instanceof NumericValue) {
-      NumericValue numeric = (NumericValue) value;
-
-      return new IntegerValue(value() + numeric.value().longValue());
-    }
-
-    return super.plus(value);
-  }
-
-  @Override
-  public IntegerValue remainder(Value value) {
-    if (value instanceof NumericValue) {
-      NumericValue numeric = (NumericValue) value;
-
-      return new IntegerValue(value() % numeric.value().longValue());
-    }
-
-    return null;
   }
 
   @Override
