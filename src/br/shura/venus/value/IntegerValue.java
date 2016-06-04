@@ -110,6 +110,28 @@ public class IntegerValue extends NumericValue {
   }
 
   @Override
+  public Value shiftLeft(Value value) {
+    if (value instanceof IntegerValue) {
+      IntegerValue integer = (IntegerValue) value;
+
+      return new IntegerValue(value() << integer.value());
+    }
+
+    return super.shiftLeft(value);
+  }
+
+  @Override
+  public Value shiftRight(Value value) {
+    if (value instanceof IntegerValue) {
+      IntegerValue integer = (IntegerValue) value;
+
+      return new IntegerValue(value() >> integer.value());
+    }
+
+    return super.shiftRight(value);
+  }
+
+  @Override
   public Value plus(Value value) {
     if (value instanceof NumericValue) {
       NumericValue numeric = (NumericValue) value;
