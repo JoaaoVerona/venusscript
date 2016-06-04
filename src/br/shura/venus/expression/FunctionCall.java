@@ -17,7 +17,7 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.resultor;
+package br.shura.venus.expression;
 
 import br.shura.venus.exception.runtime.InvalidFunctionParameterException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
@@ -43,16 +43,16 @@ import br.shura.x.collection.view.View;
  * @date 06/05/16 - 17:13
  * @since GAMMA - 0x3
  */
-public class FunctionCall implements Resultor {
-  private final Resultor[] arguments;
+public class FunctionCall implements Expression {
+  private final Expression[] arguments;
   private final String functionName;
 
-  public FunctionCall(String functionName, Resultor... arguments) {
+  public FunctionCall(String functionName, Expression... arguments) {
     this.arguments = arguments;
     this.functionName = functionName;
   }
 
-  public View<Resultor> getArguments() {
+  public View<Expression> getArguments() {
     return new ArrayView<>(arguments);
   }
 
@@ -62,7 +62,7 @@ public class FunctionCall implements Resultor {
 
   @Override
   public Value resolve(Context context) throws ScriptRuntimeException {
-    View<Value> values = getArguments().reduceExceptional(resultor -> resultor.resolve(context));
+    View<Value> values = getArguments().reduceExceptional(expression -> expression.resolve(context));
     View<Type> types = values.reduce(Value::getType);
     Function function = context.getOwner().findFunction(context, getFunctionName(), types);
     List<Value> list = new ArrayList<>();

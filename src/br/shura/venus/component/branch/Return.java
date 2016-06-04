@@ -20,7 +20,7 @@
 package br.shura.venus.component.branch;
 
 import br.shura.venus.component.Component;
-import br.shura.venus.resultor.Resultor;
+import br.shura.venus.expression.Expression;
 
 /**
  * Return.java
@@ -31,18 +31,18 @@ import br.shura.venus.resultor.Resultor;
  * @since GAMMA - 0x3
  */
 public class Return extends Component {
-  private final Resultor resultor;
+  private final Expression expression;
 
-  public Return(Resultor resultor) {
-    this.resultor = resultor;
+  public Return(Expression expression) {
+    this.expression = expression;
   }
 
-  public Resultor getResultor() {
-    return resultor;
+  public Expression getExpression() {
+    return expression;
   }
 
   @Override
   public String toString() {
-    return "return(" + getResultor() + ')';
+    return "return(" + getExpression() + ')';
   }
 }

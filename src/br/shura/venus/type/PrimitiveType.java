@@ -19,8 +19,8 @@
 
 package br.shura.venus.type;
 
+import br.shura.venus.expression.Variable;
 import br.shura.venus.function.Function;
-import br.shura.venus.resultor.Variable;
 import br.shura.venus.value.ArrayValue;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.DecimalValue;

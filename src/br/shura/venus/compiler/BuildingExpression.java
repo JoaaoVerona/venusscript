@@ -20,30 +20,30 @@
 package br.shura.venus.compiler;
 
 import br.shura.venus.exception.compile.UnexpectedTokenException;
+import br.shura.venus.expression.BinaryOperation;
+import br.shura.venus.expression.Expression;
+import br.shura.venus.expression.InContext;
+import br.shura.venus.expression.UnaryOperation;
 import br.shura.venus.operator.BinaryOperator;
 import br.shura.venus.operator.Operator;
 import br.shura.venus.operator.UnaryOperator;
-import br.shura.venus.resultor.BinaryOperation;
-import br.shura.venus.resultor.InContext;
-import br.shura.venus.resultor.Resultor;
-import br.shura.venus.resultor.UnaryOperation;
 import br.shura.x.collection.store.impl.Stack;
 
 /**
- * BuildingResultor.java
+ * BuildingExpression.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
  * @date 10/05/16 - 23:01
  * @since GAMMA - 0x3
  */
-public class BuildingResultor {
+public class BuildingExpression {
   private String inContext;
   private Operator operator;
-  private Resultor resultor;
+  private Expression expression;
   private final Stack<UnaryOperator> unaryWhenAlready;
 
-  public BuildingResultor() {
+  public BuildingExpression() {
     this.unaryWhenAlready = new Stack<>();
   }
 
@@ -78,17 +78,17 @@ public class BuildingResultor {
     this.operator = op;
   }
 
-  public void addResultor(VenusParser parser, Token owner, Resultor rslt) throws UnexpectedTokenException {
+  public void addExpression(VenusParser parser, Token owner, Expression rslt) throws UnexpectedTokenException {
     if (!hasResultor()) {
       if (operator instanceof UnaryOperator) {
         while (!unaryWhenAlready.isEmpty()) {
           rslt = new UnaryOperation(unaryWhenAlready.pop(), rslt);
         }
 
-        setResultor(new UnaryOperation((UnaryOperator) operator, rslt));
+        setExpression(new UnaryOperation((UnaryOperator) operator, rslt));
       }
       else {
-        setResultor(rslt);
+        setExpression(rslt);
       }
     }
     else if (hasOperator()) {
@@ -97,7 +97,7 @@ public class BuildingResultor {
           rslt = new UnaryOperation(unaryWhenAlready.pop(), rslt);
         }
 
-        setResultor(new BinaryOperation((BinaryOperator) operator, resultor, rslt));
+        setExpression(new BinaryOperation((BinaryOperator) operator, expression, rslt));
       }
       else {
         parser.bye("Excepted a binary or unary operator, received " + operator.getClass().getSimpleName());
@@ -106,12 +106,12 @@ public class BuildingResultor {
       this.operator = null;
     }
     else {
-      parser.bye(owner, "expected operator, found another resultor");
+      parser.bye(owner, "expected operator, found another expression");
     }
   }
 
-  public Resultor build() {
-    return resultor;
+  public Expression build() {
+    return expression;
   }
 
   public boolean hasOperator() {
@@ -119,17 +119,17 @@ public class BuildingResultor {
   }
 
   public boolean hasResultor() {
-    return resultor != null;
+    return expression != null;
   }
 
-  private void setResultor(Resultor resultor) {
+  private void setExpression(Expression expression) {
     if (inContext != null) {
-      this.resultor = new InContext(inContext, resultor);
+      this.expression = new InContext(inContext, expression);
 
       this.inContext = null;
     }
     else {
-      this.resultor = resultor;
+      this.expression = expression;
     }
   }
 }

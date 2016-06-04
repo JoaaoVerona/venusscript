@@ -17,41 +17,74 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.resultor;
+package br.shura.venus.expression;
 
+import br.shura.venus.exception.runtime.InvalidArrayAccessException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.type.PrimitiveType;
+import br.shura.venus.value.ArrayValue;
+import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.Value;
-import br.shura.x.util.layer.XApi;
 
 /**
- * Variable.java
+ * ArrayAttribution.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 01:34
+ * @date 22/05/16 - 02:17
  * @since GAMMA - 0x3
  */
-public class Variable implements Resultor {
+public class ArrayAttribution implements Expression {
   private final String name;
+  private final Expression index;
+  private final Expression expression;
 
-  public Variable(String name) {
-    XApi.requireNonNull(name, "name");
-
+  public ArrayAttribution(String name, Expression index, Expression expression) {
+    this.index = index;
     this.name = name;
+    this.expression = expression;
+  }
+
+  public Expression getIndex() {
+    return index;
   }
 
   public String getName() {
     return name;
   }
 
+  public Expression getExpression() {
+    return expression;
+  }
+
   @Override
   public Value resolve(Context context) throws ScriptRuntimeException {
-    return context.getVarValue(getName());
+    Value value = context.getVarValue(getName());
+
+    if (value instanceof ArrayValue) {
+      ArrayValue array = (ArrayValue) value;
+      Value index = getIndex().resolve(context);
+
+      if (index instanceof IntegerValue) {
+        IntegerValue intIndex = (IntegerValue) index;
+        Value result = getExpression().resolve(context);
+
+        array.set(context, intIndex.value().intValue(), result);
+
+        return result;
+      }
+
+      throw new InvalidArrayAccessException(context, "Index \"" + index + "\" is of type " +
+        index.getType() + "; expected to be an " + PrimitiveType.INTEGER);
+    }
+
+    throw new InvalidArrayAccessException(context, "Variable \"" + getName() + "\" is of type " +
+      value.getType() + "; expected to be an " + PrimitiveType.ARRAY);
   }
 
   @Override
   public String toString() {
-    return "var(" + getName() + ')';
+    return "arrayAttribution(" + getName() + '[' + getIndex() + "]=" + getExpression() + ')';
   }
 }

@@ -17,40 +17,55 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.resultor;
+package br.shura.venus.expression;
 
+import br.shura.venus.exception.runtime.InvalidValueTypeException;
+import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.value.ObjectValue;
 import br.shura.venus.value.Value;
-import br.shura.x.util.layer.XApi;
 
 /**
- * Constant.java
+ * InContext.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 01:31
+ * @date 29/05/16 - 18:55
  * @since GAMMA - 0x3
  */
-public class Constant implements Resultor {
-  private final Value value;
+public class InContext implements Expression {
+  private final String name;
+  private final Expression expression;
 
-  public Constant(Value value) {
-    XApi.requireNonNull(value, "value");
-
-    this.value = value;
+  public InContext(String name, Expression expression) {
+    this.name = name;
+    this.expression = expression;
   }
 
-  public Value getValue() {
-    return value;
+  public String getName() {
+    return name;
+  }
+
+  public Expression getExpression() {
+    return expression;
   }
 
   @Override
-  public Value resolve(Context context) {
-    return value;
+  public Value resolve(Context context) throws ScriptRuntimeException {
+    Value value = context.getVarValue(getName());
+
+    if (value instanceof ObjectValue) {
+      ObjectValue object = (ObjectValue) value;
+
+      return getExpression().resolve(object.getContext());
+    }
+    else {
+      throw new InvalidValueTypeException(context, "Cannot access " + value.getType() + " as an object");
+    }
   }
 
   @Override
   public String toString() {
-    return "const(" + getValue() + ')';
+    return "incontext(" + getName() + " << " + getExpression() + ')';
   }
 }

@@ -17,66 +17,40 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.resultor;
+package br.shura.venus.expression;
 
-import br.shura.venus.exception.runtime.IncompatibleTypesException;
-import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
-import br.shura.venus.operator.BinaryOperator;
 import br.shura.venus.value.Value;
 import br.shura.x.util.layer.XApi;
 
 /**
- * BinaryOperation.java
+ * Constant.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 02:18
+ * @date 06/05/16 - 01:31
  * @since GAMMA - 0x3
  */
-public class BinaryOperation implements Resultor {
-  private final Resultor left;
-  private final BinaryOperator operator;
-  private final Resultor right;
+public class Constant implements Expression {
+  private final Value value;
 
-  public BinaryOperation(BinaryOperator operator, Resultor left, Resultor right) {
-    XApi.requireNonNull(left, "left");
-    XApi.requireNonNull(operator, "operator");
-    XApi.requireNonNull(right, "right");
+  public Constant(Value value) {
+    XApi.requireNonNull(value, "value");
 
-    this.left = left;
-    this.operator = operator;
-    this.right = right;
+    this.value = value;
   }
 
-  public Resultor getLeft() {
-    return left;
-  }
-
-  public BinaryOperator getOperator() {
-    return operator;
-  }
-
-  public Resultor getRight() {
-    return right;
+  public Value getValue() {
+    return value;
   }
 
   @Override
-  public Value resolve(Context context) throws ScriptRuntimeException {
-    Value left = getLeft().resolve(context);
-    Value right = getRight().resolve(context);
-    Value result = getOperator().operate(context, left, right);
-
-    if (result == null) {
-      throw new IncompatibleTypesException(context, "Operator " + getOperator() + " cannot be applied with " +
-        left.getType() + " and " + right.getType());
-    }
-
-    return result;
+  public Value resolve(Context context) {
+    return value;
   }
 
   @Override
   public String toString() {
-    return "bioperation([" + getLeft() + "] " + getOperator() + " [" + getRight() + "])";
+    return "const(" + getValue() + ')';
   }
 }

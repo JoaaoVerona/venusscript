@@ -1,6 +1,6 @@
 # VenusScript - Waiting example.
 # This script shows how to use 'wait' function,
-# for waiting until a given resultor resolves into
+# for waiting until a given expression resolves into
 # 'true'.
 
 using std

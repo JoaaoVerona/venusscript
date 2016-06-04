@@ -20,7 +20,7 @@
 package br.shura.venus.component.branch;
 
 import br.shura.venus.component.Container;
-import br.shura.venus.resultor.Resultor;
+import br.shura.venus.expression.Expression;
 
 /**
  * WhileContainer.java
@@ -31,13 +31,13 @@ import br.shura.venus.resultor.Resultor;
  * @since GAMMA - 0x3
  */
 public class WhileContainer extends Container implements Breakable {
-  private final Resultor condition;
+  private final Expression condition;
 
-  public WhileContainer(Resultor condition) {
+  public WhileContainer(Expression condition) {
     this.condition = condition;
   }
 
-  public Resultor getCondition() {
+  public Expression getCondition() {
     return condition;
   }
 

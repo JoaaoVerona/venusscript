@@ -55,6 +55,7 @@ public class Script extends Container {
     this.libraryList = new LibraryList();
     this.origin = origin;
     this.parser = new VenusParser(this);
+    XLogger.println("[CXT] Script -> " + context);
   }
 
   @Override

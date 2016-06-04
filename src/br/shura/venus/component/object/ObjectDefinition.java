@@ -25,6 +25,7 @@ import br.shura.venus.type.ObjectType;
 import br.shura.venus.type.Type;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
+import br.shura.x.logging.XLogger;
 
 /**
  * ObjectDefinition.java
@@ -61,6 +62,7 @@ public class ObjectDefinition extends Container {
   public void setParent(Container parent) {
     super.setParent(parent);
     this.context = new Context(this, parent.getContext());
+    XLogger.println("[CXT] ObjectDef(" + getName() + ") -> " + context);
   }
 
   @Override

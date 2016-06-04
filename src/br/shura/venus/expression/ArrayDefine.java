@@ -17,40 +17,51 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.component.branch;
+package br.shura.venus.expression;
 
-import br.shura.venus.component.Container;
-import br.shura.venus.expression.Expression;
+import br.shura.venus.exception.runtime.ScriptRuntimeException;
+import br.shura.venus.executor.Context;
+import br.shura.venus.value.ArrayValue;
+import br.shura.venus.value.Value;
+import br.shura.x.collection.view.ArrayView;
+import br.shura.x.collection.view.View;
+import br.shura.x.util.layer.XApi;
 
 /**
- * DoWhileContainer.java
+ * ArrayDefine.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 12/05/16 - 20:40
+ * @date 22/05/16 - 03:07
  * @since GAMMA - 0x3
  */
-public class DoWhileContainer extends Container implements Breakable {
-  private Expression condition;
+public class ArrayDefine implements Expression {
+  private final Expression[] expressions;
 
-  public DoWhileContainer(Expression condition) {
-    this.condition = condition;
+  public ArrayDefine(Expression... expressions) {
+    XApi.requireNonNull(expressions, "expressions");
+
+    this.expressions = expressions;
   }
 
-  public Expression getCondition() {
-    return condition;
+  public View<Expression> getExpressions() {
+    return new ArrayView<>(expressions);
   }
 
-  public boolean hasCondition() {
-    return getCondition() != null;
-  }
+  @Override
+  public Value resolve(Context context) throws ScriptRuntimeException {
+    ArrayValue value = new ArrayValue(getExpressions().size());
+    int i = 0;
 
-  public void setCondition(Expression condition) {
-    this.condition = condition;
+    for (Expression expression : getExpressions()) {
+      value.set(context, i++, expression.resolve(context));
+    }
+
+    return value;
   }
 
   @Override
   public String toString() {
-    return "dowhile(" + getCondition() + ')';
+    return "arrdef(" + getExpressions() + ')';
   }
 }

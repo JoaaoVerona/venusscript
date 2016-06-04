@@ -20,7 +20,7 @@
 package br.shura.venus.component.branch;
 
 import br.shura.venus.component.Container;
-import br.shura.venus.resultor.Resultor;
+import br.shura.venus.expression.Expression;
 
 /**
  * ForEachContainer.java
@@ -31,15 +31,15 @@ import br.shura.venus.resultor.Resultor;
  * @since GAMMA - 0x3
  */
 public class ForEachContainer extends Container implements Breakable {
-  private final Resultor iterable;
+  private final Expression iterable;
   private final String varName;
 
-  public ForEachContainer(String varName, Resultor iterable) {
+  public ForEachContainer(String varName, Expression iterable) {
     this.iterable = iterable;
     this.varName = varName;
   }
 
-  public Resultor getIterable() {
+  public Expression getIterable() {
     return iterable;
   }
 

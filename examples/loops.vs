@@ -5,7 +5,7 @@
 # - for
 # - while
 # Should be self explanatory if you already
-# understand resultors.
+# understand expressions.
 
 using std
 

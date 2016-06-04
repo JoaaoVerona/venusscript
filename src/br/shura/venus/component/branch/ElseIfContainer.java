@@ -19,7 +19,7 @@
 
 package br.shura.venus.component.branch;
 
-import br.shura.venus.resultor.Resultor;
+import br.shura.venus.expression.Expression;
 
 /**
  * ElseIfContainer.java
@@ -30,7 +30,7 @@ import br.shura.venus.resultor.Resultor;
  * @since GAMMA - 0x3
  */
 public class ElseIfContainer extends IfContainer {
-  public ElseIfContainer(Resultor condition) {
+  public ElseIfContainer(Expression condition) {
     super(condition);
   }
 

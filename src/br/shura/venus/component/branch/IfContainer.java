@@ -20,7 +20,7 @@
 package br.shura.venus.component.branch;
 
 import br.shura.venus.component.Container;
-import br.shura.venus.resultor.Resultor;
+import br.shura.venus.expression.Expression;
 
 /**
  * IfContainer.java
@@ -31,13 +31,13 @@ import br.shura.venus.resultor.Resultor;
  * @since GAMMA - 0x3
  */
 public class IfContainer extends Container {
-  private final Resultor condition;
+  private final Expression condition;
 
-  public IfContainer(Resultor condition) {
+  public IfContainer(Expression condition) {
     this.condition = condition;
   }
 
-  public Resultor getCondition() {
+  public Expression getCondition() {
     return condition;
   }
 

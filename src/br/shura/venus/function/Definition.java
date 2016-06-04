@@ -28,6 +28,7 @@ import br.shura.venus.value.Value;
 import br.shura.x.collection.list.List;
 import br.shura.x.collection.view.BasicView;
 import br.shura.x.collection.view.View;
+import br.shura.x.logging.XLogger;
 
 /**
  * Definition.java
@@ -49,6 +50,8 @@ public final class Definition extends Container implements Function {
   @Override
   public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
     int i = 0;
+
+    //this.context = context.clone();
 
     for (Argument argument : getArguments()) {
       getContext().setVar(argument.getName(), descriptor.get(i++));
@@ -85,6 +88,7 @@ public final class Definition extends Container implements Function {
   public void setParent(Container parent) {
     super.setParent(parent);
     this.context = new Context(this, parent.getContext());
+    XLogger.println("[CXT] FuncDef(" + getName() + ") -> " + context);
   }
 
   @Override

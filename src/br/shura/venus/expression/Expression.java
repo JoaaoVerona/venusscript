@@ -17,48 +17,25 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.resultor;
+package br.shura.venus.expression;
 
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.type.Type;
 import br.shura.venus.value.Value;
 
 /**
- * Attribution.java
+ * Expression.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 17:07
+ * @date 05/05/16 - 14:42
  * @since GAMMA - 0x3
  */
-public class Attribution implements Resultor {
-  private final String name;
-  private final Resultor resultor;
+public interface Expression {
+  Value resolve(Context context) throws ScriptRuntimeException;
 
-  public Attribution(String name, Resultor resultor) {
-    this.name = name;
-    this.resultor = resultor;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public Resultor getResultor() {
-    return resultor;
-  }
-
-  @Override
-  public Value resolve(Context context) throws ScriptRuntimeException {
-    Value value = getResultor().resolve(context);
-
-    context.setVar(getName(), value);
-
-    return value;
-  }
-
-  @Override
-  public String toString() {
-    return "attribution(" + getName() + "=" + getResultor() + ')';
+  default Type resolveType(Context context) throws ScriptRuntimeException {
+    return resolve(context).getType();
   }
 }

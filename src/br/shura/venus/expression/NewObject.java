@@ -17,7 +17,7 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.resultor;
+package br.shura.venus.expression;
 
 import br.shura.venus.component.object.Attribute;
 import br.shura.venus.component.object.ObjectDefinition;
@@ -29,6 +29,7 @@ import br.shura.venus.value.ObjectValue;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.map.Map;
 import br.shura.x.collection.tuple.Pair;
+import br.shura.x.logging.XLogger;
 
 /**
  * NewObject.java
@@ -38,16 +39,16 @@ import br.shura.x.collection.tuple.Pair;
  * @date 29/05/16 - 19:01
  * @since GAMMA - 0x3
  */
-public class NewObject implements Resultor {
-  private final Map<String, Resultor> attributes;
+public class NewObject implements Expression {
+  private final Map<String, Expression> attributes;
   private final String objectType;
 
-  public NewObject(String objectType, Map<String, Resultor> attributes) {
+  public NewObject(String objectType, Map<String, Expression> attributes) {
     this.attributes = attributes;
     this.objectType = objectType;
   }
 
-  public Map<String, Resultor> getAttributes() {
+  public Map<String, Expression> getAttributes() {
     return attributes;
   }
 
@@ -59,8 +60,9 @@ public class NewObject implements Resultor {
   public Value resolve(Context context) throws ScriptRuntimeException {
     ObjectDefinition definition = context.getOwner().findObjectDefinition(context, getObjectType());
     Context c = new Context(definition, context);
+    XLogger.println("[CXT] NewObj(" + definition.getName() + ") -> " + c);
 
-    for (Pair<String, Resultor> pair : getAttributes()) {
+    for (Pair<String, Expression> pair : getAttributes()) {
       Attribute attribute = definition.getAttributes().selectFirst(attrib -> attrib.getName().equals(pair.getLeft()));
 
       if (attribute != null) {
@@ -80,8 +82,8 @@ public class NewObject implements Resultor {
     }
 
     for (Attribute attribute : definition.getAttributes()) {
-      if (!c.hasVar(attribute.getName()) && attribute.getDefaultResultor() != null) {
-        c.setVar(attribute.getName(), attribute.getDefaultResultor().resolve(context));
+      if (!c.hasVar(attribute.getName()) && attribute.getDefaultExpression() != null) {
+        c.setVar(attribute.getName(), attribute.getDefaultExpression().resolve(context));
       }
     }
 

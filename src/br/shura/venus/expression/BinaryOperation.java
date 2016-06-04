@@ -17,69 +17,66 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.resultor;
+package br.shura.venus.expression;
 
-import br.shura.venus.exception.runtime.InvalidArrayAccessException;
+import br.shura.venus.exception.runtime.IncompatibleTypesException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
-import br.shura.venus.type.PrimitiveType;
-import br.shura.venus.value.ArrayValue;
-import br.shura.venus.value.IntegerValue;
+import br.shura.venus.operator.BinaryOperator;
 import br.shura.venus.value.Value;
 import br.shura.x.util.layer.XApi;
 
 /**
- * ArrayAccess.java
+ * BinaryOperation.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 22/05/16 - 02:02
+ * @date 06/05/16 - 02:18
  * @since GAMMA - 0x3
  */
-public class ArrayAccess implements Resultor {
-  private final Resultor index;
-  private final String name;
+public class BinaryOperation implements Expression {
+  private final Expression left;
+  private final BinaryOperator operator;
+  private final Expression right;
 
-  public ArrayAccess(String name, Resultor index) {
-    XApi.requireNonNull(index, "index");
-    XApi.requireNonNull(name, "name");
+  public BinaryOperation(BinaryOperator operator, Expression left, Expression right) {
+    XApi.requireNonNull(left, "left");
+    XApi.requireNonNull(operator, "operator");
+    XApi.requireNonNull(right, "right");
 
-    this.index = index;
-    this.name = name;
+    this.left = left;
+    this.operator = operator;
+    this.right = right;
   }
 
-  public Resultor getIndex() {
-    return index;
+  public Expression getLeft() {
+    return left;
   }
 
-  public String getName() {
-    return name;
+  public BinaryOperator getOperator() {
+    return operator;
+  }
+
+  public Expression getRight() {
+    return right;
   }
 
   @Override
   public Value resolve(Context context) throws ScriptRuntimeException {
-    Value value = context.getVarValue(getName());
+    Value left = getLeft().resolve(context);
+    Value right = getRight().resolve(context);
+    Value result = getOperator().operate(context, left, right);
 
-    if (value instanceof ArrayValue) {
-      ArrayValue array = (ArrayValue) value;
-      Value index = getIndex().resolve(context);
-
-      if (index instanceof IntegerValue) {
-        IntegerValue intIndex = (IntegerValue) index;
-
-        return array.get(context, intIndex.value().intValue());
-      }
-
-      throw new InvalidArrayAccessException(context, "Index \"" + index + "\" is of type " +
-        index.getType() + "; expected to be an " + PrimitiveType.INTEGER);
+    if (result == null) {
+      throw new IncompatibleTypesException(context, "Operator " + getOperator() + " cannot be applied with " +
+        left.getType() + " and " + right.getType());
     }
 
-    throw new InvalidArrayAccessException(context, "Variable \"" + getName() + "\" is of type " +
-      value.getType() + "; expected to be an " + PrimitiveType.ARRAY);
+    return result;
   }
 
   @Override
   public String toString() {
-    return "arr(" + getName() + '[' + getIndex() + "])";
+    return "bioperation([" + getLeft() + "] " + getOperator() + " [" + getRight() + "])";
   }
 }

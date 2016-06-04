@@ -17,55 +17,41 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.resultor;
+package br.shura.venus.expression;
 
-import br.shura.venus.exception.runtime.InvalidValueTypeException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
-import br.shura.venus.value.ObjectValue;
 import br.shura.venus.value.Value;
+import br.shura.x.util.layer.XApi;
 
 /**
- * InContext.java
+ * Variable.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 29/05/16 - 18:55
+ * @date 06/05/16 - 01:34
  * @since GAMMA - 0x3
  */
-public class InContext implements Resultor {
+public class Variable implements Expression {
   private final String name;
-  private final Resultor resultor;
 
-  public InContext(String name, Resultor resultor) {
+  public Variable(String name) {
+    XApi.requireNonNull(name, "name");
+
     this.name = name;
-    this.resultor = resultor;
   }
 
   public String getName() {
     return name;
   }
 
-  public Resultor getResultor() {
-    return resultor;
-  }
-
   @Override
   public Value resolve(Context context) throws ScriptRuntimeException {
-    Value value = context.getVarValue(getName());
-
-    if (value instanceof ObjectValue) {
-      ObjectValue object = (ObjectValue) value;
-
-      return getResultor().resolve(object.getContext());
-    }
-    else {
-      throw new InvalidValueTypeException(context, "Cannot access " + value.getType() + " as an object");
-    }
+    return context.getVarValue(getName());
   }
 
   @Override
   public String toString() {
-    return "incontext(" + getName() + " << " + getResultor() + ')';
+    return "var(" + getName() + ')';
   }
 }

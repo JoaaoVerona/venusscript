@@ -22,15 +22,15 @@ package br.shura.venus.library.std;
 import br.shura.venus.exception.runtime.InvalidFunctionParameterException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.expression.BinaryOperation;
+import br.shura.venus.expression.Expression;
+import br.shura.venus.expression.FunctionCall;
+import br.shura.venus.expression.UnaryOperation;
+import br.shura.venus.expression.Variable;
 import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.VoidMethod;
 import br.shura.venus.function.annotation.MethodArgs;
 import br.shura.venus.function.annotation.MethodName;
-import br.shura.venus.resultor.BinaryOperation;
-import br.shura.venus.resultor.FunctionCall;
-import br.shura.venus.resultor.Resultor;
-import br.shura.venus.resultor.UnaryOperation;
-import br.shura.venus.resultor.Variable;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.list.List;
@@ -50,14 +50,14 @@ import br.shura.x.logging.XLogger;
 public class WaitAttribution extends VoidMethod {
   @Override
   public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    Resultor resultor = descriptor.getResultors().at(0);
+    Expression expression = descriptor.getExpressions().at(0);
     List<Variable> list = new ArrayList<>();
     Object lock = new Object();
 
-    scan(context, resultor, list);
+    scan(context, expression, list);
     list.forEachExceptional(variable -> context.getVar(variable).addChangeMonitor(lock));
 
-    Value value = resultor.resolve(context); // Maybe value changed after it was resolved.
+    Value value = expression.resolve(context); // Maybe value changed after it was resolved.
 
     while (!(value instanceof BoolValue && ((BoolValue) value).value())) {
       try {
@@ -71,29 +71,29 @@ public class WaitAttribution extends VoidMethod {
         break;
       }
 
-      value = resultor.resolve(context);
+      value = expression.resolve(context);
     }
 
     list.forEachExceptional(variable -> context.getVar(variable).removeChangeMonitor(lock));
   }
 
-  private void scan(Context context, Resultor resultor, List<Variable> list) throws ScriptRuntimeException {
-    if (resultor instanceof BinaryOperation) {
-      BinaryOperation operation = (BinaryOperation) resultor;
+  private void scan(Context context, Expression expression, List<Variable> list) throws ScriptRuntimeException {
+    if (expression instanceof BinaryOperation) {
+      BinaryOperation operation = (BinaryOperation) expression;
 
       scan(context, operation.getLeft(), list);
       scan(context, operation.getRight(), list);
     }
-    else if (resultor instanceof FunctionCall) {
+    else if (expression instanceof FunctionCall) {
       throw new InvalidFunctionParameterException(context, "Cannot embed a function call on arguments for 'wait' method");
     }
-    else if (resultor instanceof UnaryOperation) {
-      UnaryOperation operation = (UnaryOperation) resultor;
+    else if (expression instanceof UnaryOperation) {
+      UnaryOperation operation = (UnaryOperation) expression;
 
-      scan(context, operation.getResultor(), list);
+      scan(context, operation.getExpression(), list);
     }
-    else if (resultor instanceof Variable) {
-      list.add((Variable) resultor);
+    else if (expression instanceof Variable) {
+      list.add((Variable) expression);
     }
   }
 }

@@ -17,7 +17,7 @@
 // https://www.github.com/BloodShura                                                     /
 //////////////////////////////////////////////////////////////////////////////////////////
 
-package br.shura.venus.resultor;
+package br.shura.venus.expression;
 
 import br.shura.venus.exception.runtime.IncompatibleTypesException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
@@ -34,29 +34,29 @@ import br.shura.x.util.layer.XApi;
  * @date 12/05/16 - 00:20
  * @since GAMMA - 0x3
  */
-public class UnaryOperation implements Resultor {
+public class UnaryOperation implements Expression {
   private final UnaryOperator operator;
-  private final Resultor resultor;
+  private final Expression expression;
 
-  public UnaryOperation(UnaryOperator operator, Resultor resultor) {
+  public UnaryOperation(UnaryOperator operator, Expression expression) {
+    XApi.requireNonNull(expression, "expression");
     XApi.requireNonNull(operator, "operator");
-    XApi.requireNonNull(resultor, "resultor");
 
     this.operator = operator;
-    this.resultor = resultor;
+    this.expression = expression;
   }
 
   public UnaryOperator getOperator() {
     return operator;
   }
 
-  public Resultor getResultor() {
-    return resultor;
+  public Expression getExpression() {
+    return expression;
   }
 
   @Override
   public Value resolve(Context context) throws ScriptRuntimeException {
-    Value value = getResultor().resolve(context);
+    Value value = getExpression().resolve(context);
     Value result = getOperator().operate(context, value);
 
     if (result == null) {
@@ -68,6 +68,6 @@ public class UnaryOperation implements Resultor {
 
   @Override
   public String toString() {
-    return "unioperation(" + getOperator() + " [" + getResultor() + "])";
+    return "unioperation(" + getOperator() + " [" + getExpression() + "])";
   }
 }

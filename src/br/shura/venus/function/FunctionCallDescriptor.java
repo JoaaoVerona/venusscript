@@ -19,8 +19,8 @@
 
 package br.shura.venus.function;
 
-import br.shura.venus.resultor.FunctionCall;
-import br.shura.venus.resultor.Resultor;
+import br.shura.venus.expression.Expression;
+import br.shura.venus.expression.FunctionCall;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.view.View;
 
@@ -36,12 +36,12 @@ import java.util.function.Function;
  */
 public class FunctionCallDescriptor {
   private final FunctionCall caller;
-  private final View<Resultor> resultors;
+  private final View<Expression> expressions;
   private final View<Value> values;
 
-  public FunctionCallDescriptor(FunctionCall caller, View<Resultor> resultors, View<Value> values) {
+  public FunctionCallDescriptor(FunctionCall caller, View<Expression> expressions, View<Value> values) {
     this.caller = caller;
-    this.resultors = resultors;
+    this.expressions = expressions;
     this.values = values;
   }
 
@@ -61,8 +61,8 @@ public class FunctionCallDescriptor {
     return index >= 0 && index < getValues().size() ? getValues().at(index) : value;
   }
 
-  public View<Resultor> getResultors() {
-    return resultors;
+  public View<Expression> getExpressions() {
+    return expressions;
   }
 
   public View<Value> getValues() {

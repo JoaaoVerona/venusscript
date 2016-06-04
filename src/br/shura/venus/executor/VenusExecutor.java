@@ -35,9 +35,9 @@ import br.shura.venus.component.branch.Return;
 import br.shura.venus.component.branch.WhileContainer;
 import br.shura.venus.exception.runtime.InvalidValueTypeException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
+import br.shura.venus.expression.Expression;
 import br.shura.venus.function.Definition;
 import br.shura.venus.origin.ScriptMode;
-import br.shura.venus.resultor.Resultor;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.DecimalValue;
 import br.shura.venus.value.IntegerValue;
@@ -125,8 +125,8 @@ public class VenusExecutor {
         }
         else if (component instanceof ForEachContainer) {
           ForEachContainer forContainer = (ForEachContainer) component;
-          Resultor resultor = forContainer.getIterable();
-          Value value = resultor.resolve(context);
+          Expression expression = forContainer.getIterable();
+          Value value = expression.resolve(context);
 
           if (value instanceof IterableValue) {
             IterableValue iterable = (IterableValue) value;
@@ -290,7 +290,7 @@ public class VenusExecutor {
       }
       else if (component instanceof Return) {
         Return returner = (Return) component;
-        Value value = returner.getResultor().resolve(context);
+        Value value = returner.getExpression().resolve(context);
 
         if (value != null) {
           result = value;
@@ -300,7 +300,7 @@ public class VenusExecutor {
       }
       else if (component instanceof SimpleComponent) {
         SimpleComponent simple = (SimpleComponent) component;
-        Value value = simple.getResultor().resolve(context);
+        Value value = simple.getExpression().resolve(context);
 
         if (value != null) {
           if (mode == ScriptMode.EVALUATION) {

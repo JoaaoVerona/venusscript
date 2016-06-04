@@ -19,7 +19,7 @@
 
 package br.shura.venus.component;
 
-import br.shura.venus.resultor.Resultor;
+import br.shura.venus.expression.Expression;
 
 /**
  * SimpleComponent.java
@@ -30,18 +30,18 @@ import br.shura.venus.resultor.Resultor;
  * @since GAMMA - 0x3
  */
 public class SimpleComponent extends Component {
-  private final Resultor resultor;
+  private final Expression expression;
 
-  public SimpleComponent(Resultor resultor) {
-    this.resultor = resultor;
+  public SimpleComponent(Expression expression) {
+    this.expression = expression;
   }
 
-  public Resultor getResultor() {
-    return resultor;
+  public Expression getExpression() {
+    return expression;
   }
 
   @Override
   public String toString() {
-    return getResultor().toString();
+    return getExpression().toString();
   }
 }

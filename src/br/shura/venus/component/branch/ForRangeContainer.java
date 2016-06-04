@@ -20,7 +20,7 @@
 package br.shura.venus.component.branch;
 
 import br.shura.venus.component.Container;
-import br.shura.venus.resultor.Resultor;
+import br.shura.venus.expression.Expression;
 
 /**
  * ForRangeContainer.java
@@ -31,27 +31,27 @@ import br.shura.venus.resultor.Resultor;
  * @since GAMMA - 0x3
  */
 public class ForRangeContainer extends Container implements Breakable {
-  private final Resultor adjustment;
-  private final Resultor from;
-  private final Resultor to;
+  private final Expression adjustment;
+  private final Expression from;
+  private final Expression to;
   private final String varName;
 
-  public ForRangeContainer(String varName, Resultor from, Resultor to, Resultor adjustment) {
+  public ForRangeContainer(String varName, Expression from, Expression to, Expression adjustment) {
     this.adjustment = adjustment;
     this.from = from;
     this.to = to;
     this.varName = varName;
   }
 
-  public Resultor getAdjustment() {
+  public Expression getAdjustment() {
     return adjustment;
   }
 
-  public Resultor getFrom() {
+  public Expression getFrom() {
     return from;
   }
 
-  public Resultor getTo() {
+  public Expression getTo() {
     return to;
   }
 

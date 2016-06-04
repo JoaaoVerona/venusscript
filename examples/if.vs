@@ -2,7 +2,7 @@
 # This script shows some variations of
 # usages for 'if' containers.
 # Should be self explanatory if you already
-# understand resultors.
+# understand expressions.
 
 using std
 
