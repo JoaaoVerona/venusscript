@@ -118,6 +118,14 @@ public abstract class Value implements ICloneable<Value> {
     return null;
   }
 
+  public Value shiftLeft(Value value) {
+    return null;
+  }
+
+  public Value shiftRight(Value value) {
+    return null;
+  }
+
   public abstract Object value();
 
   // TODO Not OO, but fast (no need to use Reflection, etc)
