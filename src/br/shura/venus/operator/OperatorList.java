@@ -48,6 +48,8 @@ public class OperatorList {
   public static final BinaryOperator OR = new BinaryOperator("or", Value::or, "||", "|");
   public static final BinaryOperator PLUS = new BinaryOperator("plus", Value::plus, "+");
   public static final BinaryOperator REMAINDER = new BinaryOperator("remainder", Value::remainder, "%");
+  public static final BinaryOperator SHIFT_LEFT = new BinaryOperator("shiftLeft", Value::shiftLeft, "<<");
+  public static final BinaryOperator SHIFT_RIGHT = new BinaryOperator("shiftRight", Value::shiftRight, ">>");
   public static final UnaryOperator TYPE_OF = new UnaryOperator("typeOf", value -> new TypeValue(value.getType()), "*");
 
   public static Operator forIdentifier(String identifier, boolean mustBeUnary) {
