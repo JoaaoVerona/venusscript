@@ -48,11 +48,11 @@ public abstract class Value implements ICloneable<Value> {
     return null;
   }
 
-  public NumericValue divide(Value value) {
+  public Value divide(Value value) {
     return null;
   }
 
-  public BoolValue equals(Value value) {
+  public Value equals(Value value) {
     return new BoolValue(value().equals(value.value()));
   }
 
@@ -60,35 +60,35 @@ public abstract class Value implements ICloneable<Value> {
     return type;
   }
 
-  public BoolValue higherEqualThan(Value value) {
+  public Value higherEqualThan(Value value) {
     Integer comparation = compareTo(value);
 
     return comparation != null ? new BoolValue(comparation >= 0) : null;
   }
 
-  public BoolValue higherThan(Value value) {
+  public Value higherThan(Value value) {
     Integer comparation = compareTo(value);
 
     return comparation != null ? new BoolValue(comparation > 0) : null;
   }
 
-  public BoolValue lowerEqualThan(Value value) {
+  public Value lowerEqualThan(Value value) {
     Integer comparation = compareTo(value);
 
     return comparation != null ? new BoolValue(comparation <= 0) : null;
   }
 
-  public BoolValue lowerThan(Value value) {
+  public Value lowerThan(Value value) {
     Integer comparation = compareTo(value);
 
     return comparation != null ? new BoolValue(comparation < 0) : null;
   }
 
-  public NumericValue minus(Value value) {
+  public Value minus(Value value) {
     return null;
   }
 
-  public NumericValue multiply(Value value) {
+  public Value multiply(Value value) {
     return null;
   }
 
