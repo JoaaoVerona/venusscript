@@ -27,7 +27,6 @@ import br.shura.venus.value.Value;
 import br.shura.x.collection.map.Map;
 import br.shura.x.collection.map.impl.LinkedMap;
 import br.shura.x.lang.ICloneable;
-import br.shura.x.lang.annotation.Internal;
 import br.shura.x.util.layer.XApi;
 
 /**
@@ -40,7 +39,6 @@ import br.shura.x.util.layer.XApi;
  */
 public class Context implements ICloneable<Context> {
   private static int NEXT_ID = 0;
-  private int currentLine;
   private final Container owner;
   private final Context parent;
   private final Map<String, VariableStructure> variables;
@@ -62,13 +60,8 @@ public class Context implements ICloneable<Context> {
     Context context = new Context(owner, parent);
 
     context.getVariables().addAll(getVariables());
-    context.setCurrentLine(currentLine());
 
     return context;
-  }
-
-  public int currentLine() {
-    return currentLine;
   }
 
   public Container getOwner() {
@@ -166,10 +159,5 @@ public class Context implements ICloneable<Context> {
     }
 
     return hasParent() && getParent().changeVar(name, value);
-  }
-
-  @Internal
-  protected void setCurrentLine(int currentLine) {
-    this.currentLine = currentLine;
   }
 }

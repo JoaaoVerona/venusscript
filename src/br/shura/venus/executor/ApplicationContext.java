@@ -47,6 +47,7 @@ import java.util.function.Supplier;
  * @since GAMMA - 0x3
  */
 public class ApplicationContext extends Context {
+  private int currentLine;
   private VenusExecutor executor;
   private final Map<String, Supplier<VenusLibrary>> librarySuppliers;
   private final Map<String, Object> userData;
@@ -65,6 +66,10 @@ public class ApplicationContext extends Context {
     getLibrarySuppliers().add("math_java", () -> new MathLibrary(new JavaMath()));
     getLibrarySuppliers().add("std", StdLibrary::new);
     getLibrarySuppliers().add("system", SystemLibrary::new);
+  }
+
+  public int currentLine() {
+    return currentLine;
   }
 
   public VenusExecutor currentExecutor() {
@@ -92,5 +97,10 @@ public class ApplicationContext extends Context {
   @Internal
   void setExecutor(VenusExecutor executor) {
     this.executor = executor;
+  }
+
+  @Internal
+  void setCurrentLine(int currentLine) {
+    this.currentLine = currentLine;
   }
 }

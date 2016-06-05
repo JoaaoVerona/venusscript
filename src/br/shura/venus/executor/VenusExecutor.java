@@ -100,7 +100,7 @@ public class VenusExecutor {
         throw asyncExceptions.poll();
       }
 
-      context.setCurrentLine(component.getSourceLine());
+      container.getApplicationContext().setCurrentLine(component.getSourceLine());
 
       if (component instanceof Container) {
         if (component instanceof AsyncContainer) {
