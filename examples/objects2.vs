@@ -1,25 +1,20 @@
 using std
 
-object SimpleList {
-    int size: -55
-    array elements
-    bool enabled : 1 + 1 == 2
-    SimpleList parent
-
+object SimpleList(size: -55, elements, enabled: 1 + 1 == 2, parent) {
     def now() {
         println(size)
         size = 1024
         println(size)
 
     }
-
-    def eqq() {
-        println("PRINT! Size: " + size + ", Enabled: " + enabled)
-    }
 }
 
 test = new SimpleList()
-println("Size: " + test.size)
-test.eqq()
+assert(test.size == -55)
+println("--> " + (test.size != -55))
+assert(test.enabled)
 test.now()
+assert(test.size == 1024)
+test.enabled = false
+assert(!test.enabled)
 println("Size: " + test.size)
