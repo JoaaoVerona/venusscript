@@ -29,7 +29,6 @@ import br.shura.venus.value.ObjectValue;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.map.Map;
 import br.shura.x.collection.tuple.Pair;
-import br.shura.x.logging.XLogger;
 
 /**
  * NewObject.java
@@ -59,8 +58,7 @@ public class NewObject implements Expression {
   @Override
   public Value resolve(Context context) throws ScriptRuntimeException {
     ObjectDefinition definition = context.getOwner().findObjectDefinition(context, getObjectType());
-    Context c = new Context(definition, context);
-    XLogger.println("[CXT] NewObj(" + definition.getName() + ") -> " + c);
+    Context c = new Context(definition, null);
 
     for (Pair<String, Expression> pair : getAttributes()) {
       Attribute attribute = definition.getAttributes().selectFirst(attrib -> attrib.getName().equals(pair.getLeft()));
@@ -82,7 +80,7 @@ public class NewObject implements Expression {
     }
 
     for (Attribute attribute : definition.getAttributes()) {
-      if (!c.hasVar(attribute.getName()) && attribute.getDefaultExpression() != null) {
+      if (!c.hasVar(attribute.getName()) && attribute.hasDefaultExpression()) {
         c.setVar(attribute.getName(), attribute.getDefaultExpression().resolve(context));
       }
     }

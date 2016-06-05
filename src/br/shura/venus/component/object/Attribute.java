@@ -53,6 +53,10 @@ public class Attribute extends Base {
     return type;
   }
 
+  public boolean hasDefaultExpression() {
+    return getDefaultExpression() != null;
+  }
+
   @Override
   protected Object[] stringValues() {
     return new Object[] { getName(), getType(), getDefaultExpression() };
