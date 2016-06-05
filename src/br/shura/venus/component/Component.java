@@ -19,7 +19,7 @@
 
 package br.shura.venus.component;
 
-import br.shura.venus.executor.Context;
+import br.shura.venus.executor.ApplicationContext;
 import br.shura.x.lang.annotation.Internal;
 import br.shura.x.util.layer.XApi;
 
@@ -35,7 +35,7 @@ public abstract class Component {
   private Container parent;
   private int sourceLine;
 
-  public Context getApplicationContext() {
+  public ApplicationContext getApplicationContext() {
     XApi.requireState(getParent() != null, "Could not retrieve application context; no parent available");
 
     return getParent().getApplicationContext();
