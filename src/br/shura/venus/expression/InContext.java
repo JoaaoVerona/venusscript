@@ -60,7 +60,7 @@ public class InContext implements Expression {
       return getExpression().resolve(object.getContext());
     }
     else {
-      throw new InvalidValueTypeException(context, "Cannot access " + value.getType() + " as an object");
+      throw new InvalidValueTypeException(context, getName() + " has type " + value.getType() + "; expected to be an object");
     }
   }
 
