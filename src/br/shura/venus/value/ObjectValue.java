@@ -21,6 +21,10 @@ package br.shura.venus.value;
 
 import br.shura.venus.component.object.ObjectDefinition;
 import br.shura.venus.executor.Context;
+import br.shura.venus.executor.VariableStructure;
+import br.shura.x.charset.build.TextBuilder;
+import br.shura.x.collection.tuple.Pair;
+import br.shura.x.util.Pool;
 
 /**
  * ObjectValue.java
@@ -60,6 +64,12 @@ public class ObjectValue extends Value {
 
   @Override
   public String toString() {
-    return getDefinition().getName() + "(" + getContext().getVariables() + ')';
+    TextBuilder attributes = Pool.newBuilder().setSeparator(", ");
+
+    for (Pair<String, VariableStructure> pair : getContext().getVariables()) {
+      attributes.append(pair.getLeft() + ": " + pair.getRight() + " [" + pair.getRight().getValue().getType() + ']');
+    }
+
+    return getDefinition().getName() + "(" + attributes + ')';
   }
 }
