@@ -87,7 +87,7 @@ public class VenusExecutor {
     Value result = new IntegerValue(0);
     boolean hadIfAndNotProceed = false;
 
-    context.setExecutor(this);
+    container.getApplicationContext().setExecutor(this);
 
     while (shouldRun.get() && iterator.hasNext()) {
       Component component = iterator.next();

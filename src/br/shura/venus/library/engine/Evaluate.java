@@ -24,6 +24,7 @@ import br.shura.venus.compiler.VenusParser;
 import br.shura.venus.component.SimpleContainer;
 import br.shura.venus.exception.compile.ScriptCompileException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
+import br.shura.venus.executor.ApplicationContext;
 import br.shura.venus.executor.Context;
 import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.Method;
@@ -56,6 +57,7 @@ public class Evaluate extends Method {
     builder.appendln(descriptor.getValues());
 
     String source = builder.toStringAndClear();
+    ApplicationContext appContext = context.getOwner().getApplicationContext();
     SimpleScriptOrigin origin = new SimpleScriptOrigin("Interpreted-Script", source);
     SimpleContainer container = new SimpleContainer();
 
@@ -64,7 +66,7 @@ public class Evaluate extends Method {
     try {
       parser.parse(new VenusLexer(origin), container);
 
-      return context.currentExecutor().run(container, ScriptMode.EVALUATION);
+      return appContext.currentExecutor().run(container, ScriptMode.EVALUATION);
     }
     catch (IOException | ScriptCompileException exception) {
       throw new ScriptRuntimeException(context, "Failed to compile script", exception);

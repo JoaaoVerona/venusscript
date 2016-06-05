@@ -41,7 +41,6 @@ import br.shura.x.util.layer.XApi;
 public class Context implements ICloneable<Context> {
   private static int NEXT_ID = 0;
   private int currentLine;
-  private VenusExecutor executor;
   private final Container owner;
   private final Context parent;
   private final Map<String, VariableStructure> variables;
@@ -66,10 +65,6 @@ public class Context implements ICloneable<Context> {
     context.setCurrentLine(currentLine());
 
     return context;
-  }
-
-  public VenusExecutor currentExecutor() {
-    return executor != null ? executor : hasParent() ? getParent().currentExecutor() : null;
   }
 
   public int currentLine() {
@@ -176,10 +171,5 @@ public class Context implements ICloneable<Context> {
   @Internal
   protected void setCurrentLine(int currentLine) {
     this.currentLine = currentLine;
-  }
-
-  @Internal
-  protected void setExecutor(VenusExecutor executor) {
-    this.executor = executor;
   }
 }

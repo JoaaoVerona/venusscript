@@ -31,6 +31,7 @@ import br.shura.venus.library.std.StdLibrary;
 import br.shura.venus.library.system.SystemLibrary;
 import br.shura.x.collection.map.Map;
 import br.shura.x.collection.map.impl.LinkedMap;
+import br.shura.x.lang.annotation.Internal;
 import br.shura.x.math.impl.FastMath;
 import br.shura.x.math.impl.JavaMath;
 import br.shura.x.math.impl.SimpleMath;
@@ -46,6 +47,7 @@ import java.util.function.Supplier;
  * @since GAMMA - 0x3
  */
 public class ApplicationContext extends Context {
+  private VenusExecutor executor;
   private final Map<String, Supplier<VenusLibrary>> librarySuppliers;
   private final Map<String, Object> userData;
 
@@ -65,6 +67,10 @@ public class ApplicationContext extends Context {
     getLibrarySuppliers().add("system", SystemLibrary::new);
   }
 
+  public VenusExecutor currentExecutor() {
+    return executor;
+  }
+
   public Map<String, Supplier<VenusLibrary>> getLibrarySuppliers() {
     return librarySuppliers;
   }
@@ -81,5 +87,10 @@ public class ApplicationContext extends Context {
 
   public void setUserData(String name, Object value) {
     userData.set(name, value);
+  }
+
+  @Internal
+  void setExecutor(VenusExecutor executor) {
+    this.executor = executor;
   }
 }
