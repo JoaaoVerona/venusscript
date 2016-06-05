@@ -111,7 +111,6 @@ public class VenusParser {
             parseDefinition(false);
           }
           else {
-            Token attribNameToken = requireToken(Token.Type.NAME_DEFINITION, "expected an attribute name");
             Token next = requireToken();
             Expression defaultExpression = null;
 
@@ -126,7 +125,7 @@ public class VenusParser {
 
             ObjectDefinition definition = (ObjectDefinition) container;
 
-            definition.getAttributes().add(new Attribute(attribNameToken.getValue(), token.getValue(), defaultExpression));
+            definition.getAttributes().add(new Attribute(token.getValue(), defaultExpression));
           }
 
           continue;

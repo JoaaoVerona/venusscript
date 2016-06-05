@@ -33,12 +33,10 @@ import br.shura.x.object.Base;
 public class Attribute extends Base {
   private final Expression defaultExpression;
   private final String name;
-  private final String type;
 
-  public Attribute(String name, String type, Expression defaultExpression) {
+  public Attribute(String name, Expression defaultExpression) {
     this.defaultExpression = defaultExpression;
     this.name = name;
-    this.type = type;
   }
 
   public Expression getDefaultExpression() {
@@ -49,16 +47,12 @@ public class Attribute extends Base {
     return name;
   }
 
-  public String getType() {
-    return type;
-  }
-
   public boolean hasDefaultExpression() {
     return getDefaultExpression() != null;
   }
 
   @Override
   protected Object[] stringValues() {
-    return new Object[] { getName(), getType(), getDefaultExpression() };
+    return new Object[] { getName(), getDefaultExpression() };
   }
 }

@@ -21,7 +21,6 @@ package br.shura.venus.expression;
 
 import br.shura.venus.component.object.Attribute;
 import br.shura.venus.component.object.ObjectDefinition;
-import br.shura.venus.exception.runtime.InvalidValueTypeException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.exception.runtime.UndefinedAttributeException;
 import br.shura.venus.executor.Context;
@@ -66,13 +65,7 @@ public class NewObject implements Expression {
       if (attribute != null) {
         Value value = pair.getRight().resolve(context);
 
-        if (attribute.getType().equals(value.getType().getIdentifier())) {
-          c.setVar(pair.getLeft(), value);
-        }
-        else {
-          throw new InvalidValueTypeException(context, getObjectType() + "'s attribute \"" + attribute.getName() +
-            "\" expected a " + attribute.getType() + ", but passed a " + value.getType());
-        }
+        c.setVar(pair.getLeft(), value);
       }
       else {
         throw new UndefinedAttributeException(context, definition, pair.getLeft());
