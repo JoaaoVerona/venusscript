@@ -57,7 +57,7 @@ public class Evaluate extends Method {
     builder.appendln(descriptor.getValues());
 
     String source = builder.toStringAndClear();
-    ApplicationContext appContext = context.getOwner().getApplicationContext();
+    ApplicationContext appContext = context.getApplicationContext();
     SimpleScriptOrigin origin = new SimpleScriptOrigin("Interpreted-Script", source);
     SimpleContainer container = new SimpleContainer();
 

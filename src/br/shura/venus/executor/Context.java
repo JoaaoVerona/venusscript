@@ -64,6 +64,10 @@ public class Context implements ICloneable<Context> {
     return context;
   }
 
+  public ApplicationContext getApplicationContext() {
+    return getOwner().getApplicationContext();
+  }
+
   public Container getOwner() {
     return owner;
   }
@@ -78,7 +82,7 @@ public class Context implements ICloneable<Context> {
 
   public VariableStructure getVar(String name) throws UndefinedVariableException {
     if (name.length() > 1 && name.charAt(0) == '$') {
-      return getOwner().getApplicationContext().getVar(name.substring(1));
+      return getApplicationContext().getVar(name.substring(1));
     }
 
     if (isOwnerOf(name)) {
@@ -120,7 +124,7 @@ public class Context implements ICloneable<Context> {
 
   public boolean hasVar(String name) throws UndefinedVariableException {
     if (name.length() > 1 && name.charAt(0) == '$') {
-      return getOwner().getApplicationContext().hasVar(name.substring(1));
+      return getApplicationContext().hasVar(name.substring(1));
     }
 
     return isOwnerOf(name) || (hasParent() && getParent().hasVar(name));
