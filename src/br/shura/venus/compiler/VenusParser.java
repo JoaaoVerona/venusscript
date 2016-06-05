@@ -110,28 +110,11 @@ public class VenusParser {
           if (token.getValue().equals(KeywordDefinitions.DEFINE)) {
             parseDefinition(false);
           }
-          else {
-            Token next = requireToken();
-            Expression defaultExpression = null;
-
-            if (next.getType() == Token.Type.COLON) {
-              defaultExpression = readExpression(Token.Type.NEW_LINE, t -> true);
-            }
-            else {
-              lexer.reRead(next);
-            }
-
-            requireNewLine();
-
-            ObjectDefinition definition = (ObjectDefinition) container;
-
-            definition.getAttributes().add(new Attribute(token.getValue(), defaultExpression));
-          }
 
           continue;
         }
         else if (token.getType() != Token.Type.CLOSE_BRACE && token.getType() != Token.Type.NEW_LINE) {
-          bye(token, "expected an attribute or definition");
+          bye(token, "expected a definition");
         }
       }
 
@@ -624,8 +607,49 @@ public class VenusParser {
   protected void parseObject() throws ScriptCompileException {
     Token nameToken = requireToken(Token.Type.NAME_DEFINITION, "expected an object name");
 
-    requireToken(Token.Type.OPEN_BRACE, "expected an open brace");
-    addContainer(new ObjectDefinition(nameToken.getValue()), false);
+    requireToken(Token.Type.OPEN_PARENTHESE, "expected an open parenthese");
+
+    ObjectDefinition definition = new ObjectDefinition(nameToken.getValue());
+    Token next;
+
+    while ((next = requireToken()).getType() != Token.Type.CLOSE_PARENTHESE) {
+      if (next.getType() == Token.Type.NAME_DEFINITION) {
+        Token test = requireToken();
+        Expression defaultExpression = null;
+
+        if (test.getType() == Token.Type.COLON) {
+          defaultExpression = readExpression(token -> token.getType() != Token.Type.COMMA &&
+            token.getType() != Token.Type.CLOSE_PARENTHESE, token -> token.getType() == Token.Type.CLOSE_PARENTHESE);
+        }
+        else {
+          lexer.reRead(test);
+        }
+
+        definition.getAttributes().add(new Attribute(next.getValue(), defaultExpression));
+      }
+      else if (next.getType() != Token.Type.COMMA) {
+        bye(next, "expected an attribute name or close parenthese");
+      }
+    }
+
+    next = lexer.nextToken();
+
+    if (next != null) {
+      if (next.getType() == Token.Type.OPEN_BRACE) {
+        addContainer(definition, false);
+
+        return;
+      }
+
+      lexer.reRead(next);
+    }
+
+    addContainer(definition, false);
+
+    do {
+      this.container = container.getParent();
+    }
+    while (container instanceof AsyncContainer);
   }
 
   protected Object parseOperation(String currentNameDef, String operatorStr, Token errorToken, boolean mustBeUnary) throws ScriptCompileException {
@@ -702,33 +726,6 @@ public class VenusParser {
     WhileContainer whileContainer = new WhileContainer(expression);
 
     addContainer(whileContainer, true);
-  }
-
-  protected Expression[] readFunctionArguments() throws ScriptCompileException {
-    return readResultors(Token.Type.COMMA, Token.Type.CLOSE_PARENTHESE);
-  }
-
-  protected String readOperator(String start) throws ScriptCompileException {
-    TextBuilder operatorStr = Pool.newBuilder();
-    Token operatorToken;
-
-    if (start != null) {
-      operatorStr.append(start);
-    }
-
-    while ((operatorToken = requireToken()).getType() == Token.Type.OPERATOR) {
-      String op = operatorToken.getValue();
-
-      if (OperatorList.forIdentifier(op, true) != null && !operatorStr.isEmpty()) {
-        break;
-      }
-
-      operatorStr.append(operatorToken.getValue());
-    }
-
-    lexer.reRead(operatorToken); // Last token have type != OPERATOR
-
-    return operatorStr.toStringAndClear();
   }
 
   protected Expression readExpression(Predicate<Token> process) throws ScriptCompileException {
@@ -914,6 +911,33 @@ public class VenusParser {
 
   protected Expression readExpression(Token.Type stopAt, Predicate<Token> reReadLast) throws ScriptCompileException {
     return readExpression(token -> token.getType() != stopAt, reReadLast);
+  }
+
+  protected Expression[] readFunctionArguments() throws ScriptCompileException {
+    return readResultors(Token.Type.COMMA, Token.Type.CLOSE_PARENTHESE);
+  }
+
+  protected String readOperator(String start) throws ScriptCompileException {
+    TextBuilder operatorStr = Pool.newBuilder();
+    Token operatorToken;
+
+    if (start != null) {
+      operatorStr.append(start);
+    }
+
+    while ((operatorToken = requireToken()).getType() == Token.Type.OPERATOR) {
+      String op = operatorToken.getValue();
+
+      if (OperatorList.forIdentifier(op, true) != null && !operatorStr.isEmpty()) {
+        break;
+      }
+
+      operatorStr.append(operatorToken.getValue());
+    }
+
+    lexer.reRead(operatorToken); // Last token have type != OPERATOR
+
+    return operatorStr.toStringAndClear();
   }
 
   // This also consumes the last 'end' token
