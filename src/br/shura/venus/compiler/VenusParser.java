@@ -109,9 +109,11 @@ public class VenusParser {
         if (token.getType() == Token.Type.NAME_DEFINITION) {
           if (token.getValue().equals(KeywordDefinitions.DEFINE)) {
             parseDefinition(false);
+
+            continue;
           }
 
-          continue;
+          bye(token, "expected a definition");
         }
         else if (token.getType() != Token.Type.CLOSE_BRACE && token.getType() != Token.Type.NEW_LINE) {
           bye(token, "expected a definition");
@@ -453,7 +455,7 @@ public class VenusParser {
   }
 
   protected void parseDefinition(boolean isGlobal) throws ScriptCompileException {
-    Token typeToken = requireToken(Token.Type.NAME_DEFINITION, "expected a return type");
+    Token typeToken = requireToken(Token.Type.NAME_DEFINITION, "expected a definition name");
     String definitionName = typeToken.getValue();
     List<Argument> arguments = new ArrayList<>();
 
@@ -483,7 +485,7 @@ public class VenusParser {
             }
           }
           else {
-            bye(reading, "argument name cannot be a keyword");
+            bye(argumentToken, "argument name cannot be a keyword");
           }
         }
         else {
