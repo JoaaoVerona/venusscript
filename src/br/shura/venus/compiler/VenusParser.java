@@ -108,7 +108,7 @@ public class VenusParser {
       if (container instanceof ObjectDefinition) {
         if (token.getType() == Token.Type.NAME_DEFINITION) {
           if (token.getValue().equals(KeywordDefinitions.DEFINE)) {
-            parseDefinition();
+            parseDefinition(false);
           }
           else {
             Token attribNameToken = requireToken(Token.Type.NAME_DEFINITION, "expected an attribute name");
@@ -190,7 +190,7 @@ public class VenusParser {
           }
         }
         else if (token.getValue().equals(KeywordDefinitions.DEFINE)) {
-          parseDefinition();
+          parseDefinition(true);
         }
         else if (token.getValue().equals(KeywordDefinitions.DO)) {
           requireToken(Token.Type.OPEN_BRACE, "expected an open brace");
@@ -470,7 +470,7 @@ public class VenusParser {
     return null; // Will not happen
   }
 
-  protected void parseDefinition() throws ScriptCompileException {
+  protected void parseDefinition(boolean isGlobal) throws ScriptCompileException {
     Token typeToken = requireToken(Token.Type.NAME_DEFINITION, "expected a return type");
     String definitionName = typeToken.getValue();
     List<Argument> arguments = new ArrayList<>();
@@ -514,7 +514,7 @@ public class VenusParser {
     }
 
     requireToken(Token.Type.OPEN_BRACE, "expected an open brace");
-    addContainer(new Definition(definitionName, arguments), false);
+    addContainer(new Definition(definitionName, arguments, isGlobal), false);
   }
 
   protected void parseElse() throws ScriptCompileException {

@@ -40,10 +40,12 @@ import br.shura.x.logging.XLogger;
  */
 public final class Definition extends Container implements Function {
   private final List<Argument> arguments;
+  private final boolean global;
   private final String name;
 
-  public Definition(String name, List<Argument> arguments) {
+  public Definition(String name, List<Argument> arguments, boolean global) {
     this.arguments = arguments;
+    this.global = global;
     this.name = name;
   }
 
@@ -51,13 +53,15 @@ public final class Definition extends Container implements Function {
   public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
     int i = 0;
 
-    //this.context = context.clone();
+    if (!isGlobal()) {
+      this.context = new Context(this, context);
+    }
 
     for (Argument argument : getArguments()) {
       getContext().setVar(argument.getName(), descriptor.get(i++));
     }
 
-    return context.currentExecutor().run(this, ScriptMode.NORMAL);
+    return getApplicationContext().currentExecutor().run(this, ScriptMode.NORMAL);
   }
 
   @Override
@@ -77,6 +81,10 @@ public final class Definition extends Container implements Function {
   @Override
   public String getName() {
     return name;
+  }
+
+  public boolean isGlobal() {
+    return global;
   }
 
   @Override
