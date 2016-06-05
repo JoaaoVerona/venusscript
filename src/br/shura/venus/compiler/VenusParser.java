@@ -804,7 +804,7 @@ public class VenusParser {
           nameDef = null;
         }
         else {
-          Object r = parseOperation(null, operator, token, !expression.hasResultor());
+          Object r = parseOperation(null, operator, token, !expression.hasResultor() || expression.hasOperator());
 
           if (r instanceof Operator) {
             expression.addOperator(this, token, (Operator) r);
