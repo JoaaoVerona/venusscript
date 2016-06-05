@@ -57,7 +57,7 @@ public class NewObject implements Expression {
   @Override
   public Value resolve(Context context) throws ScriptRuntimeException {
     ObjectDefinition definition = context.getOwner().findObjectDefinition(context, getObjectType());
-    Context c = new Context(definition, null);
+    Context c = new Context(definition, null); // See issue #24
 
     for (Pair<String, Expression> pair : getAttributes()) {
       Attribute attribute = definition.getAttributes().selectFirst(attrib -> attrib.getName().equals(pair.getLeft()));

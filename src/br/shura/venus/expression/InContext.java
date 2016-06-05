@@ -34,20 +34,20 @@ import br.shura.venus.value.Value;
  * @since GAMMA - 0x3
  */
 public class InContext implements Expression {
-  private final String name;
   private final Expression expression;
+  private final String name;
 
   public InContext(String name, Expression expression) {
     this.name = name;
     this.expression = expression;
   }
 
-  public String getName() {
-    return name;
-  }
-
   public Expression getExpression() {
     return expression;
+  }
+
+  public String getName() {
+    return name;
   }
 
   @Override
@@ -57,7 +57,7 @@ public class InContext implements Expression {
     if (value instanceof ObjectValue) {
       ObjectValue object = (ObjectValue) value;
 
-      return getExpression().resolve(object.getContext());
+      return getExpression().resolve(object.getContext()); // See issue #24
     }
     else {
       throw new InvalidValueTypeException(context, getName() + " has type " + value.getType() + "; expected to be an object");
