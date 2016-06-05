@@ -1,16 +1,20 @@
 using std
 
-object SimpleList {
-    int size: -55
-    bool enabled : 1 + 1 == 2
+object SimpleList(size: -55, elements, enabled: 1 + 1 == 2, parent) {
+    def now() {
+        println(size)
+        size = 1024
+        println(size)
+
+    }
 }
 
-println("Heh.")
-test = new SimpleList(size: 5, enabled: false)
-println("enabled=" + test.enabled + ", size=" + test.size)
-test.size += 5
-test.size += test.size
-test.enabled = !test.enabled
-println("enabled=" + test.enabled + ", size=" + test.size)
 test = new SimpleList()
-println("size=" + test.size + ", enabled=" + test.enabled)
+assert(test.size == -55)
+println("--> " + (test.size != -55))
+assert(test.enabled)
+test.now()
+assert(test.size == 1024)
+test.enabled = false
+assert(!test.enabled)
+println("Size: " + test.size)
