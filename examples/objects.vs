@@ -1,15 +1,35 @@
 using std
 
-object SimpleList(size: -55, elements, enabled: 1 + 1 == 2, parent) {
-    def now() {
-        println(size)
-        size = 1024
-        println(size)
+object SimpleList(elements: []) {
+    def getSize() {
+        return size(elements)
+    }
+
+    def get(int index) {
+        return elements[index]
+    }
+
+    def contains(any obj) {
+        for element in elements {
+            if element == object {
+                return true
+            }
+        }
+
+        return false
     }
 }
 
 array = [5, 3, -1, 2, 0]
-test = new SimpleList(size: size(array), elements: array)
-test2 = new SimpleList(parent: test)
-println("Test  --> " + test)
-println("Test2 --> " + test2)
+test = new SimpleList(elements: array)
+println("Created list: " + test)
+
+for i in (0, size(array) - 1) {
+    println("Get(" + i + ") -> " + test.get(i))
+}
+
+println("Size -> " + test.getSize())
+
+for i in (0, 9) {
+    println("Contains(" + i + ") -> " + test.contains(i))
+}
