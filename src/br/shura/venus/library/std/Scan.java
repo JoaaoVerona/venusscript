@@ -34,7 +34,7 @@ import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.StringValue;
 import br.shura.venus.value.TypeValue;
 import br.shura.venus.value.Value;
-import br.shura.x.logging.XLogger;
+import br.shura.x.logging.ILogger;
 import br.shura.x.worker.ParseWorker;
 import br.shura.x.worker.exception.InvalidParseException;
 
@@ -51,43 +51,49 @@ import br.shura.x.worker.exception.InvalidParseException;
 public class Scan extends Method {
   @Override
   public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    TypeValue value = (TypeValue) descriptor.get(0);
-    Type type = value.value();
+    ILogger logger = context.getApplicationContext().getUserData("in", ILogger.class);
 
-    while (true) {
-      try {
-        String line = XLogger.scan();
+    if (logger != null) {
+      TypeValue value = (TypeValue) descriptor.get(0);
+      Type type = value.value();
 
-        if (type == PrimitiveType.BOOLEAN) {
-          return new BoolValue(ParseWorker.toBoolean(line));
-        }
+      while (true) {
+        try {
+          String line = logger.scan();
 
-        if (type == PrimitiveType.DECIMAL) {
-          return new DecimalValue(ParseWorker.toDouble(line));
-        }
-
-        if (type == PrimitiveType.INTEGER) {
-          return new IntegerValue(ParseWorker.toLong(line));
-        }
-
-        if (type == PrimitiveType.STRING) {
-          return new StringValue(line);
-        }
-
-        if (type == PrimitiveType.TYPE) {
-          Type lookup = PrimitiveType.forIdentifier(line);
-
-          if (lookup != null) {
-            return new TypeValue(lookup);
+          if (type == PrimitiveType.BOOLEAN) {
+            return new BoolValue(ParseWorker.toBoolean(line));
           }
 
-          continue;
-        }
+          if (type == PrimitiveType.DECIMAL) {
+            return new DecimalValue(ParseWorker.toDouble(line));
+          }
 
-        throw new InvalidValueTypeException(context, "Cannot scan for an input of type " + type);
-      }
-      catch (InvalidParseException exception) {
+          if (type == PrimitiveType.INTEGER) {
+            return new IntegerValue(ParseWorker.toLong(line));
+          }
+
+          if (type == PrimitiveType.STRING) {
+            return new StringValue(line);
+          }
+
+          if (type == PrimitiveType.TYPE) {
+            Type lookup = PrimitiveType.forIdentifier(line);
+
+            if (lookup != null) {
+              return new TypeValue(lookup);
+            }
+
+            continue;
+          }
+
+          throw new InvalidValueTypeException(context, "Cannot scan for an input of type " + type);
+        }
+        catch (InvalidParseException exception) {
+        }
       }
     }
+
+    throw new ScriptRuntimeException(context, "No input resource defined");
   }
 }

@@ -21,12 +21,12 @@ package br.shura.venus.library.std;
 
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
+import br.shura.venus.executor.IOutputReference;
 import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.VoidMethod;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.function.annotation.MethodVarArgs;
 import br.shura.venus.value.Value;
-import br.shura.x.logging.XLogger;
 
 /**
  * Println.java
@@ -41,13 +41,17 @@ import br.shura.x.logging.XLogger;
 public class Println extends VoidMethod {
   @Override
   public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    if (!descriptor.isEmpty()) {
-      for (Value argument : descriptor.getValues()) {
-        XLogger.println(argument);
+    IOutputReference reference = context.getApplicationContext().getUserData("out", IOutputReference.class);
+
+    if (reference != null) {
+      if (!descriptor.isEmpty()) {
+        for (Value argument : descriptor.getValues()) {
+          reference.output(argument.toString() + '\n');
+        }
       }
-    }
-    else {
-      XLogger.newLine();
+      else {
+        reference.output("\n");
+      }
     }
   }
 }
