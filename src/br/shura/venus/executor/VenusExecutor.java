@@ -78,7 +78,7 @@ public class VenusExecutor {
   }
 
   public void stop() {
-    this.shouldRun = true;
+    this.shouldRun = false;
   }
 
   protected Value run(Container container, ScriptMode mode, Supplier<Boolean> shouldRun) throws ScriptRuntimeException {
