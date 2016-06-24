@@ -68,6 +68,17 @@ public class ApplicationContext extends Context {
     getLibrarySuppliers().add("system", SystemLibrary::new);
   }
 
+  @Override
+  public ApplicationContext clone() {
+    ApplicationContext context = new ApplicationContext();
+
+    context.getLibrarySuppliers().addAll(getLibrarySuppliers());
+    context.userData.addAll(userData);
+    context.setCurrentLine(currentLine());
+
+    return context;
+  }
+
   public int currentLine() {
     return currentLine;
   }
