@@ -39,10 +39,10 @@ import br.shura.x.util.layer.XApi;
  */
 public class Context implements ICloneable<Context> {
   private static int NEXT_ID = 0;
+  private final int id;
   private final Container owner;
   private final Context parent;
   private final Map<String, VariableStructure> variables;
-  private final int id;
 
   public Context(Container owner, Context parent) {
     this.id = NEXT_ID++;
