@@ -32,6 +32,7 @@ import br.shura.venus.library.system.SystemLibrary;
 import br.shura.x.collection.map.Map;
 import br.shura.x.collection.map.impl.LinkedMap;
 import br.shura.x.lang.annotation.Internal;
+import br.shura.x.logging.XLogger;
 import br.shura.x.math.impl.FastMath;
 import br.shura.x.math.impl.JavaMath;
 import br.shura.x.math.impl.SimpleMath;
@@ -66,6 +67,8 @@ public class ApplicationContext extends Context {
     getLibrarySuppliers().add("math_java", () -> new MathLibrary(new JavaMath()));
     getLibrarySuppliers().add("std", StdLibrary::new);
     getLibrarySuppliers().add("system", SystemLibrary::new);
+    setUserData("in", XLogger.getInstance());
+    setUserData("out", (IOutputReference) XLogger::print);
   }
 
   @Override
