@@ -40,9 +40,9 @@ import br.shura.venus.component.object.Attribute;
 import br.shura.venus.component.object.ObjectDefinition;
 import br.shura.venus.exception.compile.ScriptCompileException;
 import br.shura.venus.exception.compile.UnexpectedTokenException;
-import br.shura.venus.expression.ArrayAccess;
-import br.shura.venus.expression.ArrayAttribution;
-import br.shura.venus.expression.ArrayDefine;
+import br.shura.venus.expression.ArrayGet;
+import br.shura.venus.expression.ArrayLiteral;
+import br.shura.venus.expression.ArraySet;
 import br.shura.venus.expression.Attribution;
 import br.shura.venus.expression.BinaryOperation;
 import br.shura.venus.expression.Constant;
@@ -418,7 +418,7 @@ public class VenusParser {
       Expression expression = readExpression(token -> token.getType() != Token.Type.NEW_LINE && token.getType() != Token.Type.CLOSE_PARENTHESE,
         token -> true);
 
-      return new ArrayAttribution(currentNameDef, index, expression);
+      return new ArraySet(currentNameDef, index, expression);
     }
 
     Operator opr = OperatorList.forIdentifier(operatorStr, mustBeUnary);
@@ -437,9 +437,9 @@ public class VenusParser {
           Expression expression = readExpression(token -> token.getType() != Token.Type.NEW_LINE && token.getType() != Token.Type.CLOSE_PARENTHESE,
             token -> true);
           BinaryOperation operation = new BinaryOperation((BinaryOperator) operator,
-            new ArrayAccess(currentNameDef, index), expression);
+            new ArrayGet(currentNameDef, index), expression);
 
-          return new ArrayAttribution(currentNameDef, index, operation);
+          return new ArraySet(currentNameDef, index, operation);
         }
 
         bye(errorToken, "expected an attribution with binary operator (+=, -=, ...)");
@@ -795,7 +795,7 @@ public class VenusParser {
             expression.addExpression(this, token, (Expression) r);
           }
           else if (r instanceof Operator) {
-            expression.addExpression(this, nameDefToken, arrayIndex != null ? new ArrayAccess(nameDef, arrayIndex) : new Variable(nameDef));
+            expression.addExpression(this, nameDefToken, arrayIndex != null ? new ArrayGet(nameDef, arrayIndex) : new Variable(nameDef));
             expression.addOperator(this, token, (Operator) r);
           }
           else {
@@ -828,7 +828,7 @@ public class VenusParser {
         else {
           Expression[] expressions = readResultors(Token.Type.COMMA, Token.Type.CLOSE_BRACKET);
 
-          expression.addExpression(this, token, new ArrayDefine(expressions));
+          expression.addExpression(this, token, new ArrayLiteral(expressions));
         }
       }
       else if (token.getType() == Token.Type.OPEN_PARENTHESE) {
@@ -887,7 +887,7 @@ public class VenusParser {
 
     if (nameDef != null) {
       if (arrayIndex != null) {
-        expression.addExpression(this, nameDefToken, new ArrayAccess(nameDef, arrayIndex));
+        expression.addExpression(this, nameDefToken, new ArrayGet(nameDef, arrayIndex));
       }
       else {
         expression.addExpression(this, nameDefToken, new Variable(nameDef));

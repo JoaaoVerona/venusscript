@@ -19,67 +19,49 @@
 
 package br.shura.venus.expression;
 
-import br.shura.venus.exception.runtime.InvalidArrayAccessException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
-import br.shura.venus.type.PrimitiveType;
 import br.shura.venus.value.ArrayValue;
-import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.Value;
+import br.shura.x.collection.view.ArrayView;
+import br.shura.x.collection.view.View;
 import br.shura.x.util.layer.XApi;
 
 /**
- * ArrayAccess.java
+ * ArrayLiteral.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
- * @date 22/05/16 - 02:02
+ * @date 22/05/16 - 03:07
  * @since GAMMA - 0x3
  */
-public class ArrayAccess implements Expression {
-  private final Expression index;
-  private final String name;
+public class ArrayLiteral implements Expression {
+  private final Expression[] expressions;
 
-  public ArrayAccess(String name, Expression index) {
-    XApi.requireNonNull(index, "index");
-    XApi.requireNonNull(name, "name");
+  public ArrayLiteral(Expression... expressions) {
+    XApi.requireNonNull(expressions, "expressions");
 
-    this.index = index;
-    this.name = name;
+    this.expressions = expressions;
   }
 
-  public Expression getIndex() {
-    return index;
-  }
-
-  public String getName() {
-    return name;
+  public View<Expression> getExpressions() {
+    return new ArrayView<>(expressions);
   }
 
   @Override
   public Value resolve(Context context) throws ScriptRuntimeException {
-    Value value = context.getVarValue(getName());
+    ArrayValue value = new ArrayValue(getExpressions().size());
+    int i = 0;
 
-    if (value instanceof ArrayValue) {
-      ArrayValue array = (ArrayValue) value;
-      Value index = getIndex().resolve(context);
-
-      if (index instanceof IntegerValue) {
-        IntegerValue intIndex = (IntegerValue) index;
-
-        return array.get(context, intIndex.value().intValue());
-      }
-
-      throw new InvalidArrayAccessException(context, "Index \"" + index + "\" is of type " +
-        index.getType() + "; expected to be an " + PrimitiveType.INTEGER);
+    for (Expression expression : getExpressions()) {
+      value.set(context, i++, expression.resolve(context));
     }
 
-    throw new InvalidArrayAccessException(context, "Variable \"" + getName() + "\" is of type " +
-      value.getType() + "; expected to be an " + PrimitiveType.ARRAY);
+    return value;
   }
 
   @Override
   public String toString() {
-    return "arr(" + getName() + '[' + getIndex() + "])";
+    return "arrdef(" + getExpressions() + ')';
   }
 }

@@ -28,19 +28,19 @@ import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.Value;
 
 /**
- * ArrayAttribution.java
+ * ArraySet.java
  *
  * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
  * @contact joaaoverona@gmail.com
  * @date 22/05/16 - 02:17
  * @since GAMMA - 0x3
  */
-public class ArrayAttribution implements Expression {
+public class ArraySet implements Expression {
   private final String name;
   private final Expression index;
   private final Expression expression;
 
-  public ArrayAttribution(String name, Expression index, Expression expression) {
+  public ArraySet(String name, Expression index, Expression expression) {
     this.index = index;
     this.name = name;
     this.expression = expression;
