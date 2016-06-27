@@ -29,6 +29,7 @@ import br.shura.venus.library.engine.EngineLibrary;
 import br.shura.venus.library.math.MathLibrary;
 import br.shura.venus.library.std.StdLibrary;
 import br.shura.venus.library.system.SystemLibrary;
+import br.shura.venus.library.time.TimeLibrary;
 import br.shura.x.collection.map.Map;
 import br.shura.x.collection.map.impl.LinkedMap;
 import br.shura.x.lang.annotation.Internal;
@@ -67,6 +68,7 @@ public class ApplicationContext extends Context {
     getLibrarySuppliers().add("math_java", () -> new MathLibrary(new JavaMath()));
     getLibrarySuppliers().add("std", StdLibrary::new);
     getLibrarySuppliers().add("system", SystemLibrary::new);
+    getLibrarySuppliers().add("time", TimeLibrary::new);
     setUserData("in", XLogger.getInstance());
     setUserData("out", (IOutputReference) XLogger::print);
   }
