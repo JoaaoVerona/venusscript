@@ -20,7 +20,6 @@
 package br.shura.venus.value;
 
 import br.shura.venus.type.Type;
-import br.shura.x.lang.ICloneable;
 
 /**
  * Value.java
@@ -30,7 +29,7 @@ import br.shura.x.lang.ICloneable;
  * @date 08/05/16 - 18:33
  * @since GAMMA - 0x3
  */
-public abstract class Value implements ICloneable<Value> {
+public abstract class Value implements Cloneable {
   private final Type type;
 
   public Value(Type type) {
