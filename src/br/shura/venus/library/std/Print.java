@@ -21,7 +21,7 @@ package br.shura.venus.library.std;
 
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
-import br.shura.venus.executor.IOutputReference;
+import br.shura.venus.executor.OutputReference;
 import br.shura.venus.function.FunctionCallDescriptor;
 import br.shura.venus.function.VoidMethod;
 import br.shura.venus.function.annotation.MethodName;
@@ -41,7 +41,7 @@ import br.shura.venus.value.Value;
 public class Print extends VoidMethod {
   @Override
   public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    IOutputReference reference = context.getApplicationContext().getUserData("out", IOutputReference.class);
+    OutputReference reference = context.getApplicationContext().getUserData("out", OutputReference.class);
 
     if (reference != null) {
       for (Value argument : descriptor.getValues()) {

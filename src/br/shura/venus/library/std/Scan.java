@@ -34,7 +34,7 @@ import br.shura.venus.value.IntegerValue;
 import br.shura.venus.value.StringValue;
 import br.shura.venus.value.TypeValue;
 import br.shura.venus.value.Value;
-import br.shura.x.logging.ILogger;
+import br.shura.x.logging.Logger;
 import br.shura.x.worker.ParseWorker;
 import br.shura.x.worker.exception.InvalidParseException;
 
@@ -51,7 +51,7 @@ import br.shura.x.worker.exception.InvalidParseException;
 public class Scan extends Method {
   @Override
   public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    ILogger logger = context.getApplicationContext().getUserData("in", ILogger.class);
+    Logger logger = context.getApplicationContext().getUserData("in", Logger.class);
 
     if (logger != null) {
       TypeValue value = (TypeValue) descriptor.get(0);

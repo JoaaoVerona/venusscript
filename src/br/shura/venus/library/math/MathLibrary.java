@@ -20,7 +20,7 @@
 package br.shura.venus.library.math;
 
 import br.shura.venus.library.VenusLibrary;
-import br.shura.x.math.IMath;
+import br.shura.x.math.MathProvider;
 
 import java.lang.reflect.Method;
 
@@ -33,8 +33,8 @@ import java.lang.reflect.Method;
  * @since GAMMA - 0x3
  */
 public class MathLibrary extends VenusLibrary {
-  public MathLibrary(IMath instance) {
-    for (Method method : IMath.class.getDeclaredMethods()) {
+  public MathLibrary(MathProvider instance) {
+    for (Method method : MathProvider.class.getDeclaredMethods()) {
       if (MathFunction.validate(method)) {
         add(new MathFunction(method, instance));
       }

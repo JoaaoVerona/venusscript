@@ -25,7 +25,7 @@ import br.shura.venus.type.PrimitiveType;
 import br.shura.venus.type.Type;
 import br.shura.venus.value.Value;
 import br.shura.x.collection.view.View;
-import br.shura.x.lang.INameable;
+import br.shura.x.lang.Nameable;
 import br.shura.x.util.layer.XApi;
 
 /**
@@ -36,7 +36,7 @@ import br.shura.x.util.layer.XApi;
  * @date 06/05/16 - 02:24
  * @since GAMMA - 0x3
  */
-public interface Function extends INameable {
+public interface Function extends Nameable {
   default boolean accepts(String name, View<Type> argumentTypes) {
     XApi.requireNonNull(name, "name");
 

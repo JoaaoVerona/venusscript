@@ -31,7 +31,7 @@ import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.collection.view.BasicView;
 import br.shura.x.collection.view.View;
-import br.shura.x.math.IMath;
+import br.shura.x.math.MathProvider;
 import br.shura.x.worker.UtilWorker;
 
 import java.lang.reflect.InvocationTargetException;
@@ -47,11 +47,11 @@ import java.lang.reflect.Method;
  */
 public class MathFunction implements Function {
   private final List<Type> arguments;
-  private final IMath instance;
+  private final MathProvider instance;
   private final Method method;
   private final String name;
 
-  public MathFunction(Method method, IMath instance) {
+  public MathFunction(Method method, MathProvider instance) {
     this.arguments = new ArrayList<>();
     this.instance = instance;
     this.method = method;
@@ -103,7 +103,7 @@ public class MathFunction implements Function {
     return new BasicView<>(arguments);
   }
 
-  public IMath getInstance() {
+  public MathProvider getInstance() {
     return instance;
   }
 

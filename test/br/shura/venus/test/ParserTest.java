@@ -26,7 +26,7 @@ import br.shura.venus.exception.compile.ScriptCompileException;
 import br.shura.venus.executor.ApplicationContext;
 import br.shura.venus.origin.ScriptOrigin;
 import br.shura.venus.origin.SimpleScriptOrigin;
-import br.shura.x.logging.ILogger.Level;
+import br.shura.x.logging.Logger.Level;
 import br.shura.x.logging.XLogger;
 import br.shura.x.worker.StringWorker;
 import org.junit.Test;

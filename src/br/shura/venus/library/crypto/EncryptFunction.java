@@ -19,7 +19,7 @@
 
 package br.shura.venus.library.crypto;
 
-import br.shura.crypto.IEncrypter;
+import br.shura.crypto.Encrypter;
 import br.shura.crypto.exception.CryptoException;
 import br.shura.venus.exception.runtime.ScriptRuntimeException;
 import br.shura.venus.executor.Context;
@@ -44,10 +44,10 @@ import br.shura.x.collection.view.View;
  */
 public class EncryptFunction implements Function {
   private final View<Type> argumentTypes;
-  private final IEncrypter encrypter;
+  private final Encrypter encrypter;
   private final String name;
 
-  public EncryptFunction(String name, IEncrypter encrypter) {
+  public EncryptFunction(String name, Encrypter encrypter) {
     this.argumentTypes = new ArrayView<>(PrimitiveType.STRING, PrimitiveType.VARIABLE_REFERENCE);
     this.encrypter = encrypter;
     this.name = name;
@@ -75,7 +75,7 @@ public class EncryptFunction implements Function {
     return argumentTypes;
   }
 
-  public IEncrypter getEncrypter() {
+  public Encrypter getEncrypter() {
     return encrypter;
   }
 

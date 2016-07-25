@@ -70,7 +70,7 @@ public class ApplicationContext extends Context {
     getLibrarySuppliers().add("system", SystemLibrary::new);
     getLibrarySuppliers().add("time", TimeLibrary::new);
     setUserData("in", XLogger.getInstance());
-    setUserData("out", (IOutputReference) XLogger::print);
+    setUserData("out", (OutputReference) XLogger::print);
   }
 
   @Override

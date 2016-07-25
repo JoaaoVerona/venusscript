@@ -26,7 +26,7 @@ import br.shura.venus.function.Method;
 import br.shura.venus.function.annotation.MethodName;
 import br.shura.venus.value.BoolValue;
 import br.shura.venus.value.Value;
-import br.shura.x.logging.ILogger;
+import br.shura.x.logging.Logger;
 
 /**
  * HasScan.java
@@ -40,7 +40,7 @@ import br.shura.x.logging.ILogger;
 public class HasScan extends Method {
   @Override
   public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    ILogger logger = context.getApplicationContext().getUserData("in", ILogger.class);
+    Logger logger = context.getApplicationContext().getUserData("in", Logger.class);
 
     if (logger != null) {
       return new BoolValue(logger.hasScan());

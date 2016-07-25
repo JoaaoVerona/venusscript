@@ -19,7 +19,7 @@
 
 package br.shura.venus.origin;
 
-import br.shura.x.lang.IResource;
+import br.shura.x.lang.Resource;
 
 import java.io.IOException;
 
@@ -33,14 +33,14 @@ import java.io.IOException;
  */
 public class StreamScriptOrigin implements ScriptOrigin {
   private final String name;
-  private final IResource resource;
+  private final Resource resource;
 
-  public StreamScriptOrigin(String name, IResource resource) {
+  public StreamScriptOrigin(String name, Resource resource) {
     this.name = name;
     this.resource = resource;
   }
 
-  public IResource getResource() {
+  public Resource getResource() {
     return resource;
   }
 

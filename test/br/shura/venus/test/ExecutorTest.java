@@ -29,7 +29,7 @@ import br.shura.x.collection.list.List;
 import br.shura.x.collection.list.impl.ArrayList;
 import br.shura.x.io.file.File;
 import br.shura.x.io.file.Folder;
-import br.shura.x.logging.ILogger.Level;
+import br.shura.x.logging.Logger.Level;
 import br.shura.x.logging.XLogger;
 import org.junit.Test;
 import org.junit.runner.RunWith;

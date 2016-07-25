@@ -19,8 +19,8 @@
 
 package br.shura.venus.library.crypto;
 
-import br.shura.crypto.IDecrypter;
-import br.shura.crypto.IEncrypter;
+import br.shura.crypto.Decrypter;
+import br.shura.crypto.Encrypter;
 import br.shura.crypto.util.CryptographyMap;
 import br.shura.venus.library.VenusLibrary;
 import br.shura.x.collection.tuple.Pair;
@@ -40,12 +40,12 @@ public class CryptoLibrary extends VenusLibrary {
 
   public CryptoLibrary(CryptographyMap map) {
     for (Pair<String, Object> pair : map) {
-      if (pair.getRight() instanceof IEncrypter) {
-        add(new EncryptFunction(pair.getLeft(), (IEncrypter) pair.getRight()));
+      if (pair.getRight() instanceof Encrypter) {
+        add(new EncryptFunction(pair.getLeft(), (Encrypter) pair.getRight()));
       }
 
-      if (pair.getRight() instanceof IDecrypter) {
-        add(new DecryptFunction("un" + pair.getLeft(), (IDecrypter) pair.getRight()));
+      if (pair.getRight() instanceof Decrypter) {
+        add(new DecryptFunction("un" + pair.getLeft(), (Decrypter) pair.getRight()));
       }
     }
   }
