@@ -489,7 +489,7 @@ public class VenusParser {
           }
         }
         else {
-          bye(reading, "expected an argument value type (" + PrimitiveType.valuesView().toString(", ") + ") or object type");
+          bye(reading, "expected an argument value type (" + PrimitiveType.values().toString(", ") + ") or object type");
         }
       }
       else {

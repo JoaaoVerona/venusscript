@@ -82,7 +82,7 @@ public final class PrimitiveType extends Type {
   public static Type forIdentifier(String identifier) {
     XApi.requireNonNull(identifier, "identifier");
 
-    for (Type value : valuesView()) {
+    for (Type value : values()) {
       if (value.getIdentifier().equals(identifier)) {
         return value;
       }
@@ -94,7 +94,7 @@ public final class PrimitiveType extends Type {
   public static Type forObjectType(Class<?> type) {
     XApi.requireNonNull(type, "type");
 
-    for (Type value : valuesView()) {
+    for (Type value : values()) {
       if (value != ANY && value.objectAccepts(type)) {
         return value;
       }
@@ -106,7 +106,7 @@ public final class PrimitiveType extends Type {
   public static Type forType(Class<? extends Value> type) {
     XApi.requireNonNull(type, "type");
 
-    for (Type value : valuesView()) {
+    for (Type value : values()) {
       if (value != ANY && value.accepts(type)) {
         return value;
       }
@@ -115,7 +115,7 @@ public final class PrimitiveType extends Type {
     return ANY;
   }
 
-  public static View<PrimitiveType> valuesView() {
+  public static View<PrimitiveType> values() {
     return Enumerations.values(PrimitiveType.class);
   }
 }
