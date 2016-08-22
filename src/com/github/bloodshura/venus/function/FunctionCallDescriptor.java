@@ -22,7 +22,7 @@ package com.github.bloodshura.venus.function;
 import com.github.bloodshura.venus.expression.Expression;
 import com.github.bloodshura.venus.expression.FunctionCall;
 import com.github.bloodshura.venus.value.Value;
-import com.github.bloodshura.x.collection.view.View;
+import com.github.bloodshura.x.collection.view.XView;
 
 import java.util.function.Function;
 
@@ -36,10 +36,10 @@ import java.util.function.Function;
  */
 public class FunctionCallDescriptor {
   private final FunctionCall caller;
-  private final View<Expression> expressions;
-  private final View<Value> values;
+  private final XView<Expression> expressions;
+  private final XView<Value> values;
 
-  public FunctionCallDescriptor(FunctionCall caller, View<Expression> expressions, View<Value> values) {
+  public FunctionCallDescriptor(FunctionCall caller, XView<Expression> expressions, XView<Value> values) {
     this.caller = caller;
     this.expressions = expressions;
     this.values = values;
@@ -61,11 +61,11 @@ public class FunctionCallDescriptor {
     return index >= 0 && index < getValues().size() ? getValues().at(index) : value;
   }
 
-  public View<Expression> getExpressions() {
+  public XView<Expression> getExpressions() {
     return expressions;
   }
 
-  public View<Value> getValues() {
+  public XView<Value> getValues() {
     return values;
   }
 

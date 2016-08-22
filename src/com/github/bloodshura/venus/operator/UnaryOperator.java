@@ -21,8 +21,8 @@ package com.github.bloodshura.venus.operator;
 
 import com.github.bloodshura.venus.executor.Context;
 import com.github.bloodshura.venus.value.Value;
-import com.github.bloodshura.x.collection.view.ArrayView;
-import com.github.bloodshura.x.collection.view.View;
+import com.github.bloodshura.x.collection.view.XArrayView;
+import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.util.layer.XApi;
 
 import java.util.function.Function;
@@ -37,7 +37,7 @@ import java.util.function.Function;
  */
 public class UnaryOperator implements Operator {
   private final Function<Value, Value> function;
-  private final View<String> identifiers;
+  private final XView<String> identifiers;
   private final String name;
 
   public UnaryOperator(String name, Function<Value, Value> function, String... identifiers) {
@@ -46,7 +46,7 @@ public class UnaryOperator implements Operator {
     XApi.requireNonNull(name, "name");
 
     this.function = function;
-    this.identifiers = new ArrayView<>(identifiers);
+    this.identifiers = new XArrayView<>(identifiers);
     this.name = name;
   }
 
@@ -55,7 +55,7 @@ public class UnaryOperator implements Operator {
   }
 
   @Override
-  public View<String> getIdentifiers() {
+  public XView<String> getIdentifiers() {
     return identifiers;
   }
 

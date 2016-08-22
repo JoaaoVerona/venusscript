@@ -21,8 +21,8 @@ package com.github.bloodshura.venus.library;
 
 import com.github.bloodshura.venus.function.Function;
 import com.github.bloodshura.venus.type.Type;
-import com.github.bloodshura.x.collection.list.impl.ArrayList;
-import com.github.bloodshura.x.collection.view.View;
+import com.github.bloodshura.x.collection.list.impl.XArrayList;
+import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.util.layer.XApi;
 
 /**
@@ -33,8 +33,8 @@ import com.github.bloodshura.x.util.layer.XApi;
  * @date 07/05/16 - 17:42
  * @since GAMMA - 0x3
  */
-public class LibraryList extends ArrayList<VenusLibrary> {
-  public Function findFunction(String name, View<Type> argumentTypes) {
+public class LibraryList extends XArrayList<VenusLibrary> {
+  public Function findFunction(String name, XView<Type> argumentTypes) {
     XApi.requireNonNull(name, "name");
 
     Function found = null;

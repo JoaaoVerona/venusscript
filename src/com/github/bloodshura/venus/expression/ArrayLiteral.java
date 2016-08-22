@@ -23,8 +23,8 @@ import com.github.bloodshura.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.venus.executor.Context;
 import com.github.bloodshura.venus.value.ArrayValue;
 import com.github.bloodshura.venus.value.Value;
-import com.github.bloodshura.x.collection.view.ArrayView;
-import com.github.bloodshura.x.collection.view.View;
+import com.github.bloodshura.x.collection.view.XArrayView;
+import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.util.layer.XApi;
 
 /**
@@ -44,8 +44,8 @@ public class ArrayLiteral implements Expression {
     this.expressions = expressions;
   }
 
-  public View<Expression> getExpressions() {
-    return new ArrayView<>(expressions);
+  public XView<Expression> getExpressions() {
+    return new XArrayView<>(expressions);
   }
 
   @Override

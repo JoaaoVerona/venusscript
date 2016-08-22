@@ -19,7 +19,7 @@
 
 package com.github.bloodshura.venus.compiler;
 
-import com.github.bloodshura.x.collection.view.View;
+import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.worker.enumeration.Enumerations;
 
 /**
@@ -60,7 +60,7 @@ public class KeywordDefinitions {
     return values().contains(definition);
   }
 
-  public static View<String> values() {
+  public static XView<String> values() {
     return Enumerations.values(KeywordDefinitions.class, String.class);
   }
 }

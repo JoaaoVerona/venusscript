@@ -33,8 +33,8 @@ import com.github.bloodshura.venus.function.annotation.MethodArgs;
 import com.github.bloodshura.venus.function.annotation.MethodName;
 import com.github.bloodshura.venus.value.BoolValue;
 import com.github.bloodshura.venus.value.Value;
-import com.github.bloodshura.x.collection.list.List;
-import com.github.bloodshura.x.collection.list.impl.ArrayList;
+import com.github.bloodshura.x.collection.list.XList;
+import com.github.bloodshura.x.collection.list.impl.XArrayList;
 import com.github.bloodshura.x.logging.XLogger;
 
 /**
@@ -51,7 +51,7 @@ public class WaitAttribution extends VoidMethod {
   @Override
   public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
     Expression expression = descriptor.getExpressions().at(0);
-    List<Variable> list = new ArrayList<>();
+    XList<Variable> list = new XArrayList<>();
     Object lock = new Object();
 
     scan(context, expression, list);
@@ -77,7 +77,7 @@ public class WaitAttribution extends VoidMethod {
     list.forEachExceptional(variable -> context.getVar(variable).removeChangeMonitor(lock));
   }
 
-  private void scan(Context context, Expression expression, List<Variable> list) throws ScriptRuntimeException {
+  private void scan(Context context, Expression expression, XList<Variable> list) throws ScriptRuntimeException {
     if (expression instanceof BinaryOperation) {
       BinaryOperation operation = (BinaryOperation) expression;
 

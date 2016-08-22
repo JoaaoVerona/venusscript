@@ -26,7 +26,7 @@ import com.github.bloodshura.venus.exception.runtime.UndefinedAttributeException
 import com.github.bloodshura.venus.executor.Context;
 import com.github.bloodshura.venus.value.ObjectValue;
 import com.github.bloodshura.venus.value.Value;
-import com.github.bloodshura.x.collection.map.Map;
+import com.github.bloodshura.x.collection.map.XMap;
 import com.github.bloodshura.x.collection.tuple.Pair;
 
 /**
@@ -38,15 +38,15 @@ import com.github.bloodshura.x.collection.tuple.Pair;
  * @since GAMMA - 0x3
  */
 public class NewObject implements Expression {
-  private final Map<String, Expression> attributes;
+  private final XMap<String, Expression> attributes;
   private final String objectType;
 
-  public NewObject(String objectType, Map<String, Expression> attributes) {
+  public NewObject(String objectType, XMap<String, Expression> attributes) {
     this.attributes = attributes;
     this.objectType = objectType;
   }
 
-  public Map<String, Expression> getAttributes() {
+  public XMap<String, Expression> getAttributes() {
     return attributes;
   }
 

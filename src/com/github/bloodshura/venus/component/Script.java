@@ -28,9 +28,9 @@ import com.github.bloodshura.venus.function.Function;
 import com.github.bloodshura.venus.library.LibraryList;
 import com.github.bloodshura.venus.origin.ScriptOrigin;
 import com.github.bloodshura.venus.type.Type;
-import com.github.bloodshura.x.collection.list.List;
-import com.github.bloodshura.x.collection.list.impl.ArrayList;
-import com.github.bloodshura.x.collection.view.View;
+import com.github.bloodshura.x.collection.list.XList;
+import com.github.bloodshura.x.collection.list.impl.XArrayList;
+import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.logging.XLogger;
 
 /**
@@ -43,7 +43,7 @@ import com.github.bloodshura.x.logging.XLogger;
  */
 public class Script extends Container {
   private final ApplicationContext appContext;
-  private final List<Script> includes;
+  private final XList<Script> includes;
   private final LibraryList libraryList;
   private final ScriptOrigin origin;
   private final VenusParser parser;
@@ -51,14 +51,14 @@ public class Script extends Container {
   public Script(ApplicationContext appContext, ScriptOrigin origin) {
     this.appContext = appContext;
     this.context = new Context(this, null);
-    this.includes = new ArrayList<>();
+    this.includes = new XArrayList<>();
     this.libraryList = new LibraryList();
     this.origin = origin;
     this.parser = new VenusParser(this);
   }
 
   @Override
-  public Function findFunction(Context context, String name, View<Type> argumentTypes) throws ScriptRuntimeException {
+  public Function findFunction(Context context, String name, XView<Type> argumentTypes) throws ScriptRuntimeException {
     try {
       return super.findFunction(context, name, argumentTypes);
     }
@@ -90,7 +90,7 @@ public class Script extends Container {
     return getOrigin().getScriptName();
   }
 
-  public List<Script> getIncludes() {
+  public XList<Script> getIncludes() {
     return includes;
   }
 

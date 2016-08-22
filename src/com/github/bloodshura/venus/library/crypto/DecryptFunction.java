@@ -31,8 +31,8 @@ import com.github.bloodshura.venus.value.BoolValue;
 import com.github.bloodshura.venus.value.StringValue;
 import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.venus.value.VariableRefValue;
-import com.github.bloodshura.x.collection.view.ArrayView;
-import com.github.bloodshura.x.collection.view.View;
+import com.github.bloodshura.x.collection.view.XArrayView;
+import com.github.bloodshura.x.collection.view.XView;
 
 /**
  * DecryptFunction.java
@@ -43,12 +43,12 @@ import com.github.bloodshura.x.collection.view.View;
  * @since GAMMA - 0x3
  */
 public class DecryptFunction implements Function {
-  private final View<Type> argumentTypes;
+  private final XView<Type> argumentTypes;
   private final Decrypter decrypter;
   private final String name;
 
   public DecryptFunction(String name, Decrypter decrypter) {
-    this.argumentTypes = new ArrayView<>(PrimitiveType.STRING, PrimitiveType.VARIABLE_REFERENCE);
+    this.argumentTypes = new XArrayView<>(PrimitiveType.STRING, PrimitiveType.VARIABLE_REFERENCE);
     this.decrypter = decrypter;
     this.name = name;
   }
@@ -71,7 +71,7 @@ public class DecryptFunction implements Function {
   }
 
   @Override
-  public View<Type> getArgumentTypes() {
+  public XView<Type> getArgumentTypes() {
     return argumentTypes;
   }
 

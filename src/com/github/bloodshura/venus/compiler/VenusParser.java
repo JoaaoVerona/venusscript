@@ -67,10 +67,10 @@ import com.github.bloodshura.venus.value.TypeValue;
 import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.venus.value.VariableRefValue;
 import com.github.bloodshura.x.charset.build.TextBuilder;
-import com.github.bloodshura.x.collection.list.List;
-import com.github.bloodshura.x.collection.list.impl.ArrayList;
-import com.github.bloodshura.x.collection.map.Map;
-import com.github.bloodshura.x.collection.map.impl.LinkedMap;
+import com.github.bloodshura.x.collection.list.XList;
+import com.github.bloodshura.x.collection.list.impl.XArrayList;
+import com.github.bloodshura.x.collection.map.XMap;
+import com.github.bloodshura.x.collection.map.impl.XLinkedMap;
 import com.github.bloodshura.x.math.number.BaseConverter;
 import com.github.bloodshura.x.util.Pool;
 import com.github.bloodshura.x.worker.ParseWorker;
@@ -457,7 +457,7 @@ public class VenusParser {
   protected void parseDefinition(boolean isGlobal) throws ScriptCompileException {
     Token typeToken = requireToken(Token.Type.NAME_DEFINITION, "expected a definition name");
     String definitionName = typeToken.getValue();
-    List<Argument> arguments = new ArrayList<>();
+    XList<Argument> arguments = new XArrayList<>();
 
     requireToken(Token.Type.OPEN_PARENTHESE, "expected an open parenthese");
 
@@ -851,7 +851,7 @@ public class VenusParser {
 
           requireToken(Token.Type.OPEN_PARENTHESE, "expected an open parenthese");
 
-          Map<String, Expression> attributes = new LinkedMap<>();
+          XMap<String, Expression> attributes = new XLinkedMap<>();
 
           while (true) {
             Token t = requireToken();
@@ -944,7 +944,7 @@ public class VenusParser {
 
   // This also consumes the last 'end' token
   protected Expression[] readResultors(Token.Type separator, Token.Type end) throws ScriptCompileException {
-    List<Expression> result = new ArrayList<>();
+    XList<Expression> result = new XArrayList<>();
     Token token;
 
     while ((token = requireToken()).getType() != end) {

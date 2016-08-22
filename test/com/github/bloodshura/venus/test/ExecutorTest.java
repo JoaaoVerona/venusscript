@@ -25,8 +25,8 @@ import com.github.bloodshura.venus.executor.VenusExecutor;
 import com.github.bloodshura.venus.origin.FileScriptOrigin;
 import com.github.bloodshura.venus.origin.ScriptMode;
 import com.github.bloodshura.venus.origin.ScriptOrigin;
-import com.github.bloodshura.x.collection.list.List;
-import com.github.bloodshura.x.collection.list.impl.ArrayList;
+import com.github.bloodshura.x.collection.list.XList;
+import com.github.bloodshura.x.collection.list.impl.XArrayList;
 import com.github.bloodshura.x.io.file.File;
 import com.github.bloodshura.x.io.file.Folder;
 import com.github.bloodshura.x.logging.Logger.Level;
@@ -69,7 +69,7 @@ public class ExecutorTest {
 
   @Parameters
   public static Collection<Object[]> data() throws IOException {
-    List<Object[]> data = new ArrayList<>();
+    XList<Object[]> data = new XArrayList<>();
 
     DIRECTORY.getAllFiles(file -> !file.getName().endsWith("_i"), file -> data.add(new Object[] { file }));
 

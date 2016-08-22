@@ -24,7 +24,7 @@ import com.github.bloodshura.venus.executor.Context;
 import com.github.bloodshura.venus.type.PrimitiveType;
 import com.github.bloodshura.venus.type.Type;
 import com.github.bloodshura.venus.value.Value;
-import com.github.bloodshura.x.collection.view.View;
+import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.lang.Nameable;
 import com.github.bloodshura.x.util.layer.XApi;
 
@@ -37,7 +37,7 @@ import com.github.bloodshura.x.util.layer.XApi;
  * @since GAMMA - 0x3
  */
 public interface Function extends Nameable {
-  default boolean accepts(String name, View<Type> argumentTypes) {
+  default boolean accepts(String name, XView<Type> argumentTypes) {
     XApi.requireNonNull(name, "name");
 
     if (getName().equals(name)) {
@@ -71,7 +71,7 @@ public interface Function extends Nameable {
     return getArgumentTypes().size();
   }
 
-  View<Type> getArgumentTypes();
+  XView<Type> getArgumentTypes();
 
   boolean isVarArgs();
 }

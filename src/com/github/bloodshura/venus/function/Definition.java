@@ -25,9 +25,9 @@ import com.github.bloodshura.venus.executor.Context;
 import com.github.bloodshura.venus.origin.ScriptMode;
 import com.github.bloodshura.venus.type.Type;
 import com.github.bloodshura.venus.value.Value;
-import com.github.bloodshura.x.collection.list.List;
-import com.github.bloodshura.x.collection.view.BasicView;
-import com.github.bloodshura.x.collection.view.View;
+import com.github.bloodshura.x.collection.list.XList;
+import com.github.bloodshura.x.collection.view.XBasicView;
+import com.github.bloodshura.x.collection.view.XView;
 
 /**
  * Definition.java
@@ -38,11 +38,11 @@ import com.github.bloodshura.x.collection.view.View;
  * @since GAMMA - 0x3
  */
 public final class Definition extends Container implements Function {
-  private final List<Argument> arguments;
+  private final XList<Argument> arguments;
   private final boolean global;
   private final String name;
 
-  public Definition(String name, List<Argument> arguments, boolean global) {
+  public Definition(String name, XList<Argument> arguments, boolean global) {
     this.arguments = arguments;
     this.global = global;
     this.name = name;
@@ -69,12 +69,12 @@ public final class Definition extends Container implements Function {
   }
 
   @Override
-  public View<Type> getArgumentTypes() {
+  public XView<Type> getArgumentTypes() {
     return getArguments().reduce(Argument::getType);
   }
 
-  public View<Argument> getArguments() {
-    return new BasicView<>(arguments);
+  public XView<Argument> getArguments() {
+    return new XBasicView<>(arguments);
   }
 
   @Override

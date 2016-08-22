@@ -24,7 +24,7 @@ import com.github.bloodshura.venus.exception.compile.UnexpectedInputException;
 import com.github.bloodshura.venus.origin.ScriptOrigin;
 import com.github.bloodshura.x.charset.build.TextBuilder;
 import com.github.bloodshura.x.charset.sequence.CharSet;
-import com.github.bloodshura.x.collection.store.impl.Queue;
+import com.github.bloodshura.x.collection.store.impl.XQueue;
 import com.github.bloodshura.x.util.Pool;
 import com.github.bloodshura.x.worker.StringWorker;
 
@@ -48,14 +48,14 @@ public class VenusLexer {
   private Type numberLiteralType;
   private final ScriptOrigin origin;
   private int position;
-  private final Queue<Token> reread;
+  private final XQueue<Token> reread;
   private State state;
   private final String string;
 
   public VenusLexer(ScriptOrigin origin) throws IOException {
     this.buildingToken = Pool.newBuilder();
     this.origin = origin;
-    this.reread = new Queue<>();
+    this.reread = new XQueue<>();
     this.string = origin.read();
   }
 

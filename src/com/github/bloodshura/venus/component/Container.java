@@ -29,9 +29,9 @@ import com.github.bloodshura.venus.function.Function;
 import com.github.bloodshura.venus.type.Type;
 import com.github.bloodshura.venus.value.FunctionRefValue;
 import com.github.bloodshura.venus.value.Value;
-import com.github.bloodshura.x.collection.list.List;
-import com.github.bloodshura.x.collection.list.impl.ArrayList;
-import com.github.bloodshura.x.collection.view.View;
+import com.github.bloodshura.x.collection.list.XList;
+import com.github.bloodshura.x.collection.list.impl.XArrayList;
+import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.util.layer.XApi;
 
 /**
@@ -44,15 +44,15 @@ import com.github.bloodshura.x.util.layer.XApi;
  */
 public abstract class Container extends Component {
   protected Context context;
-  private final List<Component> children;
+  private final XList<Component> children;
 
   public Container() {
-    this.children = new ArrayList<>();
+    this.children = new XArrayList<>();
 
     getChildren().addInsertionListener(component -> component.setParent(this));
   }
 
-  public Function findFunction(Context context, String name, View<Type> argumentTypes) throws ScriptRuntimeException {
+  public Function findFunction(Context context, String name, XView<Type> argumentTypes) throws ScriptRuntimeException {
     XApi.requireNonNull(name, "name");
 
     if (context.hasVar(name)) {
@@ -129,7 +129,7 @@ public abstract class Container extends Component {
     throw new UndefinedValueTypeException(context, name);
   }
 
-  public List<Component> getChildren() {
+  public XList<Component> getChildren() {
     return children;
   }
 

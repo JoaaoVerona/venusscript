@@ -29,7 +29,7 @@ import com.github.bloodshura.venus.executor.VenusExecutor;
 import com.github.bloodshura.venus.origin.FileScriptOrigin;
 import com.github.bloodshura.venus.origin.ScriptMode;
 import com.github.bloodshura.venus.origin.ScriptOrigin;
-import com.github.bloodshura.x.collection.view.View;
+import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.io.file.File;
 import com.github.bloodshura.x.io.file.Folder;
 import com.github.bloodshura.x.logging.XLogger;
@@ -50,7 +50,7 @@ public class InteractiveTester {
   public static final boolean LIGHTWEIGHT_ERRORS = false;
 
   public static void main(String[] args) throws Exception {
-    View<File> files = DIRECTORY.getAllFilesView();
+    XView<File> files = DIRECTORY.getAllFilesView();
     int i = 0;
 
     for (File file : files) {

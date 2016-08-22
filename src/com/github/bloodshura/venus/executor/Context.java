@@ -24,8 +24,8 @@ import com.github.bloodshura.venus.component.Script;
 import com.github.bloodshura.venus.exception.runtime.UndefinedVariableException;
 import com.github.bloodshura.venus.expression.Variable;
 import com.github.bloodshura.venus.value.Value;
-import com.github.bloodshura.x.collection.map.Map;
-import com.github.bloodshura.x.collection.map.impl.LinkedMap;
+import com.github.bloodshura.x.collection.map.XMap;
+import com.github.bloodshura.x.collection.map.impl.XLinkedMap;
 import com.github.bloodshura.x.util.layer.XApi;
 
 /**
@@ -41,13 +41,13 @@ public class Context implements Cloneable {
   private final int id;
   private final Container owner;
   private final Context parent;
-  private final Map<String, VariableStructure> variables;
+  private final XMap<String, VariableStructure> variables;
 
   public Context(Container owner, Context parent) {
     this.id = NEXT_ID++;
     this.owner = owner;
     this.parent = parent;
-    this.variables = new LinkedMap<>();
+    this.variables = new XLinkedMap<>();
   }
 
   @Override
@@ -113,7 +113,7 @@ public class Context implements Cloneable {
     return getVarValue(variable.getName());
   }
 
-  public Map<String, VariableStructure> getVariables() {
+  public XMap<String, VariableStructure> getVariables() {
     return variables;
   }
 

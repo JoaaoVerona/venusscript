@@ -25,9 +25,9 @@ import com.github.bloodshura.venus.function.annotation.MethodVarArgs;
 import com.github.bloodshura.venus.type.PrimitiveType;
 import com.github.bloodshura.venus.type.Type;
 import com.github.bloodshura.venus.value.Value;
-import com.github.bloodshura.x.collection.view.ArrayView;
-import com.github.bloodshura.x.collection.view.BasicView;
-import com.github.bloodshura.x.collection.view.View;
+import com.github.bloodshura.x.collection.view.XArrayView;
+import com.github.bloodshura.x.collection.view.XBasicView;
+import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.util.layer.XApi;
 
 /**
@@ -39,7 +39,7 @@ import com.github.bloodshura.x.util.layer.XApi;
  * @since GAMMA - 0x3
  */
 public abstract class Method implements Function {
-  private final View<Type> arguments;
+  private final XView<Type> arguments;
   private final String name;
   private final boolean varArgs;
 
@@ -54,10 +54,10 @@ public abstract class Method implements Function {
     if (hasMethodArgs) {
       Class<? extends Value>[] args = getClass().getAnnotation(MethodArgs.class).value();
 
-      this.arguments = new ArrayView<>(args).reduce(PrimitiveType::forType);
+      this.arguments = new XArrayView<>(args).reduce(PrimitiveType::forType);
     }
     else {
-      this.arguments = new BasicView<>();
+      this.arguments = new XBasicView<>();
     }
 
     this.name = getClass().getAnnotation(MethodName.class).value();
@@ -65,7 +65,7 @@ public abstract class Method implements Function {
   }
 
   @Override
-  public final View<Type> getArgumentTypes() {
+  public final XView<Type> getArgumentTypes() {
     return arguments;
   }
 

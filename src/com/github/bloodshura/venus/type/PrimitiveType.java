@@ -30,8 +30,8 @@ import com.github.bloodshura.venus.value.StringValue;
 import com.github.bloodshura.venus.value.TypeValue;
 import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.venus.value.VariableRefValue;
-import com.github.bloodshura.x.collection.view.ArrayView;
-import com.github.bloodshura.x.collection.view.View;
+import com.github.bloodshura.x.collection.view.XArrayView;
+import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.util.layer.XApi;
 import com.github.bloodshura.x.worker.UtilWorker;
 import com.github.bloodshura.x.worker.enumeration.Enumerations;
@@ -55,12 +55,12 @@ public final class PrimitiveType extends Type {
   public static final Type TYPE = new PrimitiveType("type", TypeValue.class, Type.class);
   public static final Type VARIABLE_REFERENCE = new PrimitiveType("var", VariableRefValue.class, Variable.class);
 
-  private final View<Class<?>> objectTypes;
+  private final XView<Class<?>> objectTypes;
   private final Class<? extends Value> valueClass;
 
   private PrimitiveType(String identifier, Class<? extends Value> valueClass, Class<?>... objectTypes) {
     super(identifier);
-    this.objectTypes = new ArrayView<>(objectTypes);
+    this.objectTypes = new XArrayView<>(objectTypes);
     this.valueClass = valueClass;
   }
 
@@ -115,7 +115,7 @@ public final class PrimitiveType extends Type {
     return ANY;
   }
 
-  public static View<PrimitiveType> values() {
+  public static XView<PrimitiveType> values() {
     return Enumerations.values(PrimitiveType.class);
   }
 }

@@ -31,9 +31,9 @@ import com.github.bloodshura.venus.type.Type;
 import com.github.bloodshura.venus.value.BoolValue;
 import com.github.bloodshura.venus.value.TypeValue;
 import com.github.bloodshura.venus.value.Value;
-import com.github.bloodshura.x.collection.list.List;
-import com.github.bloodshura.x.collection.list.impl.ArrayList;
-import com.github.bloodshura.x.collection.view.BasicView;
+import com.github.bloodshura.x.collection.list.XList;
+import com.github.bloodshura.x.collection.list.impl.XArrayList;
+import com.github.bloodshura.x.collection.view.XBasicView;
 
 /**
  * HasFunction.java
@@ -53,7 +53,7 @@ public class HasFunction extends Method {
     }
 
     String name = descriptor.get(0).toString();
-    List<Type> types = new ArrayList<>();
+    XList<Type> types = new XArrayList<>();
 
     for (int i = 1; i < descriptor.count(); i++) {
       Value value = descriptor.get(i);
@@ -69,7 +69,7 @@ public class HasFunction extends Method {
     }
 
     try {
-      context.getOwner().findFunction(context, name, new BasicView<>(types));
+      context.getOwner().findFunction(context, name, new XBasicView<>(types));
 
       return new BoolValue(true);
     }

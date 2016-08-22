@@ -27,10 +27,10 @@ import com.github.bloodshura.venus.type.PrimitiveType;
 import com.github.bloodshura.venus.type.Type;
 import com.github.bloodshura.venus.value.IntegerValue;
 import com.github.bloodshura.venus.value.Value;
-import com.github.bloodshura.x.collection.list.List;
-import com.github.bloodshura.x.collection.list.impl.ArrayList;
-import com.github.bloodshura.x.collection.view.BasicView;
-import com.github.bloodshura.x.collection.view.View;
+import com.github.bloodshura.x.collection.list.XList;
+import com.github.bloodshura.x.collection.list.impl.XArrayList;
+import com.github.bloodshura.x.collection.view.XBasicView;
+import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.math.MathProvider;
 import com.github.bloodshura.x.worker.UtilWorker;
 
@@ -46,13 +46,13 @@ import java.lang.reflect.Method;
  * @since GAMMA - 0x3
  */
 public class MathFunction implements Function {
-  private final List<Type> arguments;
+  private final XList<Type> arguments;
   private final MathProvider instance;
   private final Method method;
   private final String name;
 
   public MathFunction(Method method, MathProvider instance) {
-    this.arguments = new ArrayList<>();
+    this.arguments = new XArrayList<>();
     this.instance = instance;
     this.method = method;
     this.name = method.getName();
@@ -64,7 +64,7 @@ public class MathFunction implements Function {
 
   @Override
   public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    List<Object> values = new ArrayList<>();
+    XList<Object> values = new XArrayList<>();
     int i = 0;
 
     for (Value argument : descriptor.getValues()) {
@@ -99,8 +99,8 @@ public class MathFunction implements Function {
   }
 
   @Override
-  public View<Type> getArgumentTypes() {
-    return new BasicView<>(arguments);
+  public XView<Type> getArgumentTypes() {
+    return new XBasicView<>(arguments);
   }
 
   public MathProvider getInstance() {

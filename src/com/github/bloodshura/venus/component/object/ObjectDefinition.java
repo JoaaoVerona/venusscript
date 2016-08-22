@@ -23,8 +23,8 @@ import com.github.bloodshura.venus.component.Container;
 import com.github.bloodshura.venus.executor.Context;
 import com.github.bloodshura.venus.type.ObjectType;
 import com.github.bloodshura.venus.type.Type;
-import com.github.bloodshura.x.collection.list.List;
-import com.github.bloodshura.x.collection.list.impl.ArrayList;
+import com.github.bloodshura.x.collection.list.XList;
+import com.github.bloodshura.x.collection.list.impl.XArrayList;
 
 /**
  * ObjectDefinition.java
@@ -35,17 +35,17 @@ import com.github.bloodshura.x.collection.list.impl.ArrayList;
  * @since GAMMA - 0x3
  */
 public class ObjectDefinition extends Container {
-  private final List<Attribute> attributes;
+  private final XList<Attribute> attributes;
   private final String name;
   private final Type type;
 
   public ObjectDefinition(String name) {
-    this.attributes = new ArrayList<>();
+    this.attributes = new XArrayList<>();
     this.name = name;
     this.type = new ObjectType(name);
   }
 
-  public List<Attribute> getAttributes() {
+  public XList<Attribute> getAttributes() {
     return attributes;
   }
 

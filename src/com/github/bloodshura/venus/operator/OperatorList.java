@@ -21,7 +21,7 @@ package com.github.bloodshura.venus.operator;
 
 import com.github.bloodshura.venus.value.TypeValue;
 import com.github.bloodshura.venus.value.Value;
-import com.github.bloodshura.x.collection.view.View;
+import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.worker.enumeration.Enumerations;
 
 /**
@@ -62,7 +62,7 @@ public class OperatorList {
     return null;
   }
 
-  public static View<Operator> values() {
+  public static XView<Operator> values() {
     return Enumerations.values(OperatorList.class, Operator.class);
   }
 }

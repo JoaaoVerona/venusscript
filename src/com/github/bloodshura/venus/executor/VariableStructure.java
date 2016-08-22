@@ -20,8 +20,8 @@
 package com.github.bloodshura.venus.executor;
 
 import com.github.bloodshura.venus.value.Value;
-import com.github.bloodshura.x.collection.list.List;
-import com.github.bloodshura.x.collection.list.impl.ArrayList;
+import com.github.bloodshura.x.collection.list.XList;
+import com.github.bloodshura.x.collection.list.impl.XArrayList;
 
 /**
  * VariableStructure.java
@@ -32,12 +32,12 @@ import com.github.bloodshura.x.collection.list.impl.ArrayList;
  * @since GAMMA - 0x3
  */
 public class VariableStructure {
-  private final List<Object> changeMonitors;
+  private final XList<Object> changeMonitors;
   private final Object lockMonitor;
   private Value value;
 
   public VariableStructure(Value value) {
-    this.changeMonitors = new ArrayList<>();
+    this.changeMonitors = new XArrayList<>();
     this.lockMonitor = new Object();
     this.value = value;
   }

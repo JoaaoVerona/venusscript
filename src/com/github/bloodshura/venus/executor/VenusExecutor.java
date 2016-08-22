@@ -44,8 +44,8 @@ import com.github.bloodshura.venus.value.IntegerValue;
 import com.github.bloodshura.venus.value.IterableValue;
 import com.github.bloodshura.venus.value.NumericValue;
 import com.github.bloodshura.venus.value.Value;
-import com.github.bloodshura.x.collection.list.ListIterator;
-import com.github.bloodshura.x.collection.store.impl.Queue;
+import com.github.bloodshura.x.collection.list.XListIterator;
+import com.github.bloodshura.x.collection.store.impl.XQueue;
 import com.github.bloodshura.x.logging.XLogger;
 import com.github.bloodshura.x.runnable.XThread;
 import com.github.bloodshura.x.runnable.collection.ThreadPool;
@@ -61,14 +61,14 @@ import java.util.function.Supplier;
  * @since GAMMA - 0x3
  */
 public class VenusExecutor {
-  private final Queue<ScriptRuntimeException> asyncExceptions;
+  private final XQueue<ScriptRuntimeException> asyncExceptions;
   private final ThreadPool<XThread> asyncThreads;
   private boolean breaking;
   private boolean continuing;
   private boolean shouldRun;
 
   public VenusExecutor() {
-    this.asyncExceptions = new Queue<>();
+    this.asyncExceptions = new XQueue<>();
     this.asyncThreads = new ThreadPool<>();
     this.shouldRun = true;
   }
@@ -83,7 +83,7 @@ public class VenusExecutor {
 
   protected Value run(Container container, ScriptMode mode, Supplier<Boolean> shouldRun) throws ScriptRuntimeException {
     Context context = container.getContext();
-    ListIterator<Component> iterator = container.getChildren().iterator();
+    XListIterator<Component> iterator = container.getChildren().iterator();
     Value result = new IntegerValue(0);
     boolean hadIfAndNotProceed = false;
 

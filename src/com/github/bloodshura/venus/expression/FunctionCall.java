@@ -29,11 +29,11 @@ import com.github.bloodshura.venus.type.Type;
 import com.github.bloodshura.venus.value.DecimalValue;
 import com.github.bloodshura.venus.value.IntegerValue;
 import com.github.bloodshura.venus.value.Value;
-import com.github.bloodshura.x.collection.list.List;
-import com.github.bloodshura.x.collection.list.impl.ArrayList;
-import com.github.bloodshura.x.collection.view.ArrayView;
-import com.github.bloodshura.x.collection.view.BasicView;
-import com.github.bloodshura.x.collection.view.View;
+import com.github.bloodshura.x.collection.list.XList;
+import com.github.bloodshura.x.collection.list.impl.XArrayList;
+import com.github.bloodshura.x.collection.view.XArrayView;
+import com.github.bloodshura.x.collection.view.XBasicView;
+import com.github.bloodshura.x.collection.view.XView;
 
 /**
  * FunctionCall.java
@@ -52,8 +52,8 @@ public class FunctionCall implements Expression {
     this.functionName = functionName;
   }
 
-  public View<Expression> getArguments() {
-    return new ArrayView<>(arguments);
+  public XView<Expression> getArguments() {
+    return new XArrayView<>(arguments);
   }
 
   public String getFunctionName() {
@@ -62,10 +62,10 @@ public class FunctionCall implements Expression {
 
   @Override
   public Value resolve(Context context) throws ScriptRuntimeException {
-    View<Value> values = getArguments().reduceExceptional(expression -> expression.resolve(context));
-    View<Type> types = values.reduce(Value::getType);
+    XView<Value> values = getArguments().reduceExceptional(expression -> expression.resolve(context));
+    XView<Type> types = values.reduce(Value::getType);
     Function function = context.getOwner().findFunction(context, getFunctionName(), types);
-    List<Value> list = new ArrayList<>();
+    XList<Value> list = new XArrayList<>();
     int i = 0;
 
     // This check is necessary because of function references being untyped (issue #9).
@@ -94,7 +94,7 @@ public class FunctionCall implements Expression {
       i++;
     }
 
-    return function.call(context, new FunctionCallDescriptor(this, getArguments(), new BasicView<>(list)));
+    return function.call(context, new FunctionCallDescriptor(this, getArguments(), new XBasicView<>(list)));
   }
 
   @Override

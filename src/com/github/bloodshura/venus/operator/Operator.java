@@ -19,7 +19,7 @@
 
 package com.github.bloodshura.venus.operator;
 
-import com.github.bloodshura.x.collection.view.View;
+import com.github.bloodshura.x.collection.view.XView;
 
 /**
  * Operator.java
@@ -30,5 +30,5 @@ import com.github.bloodshura.x.collection.view.View;
  * @since GAMMA - 0x3
  */
 public interface Operator {
-  View<String> getIdentifiers();
+  XView<String> getIdentifiers();
 }

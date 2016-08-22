@@ -20,7 +20,7 @@
 package com.github.bloodshura.venus.library;
 
 import com.github.bloodshura.venus.function.Function;
-import com.github.bloodshura.x.collection.list.impl.ArrayList;
+import com.github.bloodshura.x.collection.list.impl.XArrayList;
 
 /**
  * VenusLibrary.java
@@ -30,7 +30,7 @@ import com.github.bloodshura.x.collection.list.impl.ArrayList;
  * @date 07/05/16 - 17:40
  * @since GAMMA - 0x3
  */
-public class VenusLibrary extends ArrayList<Function> {
+public class VenusLibrary extends XArrayList<Function> {
   public boolean add(Class<? extends Function> object) {
     try {
       return add(object.newInstance());

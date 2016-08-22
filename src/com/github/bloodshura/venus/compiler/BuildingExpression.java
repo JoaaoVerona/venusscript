@@ -27,7 +27,7 @@ import com.github.bloodshura.venus.expression.UnaryOperation;
 import com.github.bloodshura.venus.operator.BinaryOperator;
 import com.github.bloodshura.venus.operator.Operator;
 import com.github.bloodshura.venus.operator.UnaryOperator;
-import com.github.bloodshura.x.collection.store.impl.Stack;
+import com.github.bloodshura.x.collection.store.impl.XStack;
 
 /**
  * BuildingExpression.java
@@ -41,10 +41,10 @@ public class BuildingExpression {
   private String inContext;
   private Operator operator;
   private Expression expression;
-  private final Stack<UnaryOperator> unaryWhenAlready;
+  private final XStack<UnaryOperator> unaryWhenAlready;
 
   public BuildingExpression() {
-    this.unaryWhenAlready = new Stack<>();
+    this.unaryWhenAlready = new XStack<>();
   }
 
   public void addInContext(VenusParser parser, Token owner, String context) throws UnexpectedTokenException {
