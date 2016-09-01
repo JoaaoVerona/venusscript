@@ -76,7 +76,7 @@ public class FunctionCall implements Expression {
 
     for (Value value : values) {
       if (!function.isVarArgs()) {
-        Type required = function.getArgumentTypes().at(i);
+        Type required = function.getArgumentTypes().get(i);
 
         if (value.getType() == PrimitiveType.INTEGER && required == PrimitiveType.DECIMAL) {
           value = new DecimalValue(((IntegerValue) value).value());

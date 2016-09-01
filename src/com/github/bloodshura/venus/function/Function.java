@@ -47,8 +47,8 @@ public interface Function extends Nameable {
 
       if (getArgumentCount() == argumentTypes.size()) {
         for (int i = 0; i < getArgumentCount(); i++) {
-          Type required = getArgumentTypes().at(i);
-          Type found = argumentTypes.at(i);
+          Type required = getArgumentTypes().get(i);
+          Type found = argumentTypes.get(i);
 
           if (!required.accepts(found) && (required != PrimitiveType.DECIMAL || found != PrimitiveType.INTEGER)) {
             return false;

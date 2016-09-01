@@ -50,7 +50,7 @@ import com.github.bloodshura.x.logging.XLogger;
 public class WaitAttribution extends VoidMethod {
   @Override
   public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    Expression expression = descriptor.getExpressions().at(0);
+    Expression expression = descriptor.getExpressions().get(0);
     XList<Variable> list = new XArrayList<>();
     Object lock = new Object();
 

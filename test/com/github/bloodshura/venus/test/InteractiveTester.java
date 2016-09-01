@@ -75,7 +75,7 @@ public class InteractiveTester {
       }
     }
 
-    File file = files.at(option);
+    File file = files.get(option);
     ScriptOrigin origin = new FileScriptOrigin(file);
     Script script;
 

@@ -50,7 +50,7 @@ public class FunctionCallDescriptor {
   }
 
   public Value get(int index) {
-    return getValues().at(index);
+    return getValues().get(index);
   }
 
   public FunctionCall getCaller() {
@@ -58,7 +58,7 @@ public class FunctionCallDescriptor {
   }
 
   public Value getOr(int index, Value value) {
-    return index >= 0 && index < getValues().size() ? getValues().at(index) : value;
+    return index >= 0 && index < getValues().size() ? getValues().get(index) : value;
   }
 
   public XView<Expression> getExpressions() {
