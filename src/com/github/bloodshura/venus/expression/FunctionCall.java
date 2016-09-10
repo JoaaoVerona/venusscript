@@ -62,8 +62,8 @@ public class FunctionCall implements Expression {
 
   @Override
   public Value resolve(Context context) throws ScriptRuntimeException {
-    XView<Value> values = getArguments().reduceExceptional(expression -> expression.resolve(context));
-    XView<Type> types = values.reduce(Value::getType);
+    XView<Value> values = getArguments().mapExceptional(expression -> expression.resolve(context));
+    XView<Type> types = values.map(Value::getType);
     Function function = context.getOwner().findFunction(context, getFunctionName(), types);
     XList<Value> list = new XArrayList<>();
     int i = 0;

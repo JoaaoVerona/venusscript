@@ -70,7 +70,7 @@ public final class Definition extends Container implements Function {
 
   @Override
   public XView<Type> getArgumentTypes() {
-    return getArguments().reduce(Argument::getType);
+    return getArguments().map(Argument::getType);
   }
 
   public XView<Argument> getArguments() {

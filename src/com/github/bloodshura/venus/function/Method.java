@@ -54,7 +54,7 @@ public abstract class Method implements Function {
     if (hasMethodArgs) {
       Class<? extends Value>[] args = getClass().getAnnotation(MethodArgs.class).value();
 
-      this.arguments = new XArrayView<>(args).reduce(PrimitiveType::forType);
+      this.arguments = new XArrayView<>(args).map(PrimitiveType::forType);
     }
     else {
       this.arguments = new XBasicView<>();
