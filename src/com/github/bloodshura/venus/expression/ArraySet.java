@@ -27,14 +27,6 @@ import com.github.bloodshura.venus.value.ArrayValue;
 import com.github.bloodshura.venus.value.IntegerValue;
 import com.github.bloodshura.venus.value.Value;
 
-/**
- * ArraySet.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 22/05/16 - 02:17
- * @since GAMMA - 0x3
- */
 public class ArraySet implements Expression {
   private final String name;
   private final Expression index;

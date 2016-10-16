@@ -31,14 +31,6 @@ import com.github.bloodshura.x.charset.build.TextBuilder;
 import com.github.bloodshura.x.sys.enumeration.AlertType;
 import com.github.bloodshura.x.util.Pool;
 
-/**
- * InfoDialog.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 14/05/16 - 19:50
- * @since GAMMA - 0x3
- */
 @MethodName("infoDialog")
 @MethodVarArgs
 public class InfoDialog extends VoidMethod {

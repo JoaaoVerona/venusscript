@@ -28,14 +28,6 @@ import com.github.bloodshura.x.loader.resource.PathResource;
 
 import java.io.IOException;
 
-/**
- * ScriptOrigin.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 07/05/16 - 18:35
- * @since GAMMA - 0x3
- */
 public interface ScriptOrigin {
   default Script compile(ApplicationContext applicationContext) throws ScriptCompileException {
     VenusLexer lexer;

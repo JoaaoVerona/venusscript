@@ -29,14 +29,6 @@ import com.github.bloodshura.venus.value.DecimalValue;
 import com.github.bloodshura.venus.value.IntegerValue;
 import com.github.bloodshura.x.sys.XSystem;
 
-/**
- * Beep.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 13/05/16 - 17:37
- * @since GAMMA - 0x3
- */
 @MethodArgs({ DecimalValue.class, IntegerValue.class })
 @MethodName("beep")
 public class Beep extends VoidMethod {

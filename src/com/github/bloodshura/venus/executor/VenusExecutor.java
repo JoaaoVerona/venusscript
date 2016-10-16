@@ -52,14 +52,6 @@ import com.github.bloodshura.x.runnable.collection.ThreadPool;
 
 import java.util.function.Supplier;
 
-/**
- * VenusExecutor.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 09/05/16 - 02:47
- * @since GAMMA - 0x3
- */
 public class VenusExecutor {
   private final XQueue<ScriptRuntimeException> asyncExceptions;
   private final ThreadPool<XThread> asyncThreads;

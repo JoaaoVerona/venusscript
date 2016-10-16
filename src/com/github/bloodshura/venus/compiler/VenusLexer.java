@@ -32,14 +32,6 @@ import java.io.IOException;
 
 import static com.github.bloodshura.venus.compiler.VenusLexer.State.*;
 
-/**
- * VenusLexer.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 04:23
- * @since GAMMA - 0x3
- */
 public class VenusLexer {
   private final TextBuilder buildingToken;
   private boolean insideComment;

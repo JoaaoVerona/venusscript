@@ -28,14 +28,6 @@ import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.lang.Nameable;
 import com.github.bloodshura.x.util.layer.XApi;
 
-/**
- * Function.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 02:24
- * @since GAMMA - 0x3
- */
 public interface Function extends Nameable {
   default boolean accepts(String name, XView<Type> argumentTypes) {
     XApi.requireNonNull(name, "name");

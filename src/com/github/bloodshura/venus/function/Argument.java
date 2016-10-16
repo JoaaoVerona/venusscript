@@ -22,14 +22,6 @@ package com.github.bloodshura.venus.function;
 import com.github.bloodshura.venus.type.Type;
 import com.github.bloodshura.x.object.Base;
 
-/**
- * Argument.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 07/05/16 - 18:22
- * @since GAMMA - 0x3
- */
 public class Argument extends Base {
   private final String name;
   private final Type type;

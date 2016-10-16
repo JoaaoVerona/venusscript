@@ -32,14 +32,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-/**
- * LexerTest.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 07/05/16 - 18:33
- * @since GAMMA - 0x3
- */
 public class LexerTest {
   @Test
   public void simpleAssertion() throws IOException, UnexpectedInputException {

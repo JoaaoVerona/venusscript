@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.exception.runtime;
 
 import com.github.bloodshura.venus.executor.Context;
 
-/**
- * AssertionException.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 12/05/16 - 20:36
- * @since GAMMA - 0x3
- */
 public class AssertionException extends ScriptRuntimeException {
   public AssertionException(Context context, CharSequence message) {
     super(context, message);

@@ -29,14 +29,6 @@ import com.github.bloodshura.x.collection.list.XList;
 import com.github.bloodshura.x.collection.view.XBasicView;
 import com.github.bloodshura.x.collection.view.XView;
 
-/**
- * Definition.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 15:34
- * @since GAMMA - 0x3
- */
 public final class Definition extends Container implements Function {
   private final XList<Argument> arguments;
   private final boolean global;

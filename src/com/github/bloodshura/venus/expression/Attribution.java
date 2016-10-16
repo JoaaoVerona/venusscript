@@ -23,14 +23,6 @@ import com.github.bloodshura.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.venus.executor.Context;
 import com.github.bloodshura.venus.value.Value;
 
-/**
- * Attribution.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 17:07
- * @since GAMMA - 0x3
- */
 public class Attribution implements Expression {
   private final String name;
   private final Expression expression;

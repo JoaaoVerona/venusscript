@@ -35,14 +35,6 @@ import com.github.bloodshura.x.collection.list.XList;
 import com.github.bloodshura.x.collection.list.impl.XArrayList;
 import com.github.bloodshura.x.collection.view.XBasicView;
 
-/**
- * HasFunction.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 21/05/16 - 00:35
- * @since GAMMA - 0x3
- */
 @MethodName("hasFunction")
 @MethodVarArgs
 public class HasFunction extends Method {

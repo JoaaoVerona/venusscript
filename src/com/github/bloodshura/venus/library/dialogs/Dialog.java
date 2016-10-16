@@ -31,14 +31,6 @@ import com.github.bloodshura.x.charset.build.TextBuilder;
 import com.github.bloodshura.x.sys.enumeration.AlertType;
 import com.github.bloodshura.x.util.Pool;
 
-/**
- * Dialog.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 14/05/16 - 19:44
- * @since GAMMA - 0x3
- */
 @MethodName("dialog")
 @MethodVarArgs
 public class Dialog extends VoidMethod {

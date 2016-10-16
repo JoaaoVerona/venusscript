@@ -27,14 +27,6 @@ import com.github.bloodshura.x.util.layer.XApi;
 
 import java.util.function.Function;
 
-/**
- * UnaryOperator.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 12/05/16 - 00:15
- * @since GAMMA - 0x3
- */
 public class UnaryOperator implements Operator {
   private final Function<Value, Value> function;
   private final XView<String> identifiers;

@@ -32,14 +32,6 @@ import com.github.bloodshura.x.io.Url;
 import com.github.bloodshura.x.io.exception.UrlException;
 import com.github.bloodshura.x.sys.XSystem;
 
-/**
- * Browse.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 13/05/16 - 17:40
- * @since GAMMA - 0x3
- */
 @MethodArgs(StringValue.class)
 @MethodName("browse")
 public class Browse extends Method {

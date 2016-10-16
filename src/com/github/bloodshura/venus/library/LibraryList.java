@@ -25,14 +25,6 @@ import com.github.bloodshura.x.collection.list.impl.XArrayList;
 import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.util.layer.XApi;
 
-/**
- * LibraryList.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 07/05/16 - 17:42
- * @since GAMMA - 0x3
- */
 public class LibraryList extends XArrayList<VenusLibrary> {
   public Function findFunction(String name, XView<Type> argumentTypes) {
     XApi.requireNonNull(name, "name");

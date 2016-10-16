@@ -24,14 +24,6 @@ import com.github.bloodshura.venus.executor.Context;
 import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.x.util.layer.XApi;
 
-/**
- * Variable.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 01:34
- * @since GAMMA - 0x3
- */
 public class Variable implements Expression {
   private final String name;
 

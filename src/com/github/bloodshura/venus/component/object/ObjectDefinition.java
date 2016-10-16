@@ -26,14 +26,6 @@ import com.github.bloodshura.venus.type.Type;
 import com.github.bloodshura.x.collection.list.XList;
 import com.github.bloodshura.x.collection.list.impl.XArrayList;
 
-/**
- * ObjectDefinition.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 29/05/16 - 01:06
- * @since GAMMA - 0x3
- */
 public class ObjectDefinition extends Container {
   private final XList<Attribute> attributes;
   private final String name;

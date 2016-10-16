@@ -28,14 +28,6 @@ import com.github.bloodshura.venus.function.annotation.MethodName;
 import com.github.bloodshura.venus.value.IntegerValue;
 import com.github.bloodshura.x.worker.UtilWorker;
 
-/**
- * Sleep.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 11/05/16 - 19:12
- * @since GAMMA - 0x3
- */
 @MethodArgs(IntegerValue.class)
 @MethodName("sleep")
 public class Sleep extends VoidMethod {

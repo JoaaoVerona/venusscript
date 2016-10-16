@@ -40,14 +40,6 @@ import com.github.bloodshura.x.math.impl.SimpleMath;
 
 import java.util.function.Supplier;
 
-/**
- * ApplicationContext.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 04:14
- * @since GAMMA - 0x3
- */
 public class ApplicationContext extends Context {
   private int currentLine;
   private VenusExecutor executor;

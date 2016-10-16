@@ -33,14 +33,6 @@ import com.github.bloodshura.x.collection.list.impl.XArrayList;
 import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.logging.XLogger;
 
-/**
- * Script.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 01:36
- * @since GAMMA - 0x3
- */
 public class Script extends Container {
   private final ApplicationContext appContext;
   private final XList<Script> includes;

@@ -25,14 +25,6 @@ import com.github.bloodshura.crypto.util.CryptographyMap;
 import com.github.bloodshura.venus.library.VenusLibrary;
 import com.github.bloodshura.x.collection.tuple.Pair;
 
-/**
- * CryptoLibrary.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 17/05/16 - 12:49
- * @since GAMMA - 0x3
- */
 public class CryptoLibrary extends VenusLibrary {
   public CryptoLibrary() {
     this(new CryptographyMap().registerDefaults());

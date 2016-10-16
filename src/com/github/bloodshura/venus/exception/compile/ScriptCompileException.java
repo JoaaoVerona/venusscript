@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.exception.compile;
 
 import com.github.bloodshura.x.exception.CatchableException;
 
-/**
- * ScriptCompileException.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 04:34
- * @since GAMMA - 0x3
- */
 public class ScriptCompileException extends CatchableException {
   public ScriptCompileException(CharSequence message) {
     super(message);

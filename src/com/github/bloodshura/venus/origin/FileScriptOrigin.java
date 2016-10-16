@@ -24,14 +24,6 @@ import com.github.bloodshura.x.io.file.File;
 
 import java.io.IOException;
 
-/**
- * FileScriptOrigin.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 07/05/16 - 19:15
- * @since GAMMA - 0x3
- */
 public class FileScriptOrigin implements ScriptOrigin {
   private final File file;
 

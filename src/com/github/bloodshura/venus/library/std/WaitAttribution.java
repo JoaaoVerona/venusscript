@@ -37,14 +37,6 @@ import com.github.bloodshura.x.collection.list.XList;
 import com.github.bloodshura.x.collection.list.impl.XArrayList;
 import com.github.bloodshura.x.logging.XLogger;
 
-/**
- * WaitAttribution.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 20/05/16 - 20:19
- * @since GAMMA - 0x3
- */
 @MethodArgs(Value.class)
 @MethodName("wait")
 public class WaitAttribution extends VoidMethod {

@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.component.branch;
 
 import com.github.bloodshura.venus.component.Component;
 
-/**
- * Continue.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 13/05/16 - 21:37
- * @since GAMMA - 0x3
- */
 public class Continue extends Component {
   @Override
   public String toString() {

@@ -22,14 +22,6 @@ package com.github.bloodshura.venus.type;
 import com.github.bloodshura.venus.value.ObjectValue;
 import com.github.bloodshura.venus.value.Value;
 
-/**
- * ObjectType.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 29/05/16 - 18:46
- * @since GAMMA - 0x3
- */
 public class ObjectType extends Type {
   public ObjectType(String identifier) {
     super(identifier);

@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.value;
 
 import com.github.bloodshura.venus.type.Type;
 
-/**
- * IterableValue.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 22/05/16 - 03:40
- * @since GAMMA - 0x3
- */
 public abstract class IterableValue extends Value implements Iterable<Value> {
   public IterableValue(Type type) {
     super(type);

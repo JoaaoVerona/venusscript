@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.component.branch;
 
 import com.github.bloodshura.venus.expression.Expression;
 
-/**
- * ElseIfContainer.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 12/05/16 - 02:19
- * @since GAMMA - 0x3
- */
 public class ElseIfContainer extends IfContainer {
   public ElseIfContainer(Expression condition) {
     super(condition);

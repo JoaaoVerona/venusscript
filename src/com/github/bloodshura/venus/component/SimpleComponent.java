@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.component;
 
 import com.github.bloodshura.venus.expression.Expression;
 
-/**
- * SimpleComponent.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 22/05/16 - 17:13
- * @since GAMMA - 0x3
- */
 public class SimpleComponent extends Component {
   private final Expression expression;
 

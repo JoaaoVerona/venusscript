@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.type;
 
 import com.github.bloodshura.venus.value.Value;
 
-/**
- * Type.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 29/05/16 - 02:15
- * @since GAMMA - 0x3
- */
 public abstract class Type {
   private final String identifier;
 

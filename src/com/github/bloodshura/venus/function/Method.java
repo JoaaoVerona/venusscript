@@ -30,14 +30,6 @@ import com.github.bloodshura.x.collection.view.XBasicView;
 import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.util.layer.XApi;
 
-/**
- * Method.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 02:27
- * @since GAMMA - 0x3
- */
 public abstract class Method implements Function {
   private final XView<Type> arguments;
   private final String name;

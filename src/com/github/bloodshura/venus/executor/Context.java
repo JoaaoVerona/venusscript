@@ -28,14 +28,6 @@ import com.github.bloodshura.x.collection.map.XMap;
 import com.github.bloodshura.x.collection.map.impl.XLinkedMap;
 import com.github.bloodshura.x.util.layer.XApi;
 
-/**
- * Context.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 01:30
- * @since GAMMA - 0x3
- */
 public class Context implements Cloneable {
   private static int NEXT_ID = 0;
   private final int id;

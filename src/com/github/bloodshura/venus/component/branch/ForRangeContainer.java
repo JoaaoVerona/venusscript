@@ -22,14 +22,6 @@ package com.github.bloodshura.venus.component.branch;
 import com.github.bloodshura.venus.component.Container;
 import com.github.bloodshura.venus.expression.Expression;
 
-/**
- * ForRangeContainer.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 12/05/16 - 14:37
- * @since GAMMA - 0x3
- */
 public class ForRangeContainer extends Container implements Breakable {
   private final Expression adjustment;
   private final Expression from;

@@ -29,14 +29,6 @@ import com.github.bloodshura.venus.value.ArrayValue;
 import com.github.bloodshura.venus.value.IntegerValue;
 import com.github.bloodshura.venus.value.Value;
 
-/**
- * Size.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 22/05/16 - 03:32
- * @since GAMMA - 0x3
- */
 @MethodArgs(ArrayValue.class)
 @MethodName("size")
 public class Size extends Method {

@@ -23,14 +23,6 @@ import com.github.bloodshura.x.lang.Resource;
 
 import java.io.IOException;
 
-/**
- * StreamScriptOrigin.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 11/05/16 - 00:45
- * @since GAMMA - 0x3
- */
 public class StreamScriptOrigin implements ScriptOrigin {
   private final String name;
   private final Resource resource;

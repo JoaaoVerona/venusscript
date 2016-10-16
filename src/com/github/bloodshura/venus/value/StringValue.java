@@ -22,14 +22,6 @@ package com.github.bloodshura.venus.value;
 import com.github.bloodshura.venus.type.PrimitiveType;
 import com.github.bloodshura.x.util.layer.XApi;
 
-/**
- * StringValue.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 08/05/16 - 20:47
- * @since GAMMA - 0x3
- */
 public class StringValue extends Value {
   private final String value;
 

@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.library.system;
 
 import com.github.bloodshura.venus.library.VenusLibrary;
 
-/**
- * SystemLibrary.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 13/05/16 - 18:28
- * @since GAMMA - 0x3
- */
 public class SystemLibrary extends VenusLibrary {
   public SystemLibrary() {
     addAll(GetEnvVar.class, GetProperty.class);

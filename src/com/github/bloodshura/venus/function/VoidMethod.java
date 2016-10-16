@@ -23,14 +23,6 @@ import com.github.bloodshura.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.venus.executor.Context;
 import com.github.bloodshura.venus.value.Value;
 
-/**
- * VoidMethod.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 13/05/16 - 18:51
- * @since GAMMA - 0x3
- */
 public abstract class VoidMethod extends Method {
   @Override
   public final Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {

@@ -22,14 +22,6 @@ package com.github.bloodshura.venus.compiler;
 import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.worker.enumeration.Enumerations;
 
-/**
- * KeywordDefinitions.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 07/05/16 - 18:14
- * @since GAMMA - 0x3
- */
 public class KeywordDefinitions {
   public static final String ASYNC = "async";
   public static final String BREAK = "break";

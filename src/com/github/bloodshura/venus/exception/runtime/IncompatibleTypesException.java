@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.exception.runtime;
 
 import com.github.bloodshura.venus.executor.Context;
 
-/**
- * IncompatibleTypesException.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 08/05/16 - 19:02
- * @since GAMMA - 0x3
- */
 public class IncompatibleTypesException extends ScriptRuntimeException {
   public IncompatibleTypesException(Context context, CharSequence message) {
     super(context, message);

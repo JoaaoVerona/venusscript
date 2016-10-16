@@ -32,14 +32,6 @@ import com.github.bloodshura.x.sys.XSystem;
 
 import java.io.IOException;
 
-/**
- * Shell.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 13/05/16 - 17:41
- * @since GAMMA - 0x3
- */
 @MethodArgs({ StringValue.class, BoolValue.class })
 @MethodName("shell")
 public class Shell extends Method {

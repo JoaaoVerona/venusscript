@@ -24,14 +24,6 @@ import com.github.bloodshura.x.math.MathProvider;
 
 import java.lang.reflect.Method;
 
-/**
- * MathLibrary.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 13/05/16 - 03:45
- * @since GAMMA - 0x3
- */
 public class MathLibrary extends VenusLibrary {
   public MathLibrary(MathProvider instance) {
     for (Method method : MathProvider.class.getDeclaredMethods()) {

@@ -22,14 +22,6 @@ package com.github.bloodshura.venus.component.branch;
 import com.github.bloodshura.venus.component.Container;
 import com.github.bloodshura.venus.expression.Expression;
 
-/**
- * IfContainer.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 12/05/16 - 01:26
- * @since GAMMA - 0x3
- */
 public class IfContainer extends Container {
   private final Expression condition;
 

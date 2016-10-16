@@ -19,14 +19,6 @@
 
 package com.github.bloodshura.venus.executor;
 
-/**
- * OutputReference.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 24/06/16 - 03:48
- * @since GAMMA - 0x3
- */
 public interface OutputReference {
   void output(String string);
 }

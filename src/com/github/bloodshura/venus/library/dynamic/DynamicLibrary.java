@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.library.dynamic;
 
 import com.github.bloodshura.venus.library.VenusLibrary;
 
-/**
- * DynamicLibrary.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 14/05/16 - 00:47
- * @since GAMMA - 0x3
- */
 public class DynamicLibrary extends VenusLibrary {
   public DynamicLibrary() {
     addAll(DynamicInclude.class, DynamicUsing.class);

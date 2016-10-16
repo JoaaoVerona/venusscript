@@ -37,14 +37,6 @@ import com.github.bloodshura.x.util.Pool;
 
 import java.io.IOException;
 
-/**
- * Interpret.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 20/05/16 - 01:08
- * @since GAMMA - 0x3
- */
 @MethodName("interpret")
 @MethodVarArgs
 public class Interpret extends VoidMethod {

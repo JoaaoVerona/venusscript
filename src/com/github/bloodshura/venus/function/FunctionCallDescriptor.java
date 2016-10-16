@@ -26,14 +26,6 @@ import com.github.bloodshura.x.collection.view.XView;
 
 import java.util.function.Function;
 
-/**
- * FunctionCallDescriptor.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 20/05/16 - 20:24
- * @since GAMMA - 0x3
- */
 public class FunctionCallDescriptor {
   private final FunctionCall caller;
   private final XView<Expression> expressions;

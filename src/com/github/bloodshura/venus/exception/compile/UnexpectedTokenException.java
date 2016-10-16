@@ -19,14 +19,6 @@
 
 package com.github.bloodshura.venus.exception.compile;
 
-/**
- * UnexpectedTokenException.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 18:21
- * @since GAMMA - 0x3
- */
 public class UnexpectedTokenException extends ScriptCompileException {
   public UnexpectedTokenException(String scriptName, int currentLine, String message) {
     super(scriptName, currentLine, message);

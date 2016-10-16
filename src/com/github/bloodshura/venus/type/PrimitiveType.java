@@ -36,14 +36,6 @@ import com.github.bloodshura.x.util.layer.XApi;
 import com.github.bloodshura.x.worker.UtilWorker;
 import com.github.bloodshura.x.worker.enumeration.Enumerations;
 
-/**
- * PrimitiveType.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 29/05/16 - 17:40
- * @since GAMMA - 0x3
- */
 public final class PrimitiveType extends Type {
   public static final Type ANY = new PrimitiveType("any", Value.class, Object.class);
   public static final Type ARRAY = new PrimitiveType("array", ArrayValue.class, Value[].class);

@@ -28,14 +28,6 @@ import com.github.bloodshura.venus.function.annotation.MethodName;
 import com.github.bloodshura.venus.value.VariableRefValue;
 import com.github.bloodshura.x.worker.UtilWorker;
 
-/**
- * WaitDefinition.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 20/05/16 - 20:49
- * @since GAMMA - 0x3
- */
 @MethodArgs(VariableRefValue.class)
 @MethodName("wait")
 public class WaitDefinition extends VoidMethod {

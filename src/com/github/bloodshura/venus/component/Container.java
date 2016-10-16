@@ -34,14 +34,6 @@ import com.github.bloodshura.x.collection.list.impl.XArrayList;
 import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.util.layer.XApi;
 
-/**
- * Container.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 01:40
- * @since GAMMA - 0x3
- */
 public abstract class Container extends Component {
   protected Context context;
   private final XList<Component> children;

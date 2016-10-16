@@ -38,14 +38,6 @@ import com.github.bloodshura.x.util.Pool;
 
 import java.io.IOException;
 
-/**
- * Evaluate.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 21/05/16 - 00:45
- * @since GAMMA - 0x3
- */
 @MethodName("evaluate")
 @MethodVarArgs
 public class Evaluate extends Method {

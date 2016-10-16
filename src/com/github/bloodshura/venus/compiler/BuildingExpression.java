@@ -29,14 +29,6 @@ import com.github.bloodshura.venus.operator.Operator;
 import com.github.bloodshura.venus.operator.UnaryOperator;
 import com.github.bloodshura.x.collection.store.impl.XStack;
 
-/**
- * BuildingExpression.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 10/05/16 - 23:01
- * @since GAMMA - 0x3
- */
 public class BuildingExpression {
   private String inContext;
   private Operator operator;

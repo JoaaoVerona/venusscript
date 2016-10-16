@@ -26,14 +26,6 @@ import com.github.bloodshura.x.charset.build.TextBuilder;
 import com.github.bloodshura.x.collection.tuple.Pair;
 import com.github.bloodshura.x.util.Pool;
 
-/**
- * ObjectValue.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 29/05/16 - 01:09
- * @since GAMMA - 0x3
- */
 public class ObjectValue extends Value {
   private final Context context;
   private final ObjectDefinition definition;

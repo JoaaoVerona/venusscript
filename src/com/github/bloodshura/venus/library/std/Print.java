@@ -28,14 +28,6 @@ import com.github.bloodshura.venus.function.annotation.MethodName;
 import com.github.bloodshura.venus.function.annotation.MethodVarArgs;
 import com.github.bloodshura.venus.value.Value;
 
-/**
- * Print.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 09/05/16 - 20:24
- * @since GAMMA - 0x3
- */
 @MethodName("print")
 @MethodVarArgs
 public class Print extends VoidMethod {

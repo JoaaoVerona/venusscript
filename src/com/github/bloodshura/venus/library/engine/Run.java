@@ -34,14 +34,6 @@ import com.github.bloodshura.venus.value.BoolValue;
 import com.github.bloodshura.venus.value.StringValue;
 import com.github.bloodshura.venus.value.Value;
 
-/**
- * Run.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 22/05/16 - 01:04
- * @since GAMMA - 0x3
- */
 @MethodArgs(StringValue.class)
 @MethodName("run")
 public class Run extends Method {

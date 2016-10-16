@@ -27,14 +27,6 @@ import com.github.bloodshura.x.collection.view.XArrayView;
 import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.util.layer.XApi;
 
-/**
- * ArrayLiteral.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 22/05/16 - 03:07
- * @since GAMMA - 0x3
- */
 public class ArrayLiteral implements Expression {
   private final Expression[] expressions;
 

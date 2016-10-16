@@ -39,14 +39,6 @@ import org.junit.runners.Parameterized.Parameters;
 import java.io.IOException;
 import java.util.Collection;
 
-/**
- * ExecutorTest.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 11/05/16 - 00:14
- * @since GAMMA - 0x3
- */
 @RunWith(Parameterized.class)
 public class ExecutorTest {
   public static final Folder DIRECTORY = new Folder("VenusScript/examples");

@@ -23,14 +23,6 @@ import com.github.bloodshura.venus.executor.ApplicationContext;
 import com.github.bloodshura.x.lang.annotation.Internal;
 import com.github.bloodshura.x.util.layer.XApi;
 
-/**
- * Component.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 01:39
- * @since GAMMA - 0x3
- */
 public abstract class Component {
   private Container parent;
   private int sourceLine;

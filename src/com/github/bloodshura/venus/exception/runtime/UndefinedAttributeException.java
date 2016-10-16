@@ -22,14 +22,6 @@ package com.github.bloodshura.venus.exception.runtime;
 import com.github.bloodshura.venus.component.object.ObjectDefinition;
 import com.github.bloodshura.venus.executor.Context;
 
-/**
- * UndefinedAttributeException.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 29/05/16 - 19:07
- * @since GAMMA - 0x3
- */
 public class UndefinedAttributeException extends ScriptRuntimeException {
   public UndefinedAttributeException(Context context, ObjectDefinition definition, String attributeName) {
     super(context, "No attribute named \"" + attributeName + "\" in object " + definition.getName());

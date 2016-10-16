@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.value;
 
 import com.github.bloodshura.venus.type.Type;
 
-/**
- * NumericValue.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 09/05/16 - 01:49
- * @since GAMMA - 0x3
- */
 public abstract class NumericValue extends Value {
   public NumericValue(Type type) {
     super(type);

@@ -22,14 +22,6 @@ package com.github.bloodshura.venus.component.branch;
 import com.github.bloodshura.venus.component.Component;
 import com.github.bloodshura.venus.expression.Expression;
 
-/**
- * Return.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 18/05/16 - 03:14
- * @since GAMMA - 0x3
- */
 public class Return extends Component {
   private final Expression expression;
 

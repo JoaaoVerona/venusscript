@@ -23,14 +23,6 @@ import com.github.bloodshura.venus.compiler.KeywordDefinitions;
 import com.github.bloodshura.venus.type.PrimitiveType;
 import com.github.bloodshura.x.util.layer.XApi;
 
-/**
- * VariableRefValue.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 16/05/16 - 00:29
- * @since GAMMA - 0x3
- */
 public class VariableRefValue extends Value {
   private final String value;
 

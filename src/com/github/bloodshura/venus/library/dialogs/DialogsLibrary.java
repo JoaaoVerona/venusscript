@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.library.dialogs;
 
 import com.github.bloodshura.venus.library.VenusLibrary;
 
-/**
- * DialogsLibrary.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 14/05/16 - 19:37
- * @since GAMMA - 0x3
- */
 public class DialogsLibrary extends VenusLibrary {
   public DialogsLibrary() {
     addAll(AskDialog.class, Dialog.class, ErrorDialog.class, InfoDialog.class, InputDialog.class,

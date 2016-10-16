@@ -26,14 +26,6 @@ import com.github.bloodshura.venus.operator.UnaryOperator;
 import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.x.util.layer.XApi;
 
-/**
- * UnaryOperation.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 12/05/16 - 00:20
- * @since GAMMA - 0x3
- */
 public class UnaryOperation implements Expression {
   private final UnaryOperator operator;
   private final Expression expression;

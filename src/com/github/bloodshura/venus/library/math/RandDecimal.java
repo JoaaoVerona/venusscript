@@ -29,14 +29,6 @@ import com.github.bloodshura.venus.value.DecimalValue;
 import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.x.math.random.XRandom;
 
-/**
- * RandDecimal.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 17/05/16 - 13:59
- * @since GAMMA - 0x3
- */
 @MethodArgs({ DecimalValue.class, DecimalValue.class })
 @MethodName("randDecimal")
 public class RandDecimal extends Method {

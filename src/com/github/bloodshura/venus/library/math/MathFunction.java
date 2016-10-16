@@ -37,14 +37,6 @@ import com.github.bloodshura.x.worker.UtilWorker;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-/**
- * MathFunction.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 13/05/16 - 03:17
- * @since GAMMA - 0x3
- */
 public class MathFunction implements Function {
   private final XList<Type> arguments;
   private final MathProvider instance;

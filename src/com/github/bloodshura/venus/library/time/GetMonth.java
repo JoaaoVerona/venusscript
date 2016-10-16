@@ -28,14 +28,6 @@ import com.github.bloodshura.venus.value.IntegerValue;
 import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.x.date.Date;
 
-/**
- * GetMonth.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 27/06/16 - 20:11
- * @since GAMMA - 0x3
- */
 @MethodName("getMonth")
 public class GetMonth extends Method {
   @Override

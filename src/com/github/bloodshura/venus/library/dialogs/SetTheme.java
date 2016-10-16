@@ -32,14 +32,6 @@ import com.github.bloodshura.venus.value.Value;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-/**
- * SetTheme.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 14/05/16 - 20:34
- * @since GAMMA - 0x3
- */
 @MethodArgs(StringValue.class)
 @MethodName("setTheme")
 public class SetTheme extends Method {

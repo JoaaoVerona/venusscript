@@ -28,14 +28,6 @@ import com.github.bloodshura.venus.value.IntegerValue;
 import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.x.sys.XSystem;
 
-/**
- * Millis.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 13/05/16 - 18:18
- * @since GAMMA - 0x3
- */
 @MethodName("millis")
 public class Millis extends Method {
   @Override

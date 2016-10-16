@@ -35,14 +35,6 @@ import com.github.bloodshura.x.collection.view.XArrayView;
 import com.github.bloodshura.x.collection.view.XBasicView;
 import com.github.bloodshura.x.collection.view.XView;
 
-/**
- * FunctionCall.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 17:13
- * @since GAMMA - 0x3
- */
 public class FunctionCall implements Expression {
   private final Expression[] arguments;
   private final String functionName;

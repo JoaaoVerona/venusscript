@@ -23,14 +23,6 @@ import com.github.bloodshura.venus.executor.Context;
 import com.github.bloodshura.venus.type.Type;
 import com.github.bloodshura.x.collection.view.XView;
 
-/**
- * UndefinedFunctionException.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 15:50
- * @since GAMMA - 0x3
- */
 public class UndefinedFunctionException extends ScriptRuntimeException {
   public UndefinedFunctionException(Context context, String functionName, XView<Type> argumentTypes) {
     super(context, "No definition found for a function named \"" + functionName + "\" taking argument types: " + argumentTypes);

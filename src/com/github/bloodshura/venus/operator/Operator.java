@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.operator;
 
 import com.github.bloodshura.x.collection.view.XView;
 
-/**
- * Operator.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 12/05/16 - 00:14
- * @since GAMMA - 0x3
- */
 public interface Operator {
   XView<String> getIdentifiers();
 }

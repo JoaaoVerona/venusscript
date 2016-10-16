@@ -19,14 +19,6 @@
 
 package com.github.bloodshura.venus.exception.compile;
 
-/**
- * UnexpectedInputException.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 17:31
- * @since GAMMA - 0x3
- */
 public class UnexpectedInputException extends ScriptCompileException {
   public UnexpectedInputException(String scriptName, int currentLine, String message) {
     super(scriptName, currentLine, message);

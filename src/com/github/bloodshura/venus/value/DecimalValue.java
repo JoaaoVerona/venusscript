@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.value;
 
 import com.github.bloodshura.venus.type.PrimitiveType;
 
-/**
- * DecimalValue.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 08/05/16 - 18:41
- * @since GAMMA - 0x3
- */
 public class DecimalValue extends NumericValue {
   private final double value;
 

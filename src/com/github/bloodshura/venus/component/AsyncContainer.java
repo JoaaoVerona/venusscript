@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.component;
 
 import com.github.bloodshura.venus.executor.Context;
 
-/**
- * AsyncContainer.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 13/05/16 - 22:45
- * @since GAMMA - 0x3
- */
 public class AsyncContainer extends Container {
   private final boolean daemon;
 

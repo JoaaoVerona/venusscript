@@ -27,14 +27,6 @@ import com.github.bloodshura.x.util.layer.XApi;
 
 import java.util.function.BiFunction;
 
-/**
- * BinaryOperator.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 01:51
- * @since GAMMA - 0x3
- */
 public class BinaryOperator implements Operator {
   private final BiFunction<Value, Value, Value> function;
   private final XView<String> identifiers;

@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.exception.runtime;
 
 import com.github.bloodshura.venus.executor.Context;
 
-/**
- * UndefinedVariableException.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 01:36
- * @since GAMMA - 0x3
- */
 public class UndefinedVariableException extends ScriptRuntimeException {
   private final String variableName;
 

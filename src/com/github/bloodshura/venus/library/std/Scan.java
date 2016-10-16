@@ -38,14 +38,6 @@ import com.github.bloodshura.x.logging.Logger;
 import com.github.bloodshura.x.worker.ParseWorker;
 import com.github.bloodshura.x.worker.exception.InvalidParseException;
 
-/**
- * Scan.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 13/05/16 - 02:45
- * @since GAMMA - 0x3
- */
 @MethodArgs(TypeValue.class)
 @MethodName("scan")
 public class Scan extends Method {

@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.compiler;
 
 import com.github.bloodshura.x.object.Base;
 
-/**
- * Token.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 04:25
- * @since GAMMA - 0x3
- */
 public class Token extends Base {
   private final Type type;
   private final String value;

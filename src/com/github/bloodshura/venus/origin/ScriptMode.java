@@ -19,14 +19,6 @@
 
 package com.github.bloodshura.venus.origin;
 
-/**
- * ScriptMode.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 22/05/16 - 18:38
- * @since GAMMA - 0x3
- */
 public enum ScriptMode {
   EVALUATION,
   INTERACTIVE,

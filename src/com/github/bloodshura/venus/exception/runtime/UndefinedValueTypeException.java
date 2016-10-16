@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.exception.runtime;
 
 import com.github.bloodshura.venus.executor.Context;
 
-/**
- * UndefinedValueTypeException.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 29/05/16 - 02:10
- * @since GAMMA - 0x3
- */
 public class UndefinedValueTypeException extends ScriptRuntimeException {
   public UndefinedValueTypeException(Context context, String name) {
     super(context, "No definition found for a type named \"" + name + "\"");

@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.exception.runtime;
 
 import com.github.bloodshura.venus.executor.Context;
 
-/**
- * InvalidFunctionParameterException.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 06/05/16 - 02:35
- * @since GAMMA - 0x3
- */
 public class InvalidFunctionParameterException extends ScriptRuntimeException {
   public InvalidFunctionParameterException(Context context, CharSequence message) {
     super(context, message);

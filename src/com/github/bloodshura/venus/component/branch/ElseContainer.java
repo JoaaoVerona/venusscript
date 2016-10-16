@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.component.branch;
 
 import com.github.bloodshura.venus.component.Container;
 
-/**
- * ElseContainer.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 12/05/16 - 02:20
- * @since GAMMA - 0x3
- */
 public class ElseContainer extends Container {
   @Override
   public String toString() {

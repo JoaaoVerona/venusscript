@@ -31,14 +31,6 @@ import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.venus.value.VariableRefValue;
 import com.github.bloodshura.x.logging.XLogger;
 
-/**
- * Consume.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 16/05/16 - 00:59
- * @since GAMMA - 0x3
- */
 @MethodArgs(VariableRefValue.class)
 @MethodName("consume")
 public class Consume extends VoidMethod {

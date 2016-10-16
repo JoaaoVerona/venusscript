@@ -22,14 +22,6 @@ package com.github.bloodshura.venus.exception.runtime;
 import com.github.bloodshura.venus.executor.Context;
 import com.github.bloodshura.x.exception.CatchableException;
 
-/**
- * ScriptRuntimeException.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 05/05/16 - 14:42
- * @since GAMMA - 0x3
- */
 public class ScriptRuntimeException extends CatchableException {
   private final Context context;
 

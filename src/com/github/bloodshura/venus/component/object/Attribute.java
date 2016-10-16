@@ -22,14 +22,6 @@ package com.github.bloodshura.venus.component.object;
 import com.github.bloodshura.venus.expression.Expression;
 import com.github.bloodshura.x.object.Base;
 
-/**
- * Attribute.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 29/05/16 - 01:33
- * @since GAMMA - 0x3
- */
 public class Attribute extends Base {
   private final Expression defaultExpression;
   private final String name;

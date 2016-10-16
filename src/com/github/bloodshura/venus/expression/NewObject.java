@@ -29,14 +29,6 @@ import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.x.collection.map.XMap;
 import com.github.bloodshura.x.collection.tuple.Pair;
 
-/**
- * NewObject.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 29/05/16 - 19:01
- * @since GAMMA - 0x3
- */
 public class NewObject implements Expression {
   private final XMap<String, Expression> attributes;
   private final String objectType;

@@ -34,14 +34,6 @@ import com.github.bloodshura.venus.value.VariableRefValue;
 import com.github.bloodshura.x.collection.view.XArrayView;
 import com.github.bloodshura.x.collection.view.XView;
 
-/**
- * EncryptFunction.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 17/05/16 - 12:53
- * @since GAMMA - 0x3
- */
 public class EncryptFunction implements Function {
   private final XView<Type> argumentTypes;
   private final Encrypter encrypter;

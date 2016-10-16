@@ -37,14 +37,6 @@ import com.github.bloodshura.x.worker.ParseWorker;
 
 import static com.github.bloodshura.x.sys.XSystem.*;
 
-/**
- * InteractiveTester.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 13/05/16 - 21:57
- * @since GAMMA - 0x3
- */
 public class InteractiveTester {
   public static final Folder DIRECTORY = new Folder("VenusScript/examples");
   public static final boolean LIGHTWEIGHT_ERRORS = false;

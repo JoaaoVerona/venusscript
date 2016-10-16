@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.component.branch;
 
 import com.github.bloodshura.venus.component.Component;
 
-/**
- * Break.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 13/05/16 - 21:38
- * @since GAMMA - 0x3
- */
 public class Break extends Component {
   @Override
   public String toString() {

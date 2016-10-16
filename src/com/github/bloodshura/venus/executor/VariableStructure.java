@@ -23,14 +23,6 @@ import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.x.collection.list.XList;
 import com.github.bloodshura.x.collection.list.impl.XArrayList;
 
-/**
- * VariableStructure.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 20/05/16 - 21:26
- * @since GAMMA - 0x3
- */
 public class VariableStructure {
   private final XList<Object> changeMonitors;
   private final Object lockMonitor;

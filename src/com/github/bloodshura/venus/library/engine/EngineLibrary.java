@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.library.engine;
 
 import com.github.bloodshura.venus.library.VenusLibrary;
 
-/**
- * EngineLibrary.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 21/05/16 - 01:36
- * @since GAMMA - 0x3
- */
 public class EngineLibrary extends VenusLibrary {
   public EngineLibrary() {
     addAll(Evaluate.class, HasFunction.class, Interpret.class, Run.class);

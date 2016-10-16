@@ -25,14 +25,6 @@ import com.github.bloodshura.venus.executor.Context;
 import com.github.bloodshura.venus.value.ObjectValue;
 import com.github.bloodshura.venus.value.Value;
 
-/**
- * InContext.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 29/05/16 - 18:55
- * @since GAMMA - 0x3
- */
 public class InContext implements Expression {
   private final Expression expression;
   private final String name;

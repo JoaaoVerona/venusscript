@@ -26,14 +26,6 @@ import com.github.bloodshura.venus.function.VoidMethod;
 import com.github.bloodshura.venus.function.annotation.MethodName;
 import com.github.bloodshura.x.sys.XSystem;
 
-/**
- * Exit.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 27/05/16 - 22:48
- * @since GAMMA - 0x3
- */
 @MethodName("exit")
 public class Exit extends VoidMethod {
   @Override

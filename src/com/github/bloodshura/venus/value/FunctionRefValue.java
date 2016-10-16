@@ -23,14 +23,6 @@ import com.github.bloodshura.venus.compiler.KeywordDefinitions;
 import com.github.bloodshura.venus.type.PrimitiveType;
 import com.github.bloodshura.x.util.layer.XApi;
 
-/**
- * FunctionRefValue.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 14/05/16 - 02:38
- * @since GAMMA - 0x3
- */
 public class FunctionRefValue extends Value {
   private final String value;
 

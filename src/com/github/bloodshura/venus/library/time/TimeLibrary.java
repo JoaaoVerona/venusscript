@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.library.time;
 
 import com.github.bloodshura.venus.library.VenusLibrary;
 
-/**
- * TimeLibrary.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 27/06/16 - 20:14
- * @since GAMMA - 0x3
- */
 public class TimeLibrary extends VenusLibrary {
   public TimeLibrary() {
     addAll(GetDay.class, GetHour.class, GetMinute.class, GetMonth.class, GetSecond.class, GetYear.class);

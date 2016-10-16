@@ -30,14 +30,6 @@ import com.github.bloodshura.venus.function.annotation.MethodName;
 import com.github.bloodshura.venus.value.BoolValue;
 import com.github.bloodshura.venus.value.StringValue;
 
-/**
- * DynamicInclude.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 14/05/16 - 00:16
- * @since GAMMA - 0x3
- */
 @MethodArgs({ StringValue.class, BoolValue.class })
 @MethodName("dynamicInclude")
 public class DynamicInclude extends VoidMethod {

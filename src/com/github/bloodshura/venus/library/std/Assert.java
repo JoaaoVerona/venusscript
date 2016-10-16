@@ -30,14 +30,6 @@ import com.github.bloodshura.venus.type.PrimitiveType;
 import com.github.bloodshura.venus.value.BoolValue;
 import com.github.bloodshura.venus.value.Value;
 
-/**
- * Assert.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 12/05/16 - 20:33
- * @since GAMMA - 0x3
- */
 @MethodArgs(Value.class)
 @MethodName("assert")
 public class Assert extends Method {

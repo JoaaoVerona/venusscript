@@ -29,14 +29,6 @@ import com.github.bloodshura.venus.value.IntegerValue;
 import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.x.math.random.XRandom;
 
-/**
- * RandInt.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 17/05/16 - 13:52
- * @since GAMMA - 0x3
- */
 @MethodArgs({ IntegerValue.class, IntegerValue.class })
 @MethodName("randInt")
 public class RandInt extends Method {

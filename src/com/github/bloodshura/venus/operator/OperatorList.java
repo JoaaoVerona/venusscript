@@ -24,14 +24,6 @@ import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.worker.enumeration.Enumerations;
 
-/**
- * OperatorList.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 07/05/16 - 19:49
- * @since GAMMA - 0x3
- */
 public class OperatorList {
   public static final BinaryOperator AND = new BinaryOperator("and", Value::and, "&&", "&");
   public static final BinaryOperator DIVIDE = new BinaryOperator("divide", Value::divide, "/");

@@ -21,14 +21,6 @@ package com.github.bloodshura.venus.exception.runtime;
 
 import com.github.bloodshura.venus.executor.Context;
 
-/**
- * InvalidArrayAccessException.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 22/05/16 - 02:08
- * @since GAMMA - 0x3
- */
 public class InvalidArrayAccessException extends ScriptRuntimeException {
   public InvalidArrayAccessException(Context context, CharSequence message) {
     super(context, message);

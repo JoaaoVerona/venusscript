@@ -31,14 +31,6 @@ import com.github.bloodshura.venus.value.StringValue;
 
 import java.util.function.Supplier;
 
-/**
- * DynamicUsing.java
- *
- * @author <a href="https://www.github.com/BloodShura">BloodShura</a> (João Vitor Verona Biazibetti)
- * @contact joaaoverona@gmail.com
- * @date 14/05/16 - 00:40
- * @since GAMMA - 0x3
- */
 @MethodArgs(StringValue.class)
 @MethodName("dynamicUsing")
 public class DynamicUsing extends VoidMethod {
