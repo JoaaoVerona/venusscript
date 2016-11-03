@@ -818,7 +818,7 @@ public class VenusParser {
           }
         }
         else {
-          Expression[] expressions = readResultors(Token.Type.COMMA, Token.Type.CLOSE_BRACKET);
+          Expression[] expressions = readExpressions(Token.Type.COMMA, Token.Type.CLOSE_BRACKET);
 
           expression.addExpression(this, token, new ArrayLiteral(expressions));
         }
@@ -907,8 +907,23 @@ public class VenusParser {
     return readExpression(token -> token.getType() != stopAt, reReadLast);
   }
 
+  // This also consumes the last 'end' token
+  protected Expression[] readExpressions(Token.Type separator, Token.Type end) throws ScriptCompileException {
+    XList<Expression> result = new XArrayList<>();
+    Token token;
+
+    while ((token = requireToken()).getType() != end) {
+      lexer.reRead(token);
+      result.add(readExpression(
+        t -> t.getType() != end && t.getType() != separator,
+        t -> t.getType() == end));
+    }
+
+    return result.toArray();
+  }
+
   protected Expression[] readFunctionArguments() throws ScriptCompileException {
-    return readResultors(Token.Type.COMMA, Token.Type.CLOSE_PARENTHESE);
+    return readExpressions(Token.Type.COMMA, Token.Type.CLOSE_PARENTHESE);
   }
 
   protected String readOperator(String start) throws ScriptCompileException {
@@ -932,21 +947,6 @@ public class VenusParser {
     lexer.reRead(operatorToken); // Last token have type != OPERATOR
 
     return operatorStr.toStringAndClear();
-  }
-
-  // This also consumes the last 'end' token
-  protected Expression[] readResultors(Token.Type separator, Token.Type end) throws ScriptCompileException {
-    XList<Expression> result = new XArrayList<>();
-    Token token;
-
-    while ((token = requireToken()).getType() != end) {
-      lexer.reRead(token);
-      result.add(readExpression(
-        t -> t.getType() != end && t.getType() != separator,
-        t -> t.getType() == end));
-    }
-
-    return result.toArray();
   }
 
   protected Value readValue() throws ScriptCompileException {
