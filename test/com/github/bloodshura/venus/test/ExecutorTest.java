@@ -37,6 +37,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @RunWith(Parameterized.class)
@@ -65,6 +66,6 @@ public class ExecutorTest {
 
     DIRECTORY.getAllFiles(file -> !file.getName().endsWith("_i"), file -> data.add(new Object[] { file }));
 
-    return data.asCollection(java.util.ArrayList.class);
+    return data.asCollection(ArrayList.class);
   }
 }
