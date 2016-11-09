@@ -35,6 +35,7 @@ import com.github.bloodshura.venus.value.StringValue;
 import com.github.bloodshura.venus.value.TypeValue;
 import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.x.logging.Logger;
+import com.github.bloodshura.x.logging.XScanner;
 import com.github.bloodshura.x.worker.ParseWorker;
 import com.github.bloodshura.x.worker.exception.InvalidParseException;
 
@@ -51,7 +52,7 @@ public class Scan extends Method {
 
       while (true) {
         try {
-          String line = logger.scan();
+          String line = XScanner.scan();
 
           if (type == PrimitiveType.BOOLEAN) {
             return new BoolValue(ParseWorker.toBoolean(line));

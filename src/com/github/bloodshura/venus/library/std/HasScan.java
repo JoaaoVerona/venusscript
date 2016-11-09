@@ -27,6 +27,7 @@ import com.github.bloodshura.venus.function.annotation.MethodName;
 import com.github.bloodshura.venus.value.BoolValue;
 import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.x.logging.Logger;
+import com.github.bloodshura.x.logging.XScanner;
 
 @MethodName("hasScan")
 public class HasScan extends Method {
@@ -35,7 +36,7 @@ public class HasScan extends Method {
     Logger logger = context.getApplicationContext().getUserData("in", Logger.class);
 
     if (logger != null) {
-      return new BoolValue(logger.hasScan());
+      return new BoolValue(XScanner.has());
     }
 
     return new BoolValue(false);

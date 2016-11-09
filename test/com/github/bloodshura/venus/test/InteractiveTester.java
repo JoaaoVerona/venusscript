@@ -33,6 +33,7 @@ import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.io.file.File;
 import com.github.bloodshura.x.io.file.Folder;
 import com.github.bloodshura.x.logging.XLogger;
+import com.github.bloodshura.x.logging.XScanner;
 import com.github.bloodshura.x.worker.ParseWorker;
 
 import static com.github.bloodshura.x.sys.XSystem.*;
@@ -55,7 +56,7 @@ public class InteractiveTester {
     boolean printAst = false;
 
     while (option < 0 || option >= files.size()) {
-      String optionStr = XLogger.scan();
+      String optionStr = XScanner.scan();
 
       if (optionStr.startsWith("*")) {
         optionStr = optionStr.substring(1);
