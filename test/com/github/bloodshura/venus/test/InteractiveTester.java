@@ -32,8 +32,8 @@ import com.github.bloodshura.venus.origin.ScriptOrigin;
 import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.io.file.File;
 import com.github.bloodshura.x.io.file.Folder;
-import com.github.bloodshura.x.logging.XLogger;
-import com.github.bloodshura.x.logging.XScanner;
+import com.github.bloodshura.x.activity.logging.XLogger;
+import com.github.bloodshura.x.activity.scanning.XScanner;
 import com.github.bloodshura.x.worker.ParseWorker;
 
 import static com.github.bloodshura.x.sys.XSystem.*;

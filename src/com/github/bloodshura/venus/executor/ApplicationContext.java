@@ -33,7 +33,7 @@ import com.github.bloodshura.venus.library.time.TimeLibrary;
 import com.github.bloodshura.x.collection.map.XMap;
 import com.github.bloodshura.x.collection.map.impl.XLinkedMap;
 import com.github.bloodshura.x.lang.annotation.Internal;
-import com.github.bloodshura.x.logging.XLogger;
+import com.github.bloodshura.x.activity.logging.XLogger;
 import com.github.bloodshura.x.math.impl.FastMath;
 import com.github.bloodshura.x.math.impl.JavaMath;
 import com.github.bloodshura.x.math.impl.SimpleMath;

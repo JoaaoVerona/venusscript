@@ -31,7 +31,7 @@ import com.github.bloodshura.venus.type.Type;
 import com.github.bloodshura.x.collection.list.XList;
 import com.github.bloodshura.x.collection.list.impl.XArrayList;
 import com.github.bloodshura.x.collection.view.XView;
-import com.github.bloodshura.x.logging.XLogger;
+import com.github.bloodshura.x.activity.logging.XLogger;
 
 public class Script extends Container {
   private final ApplicationContext appContext;

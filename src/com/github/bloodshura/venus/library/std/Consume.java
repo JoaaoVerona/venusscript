@@ -29,7 +29,7 @@ import com.github.bloodshura.venus.function.annotation.MethodName;
 import com.github.bloodshura.venus.value.IntegerValue;
 import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.venus.value.VariableRefValue;
-import com.github.bloodshura.x.logging.XLogger;
+import com.github.bloodshura.x.activity.logging.XLogger;
 
 @MethodArgs(VariableRefValue.class)
 @MethodName("consume")

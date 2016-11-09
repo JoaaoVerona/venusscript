@@ -26,8 +26,8 @@ import com.github.bloodshura.venus.exception.compile.ScriptCompileException;
 import com.github.bloodshura.venus.executor.ApplicationContext;
 import com.github.bloodshura.venus.origin.ScriptOrigin;
 import com.github.bloodshura.venus.origin.SimpleScriptOrigin;
-import com.github.bloodshura.x.logging.Logger.Level;
-import com.github.bloodshura.x.logging.XLogger;
+import com.github.bloodshura.x.activity.logging.Logger.Level;
+import com.github.bloodshura.x.activity.logging.XLogger;
 import com.github.bloodshura.x.worker.StringWorker;
 import org.junit.Test;
 

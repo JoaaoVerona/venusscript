@@ -34,8 +34,8 @@ import com.github.bloodshura.venus.value.IntegerValue;
 import com.github.bloodshura.venus.value.StringValue;
 import com.github.bloodshura.venus.value.TypeValue;
 import com.github.bloodshura.venus.value.Value;
-import com.github.bloodshura.x.logging.Logger;
-import com.github.bloodshura.x.logging.XScanner;
+import com.github.bloodshura.x.activity.logging.Logger;
+import com.github.bloodshura.x.activity.scanning.XScanner;
 import com.github.bloodshura.x.worker.ParseWorker;
 import com.github.bloodshura.x.worker.exception.InvalidParseException;
 

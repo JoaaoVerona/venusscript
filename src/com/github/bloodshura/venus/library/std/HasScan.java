@@ -26,8 +26,8 @@ import com.github.bloodshura.venus.function.Method;
 import com.github.bloodshura.venus.function.annotation.MethodName;
 import com.github.bloodshura.venus.value.BoolValue;
 import com.github.bloodshura.venus.value.Value;
-import com.github.bloodshura.x.logging.Logger;
-import com.github.bloodshura.x.logging.XScanner;
+import com.github.bloodshura.x.activity.logging.Logger;
+import com.github.bloodshura.x.activity.scanning.XScanner;
 
 @MethodName("hasScan")
 public class HasScan extends Method {
