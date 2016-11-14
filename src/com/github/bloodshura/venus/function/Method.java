@@ -28,6 +28,7 @@ import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.x.collection.view.XArrayView;
 import com.github.bloodshura.x.collection.view.XBasicView;
 import com.github.bloodshura.x.collection.view.XView;
+import com.github.bloodshura.x.util.layer.NotNull;
 import com.github.bloodshura.x.util.layer.XApi;
 
 public abstract class Method implements Function {
@@ -61,6 +62,7 @@ public abstract class Method implements Function {
     return arguments;
   }
 
+  @NotNull
   @Override
   public final String getName() {
     return name;

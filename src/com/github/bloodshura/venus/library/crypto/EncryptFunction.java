@@ -33,6 +33,7 @@ import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.venus.value.VariableRefValue;
 import com.github.bloodshura.x.collection.view.XArrayView;
 import com.github.bloodshura.x.collection.view.XView;
+import com.github.bloodshura.x.util.layer.NotNull;
 
 public class EncryptFunction implements Function {
   private final XView<Type> argumentTypes;
@@ -71,6 +72,7 @@ public class EncryptFunction implements Function {
     return encrypter;
   }
 
+  @NotNull
   @Override
   public String getName() {
     return name;

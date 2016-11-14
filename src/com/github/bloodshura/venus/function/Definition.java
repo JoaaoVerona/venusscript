@@ -28,6 +28,7 @@ import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.x.collection.list.XList;
 import com.github.bloodshura.x.collection.view.XBasicView;
 import com.github.bloodshura.x.collection.view.XView;
+import com.github.bloodshura.x.util.layer.NotNull;
 
 public final class Definition extends Container implements Function {
   private final XList<Argument> arguments;
@@ -69,6 +70,7 @@ public final class Definition extends Container implements Function {
     return new XBasicView<>(arguments);
   }
 
+  @NotNull
   @Override
   public String getName() {
     return name;

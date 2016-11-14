@@ -32,6 +32,7 @@ import com.github.bloodshura.x.collection.list.impl.XArrayList;
 import com.github.bloodshura.x.collection.view.XBasicView;
 import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.math.MathProvider;
+import com.github.bloodshura.x.util.layer.NotNull;
 import com.github.bloodshura.x.worker.UtilWorker;
 
 import java.lang.reflect.InvocationTargetException;
@@ -103,6 +104,7 @@ public class MathFunction implements Function {
     return method;
   }
 
+  @NotNull
   @Override
   public String getName() {
     return name;
