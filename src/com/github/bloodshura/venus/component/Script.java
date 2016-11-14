@@ -28,10 +28,10 @@ import com.github.bloodshura.venus.function.Function;
 import com.github.bloodshura.venus.library.LibraryList;
 import com.github.bloodshura.venus.origin.ScriptOrigin;
 import com.github.bloodshura.venus.type.Type;
+import com.github.bloodshura.x.activity.logging.XLogger;
 import com.github.bloodshura.x.collection.list.XList;
 import com.github.bloodshura.x.collection.list.impl.XArrayList;
 import com.github.bloodshura.x.collection.view.XView;
-import com.github.bloodshura.x.activity.logging.XLogger;
 
 public class Script extends Container {
   private final ApplicationContext appContext;

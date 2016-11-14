@@ -33,9 +33,9 @@ import com.github.bloodshura.venus.function.annotation.MethodArgs;
 import com.github.bloodshura.venus.function.annotation.MethodName;
 import com.github.bloodshura.venus.value.BoolValue;
 import com.github.bloodshura.venus.value.Value;
+import com.github.bloodshura.x.activity.logging.XLogger;
 import com.github.bloodshura.x.collection.list.XList;
 import com.github.bloodshura.x.collection.list.impl.XArrayList;
-import com.github.bloodshura.x.activity.logging.XLogger;
 
 @MethodArgs(Value.class)
 @MethodName("wait")
