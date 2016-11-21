@@ -26,7 +26,7 @@ import com.github.bloodshura.venus.function.VoidMethod;
 import com.github.bloodshura.venus.function.annotation.MethodArgs;
 import com.github.bloodshura.venus.function.annotation.MethodName;
 import com.github.bloodshura.venus.value.IntegerValue;
-import com.github.bloodshura.x.worker.UtilWorker;
+import com.github.bloodshura.x.runnable.XThread;
 
 @MethodArgs(IntegerValue.class)
 @MethodName("sleep")
@@ -35,6 +35,6 @@ public class Sleep extends VoidMethod {
   public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
     IntegerValue timeInMillis = (IntegerValue) descriptor.get(0);
 
-    UtilWorker.stay(timeInMillis.value());
+    XThread.stay(timeInMillis.value());
   }
 }

@@ -26,7 +26,7 @@ import com.github.bloodshura.venus.function.VoidMethod;
 import com.github.bloodshura.venus.function.annotation.MethodArgs;
 import com.github.bloodshura.venus.function.annotation.MethodName;
 import com.github.bloodshura.venus.value.VariableRefValue;
-import com.github.bloodshura.x.worker.UtilWorker;
+import com.github.bloodshura.x.runnable.XThread;
 
 @MethodArgs(VariableRefValue.class)
 @MethodName("wait")
@@ -36,7 +36,7 @@ public class WaitDefinition extends VoidMethod {
     VariableRefValue reference = (VariableRefValue) descriptor.get(0);
 
     while (!context.hasVar(reference.value())) {
-      UtilWorker.stay(50L);
+      XThread.stay(50L);
     }
   }
 }
