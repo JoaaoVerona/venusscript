@@ -22,7 +22,7 @@ package com.github.bloodshura.venus.operator;
 import com.github.bloodshura.venus.value.TypeValue;
 import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.x.collection.view.XView;
-import com.github.bloodshura.x.worker.enumeration.Enumerations;
+import com.github.bloodshura.x.enumeration.Enumerations;
 
 public class OperatorList {
   public static final BinaryOperator AND = new BinaryOperator("and", Value::and, "&&", "&");

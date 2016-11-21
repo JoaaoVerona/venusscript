@@ -34,7 +34,7 @@ import com.github.bloodshura.x.collection.view.XArrayView;
 import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.util.layer.XApi;
 import com.github.bloodshura.x.worker.UtilWorker;
-import com.github.bloodshura.x.worker.enumeration.Enumerations;
+import com.github.bloodshura.x.enumeration.Enumerations;
 
 public final class PrimitiveType extends Type {
   public static final Type ANY = new PrimitiveType("any", Value.class, Object.class);

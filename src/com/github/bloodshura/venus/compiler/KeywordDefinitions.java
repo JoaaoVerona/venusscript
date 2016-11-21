@@ -20,7 +20,7 @@
 package com.github.bloodshura.venus.compiler;
 
 import com.github.bloodshura.x.collection.view.XView;
-import com.github.bloodshura.x.worker.enumeration.Enumerations;
+import com.github.bloodshura.x.enumeration.Enumerations;
 
 public class KeywordDefinitions {
   public static final String ASYNC = "async";
