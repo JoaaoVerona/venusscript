@@ -27,7 +27,7 @@ import com.github.bloodshura.x.charset.build.TextBuilder;
 import com.github.bloodshura.x.util.Pool;
 import com.github.bloodshura.x.util.comparator.SimpleEqualizer;
 import com.github.bloodshura.x.util.iterator.ArrayIterator;
-import com.github.bloodshura.x.util.layer.XApi;
+import com.github.bloodshura.x.lang.layer.XApi;
 import com.github.bloodshura.x.worker.ArrayWorker;
 
 import java.util.Iterator;

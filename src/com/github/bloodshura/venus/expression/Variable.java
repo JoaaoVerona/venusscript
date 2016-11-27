@@ -22,7 +22,7 @@ package com.github.bloodshura.venus.expression;
 import com.github.bloodshura.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.venus.executor.Context;
 import com.github.bloodshura.venus.value.Value;
-import com.github.bloodshura.x.util.layer.XApi;
+import com.github.bloodshura.x.lang.layer.XApi;
 
 public class Variable implements Expression {
   private final String name;

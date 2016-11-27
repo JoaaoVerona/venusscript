@@ -21,7 +21,7 @@ package com.github.bloodshura.venus.component;
 
 import com.github.bloodshura.venus.executor.ApplicationContext;
 import com.github.bloodshura.x.lang.annotation.Internal;
-import com.github.bloodshura.x.util.layer.XApi;
+import com.github.bloodshura.x.lang.layer.XApi;
 
 public abstract class Component {
   private Container parent;

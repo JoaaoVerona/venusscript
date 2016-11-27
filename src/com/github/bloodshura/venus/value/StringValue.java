@@ -20,7 +20,7 @@
 package com.github.bloodshura.venus.value;
 
 import com.github.bloodshura.venus.type.PrimitiveType;
-import com.github.bloodshura.x.util.layer.XApi;
+import com.github.bloodshura.x.lang.layer.XApi;
 
 public class StringValue extends Value {
   private final String value;
