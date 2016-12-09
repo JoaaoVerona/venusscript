@@ -32,14 +32,14 @@ import com.github.bloodshura.venus.origin.ScriptOrigin;
 import com.github.bloodshura.x.activity.logging.XLogger;
 import com.github.bloodshura.x.activity.scanning.XScanner;
 import com.github.bloodshura.x.collection.view.XView;
+import com.github.bloodshura.x.io.file.Directory;
 import com.github.bloodshura.x.io.file.File;
-import com.github.bloodshura.x.io.file.Folder;
 import com.github.bloodshura.x.worker.ParseWorker;
 
 import static com.github.bloodshura.x.sys.XSystem.*;
 
 public class InteractiveTester {
-  public static final Folder DIRECTORY = new Folder("VenusScript/examples");
+  public static final Directory DIRECTORY = new Directory("VenusScript/examples");
   public static final boolean LIGHTWEIGHT_ERRORS = false;
 
   public static void main(String[] args) throws Exception {

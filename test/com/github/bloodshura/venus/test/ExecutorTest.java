@@ -29,8 +29,8 @@ import com.github.bloodshura.x.activity.logging.Logger.Level;
 import com.github.bloodshura.x.activity.logging.XLogger;
 import com.github.bloodshura.x.collection.list.XList;
 import com.github.bloodshura.x.collection.list.impl.XArrayList;
+import com.github.bloodshura.x.io.file.Directory;
 import com.github.bloodshura.x.io.file.File;
-import com.github.bloodshura.x.io.file.Folder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -42,7 +42,7 @@ import java.util.Collection;
 
 @RunWith(Parameterized.class)
 public class ExecutorTest {
-  public static final Folder DIRECTORY = new Folder("VenusScript/examples");
+  public static final Directory DIRECTORY = new Directory("VenusScript/examples");
   private final File file;
 
   public ExecutorTest(File file) {
