@@ -6,7 +6,7 @@ using engine
 using std
 
 println("Executing basic.vs...")
-run("../basic.vs")
+run("basic.vs")
 println("Done.")
 println("Executing asynchronously input.vs...")
 async run("input.vs")
