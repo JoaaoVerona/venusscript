@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////////////////
-// Copyright (c) 2016, João Vitor Verona Biazibetti - All Rights Reserved                /
+// Copyright (c) 2013-2017, João Vitor Verona Biazibetti - All Rights Reserved           /
 //                                                                                       /
 // This program is free software: you can redistribute it and/or modify                  /
 // it under the terms of the GNU General Public License as published by                  /
