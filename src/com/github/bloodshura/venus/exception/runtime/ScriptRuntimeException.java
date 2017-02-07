@@ -20,9 +20,9 @@
 package com.github.bloodshura.venus.exception.runtime;
 
 import com.github.bloodshura.venus.executor.Context;
-import com.github.bloodshura.x.exception.CatchableException;
+import com.github.bloodshura.x.exception.CheckedException;
 
-public class ScriptRuntimeException extends CatchableException {
+public class ScriptRuntimeException extends CheckedException {
   private final Context context;
 
   public ScriptRuntimeException(Context context, CharSequence message) {

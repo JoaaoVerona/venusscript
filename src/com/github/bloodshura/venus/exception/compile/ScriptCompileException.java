@@ -19,9 +19,9 @@
 
 package com.github.bloodshura.venus.exception.compile;
 
-import com.github.bloodshura.x.exception.CatchableException;
+import com.github.bloodshura.x.exception.CheckedException;
 
-public class ScriptCompileException extends CatchableException {
+public class ScriptCompileException extends CheckedException {
   public ScriptCompileException(CharSequence message) {
     super(message);
   }
