@@ -66,6 +66,6 @@ public class ExecutorTest {
 
     DIRECTORY.getAllFiles(file -> !file.getName().endsWith("_i"), file -> data.add(new Object[] { file }));
 
-    return data.asCollection(ArrayList.class);
+    return data.toCollection(ArrayList.class);
   }
 }
