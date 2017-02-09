@@ -19,6 +19,7 @@
 
 package com.github.bloodshura.venus.library.dialogs;
 
+import com.github.bloodshura.dialogs.AlertType;
 import com.github.bloodshura.dialogs.XDialogs;
 import com.github.bloodshura.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.venus.executor.Context;
@@ -28,7 +29,6 @@ import com.github.bloodshura.venus.function.annotation.MethodName;
 import com.github.bloodshura.venus.function.annotation.MethodVarArgs;
 import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.x.charset.build.TextBuilder;
-import com.github.bloodshura.dialogs.AlertType;
 import com.github.bloodshura.x.util.Pool;
 
 @MethodName("warnDialog")
