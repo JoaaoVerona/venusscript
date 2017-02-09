@@ -28,7 +28,7 @@ import com.github.bloodshura.venus.function.annotation.MethodName;
 import com.github.bloodshura.venus.function.annotation.MethodVarArgs;
 import com.github.bloodshura.venus.value.Value;
 import com.github.bloodshura.x.charset.build.TextBuilder;
-import com.github.bloodshura.x.sys.enumeration.AlertType;
+import com.github.bloodshura.dialogs.AlertType;
 import com.github.bloodshura.x.util.Pool;
 
 @MethodName("errorDialog")
