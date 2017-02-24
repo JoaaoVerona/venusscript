@@ -19,6 +19,7 @@
 
 package com.github.bloodshura.x.venus.function;
 
+import com.github.bloodshura.x.lang.layer.NotNull;
 import com.github.bloodshura.x.venus.type.Type;
 import com.github.bloodshura.x.object.Base;
 
@@ -39,6 +40,7 @@ public class Argument extends Base {
     return type;
   }
 
+  @NotNull
   @Override
   protected Object[] stringValues() {
     return new Object[] { getName(), getType() };

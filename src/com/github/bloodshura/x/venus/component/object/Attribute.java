@@ -19,6 +19,7 @@
 
 package com.github.bloodshura.x.venus.component.object;
 
+import com.github.bloodshura.x.lang.layer.NotNull;
 import com.github.bloodshura.x.venus.expression.Expression;
 import com.github.bloodshura.x.object.Base;
 
@@ -43,6 +44,7 @@ public class Attribute extends Base {
     return getDefaultExpression() != null;
   }
 
+  @NotNull
   @Override
   protected Object[] stringValues() {
     return new Object[] { getName(), getDefaultExpression() };
