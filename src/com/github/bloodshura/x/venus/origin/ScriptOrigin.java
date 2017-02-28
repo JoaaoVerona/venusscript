@@ -24,7 +24,7 @@ import com.github.bloodshura.x.venus.compiler.VenusParser;
 import com.github.bloodshura.x.venus.component.Script;
 import com.github.bloodshura.x.venus.exception.compile.ScriptCompileException;
 import com.github.bloodshura.x.venus.executor.ApplicationContext;
-import com.github.bloodshura.x.loader.resource.PathResource;
+import com.github.bloodshura.x.resource.PathResource;
 
 import java.io.IOException;
 

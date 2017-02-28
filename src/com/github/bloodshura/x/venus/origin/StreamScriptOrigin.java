@@ -19,7 +19,7 @@
 
 package com.github.bloodshura.x.venus.origin;
 
-import com.github.bloodshura.x.lang.Resource;
+import com.github.bloodshura.x.resource.Resource;
 
 import java.io.IOException;
 
