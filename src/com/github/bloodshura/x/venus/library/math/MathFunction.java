@@ -31,7 +31,7 @@ import com.github.bloodshura.x.collection.list.XList;
 import com.github.bloodshura.x.collection.list.impl.XArrayList;
 import com.github.bloodshura.x.collection.view.XBasicView;
 import com.github.bloodshura.x.collection.view.XView;
-import com.github.bloodshura.x.lang.layer.NotNull;
+import javax.annotation.NotNull;
 import com.github.bloodshura.x.math.MathProvider;
 import com.github.bloodshura.x.worker.UtilWorker;
 

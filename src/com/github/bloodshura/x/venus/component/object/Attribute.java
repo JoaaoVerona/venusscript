@@ -19,7 +19,7 @@
 
 package com.github.bloodshura.x.venus.component.object;
 
-import com.github.bloodshura.x.lang.layer.NotNull;
+import javax.annotation.NotNull;
 import com.github.bloodshura.x.venus.expression.Expression;
 import com.github.bloodshura.x.object.Base;
 

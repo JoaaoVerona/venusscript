@@ -19,7 +19,7 @@
 
 package com.github.bloodshura.x.venus.compiler;
 
-import com.github.bloodshura.x.lang.layer.NotNull;
+import javax.annotation.NotNull;
 import com.github.bloodshura.x.object.Base;
 
 public class Token extends Base {

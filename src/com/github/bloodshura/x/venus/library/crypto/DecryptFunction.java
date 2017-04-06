@@ -33,7 +33,7 @@ import com.github.bloodshura.x.venus.value.Value;
 import com.github.bloodshura.x.venus.value.VariableRefValue;
 import com.github.bloodshura.x.collection.view.XArrayView;
 import com.github.bloodshura.x.collection.view.XView;
-import com.github.bloodshura.x.lang.layer.NotNull;
+import javax.annotation.NotNull;
 
 public class DecryptFunction implements Function {
   private final XView<Type> argumentTypes;
