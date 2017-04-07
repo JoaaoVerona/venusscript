@@ -28,7 +28,7 @@ import com.github.bloodshura.x.venus.value.Value;
 import com.github.bloodshura.x.collection.view.XArrayView;
 import com.github.bloodshura.x.collection.view.XBasicView;
 import com.github.bloodshura.x.collection.view.XView;
-import javax.annotation.NotNull;
+import javax.annotation.Nonnull;
 import com.github.bloodshura.x.lang.layer.XApi;
 
 public abstract class Method implements Function {
@@ -62,7 +62,7 @@ public abstract class Method implements Function {
     return arguments;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public final String getName() {
     return name;

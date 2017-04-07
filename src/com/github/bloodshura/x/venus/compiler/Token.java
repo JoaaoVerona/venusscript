@@ -19,7 +19,8 @@
 
 package com.github.bloodshura.x.venus.compiler;
 
-import javax.annotation.NotNull;
+import javax.annotation.Nonnull;
+
 import com.github.bloodshura.x.object.Base;
 
 public class Token extends Base {
@@ -43,7 +44,7 @@ public class Token extends Base {
     return value;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public String toString() {
     if (getValue() != null) {
@@ -53,7 +54,7 @@ public class Token extends Base {
     return getType().toString();
   }
 
-  @NotNull
+  @Nonnull
   @Override
   protected Object[] stringValues() {
     return new Object[] { getType(), getValue() };

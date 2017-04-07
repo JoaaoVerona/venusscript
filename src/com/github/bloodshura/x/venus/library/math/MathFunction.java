@@ -31,7 +31,9 @@ import com.github.bloodshura.x.collection.list.XList;
 import com.github.bloodshura.x.collection.list.impl.XArrayList;
 import com.github.bloodshura.x.collection.view.XBasicView;
 import com.github.bloodshura.x.collection.view.XView;
-import javax.annotation.NotNull;
+
+import javax.annotation.Nonnull;
+
 import com.github.bloodshura.x.math.MathProvider;
 import com.github.bloodshura.x.worker.UtilWorker;
 
@@ -104,7 +106,7 @@ public class MathFunction implements Function {
     return method;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public String getName() {
     return name;

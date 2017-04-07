@@ -33,7 +33,8 @@ import com.github.bloodshura.x.venus.value.Value;
 import com.github.bloodshura.x.venus.value.VariableRefValue;
 import com.github.bloodshura.x.collection.view.XArrayView;
 import com.github.bloodshura.x.collection.view.XView;
-import javax.annotation.NotNull;
+
+import javax.annotation.Nonnull;
 
 public class DecryptFunction implements Function {
   private final XView<Type> argumentTypes;
@@ -72,7 +73,7 @@ public class DecryptFunction implements Function {
     return decrypter;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public String getName() {
     return name;

@@ -19,7 +19,7 @@
 
 package com.github.bloodshura.x.venus.function;
 
-import javax.annotation.NotNull;
+import javax.annotation.Nonnull;
 import com.github.bloodshura.x.venus.type.Type;
 import com.github.bloodshura.x.object.Base;
 
@@ -40,7 +40,7 @@ public class Argument extends Base {
     return type;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   protected Object[] stringValues() {
     return new Object[] { getName(), getType() };
