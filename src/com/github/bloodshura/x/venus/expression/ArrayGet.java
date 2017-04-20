@@ -26,7 +26,7 @@ import com.github.bloodshura.x.venus.type.PrimitiveType;
 import com.github.bloodshura.x.venus.value.ArrayValue;
 import com.github.bloodshura.x.venus.value.IntegerValue;
 import com.github.bloodshura.x.venus.value.Value;
-import com.github.bloodshura.x.lang.layer.XApi;
+import com.github.bloodshura.x.util.XApi;
 
 public class ArrayGet implements Expression {
   private final Expression index;

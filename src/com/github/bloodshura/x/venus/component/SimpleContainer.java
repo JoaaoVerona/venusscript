@@ -19,7 +19,7 @@
 
 package com.github.bloodshura.x.venus.component;
 
-import com.github.bloodshura.x.lang.layer.XApi;
+import com.github.bloodshura.x.util.XApi;
 
 public class SimpleContainer extends Container {
   private final String name;

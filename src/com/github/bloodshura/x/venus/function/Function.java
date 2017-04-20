@@ -26,7 +26,7 @@ import com.github.bloodshura.x.venus.type.Type;
 import com.github.bloodshura.x.venus.value.Value;
 import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.lang.Nameable;
-import com.github.bloodshura.x.lang.layer.XApi;
+import com.github.bloodshura.x.util.XApi;
 
 public interface Function extends Nameable {
   default boolean accepts(String name, XView<Type> argumentTypes) {

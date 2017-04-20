@@ -24,7 +24,7 @@ import com.github.bloodshura.x.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.type.PrimitiveType;
 import com.github.bloodshura.x.charset.build.TextBuilder;
-import com.github.bloodshura.x.lang.layer.XApi;
+import com.github.bloodshura.x.util.XApi;
 import com.github.bloodshura.x.util.Pool;
 import com.github.bloodshura.x.util.comparator.SimpleEqualizer;
 import com.github.bloodshura.x.util.iterator.ArrayIterator;

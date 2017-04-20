@@ -29,7 +29,7 @@ import com.github.bloodshura.x.collection.view.XArrayView;
 import com.github.bloodshura.x.collection.view.XBasicView;
 import com.github.bloodshura.x.collection.view.XView;
 import javax.annotation.Nonnull;
-import com.github.bloodshura.x.lang.layer.XApi;
+import com.github.bloodshura.x.util.XApi;
 
 public abstract class Method implements Function {
   private final XView<Type> arguments;

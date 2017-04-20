@@ -21,7 +21,7 @@ package com.github.bloodshura.x.venus.value;
 
 import com.github.bloodshura.x.venus.type.PrimitiveType;
 import com.github.bloodshura.x.venus.type.Type;
-import com.github.bloodshura.x.lang.layer.XApi;
+import com.github.bloodshura.x.util.XApi;
 
 public class TypeValue extends Value {
   private final Type value;

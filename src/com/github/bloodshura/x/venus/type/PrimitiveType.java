@@ -33,7 +33,7 @@ import com.github.bloodshura.x.venus.value.VariableRefValue;
 import com.github.bloodshura.x.collection.view.XArrayView;
 import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.enumeration.Enumerations;
-import com.github.bloodshura.x.lang.layer.XApi;
+import com.github.bloodshura.x.util.XApi;
 import com.github.bloodshura.x.worker.UtilWorker;
 
 public final class PrimitiveType extends Type {
