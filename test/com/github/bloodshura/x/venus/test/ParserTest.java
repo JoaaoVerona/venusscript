@@ -19,6 +19,8 @@
 
 package com.github.bloodshura.x.venus.test;
 
+import com.github.bloodshura.x.activity.logging.Logger.Level;
+import com.github.bloodshura.x.activity.logging.XLogger;
 import com.github.bloodshura.x.venus.component.Component;
 import com.github.bloodshura.x.venus.component.Container;
 import com.github.bloodshura.x.venus.component.Script;
@@ -26,8 +28,6 @@ import com.github.bloodshura.x.venus.exception.compile.ScriptCompileException;
 import com.github.bloodshura.x.venus.executor.ApplicationContext;
 import com.github.bloodshura.x.venus.origin.ScriptOrigin;
 import com.github.bloodshura.x.venus.origin.SimpleScriptOrigin;
-import com.github.bloodshura.x.activity.logging.Logger.Level;
-import com.github.bloodshura.x.activity.logging.XLogger;
 import com.github.bloodshura.x.worker.StringWorker;
 import org.junit.Test;
 

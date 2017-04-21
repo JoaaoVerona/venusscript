@@ -19,6 +19,8 @@
 
 package com.github.bloodshura.x.venus.expression;
 
+import com.github.bloodshura.x.collection.map.XMap;
+import com.github.bloodshura.x.collection.tuple.Pair;
 import com.github.bloodshura.x.venus.component.object.Attribute;
 import com.github.bloodshura.x.venus.component.object.ObjectDefinition;
 import com.github.bloodshura.x.venus.exception.runtime.ScriptRuntimeException;
@@ -26,8 +28,6 @@ import com.github.bloodshura.x.venus.exception.runtime.UndefinedAttributeExcepti
 import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.value.ObjectValue;
 import com.github.bloodshura.x.venus.value.Value;
-import com.github.bloodshura.x.collection.map.XMap;
-import com.github.bloodshura.x.collection.tuple.Pair;
 
 public class NewObject implements Expression {
   private final XMap<String, Expression> attributes;

@@ -19,6 +19,7 @@
 
 package com.github.bloodshura.x.venus.library.std;
 
+import com.github.bloodshura.x.runnable.XThread;
 import com.github.bloodshura.x.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.function.FunctionCallDescriptor;
@@ -26,7 +27,6 @@ import com.github.bloodshura.x.venus.function.VoidMethod;
 import com.github.bloodshura.x.venus.function.annotation.MethodArgs;
 import com.github.bloodshura.x.venus.function.annotation.MethodName;
 import com.github.bloodshura.x.venus.value.VariableRefValue;
-import com.github.bloodshura.x.runnable.XThread;
 
 @MethodArgs(VariableRefValue.class)
 @MethodName("wait")

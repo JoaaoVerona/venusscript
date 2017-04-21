@@ -19,9 +19,9 @@
 
 package com.github.bloodshura.x.venus.compiler;
 
-import javax.annotation.Nonnull;
-
 import com.github.bloodshura.x.object.Base;
+
+import javax.annotation.Nonnull;
 
 public class Token extends Base {
   private final Type type;

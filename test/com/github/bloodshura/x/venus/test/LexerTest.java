@@ -19,14 +19,14 @@
 
 package com.github.bloodshura.x.venus.test;
 
+import com.github.bloodshura.x.activity.logging.XLogger;
+import com.github.bloodshura.x.util.comparator.SimpleEqualizer;
 import com.github.bloodshura.x.venus.compiler.Token;
 import com.github.bloodshura.x.venus.compiler.Token.Type;
 import com.github.bloodshura.x.venus.compiler.VenusLexer;
 import com.github.bloodshura.x.venus.exception.compile.UnexpectedInputException;
 import com.github.bloodshura.x.venus.origin.ScriptOrigin;
 import com.github.bloodshura.x.venus.origin.SimpleScriptOrigin;
-import com.github.bloodshura.x.activity.logging.XLogger;
-import com.github.bloodshura.x.util.comparator.SimpleEqualizer;
 import com.github.bloodshura.x.worker.StringWorker;
 import org.junit.Test;
 

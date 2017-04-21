@@ -19,9 +19,9 @@
 
 package com.github.bloodshura.x.venus.expression;
 
+import com.github.bloodshura.x.util.XApi;
 import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.value.Value;
-import com.github.bloodshura.x.util.XApi;
 
 public class Constant implements Expression {
   private final Value value;

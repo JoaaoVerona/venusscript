@@ -19,11 +19,11 @@
 
 package com.github.bloodshura.x.venus.operator;
 
-import com.github.bloodshura.x.venus.executor.Context;
-import com.github.bloodshura.x.venus.value.Value;
 import com.github.bloodshura.x.collection.view.XArrayView;
 import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.util.XApi;
+import com.github.bloodshura.x.venus.executor.Context;
+import com.github.bloodshura.x.venus.value.Value;
 
 import java.util.function.Function;
 

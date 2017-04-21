@@ -19,9 +19,9 @@
 
 package com.github.bloodshura.x.venus.executor;
 
-import com.github.bloodshura.x.venus.value.Value;
 import com.github.bloodshura.x.collection.list.XList;
 import com.github.bloodshura.x.collection.list.impl.XArrayList;
+import com.github.bloodshura.x.venus.value.Value;
 
 public class VariableStructure {
   private final XList<Object> changeMonitors;

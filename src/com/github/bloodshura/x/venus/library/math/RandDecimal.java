@@ -19,6 +19,7 @@
 
 package com.github.bloodshura.x.venus.library.math;
 
+import com.github.bloodshura.x.math.random.XRandom;
 import com.github.bloodshura.x.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.function.FunctionCallDescriptor;
@@ -27,7 +28,6 @@ import com.github.bloodshura.x.venus.function.annotation.MethodArgs;
 import com.github.bloodshura.x.venus.function.annotation.MethodName;
 import com.github.bloodshura.x.venus.value.DecimalValue;
 import com.github.bloodshura.x.venus.value.Value;
-import com.github.bloodshura.x.math.random.XRandom;
 
 @MethodArgs({ DecimalValue.class, DecimalValue.class })
 @MethodName("randDecimal")

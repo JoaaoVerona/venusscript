@@ -19,6 +19,7 @@
 
 package com.github.bloodshura.x.venus.library.std;
 
+import com.github.bloodshura.x.sys.XSystem;
 import com.github.bloodshura.x.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.function.FunctionCallDescriptor;
@@ -26,7 +27,6 @@ import com.github.bloodshura.x.venus.function.Method;
 import com.github.bloodshura.x.venus.function.annotation.MethodName;
 import com.github.bloodshura.x.venus.value.IntegerValue;
 import com.github.bloodshura.x.venus.value.Value;
-import com.github.bloodshura.x.sys.XSystem;
 
 @MethodName("millis")
 public class Millis extends Method {

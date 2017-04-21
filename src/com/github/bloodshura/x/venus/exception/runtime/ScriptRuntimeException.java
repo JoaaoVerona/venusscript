@@ -19,8 +19,8 @@
 
 package com.github.bloodshura.x.venus.exception.runtime;
 
-import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.exception.CheckedException;
+import com.github.bloodshura.x.venus.executor.Context;
 
 public class ScriptRuntimeException extends CheckedException {
   private final Context context;

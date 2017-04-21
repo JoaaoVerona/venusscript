@@ -19,12 +19,12 @@
 
 package com.github.bloodshura.x.venus.expression;
 
+import com.github.bloodshura.x.util.XApi;
 import com.github.bloodshura.x.venus.exception.runtime.IncompatibleTypesException;
 import com.github.bloodshura.x.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.operator.UnaryOperator;
 import com.github.bloodshura.x.venus.value.Value;
-import com.github.bloodshura.x.util.XApi;
 
 public class UnaryOperation implements Expression {
   private final UnaryOperator operator;

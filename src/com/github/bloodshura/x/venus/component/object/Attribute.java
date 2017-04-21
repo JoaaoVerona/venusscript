@@ -19,10 +19,10 @@
 
 package com.github.bloodshura.x.venus.component.object;
 
-import javax.annotation.Nonnull;
-
-import com.github.bloodshura.x.venus.expression.Expression;
 import com.github.bloodshura.x.object.Base;
+import com.github.bloodshura.x.venus.expression.Expression;
+
+import javax.annotation.Nonnull;
 
 public class Attribute extends Base {
   private final Expression defaultExpression;

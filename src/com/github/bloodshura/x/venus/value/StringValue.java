@@ -19,8 +19,8 @@
 
 package com.github.bloodshura.x.venus.value;
 
-import com.github.bloodshura.x.venus.type.PrimitiveType;
 import com.github.bloodshura.x.util.XApi;
+import com.github.bloodshura.x.venus.type.PrimitiveType;
 
 public class StringValue extends Value {
   private final String value;

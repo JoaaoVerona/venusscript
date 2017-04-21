@@ -19,6 +19,8 @@
 
 package com.github.bloodshura.x.venus.library.std;
 
+import com.github.bloodshura.x.activity.logging.Logger;
+import com.github.bloodshura.x.activity.scanning.XScanner;
 import com.github.bloodshura.x.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.function.FunctionCallDescriptor;
@@ -26,8 +28,6 @@ import com.github.bloodshura.x.venus.function.Method;
 import com.github.bloodshura.x.venus.function.annotation.MethodName;
 import com.github.bloodshura.x.venus.value.BoolValue;
 import com.github.bloodshura.x.venus.value.Value;
-import com.github.bloodshura.x.activity.logging.Logger;
-import com.github.bloodshura.x.activity.scanning.XScanner;
 
 @MethodName("hasScan")
 public class HasScan extends Method {

@@ -19,6 +19,9 @@
 
 package com.github.bloodshura.x.venus.library.engine;
 
+import com.github.bloodshura.x.collection.list.XList;
+import com.github.bloodshura.x.collection.list.impl.XArrayList;
+import com.github.bloodshura.x.collection.view.XBasicView;
 import com.github.bloodshura.x.venus.exception.runtime.InvalidFunctionParameterException;
 import com.github.bloodshura.x.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.x.venus.exception.runtime.UndefinedFunctionException;
@@ -31,9 +34,6 @@ import com.github.bloodshura.x.venus.type.Type;
 import com.github.bloodshura.x.venus.value.BoolValue;
 import com.github.bloodshura.x.venus.value.TypeValue;
 import com.github.bloodshura.x.venus.value.Value;
-import com.github.bloodshura.x.collection.list.XList;
-import com.github.bloodshura.x.collection.list.impl.XArrayList;
-import com.github.bloodshura.x.collection.view.XBasicView;
 
 @MethodName("hasFunction")
 @MethodVarArgs

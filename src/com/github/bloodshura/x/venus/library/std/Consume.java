@@ -19,6 +19,7 @@
 
 package com.github.bloodshura.x.venus.library.std;
 
+import com.github.bloodshura.x.activity.logging.XLogger;
 import com.github.bloodshura.x.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.executor.VariableStructure;
@@ -29,7 +30,6 @@ import com.github.bloodshura.x.venus.function.annotation.MethodName;
 import com.github.bloodshura.x.venus.value.IntegerValue;
 import com.github.bloodshura.x.venus.value.Value;
 import com.github.bloodshura.x.venus.value.VariableRefValue;
-import com.github.bloodshura.x.activity.logging.XLogger;
 
 @MethodArgs(VariableRefValue.class)
 @MethodName("consume")

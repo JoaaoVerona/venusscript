@@ -19,10 +19,10 @@
 
 package com.github.bloodshura.x.venus.operator;
 
-import com.github.bloodshura.x.venus.value.TypeValue;
-import com.github.bloodshura.x.venus.value.Value;
 import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.enumeration.Enumerations;
+import com.github.bloodshura.x.venus.value.TypeValue;
+import com.github.bloodshura.x.venus.value.Value;
 
 public class OperatorList {
   public static final BinaryOperator AND = new BinaryOperator("and", Value::and, "&&", "&");

@@ -19,17 +19,18 @@
 
 package com.github.bloodshura.x.venus.function;
 
+import com.github.bloodshura.x.collection.view.XArrayView;
+import com.github.bloodshura.x.collection.view.XBasicView;
+import com.github.bloodshura.x.collection.view.XView;
+import com.github.bloodshura.x.util.XApi;
 import com.github.bloodshura.x.venus.function.annotation.MethodArgs;
 import com.github.bloodshura.x.venus.function.annotation.MethodName;
 import com.github.bloodshura.x.venus.function.annotation.MethodVarArgs;
 import com.github.bloodshura.x.venus.type.PrimitiveType;
 import com.github.bloodshura.x.venus.type.Type;
 import com.github.bloodshura.x.venus.value.Value;
-import com.github.bloodshura.x.collection.view.XArrayView;
-import com.github.bloodshura.x.collection.view.XBasicView;
-import com.github.bloodshura.x.collection.view.XView;
+
 import javax.annotation.Nonnull;
-import com.github.bloodshura.x.util.XApi;
 
 public abstract class Method implements Function {
   private final XView<Type> arguments;

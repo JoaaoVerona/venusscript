@@ -19,6 +19,7 @@
 
 package com.github.bloodshura.x.venus.compiler;
 
+import com.github.bloodshura.x.collection.store.impl.XStack;
 import com.github.bloodshura.x.venus.exception.compile.UnexpectedTokenException;
 import com.github.bloodshura.x.venus.expression.BinaryOperation;
 import com.github.bloodshura.x.venus.expression.Expression;
@@ -27,7 +28,6 @@ import com.github.bloodshura.x.venus.expression.UnaryOperation;
 import com.github.bloodshura.x.venus.operator.BinaryOperator;
 import com.github.bloodshura.x.venus.operator.Operator;
 import com.github.bloodshura.x.venus.operator.UnaryOperator;
-import com.github.bloodshura.x.collection.store.impl.XStack;
 
 public class BuildingExpression {
   private String inContext;

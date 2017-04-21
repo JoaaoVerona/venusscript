@@ -19,13 +19,13 @@
 
 package com.github.bloodshura.x.venus.expression;
 
+import com.github.bloodshura.x.collection.view.XArrayView;
+import com.github.bloodshura.x.collection.view.XView;
+import com.github.bloodshura.x.util.XApi;
 import com.github.bloodshura.x.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.value.ArrayValue;
 import com.github.bloodshura.x.venus.value.Value;
-import com.github.bloodshura.x.collection.view.XArrayView;
-import com.github.bloodshura.x.collection.view.XView;
-import com.github.bloodshura.x.util.XApi;
 
 public class ArrayLiteral implements Expression {
   private final Expression[] expressions;

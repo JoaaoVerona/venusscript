@@ -19,9 +19,10 @@
 
 package com.github.bloodshura.x.venus.function;
 
-import javax.annotation.Nonnull;
-import com.github.bloodshura.x.venus.type.Type;
 import com.github.bloodshura.x.object.Base;
+import com.github.bloodshura.x.venus.type.Type;
+
+import javax.annotation.Nonnull;
 
 public class Argument extends Base {
   private final String name;

@@ -19,7 +19,9 @@
 
 package com.github.bloodshura.x.venus.library.dialogs;
 
+import com.github.bloodshura.x.charset.build.TextBuilder;
 import com.github.bloodshura.x.dialogs.XDialogs;
+import com.github.bloodshura.x.util.Pool;
 import com.github.bloodshura.x.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.function.FunctionCallDescriptor;
@@ -28,8 +30,6 @@ import com.github.bloodshura.x.venus.function.annotation.MethodName;
 import com.github.bloodshura.x.venus.function.annotation.MethodVarArgs;
 import com.github.bloodshura.x.venus.value.StringValue;
 import com.github.bloodshura.x.venus.value.Value;
-import com.github.bloodshura.x.charset.build.TextBuilder;
-import com.github.bloodshura.x.util.Pool;
 
 @MethodName("inputDialog")
 @MethodVarArgs

@@ -19,12 +19,12 @@
 
 package com.github.bloodshura.x.venus.value;
 
-import com.github.bloodshura.x.venus.component.object.ObjectDefinition;
-import com.github.bloodshura.x.venus.executor.Context;
-import com.github.bloodshura.x.venus.executor.VariableStructure;
 import com.github.bloodshura.x.charset.build.TextBuilder;
 import com.github.bloodshura.x.collection.tuple.Pair;
 import com.github.bloodshura.x.util.Pool;
+import com.github.bloodshura.x.venus.component.object.ObjectDefinition;
+import com.github.bloodshura.x.venus.executor.Context;
+import com.github.bloodshura.x.venus.executor.VariableStructure;
 
 public class ObjectValue extends Value {
   private final Context context;

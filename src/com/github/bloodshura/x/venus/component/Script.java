@@ -19,6 +19,10 @@
 
 package com.github.bloodshura.x.venus.component;
 
+import com.github.bloodshura.x.activity.logging.XLogger;
+import com.github.bloodshura.x.collection.list.XList;
+import com.github.bloodshura.x.collection.list.impl.XArrayList;
+import com.github.bloodshura.x.collection.view.XView;
 import com.github.bloodshura.x.venus.compiler.VenusParser;
 import com.github.bloodshura.x.venus.exception.compile.ScriptCompileException;
 import com.github.bloodshura.x.venus.exception.runtime.ScriptRuntimeException;
@@ -28,10 +32,6 @@ import com.github.bloodshura.x.venus.function.Function;
 import com.github.bloodshura.x.venus.library.LibraryList;
 import com.github.bloodshura.x.venus.origin.ScriptOrigin;
 import com.github.bloodshura.x.venus.type.Type;
-import com.github.bloodshura.x.activity.logging.XLogger;
-import com.github.bloodshura.x.collection.list.XList;
-import com.github.bloodshura.x.collection.list.impl.XArrayList;
-import com.github.bloodshura.x.collection.view.XView;
 
 public class Script extends Container {
   private final ApplicationContext appContext;

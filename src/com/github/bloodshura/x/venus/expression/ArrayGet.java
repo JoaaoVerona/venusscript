@@ -19,6 +19,7 @@
 
 package com.github.bloodshura.x.venus.expression;
 
+import com.github.bloodshura.x.util.XApi;
 import com.github.bloodshura.x.venus.exception.runtime.InvalidArrayAccessException;
 import com.github.bloodshura.x.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.x.venus.executor.Context;
@@ -26,7 +27,6 @@ import com.github.bloodshura.x.venus.type.PrimitiveType;
 import com.github.bloodshura.x.venus.value.ArrayValue;
 import com.github.bloodshura.x.venus.value.IntegerValue;
 import com.github.bloodshura.x.venus.value.Value;
-import com.github.bloodshura.x.util.XApi;
 
 public class ArrayGet implements Expression {
   private final Expression index;

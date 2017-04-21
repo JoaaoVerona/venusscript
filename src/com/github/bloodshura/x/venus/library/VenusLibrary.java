@@ -19,8 +19,8 @@
 
 package com.github.bloodshura.x.venus.library;
 
-import com.github.bloodshura.x.venus.function.Function;
 import com.github.bloodshura.x.collection.list.impl.XArrayList;
+import com.github.bloodshura.x.venus.function.Function;
 
 public class VenusLibrary extends XArrayList<Function> {
   public boolean add(Class<? extends Function> object) {

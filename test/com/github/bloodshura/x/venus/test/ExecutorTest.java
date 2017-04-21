@@ -19,18 +19,18 @@
 
 package com.github.bloodshura.x.venus.test;
 
-import com.github.bloodshura.x.venus.component.Script;
-import com.github.bloodshura.x.venus.executor.ApplicationContext;
-import com.github.bloodshura.x.venus.executor.VenusExecutor;
-import com.github.bloodshura.x.venus.origin.FileScriptOrigin;
-import com.github.bloodshura.x.venus.origin.ScriptMode;
-import com.github.bloodshura.x.venus.origin.ScriptOrigin;
 import com.github.bloodshura.x.activity.logging.Logger.Level;
 import com.github.bloodshura.x.activity.logging.XLogger;
 import com.github.bloodshura.x.collection.list.XList;
 import com.github.bloodshura.x.collection.list.impl.XArrayList;
 import com.github.bloodshura.x.io.file.Directory;
 import com.github.bloodshura.x.io.file.File;
+import com.github.bloodshura.x.venus.component.Script;
+import com.github.bloodshura.x.venus.executor.ApplicationContext;
+import com.github.bloodshura.x.venus.executor.VenusExecutor;
+import com.github.bloodshura.x.venus.origin.FileScriptOrigin;
+import com.github.bloodshura.x.venus.origin.ScriptMode;
+import com.github.bloodshura.x.venus.origin.ScriptOrigin;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

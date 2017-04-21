@@ -19,13 +19,13 @@
 
 package com.github.bloodshura.x.venus.compiler;
 
-import com.github.bloodshura.x.venus.compiler.Token.Type;
-import com.github.bloodshura.x.venus.exception.compile.UnexpectedInputException;
-import com.github.bloodshura.x.venus.origin.ScriptOrigin;
 import com.github.bloodshura.x.charset.build.TextBuilder;
 import com.github.bloodshura.x.charset.sequence.CharSet;
 import com.github.bloodshura.x.collection.store.impl.XQueue;
 import com.github.bloodshura.x.util.Pool;
+import com.github.bloodshura.x.venus.compiler.Token.Type;
+import com.github.bloodshura.x.venus.exception.compile.UnexpectedInputException;
+import com.github.bloodshura.x.venus.origin.ScriptOrigin;
 import com.github.bloodshura.x.worker.StringWorker;
 
 import java.io.IOException;

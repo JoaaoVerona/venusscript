@@ -19,6 +19,11 @@
 
 package com.github.bloodshura.x.venus.library.math;
 
+import com.github.bloodshura.x.collection.list.XList;
+import com.github.bloodshura.x.collection.list.impl.XArrayList;
+import com.github.bloodshura.x.collection.view.XBasicView;
+import com.github.bloodshura.x.collection.view.XView;
+import com.github.bloodshura.x.math.MathProvider;
 import com.github.bloodshura.x.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.function.Function;
@@ -27,16 +32,9 @@ import com.github.bloodshura.x.venus.type.PrimitiveType;
 import com.github.bloodshura.x.venus.type.Type;
 import com.github.bloodshura.x.venus.value.IntegerValue;
 import com.github.bloodshura.x.venus.value.Value;
-import com.github.bloodshura.x.collection.list.XList;
-import com.github.bloodshura.x.collection.list.impl.XArrayList;
-import com.github.bloodshura.x.collection.view.XBasicView;
-import com.github.bloodshura.x.collection.view.XView;
-
-import javax.annotation.Nonnull;
-
-import com.github.bloodshura.x.math.MathProvider;
 import com.github.bloodshura.x.worker.UtilWorker;
 
+import javax.annotation.Nonnull;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 

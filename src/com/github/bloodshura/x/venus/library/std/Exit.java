@@ -19,12 +19,12 @@
 
 package com.github.bloodshura.x.venus.library.std;
 
+import com.github.bloodshura.x.sys.XSystem;
 import com.github.bloodshura.x.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.function.FunctionCallDescriptor;
 import com.github.bloodshura.x.venus.function.VoidMethod;
 import com.github.bloodshura.x.venus.function.annotation.MethodName;
-import com.github.bloodshura.x.sys.XSystem;
 
 @MethodName("exit")
 public class Exit extends VoidMethod {

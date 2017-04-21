@@ -19,12 +19,12 @@
 
 package com.github.bloodshura.x.venus.component.object;
 
+import com.github.bloodshura.x.collection.list.XList;
+import com.github.bloodshura.x.collection.list.impl.XArrayList;
 import com.github.bloodshura.x.venus.component.Container;
 import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.type.ObjectType;
 import com.github.bloodshura.x.venus.type.Type;
-import com.github.bloodshura.x.collection.list.XList;
-import com.github.bloodshura.x.collection.list.impl.XArrayList;
 
 public class ObjectDefinition extends Container {
   private final XList<Attribute> attributes;

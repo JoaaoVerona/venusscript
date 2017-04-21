@@ -19,6 +19,10 @@
 
 package com.github.bloodshura.x.venus.type;
 
+import com.github.bloodshura.x.collection.view.XArrayView;
+import com.github.bloodshura.x.collection.view.XView;
+import com.github.bloodshura.x.enumeration.Enumerations;
+import com.github.bloodshura.x.util.XApi;
 import com.github.bloodshura.x.venus.expression.Variable;
 import com.github.bloodshura.x.venus.function.Function;
 import com.github.bloodshura.x.venus.value.ArrayValue;
@@ -30,10 +34,6 @@ import com.github.bloodshura.x.venus.value.StringValue;
 import com.github.bloodshura.x.venus.value.TypeValue;
 import com.github.bloodshura.x.venus.value.Value;
 import com.github.bloodshura.x.venus.value.VariableRefValue;
-import com.github.bloodshura.x.collection.view.XArrayView;
-import com.github.bloodshura.x.collection.view.XView;
-import com.github.bloodshura.x.enumeration.Enumerations;
-import com.github.bloodshura.x.util.XApi;
 import com.github.bloodshura.x.worker.UtilWorker;
 
 public final class PrimitiveType extends Type {

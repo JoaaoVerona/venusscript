@@ -19,6 +19,10 @@
 
 package com.github.bloodshura.x.venus.component;
 
+import com.github.bloodshura.x.collection.list.XList;
+import com.github.bloodshura.x.collection.list.impl.XArrayList;
+import com.github.bloodshura.x.collection.view.XView;
+import com.github.bloodshura.x.util.XApi;
 import com.github.bloodshura.x.venus.component.object.ObjectDefinition;
 import com.github.bloodshura.x.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.x.venus.exception.runtime.UndefinedFunctionException;
@@ -29,10 +33,6 @@ import com.github.bloodshura.x.venus.function.Function;
 import com.github.bloodshura.x.venus.type.Type;
 import com.github.bloodshura.x.venus.value.FunctionRefValue;
 import com.github.bloodshura.x.venus.value.Value;
-import com.github.bloodshura.x.collection.list.XList;
-import com.github.bloodshura.x.collection.list.impl.XArrayList;
-import com.github.bloodshura.x.collection.view.XView;
-import com.github.bloodshura.x.util.XApi;
 
 public abstract class Container extends Component {
   protected Context context;

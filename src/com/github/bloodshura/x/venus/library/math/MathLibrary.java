@@ -19,8 +19,8 @@
 
 package com.github.bloodshura.x.venus.library.math;
 
-import com.github.bloodshura.x.venus.library.VenusLibrary;
 import com.github.bloodshura.x.math.MathProvider;
+import com.github.bloodshura.x.venus.library.VenusLibrary;
 
 import java.lang.reflect.Method;
 
