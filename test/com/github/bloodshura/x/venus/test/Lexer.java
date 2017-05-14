@@ -32,7 +32,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-public class LexerTest {
+public class Lexer {
   @Test
   public void simpleAssertion() throws IOException, UnexpectedInputException {
     String[] script = {

@@ -21,51 +21,49 @@ package com.github.bloodshura.x.venus.test;
 
 import com.github.bloodshura.x.activity.logging.Logger.Level;
 import com.github.bloodshura.x.activity.logging.XLogger;
-import com.github.bloodshura.x.collection.list.XList;
-import com.github.bloodshura.x.collection.list.impl.XArrayList;
-import com.github.bloodshura.x.io.file.Directory;
-import com.github.bloodshura.x.io.file.File;
+import com.github.bloodshura.x.venus.component.Component;
+import com.github.bloodshura.x.venus.component.Container;
 import com.github.bloodshura.x.venus.component.Script;
+import com.github.bloodshura.x.venus.exception.compile.ScriptCompileException;
 import com.github.bloodshura.x.venus.executor.ApplicationContext;
-import com.github.bloodshura.x.venus.executor.VenusExecutor;
-import com.github.bloodshura.x.venus.origin.FileScriptOrigin;
-import com.github.bloodshura.x.venus.origin.ScriptMode;
 import com.github.bloodshura.x.venus.origin.ScriptOrigin;
+import com.github.bloodshura.x.venus.origin.SimpleScriptOrigin;
+import com.github.bloodshura.x.worker.StringWorker;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 
-@RunWith(Parameterized.class)
-public class ExecutorTest {
-  public static final Directory DIRECTORY = new Directory("VenusScript/examples");
-  private final File file;
-
-  public ExecutorTest(File file) {
-    this.file = file;
-  }
-
+public class Parser {
   @Test
-  public void simpleTest() throws Exception {
+  public void simplePrint() throws IOException, ScriptCompileException {
     XLogger.disable(Level.DEBUG);
 
-    ScriptOrigin origin = new FileScriptOrigin(file);
+    String[] content = {
+      "export MY_VAR = 0",
+      "export MY_STRING = \"oi\"",
+      "def printMyName(string name) {",
+      "  print(\"Hello, I'm \" + name + \"!\")",
+      "  print(1 + 3 - (5 + 2))",
+      "  j = (i + 1) * k",
+      "}"
+    };
+    ScriptOrigin origin = new SimpleScriptOrigin("test.xs", StringWorker.join('\n', content));
     Script script = origin.compile(new ApplicationContext());
-    VenusExecutor executor = new VenusExecutor();
 
-    executor.run(script, ScriptMode.NORMAL);
+    print(script);
   }
 
-  @Parameters
-  public static Collection<Object[]> data() throws IOException {
-    XList<Object[]> data = new XArrayList<>();
+  public static void print(Component component) {
+    XLogger.println(component);
 
-    DIRECTORY.getAllFiles(file -> !file.getName().endsWith("_i"), file -> data.add(new Object[] { file }));
+    if (component instanceof Container) {
+      XLogger.pushTab();
 
-    return data.toCollection(ArrayList.class);
+      for (Component child : ((Container) component).getChildren()) {
+        print(child);
+      }
+
+      XLogger.popTab();
+    }
   }
 }
