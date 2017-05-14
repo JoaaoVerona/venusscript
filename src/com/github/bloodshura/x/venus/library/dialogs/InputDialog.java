@@ -20,7 +20,7 @@
 package com.github.bloodshura.x.venus.library.dialogs;
 
 import com.github.bloodshura.x.charset.build.TextBuilder;
-import com.github.bloodshura.x.dialogs.XDialogs;
+import com.github.bloodshura.x.desktop.dialogs.XDialogs;
 import com.github.bloodshura.x.util.Pool;
 import com.github.bloodshura.x.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.x.venus.executor.Context;

@@ -11,7 +11,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="ShuraX" />
     <orderEntry type="module" module-name="ShuraX Cryptography" />
-    <orderEntry type="module" module-name="ShuraX Dialogs" />
+    <orderEntry type="module" module-name="ShuraX Desktop" />
     <orderEntry type="module-library" scope="TEST">
       <library name="JUnit4">
         <CLASSES>
