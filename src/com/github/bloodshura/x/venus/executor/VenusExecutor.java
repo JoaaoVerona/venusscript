@@ -23,7 +23,7 @@ import com.github.bloodshura.x.activity.logging.XLogger;
 import com.github.bloodshura.x.collection.list.XListIterator;
 import com.github.bloodshura.x.collection.store.impl.XQueue;
 import com.github.bloodshura.x.runnable.XThread;
-import com.github.bloodshura.x.runnable.collection.ThreadPool;
+import com.github.bloodshura.x.runnable.ThreadPool;
 import com.github.bloodshura.x.venus.component.AsyncContainer;
 import com.github.bloodshura.x.venus.component.Component;
 import com.github.bloodshura.x.venus.component.Container;
@@ -45,14 +45,14 @@ import java.util.function.Supplier;
 
 public class VenusExecutor {
   private final XQueue<ScriptRuntimeException> asyncExceptions;
-  private final ThreadPool<XThread> asyncThreads;
+  private final ThreadPool asyncThreads;
   private boolean breaking;
   private boolean continuing;
   private boolean shouldRun;
 
   public VenusExecutor() {
     this.asyncExceptions = new XQueue<>();
-    this.asyncThreads = new ThreadPool<>();
+    this.asyncThreads = new ThreadPool();
     this.shouldRun = true;
   }
 
