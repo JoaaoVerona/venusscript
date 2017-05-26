@@ -19,16 +19,15 @@
 
 package com.github.bloodshura.x.venus.library.math;
 
-import com.github.bloodshura.x.math.MathProvider;
 import com.github.bloodshura.x.venus.library.VenusLibrary;
 
 import java.lang.reflect.Method;
 
 public class MathLibrary extends VenusLibrary {
-  public MathLibrary(MathProvider instance) {
-    for (Method method : MathProvider.class.getDeclaredMethods()) {
+  public MathLibrary() {
+    for (Method method : Math.class.getDeclaredMethods()) {
       if (MathFunction.validate(method)) {
-        add(new MathFunction(method, instance));
+        add(new MathFunction(method));
       }
     }
 

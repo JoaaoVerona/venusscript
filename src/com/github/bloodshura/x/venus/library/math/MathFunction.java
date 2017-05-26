@@ -23,7 +23,6 @@ import com.github.bloodshura.x.collection.list.XList;
 import com.github.bloodshura.x.collection.list.impl.XArrayList;
 import com.github.bloodshura.x.collection.view.XBasicView;
 import com.github.bloodshura.x.collection.view.XView;
-import com.github.bloodshura.x.math.MathProvider;
 import com.github.bloodshura.x.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.function.Function;
@@ -40,13 +39,11 @@ import java.lang.reflect.Method;
 
 public class MathFunction implements Function {
   private final XList<Type> arguments;
-  private final MathProvider instance;
   private final Method method;
   private final String name;
 
-  public MathFunction(Method method, MathProvider instance) {
+  public MathFunction(Method method) {
     this.arguments = new XArrayList<>();
-    this.instance = instance;
     this.method = method;
     this.name = method.getName();
 
@@ -72,7 +69,7 @@ public class MathFunction implements Function {
     }
 
     try {
-      Object result = getMethod().invoke(getInstance(), values.toArray());
+      Object result = getMethod().invoke(null, values.toArray());
 
       if (getMethod().getReturnType() == void.class && result == null) {
         return null;
@@ -94,10 +91,6 @@ public class MathFunction implements Function {
   @Override
   public XView<Type> getArgumentTypes() {
     return new XBasicView<>(arguments);
-  }
-
-  public MathProvider getInstance() {
-    return instance;
   }
 
   public Method getMethod() {

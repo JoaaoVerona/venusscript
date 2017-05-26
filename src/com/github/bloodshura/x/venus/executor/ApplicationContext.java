@@ -23,9 +23,6 @@ import com.github.bloodshura.x.activity.logging.XLogger;
 import com.github.bloodshura.x.collection.map.XMap;
 import com.github.bloodshura.x.collection.map.impl.XLinkedMap;
 import com.github.bloodshura.x.lang.annotation.Internal;
-import com.github.bloodshura.x.math.impl.FastMath;
-import com.github.bloodshura.x.math.impl.JavaMath;
-import com.github.bloodshura.x.math.impl.SimpleMath;
 import com.github.bloodshura.x.venus.component.SimpleContainer;
 import com.github.bloodshura.x.venus.exception.runtime.UndefinedVariableException;
 import com.github.bloodshura.x.venus.library.VenusLibrary;
@@ -55,9 +52,7 @@ public class ApplicationContext extends Context {
     getLibrarySuppliers().add("dialogs", DialogsLibrary::new);
     getLibrarySuppliers().add("dynamic", DynamicLibrary::new);
     getLibrarySuppliers().add("engine", EngineLibrary::new);
-    getLibrarySuppliers().add("math", () -> new MathLibrary(new SimpleMath()));
-    getLibrarySuppliers().add("math_fast", () -> new MathLibrary(new FastMath()));
-    getLibrarySuppliers().add("math_java", () -> new MathLibrary(new JavaMath()));
+    getLibrarySuppliers().add("math", MathLibrary::new);
     getLibrarySuppliers().add("std", StdLibrary::new);
     getLibrarySuppliers().add("system", SystemLibrary::new);
     getLibrarySuppliers().add("time", TimeLibrary::new);
@@ -76,12 +71,12 @@ public class ApplicationContext extends Context {
     return context;
   }
 
-  public int currentLine() {
-    return currentLine;
-  }
-
   public VenusExecutor currentExecutor() {
     return executor;
+  }
+
+  public int currentLine() {
+    return currentLine;
   }
 
   public XMap<String, Supplier<VenusLibrary>> getLibrarySuppliers() {
@@ -103,12 +98,12 @@ public class ApplicationContext extends Context {
   }
 
   @Internal
-  void setExecutor(VenusExecutor executor) {
-    this.executor = executor;
+  void setCurrentLine(int currentLine) {
+    this.currentLine = currentLine;
   }
 
   @Internal
-  void setCurrentLine(int currentLine) {
-    this.currentLine = currentLine;
+  void setExecutor(VenusExecutor executor) {
+    this.executor = executor;
   }
 }
