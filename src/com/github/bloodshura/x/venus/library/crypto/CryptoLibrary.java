@@ -22,7 +22,6 @@ package com.github.bloodshura.x.venus.library.crypto;
 import com.github.bloodshura.x.collection.tuple.Pair;
 import com.github.bloodshura.x.cryptography.Decrypter;
 import com.github.bloodshura.x.cryptography.Encrypter;
-import com.github.bloodshura.x.cryptography.util.CryptographyMap;
 import com.github.bloodshura.x.venus.library.VenusLibrary;
 
 public class CryptoLibrary extends VenusLibrary {
