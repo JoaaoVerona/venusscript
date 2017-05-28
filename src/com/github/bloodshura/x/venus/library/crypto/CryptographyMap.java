@@ -20,11 +20,11 @@
 package com.github.bloodshura.x.venus.library.crypto;
 
 import com.github.bloodshura.x.collection.map.impl.XLinkedMap;
-import com.github.bloodshura.x.cryptography.sample.hash.*;
-import com.github.bloodshura.x.cryptography.sample.twoway.Base64;
-import com.github.bloodshura.x.cryptography.sample.twoway.Bytaway;
-import com.github.bloodshura.x.cryptography.sample.twoway.ByteSwitch;
-import com.github.bloodshura.x.cryptography.sample.twoway.CaesarCipher;
+import com.github.bloodshura.x.cryptography.impl.hash.*;
+import com.github.bloodshura.x.cryptography.impl.twoway.Base64;
+import com.github.bloodshura.x.cryptography.impl.twoway.Bytaway;
+import com.github.bloodshura.x.cryptography.impl.twoway.ByteSwitch;
+import com.github.bloodshura.x.cryptography.impl.twoway.CaesarCipher;
 
 import javax.annotation.Nonnull;
 
