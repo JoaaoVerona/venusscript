@@ -19,7 +19,7 @@
 
 package com.github.bloodshura.x.venus.value;
 
-import com.github.bloodshura.x.charset.build.TextBuilder;
+import com.github.bloodshura.x.charset.TextBuilder;
 import com.github.bloodshura.x.util.Pool;
 import com.github.bloodshura.x.util.XApi;
 import com.github.bloodshura.x.util.comparator.SimpleEqualizer;

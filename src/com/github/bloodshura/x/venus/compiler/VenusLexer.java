@@ -19,7 +19,7 @@
 
 package com.github.bloodshura.x.venus.compiler;
 
-import com.github.bloodshura.x.charset.build.TextBuilder;
+import com.github.bloodshura.x.charset.TextBuilder;
 import com.github.bloodshura.x.charset.sequence.CharSet;
 import com.github.bloodshura.x.collection.store.impl.XQueue;
 import com.github.bloodshura.x.util.Pool;

@@ -19,7 +19,7 @@
 
 package com.github.bloodshura.x.venus.compiler;
 
-import com.github.bloodshura.x.charset.build.TextBuilder;
+import com.github.bloodshura.x.charset.TextBuilder;
 import com.github.bloodshura.x.collection.list.XList;
 import com.github.bloodshura.x.collection.list.impl.XArrayList;
 import com.github.bloodshura.x.collection.map.XMap;
