@@ -64,7 +64,7 @@ public class Executor {
   public static Collection<Object[]> data() throws IOException {
     XList<Object[]> data = new XArrayList<>();
 
-    DIRECTORY.getAllFiles(file -> !file.getName().endsWith("_i"), file -> data.add(new Object[] { file }));
+    DIRECTORY.deepIterateFiles(file -> !file.getName().endsWith("_i"), file -> data.add(new Object[] { file }));
 
     return data.toCollection(ArrayList.class);
   }

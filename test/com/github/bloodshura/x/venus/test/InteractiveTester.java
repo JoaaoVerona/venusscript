@@ -43,7 +43,7 @@ public class InteractiveTester {
   public static final boolean LIGHTWEIGHT_ERRORS = false;
 
   public static void main(String[] args) throws Exception {
-    XView<File> files = DIRECTORY.getAllFilesView();
+    XView<File> files = DIRECTORY.getDeepFiles();
     int i = 0;
 
     for (File file : files) {
