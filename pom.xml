@@ -5,6 +5,14 @@
 	<artifactId>venusscript</artifactId>
 	<version>DEV</version>
 
+	<distributionManagement>
+		<repository>
+			<id>local</id>
+			<name>ShuraX Local Repository</name>
+			<url>file:///home/BloodShura/.shurax-repo</url>
+		</repository>
+	</distributionManagement>
+
 	<build>
 		<sourceDirectory>${project.basedir}/src</sourceDirectory>
 		<testSourceDirectory>${project.basedir}/test</testSourceDirectory>
