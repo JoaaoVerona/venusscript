@@ -19,7 +19,7 @@
 
 package com.github.bloodshura.x.venus.test;
 
-import com.github.bloodshura.x.activity.logging.Logger.Level;
+import com.github.bloodshura.x.activity.logging.Level;
 import com.github.bloodshura.x.activity.logging.XLogger;
 import com.github.bloodshura.x.venus.component.Component;
 import com.github.bloodshura.x.venus.component.Container;
