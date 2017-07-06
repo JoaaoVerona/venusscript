@@ -59,7 +59,7 @@ public class CryptographyMap extends XLinkedMap<String, Object> {
   public CryptographyMap registerDefaults() {
     return register(
       "base64", Base64.class,
-      "bcrypt", BCrypt.class,
+      "bcrypt", BlowfishCrypt.class,
       "bytaway", Bytaway.class,
       "byteswitch", ByteSwitch.class,
       "caesar", CaesarCipher.class,
