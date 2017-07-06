@@ -5,17 +5,36 @@
 	<artifactId>venusscript</artifactId>
 	<version>DEV</version>
 
-	<distributionManagement>
-		<repository>
-			<id>local</id>
-			<name>ShuraX Local Repository</name>
-			<url>file:///home/BloodShura/.shurax-repo</url>
-		</repository>
-	</distributionManagement>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.github.bloodshura</groupId>
+			<artifactId>shurax</artifactId>
+			<version>DEV</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.bloodshura</groupId>
+			<artifactId>shurax-cryptography</artifactId>
+			<version>DEV</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.bloodshura</groupId>
+			<artifactId>shurax-desktop</artifactId>
+			<version>DEV</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<sourceDirectory>${project.basedir}/src</sourceDirectory>
@@ -25,7 +44,8 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.5.1</version>
+				<version>3.6.1</version>
+
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
