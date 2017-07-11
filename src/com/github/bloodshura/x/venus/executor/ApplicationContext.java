@@ -56,7 +56,7 @@ public class ApplicationContext extends Context {
     getLibrarySuppliers().add("std", StdLibrary::new);
     getLibrarySuppliers().add("system", SystemLibrary::new);
     getLibrarySuppliers().add("time", TimeLibrary::new);
-    setUserData("in", XLogger.getInstance());
+    setUserData("in", XLogger.DEFAULT);
     setUserData("out", (OutputReference) XLogger::print);
   }
 
