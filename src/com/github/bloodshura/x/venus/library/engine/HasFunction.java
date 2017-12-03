@@ -38,35 +38,35 @@ import com.github.bloodshura.x.venus.value.Value;
 @MethodName("hasFunction")
 @MethodVarArgs
 public class HasFunction extends Method {
-  @Override
-  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    if (descriptor.isEmpty()) {
-      throw new InvalidFunctionParameterException(context, "Expected at least function name");
-    }
+	@Override
+	public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		if (descriptor.isEmpty()) {
+			throw new InvalidFunctionParameterException(context, "Expected at least function name");
+		}
 
-    String name = descriptor.get(0).toString();
-    XList<Type> types = new XArrayList<>();
+		String name = descriptor.get(0).toString();
+		XList<Type> types = new XArrayList<>();
 
-    for (int i = 1; i < descriptor.count(); i++) {
-      Value value = descriptor.get(i);
+		for (int i = 1; i < descriptor.count(); i++) {
+			Value value = descriptor.get(i);
 
-      if (value instanceof TypeValue) {
-        TypeValue typeValue = (TypeValue) value;
+			if (value instanceof TypeValue) {
+				TypeValue typeValue = (TypeValue) value;
 
-        types.add(typeValue.value());
-      }
-      else {
-        throw new InvalidFunctionParameterException(context, "Expected value type, received " + value.getType());
-      }
-    }
+				types.add(typeValue.value());
+			}
+			else {
+				throw new InvalidFunctionParameterException(context, "Expected value type, received " + value.getType());
+			}
+		}
 
-    try {
-      context.getOwner().findFunction(context, name, new XBasicView<>(types));
+		try {
+			context.getOwner().findFunction(context, name, new XBasicView<>(types));
 
-      return new BoolValue(true);
-    }
-    catch (UndefinedFunctionException exception) {
-      return new BoolValue(false);
-    }
-  }
+			return new BoolValue(true);
+		}
+		catch (UndefinedFunctionException exception) {
+			return new BoolValue(false);
+		}
+	}
 }

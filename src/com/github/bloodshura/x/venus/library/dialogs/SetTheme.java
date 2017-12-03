@@ -35,29 +35,29 @@ import javax.swing.UnsupportedLookAndFeelException;
 @MethodArgs(StringValue.class)
 @MethodName("setTheme")
 public class SetTheme extends Method {
-  @Override
-  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    StringValue value = (StringValue) descriptor.get(0);
-    String themeName = value.value();
-    String themePath = null;
+	@Override
+	public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		StringValue value = (StringValue) descriptor.get(0);
+		String themeName = value.value();
+		String themePath = null;
 
-    if (themeName.equalsIgnoreCase("metal")) {
-      themePath = UIManager.getCrossPlatformLookAndFeelClassName();
-    }
-    else if (themeName.equalsIgnoreCase("system")) {
-      themePath = UIManager.getSystemLookAndFeelClassName();
-    }
+		if (themeName.equalsIgnoreCase("metal")) {
+			themePath = UIManager.getCrossPlatformLookAndFeelClassName();
+		}
+		else if (themeName.equalsIgnoreCase("system")) {
+			themePath = UIManager.getSystemLookAndFeelClassName();
+		}
 
-    if (themePath != null) {
-      try {
-        UIManager.setLookAndFeel(themePath);
+		if (themePath != null) {
+			try {
+				UIManager.setLookAndFeel(themePath);
 
-        return new BoolValue(true);
-      }
-      catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException exception) {
-      }
-    }
+				return new BoolValue(true);
+			}
+			catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException exception) {
+			}
+		}
 
-    return new BoolValue(false);
-  }
+		return new BoolValue(false);
+	}
 }

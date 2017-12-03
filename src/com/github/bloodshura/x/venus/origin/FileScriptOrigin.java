@@ -25,43 +25,43 @@ import com.github.bloodshura.x.io.file.File;
 import java.io.IOException;
 
 public class FileScriptOrigin implements ScriptOrigin {
-  private final File file;
+	private final File file;
 
-  public FileScriptOrigin(File file) {
-    this.file = file;
-  }
+	public FileScriptOrigin(File file) {
+		this.file = file;
+	}
 
-  @Override
-  public ScriptOrigin findRelative(String includePath) {
-    try {
-      File file = new File(getFile().getParent(), includePath);
+	@Override
+	public ScriptOrigin findRelative(String includePath) {
+		try {
+			File file = new File(getFile().getParent(), includePath);
 
-      if (file.exists()) {
-        return new FileScriptOrigin(file);
-      }
-    }
-    catch (FileException exception) {
-    }
+			if (file.exists()) {
+				return new FileScriptOrigin(file);
+			}
+		}
+		catch (FileException exception) {
+		}
 
-    return ScriptOrigin.super.findRelative(includePath);
-  }
+		return ScriptOrigin.super.findRelative(includePath);
+	}
 
-  public File getFile() {
-    return file;
-  }
+	public File getFile() {
+		return file;
+	}
 
-  @Override
-  public String getScriptName() {
-    return getFile().getFullName();
-  }
+	@Override
+	public String getScriptName() {
+		return getFile().getFullName();
+	}
 
-  @Override
-  public String read() throws IOException {
-    return getFile().readString();
-  }
+	@Override
+	public String read() throws IOException {
+		return getFile().readString();
+	}
 
-  @Override
-  public String toString() {
-    return "fileorigin(" + getScriptName() + ')';
-  }
+	@Override
+	public String toString() {
+		return "fileorigin(" + getScriptName() + ')';
+	}
 }

@@ -31,14 +31,14 @@ import com.github.bloodshura.x.venus.value.Value;
 
 @MethodName("hasScan")
 public class HasScan extends Method {
-  @Override
-  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    Logger logger = context.getApplicationContext().getUserData("in", Logger.class);
+	@Override
+	public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		Logger logger = context.getApplicationContext().getUserData("in", Logger.class);
 
-    if (logger != null) {
-      return new BoolValue(XScanner.has());
-    }
+		if (logger != null) {
+			return new BoolValue(XScanner.has());
+		}
 
-    return new BoolValue(false);
-  }
+		return new BoolValue(false);
+	}
 }

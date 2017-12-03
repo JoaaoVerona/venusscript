@@ -30,10 +30,10 @@ import com.github.bloodshura.x.venus.value.IntegerValue;
 @MethodArgs(IntegerValue.class)
 @MethodName("exit")
 public class ExitWithCode extends VoidMethod {
-  @Override
-  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    IntegerValue code = (IntegerValue) descriptor.get(0);
+	@Override
+	public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		IntegerValue code = (IntegerValue) descriptor.get(0);
 
-    System.exit(code.value().intValue());
-  }
+		System.exit(code.value().intValue());
+	}
 }

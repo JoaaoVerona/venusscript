@@ -32,20 +32,20 @@ import com.github.bloodshura.x.venus.value.Value;
 @MethodArgs({ DecimalValue.class, DecimalValue.class })
 @MethodName("randDecimal")
 public class RandDecimal extends Method {
-  @Override
-  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    DecimalValue min = (DecimalValue) descriptor.get(0);
-    DecimalValue max = (DecimalValue) descriptor.get(1);
-    double minValue = min.value();
-    double maxValue = max.value();
+	@Override
+	public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		DecimalValue min = (DecimalValue) descriptor.get(0);
+		DecimalValue max = (DecimalValue) descriptor.get(1);
+		double minValue = min.value();
+		double maxValue = max.value();
 
-    if (minValue > maxValue) {
-      double temp = maxValue;
+		if (minValue > maxValue) {
+			double temp = maxValue;
 
-      maxValue = minValue;
-      minValue = temp;
-    }
+			maxValue = minValue;
+			minValue = temp;
+		}
 
-    return new DecimalValue(XRandom.INSTANCE.nextDouble(minValue, maxValue));
-  }
+		return new DecimalValue(XRandom.INSTANCE.nextDouble(minValue, maxValue));
+	}
 }

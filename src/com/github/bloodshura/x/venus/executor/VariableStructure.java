@@ -24,50 +24,50 @@ import com.github.bloodshura.x.collection.list.impl.XArrayList;
 import com.github.bloodshura.x.venus.value.Value;
 
 public class VariableStructure {
-  private final XList<Object> changeMonitors;
-  private final Object lockMonitor;
-  private Value value;
+	private final XList<Object> changeMonitors;
+	private final Object lockMonitor;
+	private Value value;
 
-  public VariableStructure(Value value) {
-    this.changeMonitors = new XArrayList<>();
-    this.lockMonitor = new Object();
-    this.value = value;
-  }
+	public VariableStructure(Value value) {
+		this.changeMonitors = new XArrayList<>();
+		this.lockMonitor = new Object();
+		this.value = value;
+	}
 
-  public void addChangeMonitor(Object monitor) {
-    synchronized (changeMonitors) {
-      changeMonitors.add(monitor);
-    }
-  }
+	public void addChangeMonitor(Object monitor) {
+		synchronized (changeMonitors) {
+			changeMonitors.add(monitor);
+		}
+	}
 
-  public Object getLockMonitor() {
-    return lockMonitor;
-  }
+	public Object getLockMonitor() {
+		return lockMonitor;
+	}
 
-  public Value getValue() {
-    return value;
-  }
+	public Value getValue() {
+		return value;
+	}
 
-  public void removeChangeMonitor(Object monitor) {
-    synchronized (changeMonitors) {
-      changeMonitors.remove(monitor);
-    }
-  }
+	public void removeChangeMonitor(Object monitor) {
+		synchronized (changeMonitors) {
+			changeMonitors.remove(monitor);
+		}
+	}
 
-  public void setValue(Value value) {
-    this.value = value;
+	public void setValue(Value value) {
+		this.value = value;
 
-    synchronized (changeMonitors) {
-      for (Object monitor : changeMonitors) {
-        synchronized (monitor) {
-          monitor.notifyAll();
-        }
-      }
-    }
-  }
+		synchronized (changeMonitors) {
+			for (Object monitor : changeMonitors) {
+				synchronized (monitor) {
+					monitor.notifyAll();
+				}
+			}
+		}
+	}
 
-  @Override
-  public String toString() {
-    return getValue().toString();
-  }
+	@Override
+	public String toString() {
+		return getValue().toString();
+	}
 }

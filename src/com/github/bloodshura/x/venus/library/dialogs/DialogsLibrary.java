@@ -22,8 +22,7 @@ package com.github.bloodshura.x.venus.library.dialogs;
 import com.github.bloodshura.x.venus.library.VenusLibrary;
 
 public class DialogsLibrary extends VenusLibrary {
-  public DialogsLibrary() {
-    addAll(AskDialog.class, Dialog.class, ErrorDialog.class, InfoDialog.class, InputDialog.class,
-      SetTheme.class, WarnDialog.class);
-  }
+	public DialogsLibrary() {
+		addAll(AskDialog.class, Dialog.class, ErrorDialog.class, InfoDialog.class, InputDialog.class, SetTheme.class, WarnDialog.class);
+	}
 }

@@ -22,7 +22,7 @@ package com.github.bloodshura.x.venus.library.time;
 import com.github.bloodshura.x.venus.library.VenusLibrary;
 
 public class TimeLibrary extends VenusLibrary {
-  public TimeLibrary() {
-    addAll(GetDay.class, GetHour.class, GetMinute.class, GetMonth.class, GetSecond.class, GetYear.class);
-  }
+	public TimeLibrary() {
+		addAll(GetDay.class, GetHour.class, GetMinute.class, GetMonth.class, GetSecond.class, GetYear.class);
+	}
 }

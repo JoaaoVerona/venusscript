@@ -23,18 +23,18 @@ import com.github.bloodshura.x.venus.component.Component;
 import com.github.bloodshura.x.venus.expression.Expression;
 
 public class Return extends Component {
-  private final Expression expression;
+	private final Expression expression;
 
-  public Return(Expression expression) {
-    this.expression = expression;
-  }
+	public Return(Expression expression) {
+		this.expression = expression;
+	}
 
-  public Expression getExpression() {
-    return expression;
-  }
+	public Expression getExpression() {
+		return expression;
+	}
 
-  @Override
-  public String toString() {
-    return "return(" + getExpression() + ')';
-  }
+	@Override
+	public String toString() {
+		return "return(" + getExpression() + ')';
+	}
 }

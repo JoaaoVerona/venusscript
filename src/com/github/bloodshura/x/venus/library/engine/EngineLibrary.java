@@ -22,7 +22,7 @@ package com.github.bloodshura.x.venus.library.engine;
 import com.github.bloodshura.x.venus.library.VenusLibrary;
 
 public class EngineLibrary extends VenusLibrary {
-  public EngineLibrary() {
-    addAll(Evaluate.class, HasFunction.class, Interpret.class, Run.class);
-  }
+	public EngineLibrary() {
+		addAll(Evaluate.class, HasFunction.class, Interpret.class, Run.class);
+	}
 }

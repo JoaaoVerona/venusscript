@@ -41,51 +41,51 @@ import com.github.bloodshura.x.worker.ParseWorker;
 @MethodArgs(TypeValue.class)
 @MethodName("scan")
 public class Scan extends Method {
-  @Override
-  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    Logger logger = context.getApplicationContext().getUserData("in", Logger.class);
+	@Override
+	public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		Logger logger = context.getApplicationContext().getUserData("in", Logger.class);
 
-    if (logger != null) {
-      TypeValue value = (TypeValue) descriptor.get(0);
-      Type type = value.value();
+		if (logger != null) {
+			TypeValue value = (TypeValue) descriptor.get(0);
+			Type type = value.value();
 
-      while (true) {
-        try {
-          String line = XScanner.scan();
+			while (true) {
+				try {
+					String line = XScanner.scan();
 
-          if (type == PrimitiveType.BOOLEAN) {
-            return new BoolValue(ParseWorker.toBoolean(line));
-          }
+					if (type == PrimitiveType.BOOLEAN) {
+						return new BoolValue(ParseWorker.toBoolean(line));
+					}
 
-          if (type == PrimitiveType.DECIMAL) {
-            return new DecimalValue(ParseWorker.toDouble(line));
-          }
+					if (type == PrimitiveType.DECIMAL) {
+						return new DecimalValue(ParseWorker.toDouble(line));
+					}
 
-          if (type == PrimitiveType.INTEGER) {
-            return new IntegerValue(ParseWorker.toLong(line));
-          }
+					if (type == PrimitiveType.INTEGER) {
+						return new IntegerValue(ParseWorker.toLong(line));
+					}
 
-          if (type == PrimitiveType.STRING) {
-            return new StringValue(line);
-          }
+					if (type == PrimitiveType.STRING) {
+						return new StringValue(line);
+					}
 
-          if (type == PrimitiveType.TYPE) {
-            Type lookup = PrimitiveType.forIdentifier(line);
+					if (type == PrimitiveType.TYPE) {
+						Type lookup = PrimitiveType.forIdentifier(line);
 
-            if (lookup != null) {
-              return new TypeValue(lookup);
-            }
+						if (lookup != null) {
+							return new TypeValue(lookup);
+						}
 
-            continue;
-          }
+						continue;
+					}
 
-          throw new InvalidValueTypeException(context, "Cannot scan for an input of type " + type);
-        }
-        catch (NumberFormatException exception) {
-        }
-      }
-    }
+					throw new InvalidValueTypeException(context, "Cannot scan for an input of type " + type);
+				}
+				catch (NumberFormatException exception) {
+				}
+			}
+		}
 
-    throw new ScriptRuntimeException(context, "No input resource defined");
-  }
+		throw new ScriptRuntimeException(context, "No input resource defined");
+	}
 }

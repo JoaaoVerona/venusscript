@@ -34,36 +34,28 @@ import org.junit.Test;
 import java.io.IOException;
 
 public class Parser {
-  @Test
-  public void simplePrint() throws IOException, ScriptCompileException {
-    XLogger.disable(Level.DEBUG);
+	@Test
+	public void simplePrint() throws IOException, ScriptCompileException {
+		XLogger.disable(Level.DEBUG);
 
-    String[] content = {
-      "export MY_VAR = 0",
-      "export MY_STRING = \"oi\"",
-      "def printMyName(string name) {",
-      "  print(\"Hello, I'm \" + name + \"!\")",
-      "  print(1 + 3 - (5 + 2))",
-      "  j = (i + 1) * k",
-      "}"
-    };
-    ScriptOrigin origin = new SimpleScriptOrigin("test.xs", StringWorker.join('\n', content));
-    Script script = origin.compile(new ApplicationContext());
+		String[] content = { "export MY_VAR = 0", "export MY_STRING = \"oi\"", "def printMyName(string name) {", "  print(\"Hello, I'm \" + name + \"!\")", "  print(1 + 3 - (5 + 2))", "  j = (i + 1) * k", "}" };
+		ScriptOrigin origin = new SimpleScriptOrigin("test.xs", StringWorker.join('\n', content));
+		Script script = origin.compile(new ApplicationContext());
 
-    print(script);
-  }
+		print(script);
+	}
 
-  public static void print(Component component) {
-    XLogger.println(component);
+	public static void print(Component component) {
+		XLogger.println(component);
 
-    if (component instanceof Container) {
-      XLogger.pushTab();
+		if (component instanceof Container) {
+			XLogger.pushTab();
 
-      for (Component child : ((Container) component).getChildren()) {
-        print(child);
-      }
+			for (Component child : ((Container) component).getChildren()) {
+				print(child);
+			}
 
-      XLogger.popTab();
-    }
-  }
+			XLogger.popTab();
+		}
+	}
 }

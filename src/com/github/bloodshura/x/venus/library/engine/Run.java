@@ -37,26 +37,26 @@ import com.github.bloodshura.x.venus.value.Value;
 @MethodArgs(StringValue.class)
 @MethodName("run")
 public class Run extends Method {
-  @Override
-  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    StringValue path = (StringValue) descriptor.get(0);
-    Script current = context.getScript();
-    ScriptOrigin origin = current.getOrigin().findRelative(path.value());
+	@Override
+	public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		StringValue path = (StringValue) descriptor.get(0);
+		Script current = context.getScript();
+		ScriptOrigin origin = current.getOrigin().findRelative(path.value());
 
-    if (origin != null) {
-      try {
-        Script script = origin.compile(current.getApplicationContext());
-        VenusExecutor executor = new VenusExecutor();
+		if (origin != null) {
+			try {
+				Script script = origin.compile(current.getApplicationContext());
+				VenusExecutor executor = new VenusExecutor();
 
-        executor.run(script, ScriptMode.NORMAL);
+				executor.run(script, ScriptMode.NORMAL);
 
-        return new BoolValue(true);
-      }
-      catch (ScriptCompileException exception) {
-        throw new ScriptRuntimeException(context, "Failed to compile script", exception);
-      }
-    }
+				return new BoolValue(true);
+			}
+			catch (ScriptCompileException exception) {
+				throw new ScriptRuntimeException(context, "Failed to compile script", exception);
+			}
+		}
 
-    return new BoolValue(false);
-  }
+		return new BoolValue(false);
+	}
 }

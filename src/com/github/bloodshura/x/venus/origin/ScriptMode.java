@@ -20,7 +20,7 @@
 package com.github.bloodshura.x.venus.origin;
 
 public enum ScriptMode {
-  EVALUATION,
-  INTERACTIVE,
-  NORMAL
+	EVALUATION,
+	INTERACTIVE,
+	NORMAL
 }

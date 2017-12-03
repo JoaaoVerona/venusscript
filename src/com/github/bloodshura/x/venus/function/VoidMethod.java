@@ -24,12 +24,12 @@ import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.value.Value;
 
 public abstract class VoidMethod extends Method {
-  @Override
-  public final Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    callVoid(context, descriptor);
+	@Override
+	public final Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		callVoid(context, descriptor);
 
-    return null;
-  }
+		return null;
+	}
 
-  public abstract void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException;
+	public abstract void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException;
 }

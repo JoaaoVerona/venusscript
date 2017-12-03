@@ -32,10 +32,10 @@ import com.github.bloodshura.x.venus.value.Value;
 @MethodArgs(ArrayValue.class)
 @MethodName("size")
 public class Size extends Method {
-  @Override
-  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    ArrayValue array = (ArrayValue) descriptor.get(0);
+	@Override
+	public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		ArrayValue array = (ArrayValue) descriptor.get(0);
 
-    return new IntegerValue(array.size());
-  }
+		return new IntegerValue(array.size());
+	}
 }

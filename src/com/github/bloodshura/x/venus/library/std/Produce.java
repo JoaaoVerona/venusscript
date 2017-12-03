@@ -33,17 +33,17 @@ import com.github.bloodshura.x.venus.value.VariableRefValue;
 @MethodArgs(VariableRefValue.class)
 @MethodName("produce")
 public class Produce extends VoidMethod {
-  @Override
-  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    VariableRefValue reference = (VariableRefValue) descriptor.get(0);
-    VariableStructure variable = context.getVar(reference.value());
-    Object monitor;
+	@Override
+	public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		VariableRefValue reference = (VariableRefValue) descriptor.get(0);
+		VariableStructure variable = context.getVar(reference.value());
+		Object monitor;
 
-    synchronized ((monitor = variable.getLockMonitor())) {
-      Value value = variable.getValue();
+		synchronized ((monitor = variable.getLockMonitor())) {
+			Value value = variable.getValue();
 
-      context.setVar(reference.value(), value.plus(new IntegerValue(1)));
-      monitor.notifyAll();
-    }
-  }
+			context.setVar(reference.value(), value.plus(new IntegerValue(1)));
+			monitor.notifyAll();
+		}
+	}
 }

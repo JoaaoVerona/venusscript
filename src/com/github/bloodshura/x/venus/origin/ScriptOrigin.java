@@ -29,32 +29,31 @@ import com.github.bloodshura.x.venus.executor.ApplicationContext;
 import java.io.IOException;
 
 public interface ScriptOrigin {
-  default Script compile(ApplicationContext applicationContext) throws ScriptCompileException {
-    VenusLexer lexer;
+	default Script compile(ApplicationContext applicationContext) throws ScriptCompileException {
+		VenusLexer lexer;
 
-    try {
-      lexer = new VenusLexer(this);
-    }
-    catch (IOException exception) {
-      throw new ScriptCompileException("Could not read script \"" + getScriptName() + "\": " + exception.getClass().getSimpleName() +
-        ": " + exception.getMessage());
-    }
+		try {
+			lexer = new VenusLexer(this);
+		}
+		catch (IOException exception) {
+			throw new ScriptCompileException("Could not read script \"" + getScriptName() + "\": " + exception.getClass().getSimpleName() + ": " + exception.getMessage());
+		}
 
-    Script script = new Script(applicationContext, this);
-    VenusParser parser = script.getParser();
+		Script script = new Script(applicationContext, this);
+		VenusParser parser = script.getParser();
 
-    parser.parse(lexer, script);
+		parser.parse(lexer, script);
 
-    return script;
-  }
+		return script;
+	}
 
-  default ScriptOrigin findRelative(String includePath) {
-    PathResource resource = new PathResource(includePath);
+	default ScriptOrigin findRelative(String includePath) {
+		PathResource resource = new PathResource(includePath);
 
-    return resource.exists() ? new StreamScriptOrigin(includePath, resource) : null;
-  }
+		return resource.exists() ? new StreamScriptOrigin(includePath, resource) : null;
+	}
 
-  String getScriptName();
+	String getScriptName();
 
-  String read() throws IOException;
+	String read() throws IOException;
 }

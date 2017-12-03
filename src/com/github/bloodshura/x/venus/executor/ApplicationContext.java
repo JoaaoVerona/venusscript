@@ -38,72 +38,72 @@ import com.github.bloodshura.x.venus.library.time.TimeLibrary;
 import java.util.function.Supplier;
 
 public class ApplicationContext extends Context {
-  private int currentLine;
-  private VenusExecutor executor;
-  private final XMap<String, Supplier<VenusLibrary>> librarySuppliers;
-  private final XMap<String, Object> userData;
+	private int currentLine;
+	private VenusExecutor executor;
+	private final XMap<String, Supplier<VenusLibrary>> librarySuppliers;
+	private final XMap<String, Object> userData;
 
-  public ApplicationContext() {
-    super(new SimpleContainer("APPLICATION"), null);
-    this.librarySuppliers = new XLinkedMap<>();
-    this.userData = new XLinkedMap<>();
+	public ApplicationContext() {
+		super(new SimpleContainer("APPLICATION"), null);
+		this.librarySuppliers = new XLinkedMap<>();
+		this.userData = new XLinkedMap<>();
 
-    getLibrarySuppliers().add("crypto", CryptoLibrary::new);
-    getLibrarySuppliers().add("dialogs", DialogsLibrary::new);
-    getLibrarySuppliers().add("dynamic", DynamicLibrary::new);
-    getLibrarySuppliers().add("engine", EngineLibrary::new);
-    getLibrarySuppliers().add("math", MathLibrary::new);
-    getLibrarySuppliers().add("std", StdLibrary::new);
-    getLibrarySuppliers().add("system", SystemLibrary::new);
-    getLibrarySuppliers().add("time", TimeLibrary::new);
-    setUserData("in", XLogger.DEFAULT);
-    setUserData("out", (OutputReference) XLogger::print);
-  }
+		getLibrarySuppliers().add("crypto", CryptoLibrary::new);
+		getLibrarySuppliers().add("dialogs", DialogsLibrary::new);
+		getLibrarySuppliers().add("dynamic", DynamicLibrary::new);
+		getLibrarySuppliers().add("engine", EngineLibrary::new);
+		getLibrarySuppliers().add("math", MathLibrary::new);
+		getLibrarySuppliers().add("std", StdLibrary::new);
+		getLibrarySuppliers().add("system", SystemLibrary::new);
+		getLibrarySuppliers().add("time", TimeLibrary::new);
+		setUserData("in", XLogger.DEFAULT);
+		setUserData("out", (OutputReference) XLogger::print);
+	}
 
-  @Override
-  public ApplicationContext clone() {
-    ApplicationContext context = new ApplicationContext();
+	@Override
+	public ApplicationContext clone() {
+		ApplicationContext context = new ApplicationContext();
 
-    context.getLibrarySuppliers().addAll(getLibrarySuppliers());
-    context.userData.addAll(userData);
-    context.setCurrentLine(currentLine());
+		context.getLibrarySuppliers().addAll(getLibrarySuppliers());
+		context.userData.addAll(userData);
+		context.setCurrentLine(currentLine());
 
-    return context;
-  }
+		return context;
+	}
 
-  public VenusExecutor currentExecutor() {
-    return executor;
-  }
+	public VenusExecutor currentExecutor() {
+		return executor;
+	}
 
-  public int currentLine() {
-    return currentLine;
-  }
+	public int currentLine() {
+		return currentLine;
+	}
 
-  public XMap<String, Supplier<VenusLibrary>> getLibrarySuppliers() {
-    return librarySuppliers;
-  }
+	public XMap<String, Supplier<VenusLibrary>> getLibrarySuppliers() {
+		return librarySuppliers;
+	}
 
-  public <E> E getUserData(String name, Class<E> type) throws UndefinedVariableException {
-    Object value = userData.get(name);
+	public <E> E getUserData(String name, Class<E> type) throws UndefinedVariableException {
+		Object value = userData.get(name);
 
-    if (value != null && type.isAssignableFrom(value.getClass())) {
-      return (E) value;
-    }
+		if (value != null && type.isAssignableFrom(value.getClass())) {
+			return (E) value;
+		}
 
-    throw new UndefinedVariableException(this, name);
-  }
+		throw new UndefinedVariableException(this, name);
+	}
 
-  public void setUserData(String name, Object value) {
-    userData.set(name, value);
-  }
+	public void setUserData(String name, Object value) {
+		userData.set(name, value);
+	}
 
-  @Internal
-  void setCurrentLine(int currentLine) {
-    this.currentLine = currentLine;
-  }
+	@Internal
+	void setCurrentLine(int currentLine) {
+		this.currentLine = currentLine;
+	}
 
-  @Internal
-  void setExecutor(VenusExecutor executor) {
-    this.executor = executor;
-  }
+	@Internal
+	void setExecutor(VenusExecutor executor) {
+		this.executor = executor;
+	}
 }

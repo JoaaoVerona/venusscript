@@ -24,43 +24,43 @@ import com.github.bloodshura.x.util.XApi;
 import com.github.bloodshura.x.venus.executor.ApplicationContext;
 
 public abstract class Component {
-  private Container parent;
-  private int sourceLine;
+	private Container parent;
+	private int sourceLine;
 
-  public ApplicationContext getApplicationContext() {
-    XApi.requireState(getParent() != null, "Could not retrieve application context; no parent available");
+	public ApplicationContext getApplicationContext() {
+		XApi.requireState(getParent() != null, "Could not retrieve application context; no parent available");
 
-    return getParent().getApplicationContext();
-  }
+		return getParent().getApplicationContext();
+	}
 
-  public final Container getParent() {
-    return parent;
-  }
+	public final Container getParent() {
+		return parent;
+	}
 
-  public Script getScript() {
-    XApi.requireState(getParent() != null, "Could not retrieve script; no parent available");
+	public Script getScript() {
+		XApi.requireState(getParent() != null, "Could not retrieve script; no parent available");
 
-    return getParent().getScript();
-  }
+		return getParent().getScript();
+	}
 
-  public final int getSourceLine() {
-    return sourceLine;
-  }
+	public final int getSourceLine() {
+		return sourceLine;
+	}
 
-  public final boolean hasParent() {
-    return getParent() != null;
-  }
+	public final boolean hasParent() {
+		return getParent() != null;
+	}
 
-  @Internal
-  public void setParent(Container parent) {
-    this.parent = parent;
-  }
+	@Internal
+	public void setParent(Container parent) {
+		this.parent = parent;
+	}
 
-  @Internal
-  public void setSourceLine(int sourceLine) {
-    this.sourceLine = sourceLine;
-  }
+	@Internal
+	public void setSourceLine(int sourceLine) {
+		this.sourceLine = sourceLine;
+	}
 
-  @Override
-  public abstract String toString();
+	@Override
+	public abstract String toString();
 }

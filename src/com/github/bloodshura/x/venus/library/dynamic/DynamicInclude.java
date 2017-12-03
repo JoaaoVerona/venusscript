@@ -33,17 +33,17 @@ import com.github.bloodshura.x.venus.value.StringValue;
 @MethodArgs({ StringValue.class, BoolValue.class })
 @MethodName("dynamicInclude")
 public class DynamicInclude extends VoidMethod {
-  @Override
-  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    StringValue includeName = (StringValue) descriptor.get(0);
-    BoolValue maybe = (BoolValue) descriptor.get(1);
-    Script script = context.getScript();
+	@Override
+	public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		StringValue includeName = (StringValue) descriptor.get(0);
+		BoolValue maybe = (BoolValue) descriptor.get(1);
+		Script script = context.getScript();
 
-    try {
-      script.include(includeName.value(), maybe.value());
-    }
-    catch (ScriptCompileException exception) {
-      throw new ScriptRuntimeException(context, "Could not include script: " + exception.getMessage(), exception.getCause());
-    }
-  }
+		try {
+			script.include(includeName.value(), maybe.value());
+		}
+		catch (ScriptCompileException exception) {
+			throw new ScriptRuntimeException(context, "Could not include script: " + exception.getMessage(), exception.getCause());
+		}
+	}
 }

@@ -39,91 +39,91 @@ import com.github.bloodshura.x.worker.ParseWorker;
 import static com.github.bloodshura.x.sys.XSystem.*;
 
 public class InteractiveTester {
-  public static final Directory DIRECTORY = new Directory("VenusScript/examples");
-  public static final boolean LIGHTWEIGHT_ERRORS = false;
+	public static final Directory DIRECTORY = new Directory("VenusScript/examples");
+	public static final boolean LIGHTWEIGHT_ERRORS = false;
 
-  public static void main(String[] args) throws Exception {
-    XView<File> files = DIRECTORY.getDeepFiles();
-    int i = 0;
+	public static void main(String[] args) throws Exception {
+		XView<File> files = DIRECTORY.getDeepFiles();
+		int i = 0;
 
-    for (File file : files) {
-      XLogger.println(i++ + ". " + file.getRelativePath(DIRECTORY));
-    }
+		for (File file : files) {
+			XLogger.println(i++ + ". " + file.getRelativePath(DIRECTORY));
+		}
 
-    XLogger.print("> ");
+		XLogger.print("> ");
 
-    int option = -1;
-    boolean printAst = false;
+		int option = -1;
+		boolean printAst = false;
 
-    while (option < 0 || option >= files.size()) {
-      String optionStr = XScanner.scan();
+		while (option < 0 || option >= files.size()) {
+			String optionStr = XScanner.scan();
 
-      if (optionStr.startsWith("*")) {
-        optionStr = optionStr.substring(1);
-        printAst = true;
-      }
+			if (optionStr.startsWith("*")) {
+				optionStr = optionStr.substring(1);
+				printAst = true;
+			}
 
-      if (ParseWorker.isInt(optionStr)) {
-        option = ParseWorker.toInt(optionStr);
-      }
-    }
+			if (ParseWorker.isInt(optionStr)) {
+				option = ParseWorker.toInt(optionStr);
+			}
+		}
 
-    File file = files.get(option);
-    ScriptOrigin origin = new FileScriptOrigin(file);
-    Script script;
+		File file = files.get(option);
+		ScriptOrigin origin = new FileScriptOrigin(file);
+		Script script;
 
-    if (LIGHTWEIGHT_ERRORS) {
-      try {
-        script = origin.compile(new ApplicationContext());
-      }
-      catch (ScriptCompileException exception) {
-        XLogger.warnln("COMPILE ERR: " + exception.getMessage());
+		if (LIGHTWEIGHT_ERRORS) {
+			try {
+				script = origin.compile(new ApplicationContext());
+			}
+			catch (ScriptCompileException exception) {
+				XLogger.warnln("COMPILE ERR: " + exception.getMessage());
 
-        return;
-      }
-    }
-    else {
-      script = origin.compile(new ApplicationContext());
-    }
+				return;
+			}
+		}
+		else {
+			script = origin.compile(new ApplicationContext());
+		}
 
-    if (printAst) {
-      print(script);
-      XLogger.newLine();
-    }
+		if (printAst) {
+			print(script);
+			XLogger.newLine();
+		}
 
-    VenusExecutor executor = new VenusExecutor();
-    long start = millis();
+		VenusExecutor executor = new VenusExecutor();
+		long start = millis();
 
-    if (LIGHTWEIGHT_ERRORS) {
-      try {
-        executor.run(script, ScriptMode.NORMAL);
-      }
-      catch (ScriptRuntimeException exception) {
-        XLogger.warnln("RUNTIME ERR: " + exception.getMessage());
+		if (LIGHTWEIGHT_ERRORS) {
+			try {
+				executor.run(script, ScriptMode.NORMAL);
+			}
+			catch (ScriptRuntimeException exception) {
+				XLogger.warnln("RUNTIME ERR: " + exception.getMessage());
 
-        return;
-      }
-    }
-    else {
-      executor.run(script, ScriptMode.NORMAL);
-    }
+				return;
+			}
+		}
+		else {
+			executor.run(script, ScriptMode.NORMAL);
+		}
 
-    long duration = millis() - start;
+		long duration = millis() - start;
 
-    XLogger.println("Duration: " + duration + "ms");
-  }
+		XLogger.println("Duration: " + duration + "ms");
+	}
 
-  private static void print(Component component) {
-    XLogger.println(component);
+	private static void print(Component component) {
+		XLogger.println(component);
 
-    if (component instanceof Container) {
-      XLogger.pushTab();
+		if (component instanceof Container) {
+			XLogger.pushTab();
 
-      for (Component child : ((Container) component).getChildren()) {
-        print(child);
-      }
+			for (Component child : ((Container) component).getChildren()) {
+				print(child);
+			}
 
-      XLogger.popTab();
-    }
-  }
+			XLogger.popTab();
+		}
+	}
 }

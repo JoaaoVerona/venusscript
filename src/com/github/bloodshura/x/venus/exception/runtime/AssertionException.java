@@ -22,7 +22,7 @@ package com.github.bloodshura.x.venus.exception.runtime;
 import com.github.bloodshura.x.venus.executor.Context;
 
 public class AssertionException extends ScriptRuntimeException {
-  public AssertionException(Context context, CharSequence message) {
-    super(context, message);
-  }
+	public AssertionException(Context context, CharSequence message) {
+		super(context, message);
+	}
 }

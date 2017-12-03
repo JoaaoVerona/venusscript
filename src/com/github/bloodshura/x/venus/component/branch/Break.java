@@ -22,8 +22,8 @@ package com.github.bloodshura.x.venus.component.branch;
 import com.github.bloodshura.x.venus.component.Component;
 
 public class Break extends Component {
-  @Override
-  public String toString() {
-    return "break()";
-  }
+	@Override
+	public String toString() {
+		return "break()";
+	}
 }

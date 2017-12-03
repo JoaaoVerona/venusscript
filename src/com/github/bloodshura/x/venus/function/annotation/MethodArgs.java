@@ -29,5 +29,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface MethodArgs {
-  Class<? extends Value>[] value();
+	Class<? extends Value>[] value();
 }

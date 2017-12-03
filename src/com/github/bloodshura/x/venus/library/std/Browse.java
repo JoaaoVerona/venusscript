@@ -35,17 +35,17 @@ import com.github.bloodshura.x.venus.value.Value;
 @MethodArgs(StringValue.class)
 @MethodName("browse")
 public class Browse extends Method {
-  @Override
-  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    StringValue path = (StringValue) descriptor.get(0);
+	@Override
+	public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		StringValue path = (StringValue) descriptor.get(0);
 
-    try {
-      XSystem.getDesktop().browse(new Url(path.value()));
+		try {
+			XSystem.getDesktop().browse(new Url(path.value()));
 
-      return new BoolValue(true);
-    }
-    catch (UrlException exception) {
-      return new BoolValue(false);
-    }
-  }
+			return new BoolValue(true);
+		}
+		catch (UrlException exception) {
+			return new BoolValue(false);
+		}
+	}
 }

@@ -25,25 +25,25 @@ import com.github.bloodshura.x.venus.type.Type;
 import javax.annotation.Nonnull;
 
 public class Argument extends Base {
-  private final String name;
-  private final Type type;
+	private final String name;
+	private final Type type;
 
-  public Argument(String name, Type type) {
-    this.name = name;
-    this.type = type;
-  }
+	public Argument(String name, Type type) {
+		this.name = name;
+		this.type = type;
+	}
 
-  public String getName() {
-    return name;
-  }
+	public String getName() {
+		return name;
+	}
 
-  public Type getType() {
-    return type;
-  }
+	public Type getType() {
+		return type;
+	}
 
-  @Nonnull
-  @Override
-  protected Object[] stringValues() {
-    return new Object[] { getName(), getType() };
-  }
+	@Nonnull
+	@Override
+	protected Object[] stringValues() {
+		return new Object[] { getName(), getType() };
+	}
 }

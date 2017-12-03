@@ -24,25 +24,25 @@ import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.value.Value;
 
 public class Constant implements Expression {
-  private final Value value;
+	private final Value value;
 
-  public Constant(Value value) {
-    XApi.requireNonNull(value, "value");
+	public Constant(Value value) {
+		XApi.requireNonNull(value, "value");
 
-    this.value = value;
-  }
+		this.value = value;
+	}
 
-  public Value getValue() {
-    return value;
-  }
+	public Value getValue() {
+		return value;
+	}
 
-  @Override
-  public Value resolve(Context context) {
-    return value;
-  }
+	@Override
+	public Value resolve(Context context) {
+		return value;
+	}
 
-  @Override
-  public String toString() {
-    return "const(" + getValue() + ')';
-  }
+	@Override
+	public String toString() {
+		return "const(" + getValue() + ')';
+	}
 }

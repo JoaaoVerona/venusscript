@@ -42,30 +42,30 @@ import java.util.Collection;
 
 @RunWith(Parameterized.class)
 public class Executor {
-  public static final Directory DIRECTORY = new Directory("VenusScript/examples");
-  private final File file;
+	public static final Directory DIRECTORY = new Directory("VenusScript/examples");
+	private final File file;
 
-  public Executor(File file) {
-    this.file = file;
-  }
+	public Executor(File file) {
+		this.file = file;
+	}
 
-  @Test
-  public void simpleTest() throws Exception {
-    XLogger.disable(Level.DEBUG);
+	@Test
+	public void simpleTest() throws Exception {
+		XLogger.disable(Level.DEBUG);
 
-    ScriptOrigin origin = new FileScriptOrigin(file);
-    Script script = origin.compile(new ApplicationContext());
-    VenusExecutor executor = new VenusExecutor();
+		ScriptOrigin origin = new FileScriptOrigin(file);
+		Script script = origin.compile(new ApplicationContext());
+		VenusExecutor executor = new VenusExecutor();
 
-    executor.run(script, ScriptMode.NORMAL);
-  }
+		executor.run(script, ScriptMode.NORMAL);
+	}
 
-  @Parameters
-  public static Collection<Object[]> data() throws IOException {
-    XList<Object[]> data = new XArrayList<>();
+	@Parameters
+	public static Collection<Object[]> data() throws IOException {
+		XList<Object[]> data = new XArrayList<>();
 
-    DIRECTORY.deepIterateFiles(file -> !file.getName().endsWith("_i"), file -> data.add(new Object[] { file }));
+		DIRECTORY.deepIterateFiles(file -> !file.getName().endsWith("_i"), file -> data.add(new Object[] { file }));
 
-    return data.toCollection(ArrayList.class);
-  }
+		return data.toCollection(ArrayList.class);
+	}
 }

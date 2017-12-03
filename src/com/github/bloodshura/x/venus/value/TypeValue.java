@@ -24,27 +24,27 @@ import com.github.bloodshura.x.venus.type.PrimitiveType;
 import com.github.bloodshura.x.venus.type.Type;
 
 public class TypeValue extends Value {
-  private final Type value;
+	private final Type value;
 
-  public TypeValue(Type value) {
-    super(PrimitiveType.TYPE);
-    XApi.requireNonNull(value, "value");
+	public TypeValue(Type value) {
+		super(PrimitiveType.TYPE);
+		XApi.requireNonNull(value, "value");
 
-    this.value = value;
-  }
+		this.value = value;
+	}
 
-  @Override
-  public TypeValue clone() {
-    return new TypeValue(value());
-  }
+	@Override
+	public TypeValue clone() {
+		return new TypeValue(value());
+	}
 
-  @Override
-  public String toString() {
-    return value().toString();
-  }
+	@Override
+	public String toString() {
+		return value().toString();
+	}
 
-  @Override
-  public Type value() {
-    return value;
-  }
+	@Override
+	public Type value() {
+		return value;
+	}
 }

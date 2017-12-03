@@ -22,10 +22,10 @@ package com.github.bloodshura.x.venus.value;
 import com.github.bloodshura.x.venus.type.Type;
 
 public abstract class NumericValue extends Value {
-  public NumericValue(Type type) {
-    super(type);
-  }
+	public NumericValue(Type type) {
+		super(type);
+	}
 
-  @Override
-  public abstract Number value();
+	@Override
+	public abstract Number value();
 }

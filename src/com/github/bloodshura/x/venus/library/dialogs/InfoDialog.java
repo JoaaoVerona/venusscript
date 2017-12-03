@@ -34,21 +34,21 @@ import com.github.bloodshura.x.venus.value.Value;
 @MethodName("infoDialog")
 @MethodVarArgs
 public class InfoDialog extends VoidMethod {
-  @Override
-  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    if (descriptor.isEmpty()) {
-      return;
-    }
+	@Override
+	public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		if (descriptor.isEmpty()) {
+			return;
+		}
 
-    String title = descriptor.transform(0, Value::toString, null);
-    TextBuilder message = Pool.newBuilder();
-    int offset = descriptor.count() > 1 ? 1 : 0;
+		String title = descriptor.transform(0, Value::toString, null);
+		TextBuilder message = Pool.newBuilder();
+		int offset = descriptor.count() > 1 ? 1 : 0;
 
-    for (int i = offset; i < descriptor.count(); i++) {
-      message.append(descriptor.get(i));
-      message.newLine();
-    }
+		for (int i = offset; i < descriptor.count(); i++) {
+			message.append(descriptor.get(i));
+			message.newLine();
+		}
 
-    XDialogs.show(AlertType.INFORMATION, title, message);
-  }
+		XDialogs.show(AlertType.INFORMATION, title, message);
+	}
 }

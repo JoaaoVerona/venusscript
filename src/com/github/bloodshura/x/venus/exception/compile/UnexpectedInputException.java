@@ -20,7 +20,7 @@
 package com.github.bloodshura.x.venus.exception.compile;
 
 public class UnexpectedInputException extends ScriptCompileException {
-  public UnexpectedInputException(String scriptName, int currentLine, String message) {
-    super(scriptName, currentLine, message);
-  }
+	public UnexpectedInputException(String scriptName, int currentLine, String message) {
+		super(scriptName, currentLine, message);
+	}
 }

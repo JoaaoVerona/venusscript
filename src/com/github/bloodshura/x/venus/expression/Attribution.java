@@ -24,33 +24,33 @@ import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.value.Value;
 
 public class Attribution implements Expression {
-  private final String name;
-  private final Expression expression;
+	private final String name;
+	private final Expression expression;
 
-  public Attribution(String name, Expression expression) {
-    this.name = name;
-    this.expression = expression;
-  }
+	public Attribution(String name, Expression expression) {
+		this.name = name;
+		this.expression = expression;
+	}
 
-  public String getName() {
-    return name;
-  }
+	public String getName() {
+		return name;
+	}
 
-  public Expression getExpression() {
-    return expression;
-  }
+	public Expression getExpression() {
+		return expression;
+	}
 
-  @Override
-  public Value resolve(Context context) throws ScriptRuntimeException {
-    Value value = getExpression().resolve(context);
+	@Override
+	public Value resolve(Context context) throws ScriptRuntimeException {
+		Value value = getExpression().resolve(context);
 
-    context.setVar(getName(), value);
+		context.setVar(getName(), value);
 
-    return value;
-  }
+		return value;
+	}
 
-  @Override
-  public String toString() {
-    return "attribution(" + getName() + "=" + getExpression() + ')';
-  }
+	@Override
+	public String toString() {
+		return "attribution(" + getName() + "=" + getExpression() + ')';
+	}
 }

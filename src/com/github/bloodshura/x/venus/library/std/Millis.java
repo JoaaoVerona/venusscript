@@ -30,8 +30,8 @@ import com.github.bloodshura.x.venus.value.Value;
 
 @MethodName("millis")
 public class Millis extends Method {
-  @Override
-  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    return new IntegerValue(XSystem.millis());
-  }
+	@Override
+	public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		return new IntegerValue(XSystem.millis());
+	}
 }

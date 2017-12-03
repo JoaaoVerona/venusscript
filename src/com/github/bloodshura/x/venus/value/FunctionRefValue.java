@@ -24,27 +24,27 @@ import com.github.bloodshura.x.venus.compiler.KeywordDefinitions;
 import com.github.bloodshura.x.venus.type.PrimitiveType;
 
 public class FunctionRefValue extends Value {
-  private final String value;
+	private final String value;
 
-  public FunctionRefValue(String value) {
-    super(PrimitiveType.FUNCTION_REFERENCE);
-    XApi.requireNonNull(value, "value");
+	public FunctionRefValue(String value) {
+		super(PrimitiveType.FUNCTION_REFERENCE);
+		XApi.requireNonNull(value, "value");
 
-    this.value = value;
-  }
+		this.value = value;
+	}
 
-  @Override
-  public FunctionRefValue clone() {
-    return new FunctionRefValue(value());
-  }
+	@Override
+	public FunctionRefValue clone() {
+		return new FunctionRefValue(value());
+	}
 
-  @Override
-  public String toString() {
-    return KeywordDefinitions.FUNCTION_REFERENCE + value();
-  }
+	@Override
+	public String toString() {
+		return KeywordDefinitions.FUNCTION_REFERENCE + value();
+	}
 
-  @Override
-  public String value() {
-    return value;
-  }
+	@Override
+	public String value() {
+		return value;
+	}
 }

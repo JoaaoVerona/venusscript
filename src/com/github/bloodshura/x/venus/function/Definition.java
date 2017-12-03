@@ -32,68 +32,68 @@ import com.github.bloodshura.x.venus.value.Value;
 import javax.annotation.Nonnull;
 
 public final class Definition extends Container implements Function {
-  private final XList<Argument> arguments;
-  private final boolean global;
-  private final String name;
+	private final XList<Argument> arguments;
+	private final boolean global;
+	private final String name;
 
-  public Definition(String name, XList<Argument> arguments, boolean global) {
-    this.arguments = arguments;
-    this.global = global;
-    this.name = name;
-  }
+	public Definition(String name, XList<Argument> arguments, boolean global) {
+		this.arguments = arguments;
+		this.global = global;
+		this.name = name;
+	}
 
-  @Override
-  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    int i = 0;
+	@Override
+	public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		int i = 0;
 
-    if (!isGlobal()) {
-      this.context = new Context(this, context);
-    }
+		if (!isGlobal()) {
+			this.context = new Context(this, context);
+		}
 
-    for (Argument argument : getArguments()) {
-      getContext().setVar(argument.getName(), descriptor.get(i++));
-    }
+		for (Argument argument : getArguments()) {
+			getContext().setVar(argument.getName(), descriptor.get(i++));
+		}
 
-    return getApplicationContext().currentExecutor().run(this, ScriptMode.NORMAL);
-  }
+		return getApplicationContext().currentExecutor().run(this, ScriptMode.NORMAL);
+	}
 
-  @Override
-  public int getArgumentCount() { // Default impl. of getArgumentCount() calls getArgumentTypes(), but our impl. is expensive
-    return arguments.size();
-  }
+	@Override
+	public int getArgumentCount() { // Default impl. of getArgumentCount() calls getArgumentTypes(), but our impl. is expensive
+		return arguments.size();
+	}
 
-  @Override
-  public XView<Type> getArgumentTypes() {
-    return getArguments().map(Argument::getType);
-  }
+	@Override
+	public XView<Type> getArgumentTypes() {
+		return getArguments().map(Argument::getType);
+	}
 
-  public XView<Argument> getArguments() {
-    return new XBasicView<>(arguments);
-  }
+	public XView<Argument> getArguments() {
+		return new XBasicView<>(arguments);
+	}
 
-  @Nonnull
-  @Override
-  public String getName() {
-    return name;
-  }
+	@Nonnull
+	@Override
+	public String getName() {
+		return name;
+	}
 
-  public boolean isGlobal() {
-    return global;
-  }
+	public boolean isGlobal() {
+		return global;
+	}
 
-  @Override
-  public boolean isVarArgs() {
-    return false;
-  }
+	@Override
+	public boolean isVarArgs() {
+		return false;
+	}
 
-  @Override
-  public void setParent(Container parent) {
-    super.setParent(parent);
-    this.context = new Context(this, parent.getContext());
-  }
+	@Override
+	public void setParent(Container parent) {
+		super.setParent(parent);
+		this.context = new Context(this, parent.getContext());
+	}
 
-  @Override
-  public String toString() {
-    return "definition(" + getName() + ')';
-  }
+	@Override
+	public String toString() {
+		return "definition(" + getName() + ')';
+	}
 }

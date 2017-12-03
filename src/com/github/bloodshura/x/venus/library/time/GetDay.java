@@ -30,8 +30,8 @@ import com.github.bloodshura.x.venus.value.Value;
 
 @MethodName("getDay")
 public class GetDay extends Method {
-  @Override
-  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    return new IntegerValue(Date.now().getDay());
-  }
+	@Override
+	public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		return new IntegerValue(Date.now().getDay());
+	}
 }

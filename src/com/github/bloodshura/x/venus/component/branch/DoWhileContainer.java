@@ -23,26 +23,26 @@ import com.github.bloodshura.x.venus.component.Container;
 import com.github.bloodshura.x.venus.expression.Expression;
 
 public class DoWhileContainer extends Container implements Breakable {
-  private Expression condition;
+	private Expression condition;
 
-  public DoWhileContainer(Expression condition) {
-    this.condition = condition;
-  }
+	public DoWhileContainer(Expression condition) {
+		this.condition = condition;
+	}
 
-  public Expression getCondition() {
-    return condition;
-  }
+	public Expression getCondition() {
+		return condition;
+	}
 
-  public boolean hasCondition() {
-    return getCondition() != null;
-  }
+	public boolean hasCondition() {
+		return getCondition() != null;
+	}
 
-  public void setCondition(Expression condition) {
-    this.condition = condition;
-  }
+	public void setCondition(Expression condition) {
+		this.condition = condition;
+	}
 
-  @Override
-  public String toString() {
-    return "dowhile(" + getCondition() + ')';
-  }
+	@Override
+	public String toString() {
+		return "dowhile(" + getCondition() + ')';
+	}
 }

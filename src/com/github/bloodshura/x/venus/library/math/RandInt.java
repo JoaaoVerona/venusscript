@@ -32,20 +32,20 @@ import com.github.bloodshura.x.venus.value.Value;
 @MethodArgs({ IntegerValue.class, IntegerValue.class })
 @MethodName("randInt")
 public class RandInt extends Method {
-  @Override
-  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    IntegerValue min = (IntegerValue) descriptor.get(0);
-    IntegerValue max = (IntegerValue) descriptor.get(1);
-    long minValue = min.value();
-    long maxValue = max.value();
+	@Override
+	public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		IntegerValue min = (IntegerValue) descriptor.get(0);
+		IntegerValue max = (IntegerValue) descriptor.get(1);
+		long minValue = min.value();
+		long maxValue = max.value();
 
-    if (minValue > maxValue) {
-      long temp = maxValue;
+		if (minValue > maxValue) {
+			long temp = maxValue;
 
-      maxValue = minValue;
-      minValue = temp;
-    }
+			maxValue = minValue;
+			minValue = temp;
+		}
 
-    return new IntegerValue(XRandom.INSTANCE.nextLong(minValue, maxValue));
-  }
+		return new IntegerValue(XRandom.INSTANCE.nextLong(minValue, maxValue));
+	}
 }

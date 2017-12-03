@@ -30,8 +30,8 @@ import com.github.bloodshura.x.venus.value.Value;
 
 @MethodName("getYear")
 public class GetHour extends Method {
-  @Override
-  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    return new IntegerValue(Time.now().getHour());
-  }
+	@Override
+	public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		return new IntegerValue(Time.now().getHour());
+	}
 }

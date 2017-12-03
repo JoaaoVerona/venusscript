@@ -33,82 +33,82 @@ import com.github.bloodshura.x.worker.ArrayWorker;
 import java.util.Iterator;
 
 public class ArrayValue extends IterableValue {
-  private final Value[] values;
+	private final Value[] values;
 
-  public ArrayValue(int size) {
-    this(new Value[size]);
-  }
+	public ArrayValue(int size) {
+		this(new Value[size]);
+	}
 
-  public ArrayValue(Value... values) {
-    super(PrimitiveType.ARRAY);
-    XApi.requireNonNull(values, "values");
+	public ArrayValue(Value... values) {
+		super(PrimitiveType.ARRAY);
+		XApi.requireNonNull(values, "values");
 
-    this.values = values;
-  }
+		this.values = values;
+	}
 
-  @Override
-  public ArrayValue clone() {
-    return new ArrayValue(ArrayWorker.copyOf(value()));
-  }
+	@Override
+	public ArrayValue clone() {
+		return new ArrayValue(ArrayWorker.copyOf(value()));
+	}
 
-  @Override
-  public BoolValue equals(Value value) {
-    if (value instanceof ArrayValue) {
-      ArrayValue array = (ArrayValue) value;
+	@Override
+	public BoolValue equals(Value value) {
+		if (value instanceof ArrayValue) {
+			ArrayValue array = (ArrayValue) value;
 
-      return new BoolValue(size() == array.size() && SimpleEqualizer.compare(value(), array.value()));
-    }
+			return new BoolValue(size() == array.size() && SimpleEqualizer.compare(value(), array.value()));
+		}
 
-    return new BoolValue(false);
-  }
+		return new BoolValue(false);
+	}
 
-  public Value get(Context context, int index) throws ScriptRuntimeException {
-    if (index < 0 || index >= size()) {
-      throw new InvalidArrayAccessException(context, "Out of range array index: " + index + ", expected between 0~" + (size() - 1));
-    }
+	public Value get(Context context, int index) throws ScriptRuntimeException {
+		if (index < 0 || index >= size()) {
+			throw new InvalidArrayAccessException(context, "Out of range array index: " + index + ", expected between 0~" + (size() - 1));
+		}
 
-    return value()[index];
-  }
+		return value()[index];
+	}
 
-  @Override
-  public Iterator<Value> iterator() {
-    return new ArrayIterator<>(value());
-  }
+	@Override
+	public Iterator<Value> iterator() {
+		return new ArrayIterator<>(value());
+	}
 
-  public void set(Context context, int index, Value value) throws ScriptRuntimeException {
-    if (index < 0 || index >= size()) {
-      throw new InvalidArrayAccessException(context, "Out of range array index: " + index + ", expected between 0~" + (size() - 1));
-    }
+	public void set(Context context, int index, Value value) throws ScriptRuntimeException {
+		if (index < 0 || index >= size()) {
+			throw new InvalidArrayAccessException(context, "Out of range array index: " + index + ", expected between 0~" + (size() - 1));
+		}
 
-    value()[index] = value;
-  }
+		value()[index] = value;
+	}
 
-  public int size() {
-    return value().length;
-  }
+	public int size() {
+		return value().length;
+	}
 
-  @Override
-  public String toString() {
-    return toString(this);
-  }
+	@Override
+	public String toString() {
+		return toString(this);
+	}
 
-  @Override
-  public Value[] value() {
-    return values;
-  }
+	@Override
+	public Value[] value() {
+		return values;
+	}
 
-  private static <E> String toString(ArrayValue array) {
-    TextBuilder builder = Pool.newBuilder().setSeparator(", ");
+	private static <E> String toString(ArrayValue array) {
+		TextBuilder builder = Pool.newBuilder().setSeparator(", ");
 
-    for (Value value : array.value()) {
-      if (value instanceof ArrayValue) {
-        builder.append('[' + toString((ArrayValue) value) + ']');
-      }
-      else {
-        builder.append(value);
-      }
-    }
+		for (Value value : array.value()) {
+			if (value instanceof ArrayValue) {
+				builder.append('[' + toString((ArrayValue) value) + ']');
+			}
+			else {
+				builder.append(value);
+			}
+		}
 
-    return '[' + builder.toString() + ']';
-  }
+		return '[' + builder.toString() + ']';
+	}
 }

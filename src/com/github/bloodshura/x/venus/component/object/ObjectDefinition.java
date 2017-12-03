@@ -27,36 +27,36 @@ import com.github.bloodshura.x.venus.type.ObjectType;
 import com.github.bloodshura.x.venus.type.Type;
 
 public class ObjectDefinition extends Container {
-  private final XList<Attribute> attributes;
-  private final String name;
-  private final Type type;
+	private final XList<Attribute> attributes;
+	private final String name;
+	private final Type type;
 
-  public ObjectDefinition(String name) {
-    this.attributes = new XArrayList<>();
-    this.name = name;
-    this.type = new ObjectType(name);
-  }
+	public ObjectDefinition(String name) {
+		this.attributes = new XArrayList<>();
+		this.name = name;
+		this.type = new ObjectType(name);
+	}
 
-  public XList<Attribute> getAttributes() {
-    return attributes;
-  }
+	public XList<Attribute> getAttributes() {
+		return attributes;
+	}
 
-  public String getName() {
-    return name;
-  }
+	public String getName() {
+		return name;
+	}
 
-  public Type getType() {
-    return type;
-  }
+	public Type getType() {
+		return type;
+	}
 
-  @Override
-  public void setParent(Container parent) {
-    super.setParent(parent);
-    this.context = new Context(this, parent.getContext());
-  }
+	@Override
+	public void setParent(Container parent) {
+		super.setParent(parent);
+		this.context = new Context(this, parent.getContext());
+	}
 
-  @Override
-  public String toString() {
-    return "objectdef(" + getName() + ')';
-  }
+	@Override
+	public String toString() {
+		return "objectdef(" + getName() + ')';
+	}
 }

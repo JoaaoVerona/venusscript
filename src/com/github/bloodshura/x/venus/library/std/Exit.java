@@ -28,8 +28,8 @@ import com.github.bloodshura.x.venus.function.annotation.MethodName;
 
 @MethodName("exit")
 public class Exit extends VoidMethod {
-  @Override
-  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    XSystem.exit();
-  }
+	@Override
+	public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		XSystem.exit();
+	}
 }

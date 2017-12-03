@@ -20,5 +20,5 @@
 package com.github.bloodshura.x.venus.executor;
 
 public interface OutputReference {
-  void output(String string);
+	void output(String string);
 }

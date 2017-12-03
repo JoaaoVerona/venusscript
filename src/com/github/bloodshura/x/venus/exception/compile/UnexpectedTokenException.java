@@ -20,7 +20,7 @@
 package com.github.bloodshura.x.venus.exception.compile;
 
 public class UnexpectedTokenException extends ScriptCompileException {
-  public UnexpectedTokenException(String scriptName, int currentLine, String message) {
-    super(scriptName, currentLine, message);
-  }
+	public UnexpectedTokenException(String scriptName, int currentLine, String message) {
+		super(scriptName, currentLine, message);
+	}
 }

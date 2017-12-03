@@ -22,5 +22,5 @@ package com.github.bloodshura.x.venus.operator;
 import com.github.bloodshura.x.collection.view.XView;
 
 public interface Operator {
-  XView<String> getIdentifiers();
+	XView<String> getIdentifiers();
 }

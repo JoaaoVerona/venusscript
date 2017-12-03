@@ -22,8 +22,8 @@ package com.github.bloodshura.x.venus.component.branch;
 import com.github.bloodshura.x.venus.component.Component;
 
 public class Continue extends Component {
-  @Override
-  public String toString() {
-    return "continue()";
-  }
+	@Override
+	public String toString() {
+		return "continue()";
+	}
 }

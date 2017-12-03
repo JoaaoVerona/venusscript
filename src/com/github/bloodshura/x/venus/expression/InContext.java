@@ -26,38 +26,38 @@ import com.github.bloodshura.x.venus.value.ObjectValue;
 import com.github.bloodshura.x.venus.value.Value;
 
 public class InContext implements Expression {
-  private final Expression expression;
-  private final String name;
+	private final Expression expression;
+	private final String name;
 
-  public InContext(String name, Expression expression) {
-    this.name = name;
-    this.expression = expression;
-  }
+	public InContext(String name, Expression expression) {
+		this.name = name;
+		this.expression = expression;
+	}
 
-  public Expression getExpression() {
-    return expression;
-  }
+	public Expression getExpression() {
+		return expression;
+	}
 
-  public String getName() {
-    return name;
-  }
+	public String getName() {
+		return name;
+	}
 
-  @Override
-  public Value resolve(Context context) throws ScriptRuntimeException {
-    Value value = context.getVarValue(getName());
+	@Override
+	public Value resolve(Context context) throws ScriptRuntimeException {
+		Value value = context.getVarValue(getName());
 
-    if (value instanceof ObjectValue) {
-      ObjectValue object = (ObjectValue) value;
+		if (value instanceof ObjectValue) {
+			ObjectValue object = (ObjectValue) value;
 
-      return getExpression().resolve(object.getContext()); // See issue #24
-    }
-    else {
-      throw new InvalidValueTypeException(context, getName() + " has type " + value.getType() + "; expected to be an object");
-    }
-  }
+			return getExpression().resolve(object.getContext()); // See issue #24
+		}
+		else {
+			throw new InvalidValueTypeException(context, getName() + " has type " + value.getType() + "; expected to be an object");
+		}
+	}
 
-  @Override
-  public String toString() {
-    return "incontext(" + getName() + " << " + getExpression() + ')';
-  }
+	@Override
+	public String toString() {
+		return "incontext(" + getName() + " << " + getExpression() + ')';
+	}
 }

@@ -33,13 +33,13 @@ import com.github.bloodshura.x.worker.ArrayWorker;
 @MethodArgs({ IntegerValue.class, Value.class })
 @MethodName("newArray")
 public class NewArray extends Method {
-  @Override
-  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    IntegerValue size = (IntegerValue) descriptor.get(0);
-    Value[] content = new Value[size.value().intValue()];
+	@Override
+	public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		IntegerValue size = (IntegerValue) descriptor.get(0);
+		Value[] content = new Value[size.value().intValue()];
 
-    ArrayWorker.fill(content, descriptor.get(1));
+		ArrayWorker.fill(content, descriptor.get(1));
 
-    return new ArrayValue(content);
-  }
+		return new ArrayValue(content);
+	}
 }

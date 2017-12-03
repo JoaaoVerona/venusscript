@@ -41,27 +41,27 @@ import java.io.IOException;
 @MethodName("evaluate")
 @MethodVarArgs
 public class Evaluate extends Method {
-  @Override
-  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    VenusParser parser = context.getScript().getParser();
-    TextBuilder builder = Pool.newBuilder();
+	@Override
+	public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		VenusParser parser = context.getScript().getParser();
+		TextBuilder builder = Pool.newBuilder();
 
-    builder.appendln(descriptor.getValues());
+		builder.appendln(descriptor.getValues());
 
-    String source = builder.toStringAndClear();
-    ApplicationContext appContext = context.getApplicationContext();
-    SimpleScriptOrigin origin = new SimpleScriptOrigin("Interpreted-Script", source);
-    SimpleContainer container = new SimpleContainer();
+		String source = builder.toStringAndClear();
+		ApplicationContext appContext = context.getApplicationContext();
+		SimpleScriptOrigin origin = new SimpleScriptOrigin("Interpreted-Script", source);
+		SimpleContainer container = new SimpleContainer();
 
-    container.setParent(context.getOwner());
+		container.setParent(context.getOwner());
 
-    try {
-      parser.parse(new VenusLexer(origin), container);
+		try {
+			parser.parse(new VenusLexer(origin), container);
 
-      return appContext.currentExecutor().run(container, ScriptMode.EVALUATION);
-    }
-    catch (IOException | ScriptCompileException exception) {
-      throw new ScriptRuntimeException(context, "Failed to compile script", exception);
-    }
-  }
+			return appContext.currentExecutor().run(container, ScriptMode.EVALUATION);
+		}
+		catch (IOException | ScriptCompileException exception) {
+			throw new ScriptRuntimeException(context, "Failed to compile script", exception);
+		}
+	}
 }

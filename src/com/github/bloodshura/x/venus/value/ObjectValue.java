@@ -27,41 +27,41 @@ import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.executor.VariableStructure;
 
 public class ObjectValue extends Value {
-  private final Context context;
-  private final ObjectDefinition definition;
+	private final Context context;
+	private final ObjectDefinition definition;
 
-  public ObjectValue(ObjectDefinition definition, Context context) {
-    super(definition.getType());
-    this.context = context;
-    this.definition = definition;
-  }
+	public ObjectValue(ObjectDefinition definition, Context context) {
+		super(definition.getType());
+		this.context = context;
+		this.definition = definition;
+	}
 
-  @Override
-  public ObjectValue clone() {
-    return new ObjectValue(getDefinition(), getContext().clone());
-  }
+	@Override
+	public ObjectValue clone() {
+		return new ObjectValue(getDefinition(), getContext().clone());
+	}
 
-  public Context getContext() {
-    return context;
-  }
+	public Context getContext() {
+		return context;
+	}
 
-  public ObjectDefinition getDefinition() {
-    return definition;
-  }
+	public ObjectDefinition getDefinition() {
+		return definition;
+	}
 
-  @Override
-  public Object value() {
-    return this;
-  }
+	@Override
+	public Object value() {
+		return this;
+	}
 
-  @Override
-  public String toString() {
-    TextBuilder attributes = Pool.newBuilder().setSeparator(", ");
+	@Override
+	public String toString() {
+		TextBuilder attributes = Pool.newBuilder().setSeparator(", ");
 
-    for (Pair<String, VariableStructure> pair : getContext().getVariables()) {
-      attributes.append(pair.getLeft() + ": " + pair.getRight() + " [" + pair.getRight().getValue().getType() + ']');
-    }
+		for (Pair<String, VariableStructure> pair : getContext().getVariables()) {
+			attributes.append(pair.getLeft() + ": " + pair.getRight() + " [" + pair.getRight().getValue().getType() + ']');
+		}
 
-    return getDefinition().getName() + "(" + attributes + ')';
-  }
+		return getDefinition().getName() + "(" + attributes + ')';
+	}
 }

@@ -34,31 +34,31 @@ import com.github.bloodshura.x.venus.value.VariableRefValue;
 @MethodArgs(VariableRefValue.class)
 @MethodName("consume")
 public class Consume extends VoidMethod {
-  @Override
-  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    VariableRefValue reference = (VariableRefValue) descriptor.get(0);
-    VariableStructure variable = context.getVar(reference.value());
-    Object monitor;
+	@Override
+	public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		VariableRefValue reference = (VariableRefValue) descriptor.get(0);
+		VariableStructure variable = context.getVar(reference.value());
+		Object monitor;
 
-    synchronized ((monitor = variable.getLockMonitor())) {
-      Value value = variable.getValue();
-      long val = 0;
+		synchronized ((monitor = variable.getLockMonitor())) {
+			Value value = variable.getValue();
+			long val = 0;
 
-      if (value instanceof IntegerValue) {
-        IntegerValue intValue = (IntegerValue) value;
+			if (value instanceof IntegerValue) {
+				IntegerValue intValue = (IntegerValue) value;
 
-        val = intValue.value();
-      }
+				val = intValue.value();
+			}
 
-      if (val <= 0) {
-        try {
-          monitor.wait();
-          context.setVar(reference.value(), value.minus(new IntegerValue(1)));
-        }
-        catch (InterruptedException exception) {
-          XLogger.warnln("Thread " + Thread.currentThread() + " interrupted while 'consume' was locking.");
-        }
-      }
-    }
-  }
+			if (val <= 0) {
+				try {
+					monitor.wait();
+					context.setVar(reference.value(), value.minus(new IntegerValue(1)));
+				}
+				catch (InterruptedException exception) {
+					XLogger.warnln("Thread " + Thread.currentThread() + " interrupted while 'consume' was locking.");
+				}
+			}
+		}
+	}
 }

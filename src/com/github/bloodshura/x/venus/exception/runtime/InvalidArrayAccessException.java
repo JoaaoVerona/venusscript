@@ -22,7 +22,7 @@ package com.github.bloodshura.x.venus.exception.runtime;
 import com.github.bloodshura.x.venus.executor.Context;
 
 public class InvalidArrayAccessException extends ScriptRuntimeException {
-  public InvalidArrayAccessException(Context context, CharSequence message) {
-    super(context, message);
-  }
+	public InvalidArrayAccessException(Context context, CharSequence message) {
+		super(context, message);
+	}
 }

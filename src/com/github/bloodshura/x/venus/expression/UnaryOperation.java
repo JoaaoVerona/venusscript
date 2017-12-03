@@ -27,39 +27,39 @@ import com.github.bloodshura.x.venus.operator.UnaryOperator;
 import com.github.bloodshura.x.venus.value.Value;
 
 public class UnaryOperation implements Expression {
-  private final UnaryOperator operator;
-  private final Expression expression;
+	private final UnaryOperator operator;
+	private final Expression expression;
 
-  public UnaryOperation(UnaryOperator operator, Expression expression) {
-    XApi.requireNonNull(expression, "expression");
-    XApi.requireNonNull(operator, "operator");
+	public UnaryOperation(UnaryOperator operator, Expression expression) {
+		XApi.requireNonNull(expression, "expression");
+		XApi.requireNonNull(operator, "operator");
 
-    this.operator = operator;
-    this.expression = expression;
-  }
+		this.operator = operator;
+		this.expression = expression;
+	}
 
-  public UnaryOperator getOperator() {
-    return operator;
-  }
+	public UnaryOperator getOperator() {
+		return operator;
+	}
 
-  public Expression getExpression() {
-    return expression;
-  }
+	public Expression getExpression() {
+		return expression;
+	}
 
-  @Override
-  public Value resolve(Context context) throws ScriptRuntimeException {
-    Value value = getExpression().resolve(context);
-    Value result = getOperator().operate(context, value);
+	@Override
+	public Value resolve(Context context) throws ScriptRuntimeException {
+		Value value = getExpression().resolve(context);
+		Value result = getOperator().operate(context, value);
 
-    if (result == null) {
-      throw new IncompatibleTypesException(context, "Operator " + getOperator() + " cannot be applied with " + value.getType());
-    }
+		if (result == null) {
+			throw new IncompatibleTypesException(context, "Operator " + getOperator() + " cannot be applied with " + value.getType());
+		}
 
-    return result;
-  }
+		return result;
+	}
 
-  @Override
-  public String toString() {
-    return "unioperation(" + getOperator() + " [" + getExpression() + "])";
-  }
+	@Override
+	public String toString() {
+		return "unioperation(" + getOperator() + " [" + getExpression() + "])";
+	}
 }

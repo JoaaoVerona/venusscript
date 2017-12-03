@@ -31,10 +31,10 @@ import com.github.bloodshura.x.venus.value.IntegerValue;
 @MethodArgs(IntegerValue.class)
 @MethodName("sleep")
 public class Sleep extends VoidMethod {
-  @Override
-  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    IntegerValue timeInMillis = (IntegerValue) descriptor.get(0);
+	@Override
+	public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		IntegerValue timeInMillis = (IntegerValue) descriptor.get(0);
 
-    XThread.stay(timeInMillis.value());
-  }
+		XThread.stay(timeInMillis.value());
+	}
 }

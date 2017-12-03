@@ -22,7 +22,7 @@ package com.github.bloodshura.x.venus.library.system;
 import com.github.bloodshura.x.venus.library.VenusLibrary;
 
 public class SystemLibrary extends VenusLibrary {
-  public SystemLibrary() {
-    addAll(GetEnvVar.class, GetProperty.class);
-  }
+	public SystemLibrary() {
+		addAll(GetEnvVar.class, GetProperty.class);
+	}
 }

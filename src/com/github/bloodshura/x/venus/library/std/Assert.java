@@ -33,20 +33,20 @@ import com.github.bloodshura.x.venus.value.Value;
 @MethodArgs(Value.class)
 @MethodName("assert")
 public class Assert extends Method {
-  @Override
-  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    Value value = descriptor.get(0);
+	@Override
+	public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		Value value = descriptor.get(0);
 
-    if (value instanceof BoolValue) {
-      BoolValue boolValue = (BoolValue) value;
+		if (value instanceof BoolValue) {
+			BoolValue boolValue = (BoolValue) value;
 
-      if (boolValue.value()) {
-        return null;
-      }
+			if (boolValue.value()) {
+				return null;
+			}
 
-      throw new AssertionException(context, "Assertion failed");
-    }
+			throw new AssertionException(context, "Assertion failed");
+		}
 
-    throw new AssertionException(context, "Assertion expected a value of type " + PrimitiveType.BOOLEAN + "; received " + value.getType());
-  }
+		throw new AssertionException(context, "Assertion expected a value of type " + PrimitiveType.BOOLEAN + "; received " + value.getType());
+	}
 }

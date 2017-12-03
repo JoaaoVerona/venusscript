@@ -35,18 +35,18 @@ import java.io.IOException;
 @MethodArgs({ StringValue.class, BoolValue.class })
 @MethodName("shell")
 public class Shell extends Method {
-  @Override
-  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    StringValue command = (StringValue) descriptor.get(0);
-    BoolValue newWindow = (BoolValue) descriptor.get(1);
+	@Override
+	public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		StringValue command = (StringValue) descriptor.get(0);
+		BoolValue newWindow = (BoolValue) descriptor.get(1);
 
-    try {
-      XSystem.getTerminal().runInShell(command.value(), newWindow.value());
+		try {
+			XSystem.getTerminal().runInShell(command.value(), newWindow.value());
 
-      return new BoolValue(true);
-    }
-    catch (IOException exception) {
-      return new BoolValue(false);
-    }
-  }
+			return new BoolValue(true);
+		}
+		catch (IOException exception) {
+			return new BoolValue(false);
+		}
+	}
 }

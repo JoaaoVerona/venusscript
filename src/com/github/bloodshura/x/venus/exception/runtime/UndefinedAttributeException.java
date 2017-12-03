@@ -23,7 +23,7 @@ import com.github.bloodshura.x.venus.component.object.ObjectDefinition;
 import com.github.bloodshura.x.venus.executor.Context;
 
 public class UndefinedAttributeException extends ScriptRuntimeException {
-  public UndefinedAttributeException(Context context, ObjectDefinition definition, String attributeName) {
-    super(context, "No attribute named \"" + attributeName + "\" in object " + definition.getName());
-  }
+	public UndefinedAttributeException(Context context, ObjectDefinition definition, String attributeName) {
+		super(context, "No attribute named \"" + attributeName + "\" in object " + definition.getName());
+	}
 }

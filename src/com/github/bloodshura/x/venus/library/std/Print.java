@@ -31,14 +31,14 @@ import com.github.bloodshura.x.venus.value.Value;
 @MethodName("print")
 @MethodVarArgs
 public class Print extends VoidMethod {
-  @Override
-  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    OutputReference reference = context.getApplicationContext().getUserData("out", OutputReference.class);
+	@Override
+	public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		OutputReference reference = context.getApplicationContext().getUserData("out", OutputReference.class);
 
-    if (reference != null) {
-      for (Value argument : descriptor.getValues()) {
-        reference.output(argument.toString());
-      }
-    }
-  }
+		if (reference != null) {
+			for (Value argument : descriptor.getValues()) {
+				reference.output(argument.toString());
+			}
+		}
+	}
 }

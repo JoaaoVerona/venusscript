@@ -24,13 +24,13 @@ import com.github.bloodshura.x.venus.library.VenusLibrary;
 import java.lang.reflect.Method;
 
 public class MathLibrary extends VenusLibrary {
-  public MathLibrary() {
-    for (Method method : Math.class.getDeclaredMethods()) {
-      if (MathFunction.validate(method)) {
-        add(new MathFunction(method));
-      }
-    }
+	public MathLibrary() {
+		for (Method method : Math.class.getDeclaredMethods()) {
+			if (MathFunction.validate(method)) {
+				add(new MathFunction(method));
+			}
+		}
 
-    addAll(RandDecimal.class, RandInt.class);
-  }
+		addAll(RandDecimal.class, RandInt.class);
+	}
 }

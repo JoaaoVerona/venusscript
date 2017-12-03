@@ -32,12 +32,12 @@ import com.github.bloodshura.x.venus.value.Value;
 @MethodArgs({ StringValue.class, Value.class })
 @MethodName("getProperty")
 public class GetProperty extends Method {
-  @Override
-  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    StringValue key = (StringValue) descriptor.get(0);
-    Object value = XSystem.getProperty(key.value());
-    Value result = Value.construct(value);
+	@Override
+	public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		StringValue key = (StringValue) descriptor.get(0);
+		Object value = XSystem.getProperty(key.value());
+		Value result = Value.construct(value);
 
-    return result != null ? result : descriptor.get(1);
-  }
+		return result != null ? result : descriptor.get(1);
+	}
 }

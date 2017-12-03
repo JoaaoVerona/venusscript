@@ -40,26 +40,26 @@ import java.io.IOException;
 @MethodName("interpret")
 @MethodVarArgs
 public class Interpret extends VoidMethod {
-  @Override
-  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    VenusParser parser = context.getScript().getParser();
-    TextBuilder builder = Pool.newBuilder();
+	@Override
+	public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		VenusParser parser = context.getScript().getParser();
+		TextBuilder builder = Pool.newBuilder();
 
-    builder.appendln(descriptor.getValues());
+		builder.appendln(descriptor.getValues());
 
-    String source = builder.toStringAndClear();
-    ApplicationContext appContext = context.getApplicationContext();
-    SimpleScriptOrigin origin = new SimpleScriptOrigin("Interpreted-Script", source);
-    SimpleContainer container = new SimpleContainer();
+		String source = builder.toStringAndClear();
+		ApplicationContext appContext = context.getApplicationContext();
+		SimpleScriptOrigin origin = new SimpleScriptOrigin("Interpreted-Script", source);
+		SimpleContainer container = new SimpleContainer();
 
-    container.setParent(context.getOwner());
+		container.setParent(context.getOwner());
 
-    try {
-      parser.parse(new VenusLexer(origin), container);
-      appContext.currentExecutor().run(container, ScriptMode.INTERACTIVE);
-    }
-    catch (IOException | ScriptCompileException exception) {
-      throw new ScriptRuntimeException(context, "Failed to compile script", exception);
-    }
-  }
+		try {
+			parser.parse(new VenusLexer(origin), container);
+			appContext.currentExecutor().run(container, ScriptMode.INTERACTIVE);
+		}
+		catch (IOException | ScriptCompileException exception) {
+			throw new ScriptRuntimeException(context, "Failed to compile script", exception);
+		}
+	}
 }

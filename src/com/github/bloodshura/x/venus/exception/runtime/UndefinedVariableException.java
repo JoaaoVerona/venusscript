@@ -22,14 +22,14 @@ package com.github.bloodshura.x.venus.exception.runtime;
 import com.github.bloodshura.x.venus.executor.Context;
 
 public class UndefinedVariableException extends ScriptRuntimeException {
-  private final String variableName;
+	private final String variableName;
 
-  public UndefinedVariableException(Context context, String variableName) {
-    super(context, "Undefined variable \"" + variableName + "\"");
-    this.variableName = variableName;
-  }
+	public UndefinedVariableException(Context context, String variableName) {
+		super(context, "Undefined variable \"" + variableName + "\"");
+		this.variableName = variableName;
+	}
 
-  public String getVariableName() {
-    return variableName;
-  }
+	public String getVariableName() {
+		return variableName;
+	}
 }

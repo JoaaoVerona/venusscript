@@ -34,23 +34,23 @@ import com.github.bloodshura.x.venus.value.Value;
 @MethodName("inputDialog")
 @MethodVarArgs
 public class InputDialog extends Method {
-  @Override
-  public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    if (descriptor.isEmpty()) {
-      return new StringValue(Pool.EMPTY_STRING);
-    }
+	@Override
+	public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		if (descriptor.isEmpty()) {
+			return new StringValue(Pool.EMPTY_STRING);
+		}
 
-    String title = descriptor.transform(0, Value::toString, null);
-    TextBuilder message = Pool.newBuilder();
-    int offset = descriptor.count() > 1 ? 1 : 0;
+		String title = descriptor.transform(0, Value::toString, null);
+		TextBuilder message = Pool.newBuilder();
+		int offset = descriptor.count() > 1 ? 1 : 0;
 
-    for (int i = offset; i < descriptor.count(); i++) {
-      message.append(descriptor.get(i));
-      message.newLine();
-    }
+		for (int i = offset; i < descriptor.count(); i++) {
+			message.append(descriptor.get(i));
+			message.newLine();
+		}
 
-    String input = XDialogs.askInput(title, message);
+		String input = XDialogs.askInput(title, message);
 
-    return new StringValue(input != null ? input : Pool.EMPTY_STRING);
-  }
+		return new StringValue(input != null ? input : Pool.EMPTY_STRING);
+	}
 }

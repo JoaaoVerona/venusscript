@@ -31,19 +31,19 @@ import com.github.bloodshura.x.venus.value.Value;
 @MethodName("println")
 @MethodVarArgs
 public class Println extends VoidMethod {
-  @Override
-  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    OutputReference reference = context.getApplicationContext().getUserData("out", OutputReference.class);
+	@Override
+	public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		OutputReference reference = context.getApplicationContext().getUserData("out", OutputReference.class);
 
-    if (reference != null) {
-      if (!descriptor.isEmpty()) {
-        for (Value argument : descriptor.getValues()) {
-          reference.output(argument.toString() + '\n');
-        }
-      }
-      else {
-        reference.output("\n");
-      }
-    }
-  }
+		if (reference != null) {
+			if (!descriptor.isEmpty()) {
+				for (Value argument : descriptor.getValues()) {
+					reference.output(argument.toString() + '\n');
+				}
+			}
+			else {
+				reference.output("\n");
+			}
+		}
+	}
 }

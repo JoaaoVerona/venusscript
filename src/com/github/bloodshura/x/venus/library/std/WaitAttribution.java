@@ -40,52 +40,52 @@ import com.github.bloodshura.x.venus.value.Value;
 @MethodArgs(Value.class)
 @MethodName("wait")
 public class WaitAttribution extends VoidMethod {
-  @Override
-  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    Expression expression = descriptor.getExpressions().get(0);
-    XList<Variable> list = new XArrayList<>();
-    Object lock = new Object();
+	@Override
+	public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		Expression expression = descriptor.getExpressions().get(0);
+		XList<Variable> list = new XArrayList<>();
+		Object lock = new Object();
 
-    scan(context, expression, list);
-    list.forEachExceptional(variable -> context.getVar(variable).addChangeMonitor(lock));
+		scan(context, expression, list);
+		list.forEachExceptional(variable -> context.getVar(variable).addChangeMonitor(lock));
 
-    Value value = expression.resolve(context); // Maybe value changed after it was resolved.
+		Value value = expression.resolve(context); // Maybe value changed after it was resolved.
 
-    while (!(value instanceof BoolValue && ((BoolValue) value).value())) {
-      try {
-        synchronized (lock) {
-          lock.wait();
-        }
-      }
-      catch (InterruptedException exception) {
-        XLogger.warnln("Thread " + Thread.currentThread() + " interrupted while 'wait' was locking.");
+		while (!(value instanceof BoolValue && ((BoolValue) value).value())) {
+			try {
+				synchronized (lock) {
+					lock.wait();
+				}
+			}
+			catch (InterruptedException exception) {
+				XLogger.warnln("Thread " + Thread.currentThread() + " interrupted while 'wait' was locking.");
 
-        break;
-      }
+				break;
+			}
 
-      value = expression.resolve(context);
-    }
+			value = expression.resolve(context);
+		}
 
-    list.forEachExceptional(variable -> context.getVar(variable).removeChangeMonitor(lock));
-  }
+		list.forEachExceptional(variable -> context.getVar(variable).removeChangeMonitor(lock));
+	}
 
-  private void scan(Context context, Expression expression, XList<Variable> list) throws ScriptRuntimeException {
-    if (expression instanceof BinaryOperation) {
-      BinaryOperation operation = (BinaryOperation) expression;
+	private void scan(Context context, Expression expression, XList<Variable> list) throws ScriptRuntimeException {
+		if (expression instanceof BinaryOperation) {
+			BinaryOperation operation = (BinaryOperation) expression;
 
-      scan(context, operation.getLeft(), list);
-      scan(context, operation.getRight(), list);
-    }
-    else if (expression instanceof FunctionCall) {
-      throw new InvalidFunctionParameterException(context, "Cannot embed a function call on arguments for 'wait' method");
-    }
-    else if (expression instanceof UnaryOperation) {
-      UnaryOperation operation = (UnaryOperation) expression;
+			scan(context, operation.getLeft(), list);
+			scan(context, operation.getRight(), list);
+		}
+		else if (expression instanceof FunctionCall) {
+			throw new InvalidFunctionParameterException(context, "Cannot embed a function call on arguments for 'wait' method");
+		}
+		else if (expression instanceof UnaryOperation) {
+			UnaryOperation operation = (UnaryOperation) expression;
 
-      scan(context, operation.getExpression(), list);
-    }
-    else if (expression instanceof Variable) {
-      list.add((Variable) expression);
-    }
-  }
+			scan(context, operation.getExpression(), list);
+		}
+		else if (expression instanceof Variable) {
+			list.add((Variable) expression);
+		}
+	}
 }

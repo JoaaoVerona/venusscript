@@ -28,35 +28,35 @@ import com.github.bloodshura.x.venus.value.Value;
 import java.util.function.BiFunction;
 
 public class BinaryOperator implements Operator {
-  private final BiFunction<Value, Value, Value> function;
-  private final XView<String> identifiers;
-  private final String name;
+	private final BiFunction<Value, Value, Value> function;
+	private final XView<String> identifiers;
+	private final String name;
 
-  public BinaryOperator(String name, BiFunction<Value, Value, Value> function, String... identifiers) {
-    XApi.requireNonNull(function, "function");
-    XApi.requireNonNull(identifiers, "identifiers");
-    XApi.requireNonNull(name, "name");
+	public BinaryOperator(String name, BiFunction<Value, Value, Value> function, String... identifiers) {
+		XApi.requireNonNull(function, "function");
+		XApi.requireNonNull(identifiers, "identifiers");
+		XApi.requireNonNull(name, "name");
 
-    this.function = function;
-    this.identifiers = new XArrayView<>(identifiers);
-    this.name = name;
-  }
+		this.function = function;
+		this.identifiers = new XArrayView<>(identifiers);
+		this.name = name;
+	}
 
-  public BiFunction<Value, Value, Value> getFunction() {
-    return function;
-  }
+	public BiFunction<Value, Value, Value> getFunction() {
+		return function;
+	}
 
-  @Override
-  public XView<String> getIdentifiers() {
-    return identifiers;
-  }
+	@Override
+	public XView<String> getIdentifiers() {
+		return identifiers;
+	}
 
-  public final Value operate(Context context, Value left, Value right) {
-    return getFunction().apply(left, right);
-  }
+	public final Value operate(Context context, Value left, Value right) {
+		return getFunction().apply(left, right);
+	}
 
-  @Override
-  public String toString() {
-    return name;
-  }
+	@Override
+	public String toString() {
+		return name;
+	}
 }

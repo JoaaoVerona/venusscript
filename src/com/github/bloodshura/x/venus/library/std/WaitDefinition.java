@@ -31,12 +31,12 @@ import com.github.bloodshura.x.venus.value.VariableRefValue;
 @MethodArgs(VariableRefValue.class)
 @MethodName("wait")
 public class WaitDefinition extends VoidMethod {
-  @Override
-  public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-    VariableRefValue reference = (VariableRefValue) descriptor.get(0);
+	@Override
+	public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
+		VariableRefValue reference = (VariableRefValue) descriptor.get(0);
 
-    while (!context.hasVar(reference.value())) {
-      XThread.stay(50L);
-    }
-  }
+		while (!context.hasVar(reference.value())) {
+			XThread.stay(50L);
+		}
+	}
 }

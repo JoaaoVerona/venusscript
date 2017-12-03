@@ -25,9 +25,9 @@ import com.github.bloodshura.x.venus.type.Type;
 import com.github.bloodshura.x.venus.value.Value;
 
 public interface Expression {
-  Value resolve(Context context) throws ScriptRuntimeException;
+	Value resolve(Context context) throws ScriptRuntimeException;
 
-  default Type resolveType(Context context) throws ScriptRuntimeException {
-    return resolve(context).getType();
-  }
+	default Type resolveType(Context context) throws ScriptRuntimeException {
+		return resolve(context).getType();
+	}
 }

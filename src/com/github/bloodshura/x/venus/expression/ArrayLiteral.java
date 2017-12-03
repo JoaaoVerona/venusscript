@@ -28,32 +28,32 @@ import com.github.bloodshura.x.venus.value.ArrayValue;
 import com.github.bloodshura.x.venus.value.Value;
 
 public class ArrayLiteral implements Expression {
-  private final Expression[] expressions;
+	private final Expression[] expressions;
 
-  public ArrayLiteral(Expression... expressions) {
-    XApi.requireNonNull(expressions, "expressions");
+	public ArrayLiteral(Expression... expressions) {
+		XApi.requireNonNull(expressions, "expressions");
 
-    this.expressions = expressions;
-  }
+		this.expressions = expressions;
+	}
 
-  public XView<Expression> getExpressions() {
-    return new XArrayView<>(expressions);
-  }
+	public XView<Expression> getExpressions() {
+		return new XArrayView<>(expressions);
+	}
 
-  @Override
-  public Value resolve(Context context) throws ScriptRuntimeException {
-    ArrayValue value = new ArrayValue(getExpressions().size());
-    int i = 0;
+	@Override
+	public Value resolve(Context context) throws ScriptRuntimeException {
+		ArrayValue value = new ArrayValue(getExpressions().size());
+		int i = 0;
 
-    for (Expression expression : getExpressions()) {
-      value.set(context, i++, expression.resolve(context));
-    }
+		for (Expression expression : getExpressions()) {
+			value.set(context, i++, expression.resolve(context));
+		}
 
-    return value;
-  }
+		return value;
+	}
 
-  @Override
-  public String toString() {
-    return "arrdef(" + getExpressions() + ')';
-  }
+	@Override
+	public String toString() {
+		return "arrdef(" + getExpressions() + ')';
+	}
 }

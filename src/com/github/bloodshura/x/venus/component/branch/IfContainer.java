@@ -23,18 +23,18 @@ import com.github.bloodshura.x.venus.component.Container;
 import com.github.bloodshura.x.venus.expression.Expression;
 
 public class IfContainer extends Container {
-  private final Expression condition;
+	private final Expression condition;
 
-  public IfContainer(Expression condition) {
-    this.condition = condition;
-  }
+	public IfContainer(Expression condition) {
+		this.condition = condition;
+	}
 
-  public Expression getCondition() {
-    return condition;
-  }
+	public Expression getCondition() {
+		return condition;
+	}
 
-  @Override
-  public String toString() {
-    return "if(" + getCondition() + ')';
-  }
+	@Override
+	public String toString() {
+		return "if(" + getCondition() + ')';
+	}
 }

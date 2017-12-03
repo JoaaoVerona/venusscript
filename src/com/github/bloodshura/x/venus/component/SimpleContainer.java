@@ -22,20 +22,20 @@ package com.github.bloodshura.x.venus.component;
 import com.github.bloodshura.x.util.XApi;
 
 public class SimpleContainer extends Container {
-  private final String name;
+	private final String name;
 
-  public SimpleContainer() {
-    this("container");
-  }
+	public SimpleContainer() {
+		this("container");
+	}
 
-  public SimpleContainer(String name) {
-    XApi.requireNonNull(name, "name");
+	public SimpleContainer(String name) {
+		XApi.requireNonNull(name, "name");
 
-    this.name = name;
-  }
+		this.name = name;
+	}
 
-  @Override
-  public String toString() {
-    return name + "()";
-  }
+	@Override
+	public String toString() {
+		return name + "()";
+	}
 }
