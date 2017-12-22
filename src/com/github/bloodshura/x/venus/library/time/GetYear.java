@@ -19,7 +19,6 @@
 
 package com.github.bloodshura.x.venus.library.time;
 
-import com.github.bloodshura.x.date.Date;
 import com.github.bloodshura.x.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.function.FunctionCallDescriptor;
@@ -28,10 +27,12 @@ import com.github.bloodshura.x.venus.function.annotation.MethodName;
 import com.github.bloodshura.x.venus.value.IntegerValue;
 import com.github.bloodshura.x.venus.value.Value;
 
+import java.time.LocalDate;
+
 @MethodName("getYear")
 public class GetYear extends Method {
 	@Override
 	public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
-		return new IntegerValue(Date.now().getYear());
+		return new IntegerValue(LocalDate.now().getYear());
 	}
 }
