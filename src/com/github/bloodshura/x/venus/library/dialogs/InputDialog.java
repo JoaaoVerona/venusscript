@@ -37,7 +37,7 @@ public class InputDialog extends Method {
 	@Override
 	public Value call(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
 		if (descriptor.isEmpty()) {
-			return new StringValue(Pool.EMPTY_STRING);
+			return new StringValue("");
 		}
 
 		String title = descriptor.transform(0, Value::toString, null);
@@ -51,6 +51,6 @@ public class InputDialog extends Method {
 
 		String input = XDialogs.askInput(title, message);
 
-		return new StringValue(input != null ? input : Pool.EMPTY_STRING);
+		return new StringValue(input != null ? input : "");
 	}
 }
