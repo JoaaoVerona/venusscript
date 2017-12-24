@@ -21,7 +21,6 @@ package com.github.bloodshura.x.venus.library.dialogs;
 
 import com.github.bloodshura.x.charset.TextBuilder;
 import com.github.bloodshura.x.desktop.dialogs.XDialogs;
-import com.github.bloodshura.x.util.Pool;
 import com.github.bloodshura.x.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.function.FunctionCallDescriptor;
@@ -41,7 +40,7 @@ public class InputDialog extends Method {
 		}
 
 		String title = descriptor.transform(0, Value::toString, null);
-		TextBuilder message = Pool.newBuilder();
+		TextBuilder message = new TextBuilder();
 		int offset = descriptor.count() > 1 ? 1 : 0;
 
 		for (int i = offset; i < descriptor.count(); i++) {

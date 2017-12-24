@@ -20,7 +20,6 @@
 package com.github.bloodshura.x.venus.library.engine;
 
 import com.github.bloodshura.x.charset.TextBuilder;
-import com.github.bloodshura.x.util.Pool;
 import com.github.bloodshura.x.venus.compiler.VenusLexer;
 import com.github.bloodshura.x.venus.compiler.VenusParser;
 import com.github.bloodshura.x.venus.component.SimpleContainer;
@@ -43,7 +42,7 @@ public class Interpret extends VoidMethod {
 	@Override
 	public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
 		VenusParser parser = context.getScript().getParser();
-		TextBuilder builder = Pool.newBuilder();
+		TextBuilder builder = new TextBuilder();
 
 		builder.appendln(descriptor.getValues());
 

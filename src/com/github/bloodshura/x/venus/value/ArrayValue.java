@@ -20,7 +20,6 @@
 package com.github.bloodshura.x.venus.value;
 
 import com.github.bloodshura.x.charset.TextBuilder;
-import com.github.bloodshura.x.util.Pool;
 import com.github.bloodshura.x.util.XApi;
 import com.github.bloodshura.x.util.comparator.SimpleEqualizer;
 import com.github.bloodshura.x.util.iterator.ArrayIterator;
@@ -98,7 +97,7 @@ public class ArrayValue extends IterableValue {
 	}
 
 	private static <E> String toString(ArrayValue array) {
-		TextBuilder builder = Pool.newBuilder().setSeparator(", ");
+		TextBuilder builder = new TextBuilder().setSeparator(", ");
 
 		for (Value value : array.value()) {
 			if (value instanceof ArrayValue) {

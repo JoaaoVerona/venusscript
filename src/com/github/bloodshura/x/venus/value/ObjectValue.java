@@ -21,7 +21,6 @@ package com.github.bloodshura.x.venus.value;
 
 import com.github.bloodshura.x.charset.TextBuilder;
 import com.github.bloodshura.x.collection.tuple.Pair;
-import com.github.bloodshura.x.util.Pool;
 import com.github.bloodshura.x.venus.component.object.ObjectDefinition;
 import com.github.bloodshura.x.venus.executor.Context;
 import com.github.bloodshura.x.venus.executor.VariableStructure;
@@ -56,7 +55,7 @@ public class ObjectValue extends Value {
 
 	@Override
 	public String toString() {
-		TextBuilder attributes = Pool.newBuilder().setSeparator(", ");
+		TextBuilder attributes = new TextBuilder().setSeparator(", ");
 
 		for (Pair<String, VariableStructure> pair : getContext().getVariables()) {
 			attributes.append(pair.getLeft() + ": " + pair.getRight() + " [" + pair.getRight().getValue().getType() + ']');
