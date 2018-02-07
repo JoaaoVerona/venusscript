@@ -17,7 +17,7 @@
     <orderEntry type="module" module-name="ShuraX Cfg" />
     <orderEntry type="library" name="Maven: org.gnu:gnu-crypto:2.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.mindrot:jbcrypt:0.4" level="project" />
-    <orderEntry type="module" module-name="ShuraX Desktop" />
+    <orderEntry type="module" module-name="DesktopUtils" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.12" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
   </component>

@@ -5,6 +5,25 @@
 	<artifactId>venusscript</artifactId>
 	<version>DEV</version>
 
+	<name>VenusScript</name>
+	<description>A dynamic, easy, highly customizable scripting language.</description>
+	<url>https://github.com/BloodShura/VenusScript</url>
+
+	<developers>
+		<developer>
+			<name>João Vitor Verona Biazibetti</name>
+			<email>joaaoverona@gmail.com</email>
+			<url>https://github.com/BloodShura</url>
+		</developer>
+	</developers>
+
+	<licenses>
+		<license>
+			<name>GPLv3</name>
+			<url>https://gnu.org/licenses/gpl-3.0.en.html</url>
+		</license>
+	</licenses>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -24,7 +43,7 @@
 
 		<dependency>
 			<groupId>com.github.bloodshura</groupId>
-			<artifactId>shurax-desktop</artifactId>
+			<artifactId>desktoputils</artifactId>
 			<version>DEV</version>
 		</dependency>
 
