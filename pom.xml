@@ -3,7 +3,8 @@
 
 	<groupId>com.github.bloodshura</groupId>
 	<artifactId>venusscript</artifactId>
-	<version>DEV</version>
+	<version>1.0.0</version>
+	<packaging>jar</packaging>
 
 	<name>VenusScript</name>
 	<description>A dynamic, easy, highly customizable scripting language.</description>
@@ -24,6 +25,24 @@
 		</license>
 	</licenses>
 
+	<scm>
+		<connection>scm:git:git://github.com/BloodShura/VenusScript.git</connection>
+		<developerConnection>scm:git:ssh://github.com:BloodShura/VenusScript.git</developerConnection>
+		<url>https://github.com/BloodShura/VenusScript/tree/master</url>
+	</scm>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -32,19 +51,19 @@
 		<dependency>
 			<groupId>com.github.bloodshura</groupId>
 			<artifactId>shurax</artifactId>
-			<version>DEV</version>
+			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.github.bloodshura</groupId>
 			<artifactId>shurax-cryptography</artifactId>
-			<version>DEV</version>
+			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.github.bloodshura</groupId>
 			<artifactId>desktoputils</artifactId>
-			<version>DEV</version>
+			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>
@@ -63,11 +82,65 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.6.1</version>
-
+				<version>3.7.0</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.8</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
 				</configuration>
 			</plugin>
 		</plugins>
