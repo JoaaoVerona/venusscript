@@ -3,7 +3,7 @@
 
 	<groupId>com.github.bloodshura</groupId>
 	<artifactId>venusscript</artifactId>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 	<packaging>jar</packaging>
 
 	<name>VenusScript</name>
@@ -51,19 +51,19 @@
 		<dependency>
 			<groupId>com.github.bloodshura</groupId>
 			<artifactId>shurax</artifactId>
-			<version>1.0.1</version>
+			<version>1.1.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.github.bloodshura</groupId>
 			<artifactId>shurax-cryptography</artifactId>
-			<version>1.0.0</version>
+			<version>1.1.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.github.bloodshura</groupId>
 			<artifactId>desktoputils</artifactId>
-			<version>1.0.0</version>
+			<version>1.1.0</version>
 		</dependency>
 
 		<dependency>
