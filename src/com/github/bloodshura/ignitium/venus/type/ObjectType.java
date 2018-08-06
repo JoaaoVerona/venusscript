@@ -1,0 +1,44 @@
+/*
+ * Copyright (c) 2013-2018, João Vitor Verona Biazibetti - All Rights Reserved
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * https://www.github.com/BloodShura
+ */
+
+package com.github.bloodshura.ignitium.venus.type;
+
+import com.github.bloodshura.ignitium.venus.value.ObjectValue;
+import com.github.bloodshura.ignitium.venus.value.Value;
+
+public class ObjectType extends Type {
+	public ObjectType(String identifier) {
+		super(identifier);
+	}
+
+	@Override
+	public boolean accepts(Class<? extends Value> valueClass) {
+		return ObjectValue.class.isAssignableFrom(valueClass);
+	}
+
+	@Override
+	public boolean accepts(Type type) {
+		return this == type;
+	}
+
+	@Override
+	public boolean objectAccepts(Class<?> type) {
+		return false;
+	}
+}

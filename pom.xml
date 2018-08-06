@@ -3,7 +3,7 @@
 
 	<groupId>com.github.bloodshura</groupId>
 	<artifactId>venusscript</artifactId>
-	<version>1.1.0</version>
+	<version>1.2.0</version>
 	<packaging>jar</packaging>
 
 	<name>VenusScript</name>
@@ -50,20 +50,20 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.github.bloodshura</groupId>
-			<artifactId>shurax</artifactId>
-			<version>1.1.0</version>
+			<artifactId>ignitium-core</artifactId>
+			<version>0.0.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.github.bloodshura</groupId>
-			<artifactId>shurax-cryptography</artifactId>
-			<version>1.1.0</version>
+			<artifactId>ignitium-crypto</artifactId>
+			<version>0.0.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.github.bloodshura</groupId>
-			<artifactId>desktoputils</artifactId>
-			<version>1.1.0</version>
+			<artifactId>sparkium-desktop</artifactId>
+			<version>0.0.1</version>
 		</dependency>
 
 		<dependency>
@@ -82,7 +82,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.7.0</version>
+				<version>3.8.0</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
@@ -107,7 +107,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.0.0</version>
+				<version>3.0.1</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
