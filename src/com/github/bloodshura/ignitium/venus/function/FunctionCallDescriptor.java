@@ -19,10 +19,10 @@
 
 package com.github.bloodshura.ignitium.venus.function;
 
+import com.github.bloodshura.ignitium.collection.view.XView;
 import com.github.bloodshura.ignitium.venus.expression.Expression;
 import com.github.bloodshura.ignitium.venus.expression.FunctionCall;
 import com.github.bloodshura.ignitium.venus.value.Value;
-import com.github.bloodshura.ignitium.collection.view.XView;
 
 import java.util.function.Function;
 

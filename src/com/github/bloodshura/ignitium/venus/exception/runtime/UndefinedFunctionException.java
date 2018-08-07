@@ -19,9 +19,9 @@
 
 package com.github.bloodshura.ignitium.venus.exception.runtime;
 
-import com.github.bloodshura.ignitium.venus.type.Type;
 import com.github.bloodshura.ignitium.collection.view.XView;
 import com.github.bloodshura.ignitium.venus.executor.Context;
+import com.github.bloodshura.ignitium.venus.type.Type;
 
 public class UndefinedFunctionException extends ScriptRuntimeException {
 	public UndefinedFunctionException(Context context, String functionName, XView<Type> argumentTypes) {

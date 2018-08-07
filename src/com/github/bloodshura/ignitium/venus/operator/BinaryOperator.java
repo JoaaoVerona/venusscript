@@ -19,11 +19,11 @@
 
 package com.github.bloodshura.ignitium.venus.operator;
 
-import com.github.bloodshura.ignitium.venus.value.Value;
 import com.github.bloodshura.ignitium.collection.view.XArrayView;
 import com.github.bloodshura.ignitium.collection.view.XView;
 import com.github.bloodshura.ignitium.util.XApi;
 import com.github.bloodshura.ignitium.venus.executor.Context;
+import com.github.bloodshura.ignitium.venus.value.Value;
 
 import java.util.function.BiFunction;
 

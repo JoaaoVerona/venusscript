@@ -19,8 +19,6 @@
 
 package com.github.bloodshura.ignitium.venus.expression;
 
-import com.github.bloodshura.ignitium.venus.value.ObjectValue;
-import com.github.bloodshura.ignitium.venus.value.Value;
 import com.github.bloodshura.ignitium.collection.map.XMap;
 import com.github.bloodshura.ignitium.collection.tuple.Pair;
 import com.github.bloodshura.ignitium.venus.component.object.Attribute;
@@ -28,6 +26,8 @@ import com.github.bloodshura.ignitium.venus.component.object.ObjectDefinition;
 import com.github.bloodshura.ignitium.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.ignitium.venus.exception.runtime.UndefinedAttributeException;
 import com.github.bloodshura.ignitium.venus.executor.Context;
+import com.github.bloodshura.ignitium.venus.value.ObjectValue;
+import com.github.bloodshura.ignitium.venus.value.Value;
 
 public class NewObject implements Expression {
 	private final XMap<String, Expression> attributes;

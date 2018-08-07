@@ -19,8 +19,8 @@
 
 package com.github.bloodshura.ignitium.venus.function;
 
-import com.github.bloodshura.ignitium.venus.type.Type;
 import com.github.bloodshura.ignitium.object.Base;
+import com.github.bloodshura.ignitium.venus.type.Type;
 
 import javax.annotation.Nonnull;
 

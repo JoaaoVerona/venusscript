@@ -19,9 +19,6 @@
 
 package com.github.bloodshura.ignitium.venus.test;
 
-import com.github.bloodshura.ignitium.venus.origin.FileScriptOrigin;
-import com.github.bloodshura.ignitium.venus.origin.ScriptMode;
-import com.github.bloodshura.ignitium.venus.origin.ScriptOrigin;
 import com.github.bloodshura.ignitium.activity.logging.XLogger;
 import com.github.bloodshura.ignitium.activity.scanning.XScanner;
 import com.github.bloodshura.ignitium.collection.view.XView;
@@ -34,6 +31,9 @@ import com.github.bloodshura.ignitium.venus.exception.compile.ScriptCompileExcep
 import com.github.bloodshura.ignitium.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.ignitium.venus.executor.ApplicationContext;
 import com.github.bloodshura.ignitium.venus.executor.VenusExecutor;
+import com.github.bloodshura.ignitium.venus.origin.FileScriptOrigin;
+import com.github.bloodshura.ignitium.venus.origin.ScriptMode;
+import com.github.bloodshura.ignitium.venus.origin.ScriptOrigin;
 import com.github.bloodshura.ignitium.worker.ParseWorker;
 
 import static com.github.bloodshura.ignitium.sys.XSystem.*;

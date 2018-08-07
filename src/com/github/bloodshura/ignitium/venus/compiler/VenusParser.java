@@ -19,6 +19,12 @@
 
 package com.github.bloodshura.ignitium.venus.compiler;
 
+import com.github.bloodshura.ignitium.charset.TextBuilder;
+import com.github.bloodshura.ignitium.collection.list.XList;
+import com.github.bloodshura.ignitium.collection.list.impl.XArrayList;
+import com.github.bloodshura.ignitium.collection.map.XMap;
+import com.github.bloodshura.ignitium.collection.map.impl.XLinkedMap;
+import com.github.bloodshura.ignitium.math.BaseConverter;
 import com.github.bloodshura.ignitium.venus.component.AsyncContainer;
 import com.github.bloodshura.ignitium.venus.component.Component;
 import com.github.bloodshura.ignitium.venus.component.Container;
@@ -47,14 +53,6 @@ import com.github.bloodshura.ignitium.venus.value.StringValue;
 import com.github.bloodshura.ignitium.venus.value.TypeValue;
 import com.github.bloodshura.ignitium.venus.value.Value;
 import com.github.bloodshura.ignitium.venus.value.VariableRefValue;
-import com.github.bloodshura.ignitium.charset.TextBuilder;
-import com.github.bloodshura.ignitium.collection.list.XList;
-import com.github.bloodshura.ignitium.collection.list.impl.XArrayList;
-import com.github.bloodshura.ignitium.collection.map.XMap;
-import com.github.bloodshura.ignitium.collection.map.impl.XLinkedMap;
-import com.github.bloodshura.ignitium.math.BaseConverter;
-import com.github.bloodshura.ignitium.venus.component.branch.*;
-import com.github.bloodshura.ignitium.venus.expression.*;
 import com.github.bloodshura.ignitium.worker.ParseWorker;
 
 import java.util.function.Predicate;

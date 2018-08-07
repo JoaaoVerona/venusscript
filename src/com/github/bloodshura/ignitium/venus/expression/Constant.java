@@ -19,9 +19,9 @@
 
 package com.github.bloodshura.ignitium.venus.expression;
 
-import com.github.bloodshura.ignitium.venus.value.Value;
 import com.github.bloodshura.ignitium.util.XApi;
 import com.github.bloodshura.ignitium.venus.executor.Context;
+import com.github.bloodshura.ignitium.venus.value.Value;
 
 public class Constant implements Expression {
 	private final Value value;

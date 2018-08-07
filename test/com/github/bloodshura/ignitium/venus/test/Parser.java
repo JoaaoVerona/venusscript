@@ -19,8 +19,6 @@
 
 package com.github.bloodshura.ignitium.venus.test;
 
-import com.github.bloodshura.ignitium.venus.origin.ScriptOrigin;
-import com.github.bloodshura.ignitium.venus.origin.SimpleScriptOrigin;
 import com.github.bloodshura.ignitium.activity.logging.Level;
 import com.github.bloodshura.ignitium.activity.logging.XLogger;
 import com.github.bloodshura.ignitium.venus.component.Component;
@@ -28,6 +26,8 @@ import com.github.bloodshura.ignitium.venus.component.Container;
 import com.github.bloodshura.ignitium.venus.component.Script;
 import com.github.bloodshura.ignitium.venus.exception.compile.ScriptCompileException;
 import com.github.bloodshura.ignitium.venus.executor.ApplicationContext;
+import com.github.bloodshura.ignitium.venus.origin.ScriptOrigin;
+import com.github.bloodshura.ignitium.venus.origin.SimpleScriptOrigin;
 import com.github.bloodshura.ignitium.worker.StringWorker;
 import org.junit.Test;
 

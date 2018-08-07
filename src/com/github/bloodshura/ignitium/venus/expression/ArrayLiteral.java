@@ -19,13 +19,13 @@
 
 package com.github.bloodshura.ignitium.venus.expression;
 
-import com.github.bloodshura.ignitium.venus.value.ArrayValue;
-import com.github.bloodshura.ignitium.venus.value.Value;
 import com.github.bloodshura.ignitium.collection.view.XArrayView;
 import com.github.bloodshura.ignitium.collection.view.XView;
 import com.github.bloodshura.ignitium.util.XApi;
 import com.github.bloodshura.ignitium.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.ignitium.venus.executor.Context;
+import com.github.bloodshura.ignitium.venus.value.ArrayValue;
+import com.github.bloodshura.ignitium.venus.value.Value;
 
 public class ArrayLiteral implements Expression {
 	private final Expression[] expressions;

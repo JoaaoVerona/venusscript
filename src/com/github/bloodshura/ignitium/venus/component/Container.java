@@ -19,20 +19,20 @@
 
 package com.github.bloodshura.ignitium.venus.component;
 
-import com.github.bloodshura.ignitium.venus.component.object.ObjectDefinition;
-import com.github.bloodshura.ignitium.venus.exception.runtime.ScriptRuntimeException;
-import com.github.bloodshura.ignitium.venus.exception.runtime.UndefinedFunctionException;
-import com.github.bloodshura.ignitium.venus.exception.runtime.UndefinedValueTypeException;
-import com.github.bloodshura.ignitium.venus.type.Type;
-import com.github.bloodshura.ignitium.venus.value.FunctionRefValue;
-import com.github.bloodshura.ignitium.venus.value.Value;
 import com.github.bloodshura.ignitium.collection.list.XList;
 import com.github.bloodshura.ignitium.collection.list.impl.XArrayList;
 import com.github.bloodshura.ignitium.collection.view.XView;
 import com.github.bloodshura.ignitium.util.XApi;
+import com.github.bloodshura.ignitium.venus.component.object.ObjectDefinition;
+import com.github.bloodshura.ignitium.venus.exception.runtime.ScriptRuntimeException;
+import com.github.bloodshura.ignitium.venus.exception.runtime.UndefinedFunctionException;
+import com.github.bloodshura.ignitium.venus.exception.runtime.UndefinedValueTypeException;
 import com.github.bloodshura.ignitium.venus.executor.Context;
 import com.github.bloodshura.ignitium.venus.function.Definition;
 import com.github.bloodshura.ignitium.venus.function.Function;
+import com.github.bloodshura.ignitium.venus.type.Type;
+import com.github.bloodshura.ignitium.venus.value.FunctionRefValue;
+import com.github.bloodshura.ignitium.venus.value.Value;
 
 public abstract class Container extends Component {
 	protected Context context;

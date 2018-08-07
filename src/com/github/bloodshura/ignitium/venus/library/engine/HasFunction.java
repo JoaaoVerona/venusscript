@@ -19,6 +19,9 @@
 
 package com.github.bloodshura.ignitium.venus.library.engine;
 
+import com.github.bloodshura.ignitium.collection.list.XList;
+import com.github.bloodshura.ignitium.collection.list.impl.XArrayList;
+import com.github.bloodshura.ignitium.collection.view.XBasicView;
 import com.github.bloodshura.ignitium.venus.exception.runtime.InvalidFunctionParameterException;
 import com.github.bloodshura.ignitium.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.ignitium.venus.exception.runtime.UndefinedFunctionException;
@@ -31,9 +34,6 @@ import com.github.bloodshura.ignitium.venus.type.Type;
 import com.github.bloodshura.ignitium.venus.value.BoolValue;
 import com.github.bloodshura.ignitium.venus.value.TypeValue;
 import com.github.bloodshura.ignitium.venus.value.Value;
-import com.github.bloodshura.ignitium.collection.list.XList;
-import com.github.bloodshura.ignitium.collection.list.impl.XArrayList;
-import com.github.bloodshura.ignitium.collection.view.XBasicView;
 
 @MethodName("hasFunction")
 @MethodVarArgs

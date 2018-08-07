@@ -19,12 +19,12 @@
 
 package com.github.bloodshura.ignitium.venus.expression;
 
-import com.github.bloodshura.ignitium.venus.value.Value;
 import com.github.bloodshura.ignitium.util.XApi;
 import com.github.bloodshura.ignitium.venus.exception.runtime.IncompatibleTypesException;
 import com.github.bloodshura.ignitium.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.ignitium.venus.executor.Context;
 import com.github.bloodshura.ignitium.venus.operator.UnaryOperator;
+import com.github.bloodshura.ignitium.venus.value.Value;
 
 public class UnaryOperation implements Expression {
 	private final UnaryOperator operator;

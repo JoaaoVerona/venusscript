@@ -19,12 +19,12 @@
 
 package com.github.bloodshura.ignitium.venus.compiler;
 
-import com.github.bloodshura.ignitium.venus.exception.compile.UnexpectedInputException;
-import com.github.bloodshura.ignitium.venus.origin.ScriptOrigin;
 import com.github.bloodshura.ignitium.charset.TextBuilder;
 import com.github.bloodshura.ignitium.charset.sequence.CharSet;
 import com.github.bloodshura.ignitium.collection.store.impl.XQueue;
 import com.github.bloodshura.ignitium.venus.compiler.Token.Type;
+import com.github.bloodshura.ignitium.venus.exception.compile.UnexpectedInputException;
+import com.github.bloodshura.ignitium.venus.origin.ScriptOrigin;
 import com.github.bloodshura.ignitium.worker.StringWorker;
 
 import java.io.IOException;

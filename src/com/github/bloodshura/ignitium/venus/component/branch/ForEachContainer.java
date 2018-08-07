@@ -19,8 +19,8 @@
 
 package com.github.bloodshura.ignitium.venus.component.branch;
 
-import com.github.bloodshura.ignitium.venus.expression.Expression;
 import com.github.bloodshura.ignitium.venus.component.Container;
+import com.github.bloodshura.ignitium.venus.expression.Expression;
 
 public class ForEachContainer extends Container implements Breakable {
 	private final Expression iterable;

@@ -19,6 +19,12 @@
 
 package com.github.bloodshura.ignitium.venus.type;
 
+import com.github.bloodshura.ignitium.collection.view.XArrayView;
+import com.github.bloodshura.ignitium.collection.view.XView;
+import com.github.bloodshura.ignitium.enumeration.Enumerations;
+import com.github.bloodshura.ignitium.util.XApi;
+import com.github.bloodshura.ignitium.venus.expression.Variable;
+import com.github.bloodshura.ignitium.venus.function.Function;
 import com.github.bloodshura.ignitium.venus.value.ArrayValue;
 import com.github.bloodshura.ignitium.venus.value.BoolValue;
 import com.github.bloodshura.ignitium.venus.value.DecimalValue;
@@ -28,12 +34,6 @@ import com.github.bloodshura.ignitium.venus.value.StringValue;
 import com.github.bloodshura.ignitium.venus.value.TypeValue;
 import com.github.bloodshura.ignitium.venus.value.Value;
 import com.github.bloodshura.ignitium.venus.value.VariableRefValue;
-import com.github.bloodshura.ignitium.collection.view.XArrayView;
-import com.github.bloodshura.ignitium.collection.view.XView;
-import com.github.bloodshura.ignitium.enumeration.Enumerations;
-import com.github.bloodshura.ignitium.util.XApi;
-import com.github.bloodshura.ignitium.venus.expression.Variable;
-import com.github.bloodshura.ignitium.venus.function.Function;
 import com.github.bloodshura.ignitium.worker.UtilWorker;
 
 public final class PrimitiveType extends Type {

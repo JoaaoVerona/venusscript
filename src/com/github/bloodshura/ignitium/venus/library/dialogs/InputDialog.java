@@ -19,7 +19,7 @@
 
 package com.github.bloodshura.ignitium.venus.library.dialogs;
 
-import com.github.bloodshura.sparkium.desktop.dialogs.XDialogs;
+import com.github.bloodshura.ignitium.charset.TextBuilder;
 import com.github.bloodshura.ignitium.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.ignitium.venus.executor.Context;
 import com.github.bloodshura.ignitium.venus.function.FunctionCallDescriptor;
@@ -28,7 +28,7 @@ import com.github.bloodshura.ignitium.venus.function.annotation.MethodName;
 import com.github.bloodshura.ignitium.venus.function.annotation.MethodVarArgs;
 import com.github.bloodshura.ignitium.venus.value.StringValue;
 import com.github.bloodshura.ignitium.venus.value.Value;
-import com.github.bloodshura.ignitium.charset.TextBuilder;
+import com.github.bloodshura.sparkium.desktop.dialogs.XDialogs;
 
 @MethodName("inputDialog")
 @MethodVarArgs

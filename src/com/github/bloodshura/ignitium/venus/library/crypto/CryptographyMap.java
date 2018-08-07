@@ -19,13 +19,12 @@
 
 package com.github.bloodshura.ignitium.venus.library.crypto;
 
+import com.github.bloodshura.ignitium.collection.map.impl.XLinkedMap;
 import com.github.bloodshura.ignitium.cryptography.impl.hash.*;
 import com.github.bloodshura.ignitium.cryptography.impl.twoway.Base64;
 import com.github.bloodshura.ignitium.cryptography.impl.twoway.Bytaway;
 import com.github.bloodshura.ignitium.cryptography.impl.twoway.ByteSwitch;
 import com.github.bloodshura.ignitium.cryptography.impl.twoway.CaesarCipher;
-import com.github.bloodshura.ignitium.collection.map.impl.XLinkedMap;
-import com.github.bloodshura.ignitium.cryptography.impl.hash.*;
 
 import javax.annotation.Nonnull;
 

@@ -19,6 +19,7 @@
 
 package com.github.bloodshura.ignitium.venus.library.engine;
 
+import com.github.bloodshura.ignitium.charset.TextBuilder;
 import com.github.bloodshura.ignitium.venus.compiler.VenusLexer;
 import com.github.bloodshura.ignitium.venus.compiler.VenusParser;
 import com.github.bloodshura.ignitium.venus.component.SimpleContainer;
@@ -32,7 +33,6 @@ import com.github.bloodshura.ignitium.venus.function.annotation.MethodName;
 import com.github.bloodshura.ignitium.venus.function.annotation.MethodVarArgs;
 import com.github.bloodshura.ignitium.venus.origin.ScriptMode;
 import com.github.bloodshura.ignitium.venus.origin.SimpleScriptOrigin;
-import com.github.bloodshura.ignitium.charset.TextBuilder;
 
 import java.io.IOException;
 

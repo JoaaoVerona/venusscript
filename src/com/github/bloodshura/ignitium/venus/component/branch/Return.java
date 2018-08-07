@@ -19,8 +19,8 @@
 
 package com.github.bloodshura.ignitium.venus.component.branch;
 
-import com.github.bloodshura.ignitium.venus.expression.Expression;
 import com.github.bloodshura.ignitium.venus.component.Component;
+import com.github.bloodshura.ignitium.venus.expression.Expression;
 
 public class Return extends Component {
 	private final Expression expression;

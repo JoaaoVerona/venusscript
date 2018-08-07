@@ -19,12 +19,12 @@
 
 package com.github.bloodshura.ignitium.venus.component.object;
 
-import com.github.bloodshura.ignitium.venus.type.ObjectType;
-import com.github.bloodshura.ignitium.venus.type.Type;
 import com.github.bloodshura.ignitium.collection.list.XList;
 import com.github.bloodshura.ignitium.collection.list.impl.XArrayList;
 import com.github.bloodshura.ignitium.venus.component.Container;
 import com.github.bloodshura.ignitium.venus.executor.Context;
+import com.github.bloodshura.ignitium.venus.type.ObjectType;
+import com.github.bloodshura.ignitium.venus.type.Type;
 
 public class ObjectDefinition extends Container {
 	private final XList<Attribute> attributes;

@@ -19,13 +19,13 @@
 
 package com.github.bloodshura.ignitium.venus.expression;
 
+import com.github.bloodshura.ignitium.venus.exception.runtime.InvalidArrayAccessException;
+import com.github.bloodshura.ignitium.venus.exception.runtime.ScriptRuntimeException;
+import com.github.bloodshura.ignitium.venus.executor.Context;
 import com.github.bloodshura.ignitium.venus.type.PrimitiveType;
 import com.github.bloodshura.ignitium.venus.value.ArrayValue;
 import com.github.bloodshura.ignitium.venus.value.IntegerValue;
 import com.github.bloodshura.ignitium.venus.value.Value;
-import com.github.bloodshura.ignitium.venus.exception.runtime.InvalidArrayAccessException;
-import com.github.bloodshura.ignitium.venus.exception.runtime.ScriptRuntimeException;
-import com.github.bloodshura.ignitium.venus.executor.Context;
 
 public class ArraySet implements Expression {
 	private final String name;

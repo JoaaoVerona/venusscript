@@ -19,8 +19,8 @@
 
 package com.github.bloodshura.ignitium.venus.component.object;
 
-import com.github.bloodshura.ignitium.venus.expression.Expression;
 import com.github.bloodshura.ignitium.object.Base;
+import com.github.bloodshura.ignitium.venus.expression.Expression;
 
 import javax.annotation.Nonnull;
 

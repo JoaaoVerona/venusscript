@@ -19,10 +19,10 @@
 
 package com.github.bloodshura.ignitium.venus.library.crypto;
 
+import com.github.bloodshura.ignitium.collection.tuple.Pair;
 import com.github.bloodshura.ignitium.cryptography.Decrypter;
 import com.github.bloodshura.ignitium.cryptography.Encrypter;
 import com.github.bloodshura.ignitium.venus.library.VenusLibrary;
-import com.github.bloodshura.ignitium.collection.tuple.Pair;
 
 public class CryptoLibrary extends VenusLibrary {
 	public CryptoLibrary() {

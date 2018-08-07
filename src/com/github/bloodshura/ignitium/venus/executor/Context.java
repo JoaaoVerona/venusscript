@@ -19,14 +19,14 @@
 
 package com.github.bloodshura.ignitium.venus.executor;
 
+import com.github.bloodshura.ignitium.collection.map.XMap;
+import com.github.bloodshura.ignitium.collection.map.impl.XLinkedMap;
+import com.github.bloodshura.ignitium.util.XApi;
 import com.github.bloodshura.ignitium.venus.component.Container;
 import com.github.bloodshura.ignitium.venus.component.Script;
 import com.github.bloodshura.ignitium.venus.exception.runtime.UndefinedVariableException;
 import com.github.bloodshura.ignitium.venus.expression.Variable;
 import com.github.bloodshura.ignitium.venus.value.Value;
-import com.github.bloodshura.ignitium.collection.map.XMap;
-import com.github.bloodshura.ignitium.collection.map.impl.XLinkedMap;
-import com.github.bloodshura.ignitium.util.XApi;
 
 public class Context implements Cloneable {
 	private static int NEXT_ID = 0;
