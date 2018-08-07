@@ -28,7 +28,7 @@ import com.github.bloodshura.ignitium.venus.function.annotation.MethodName;
 import com.github.bloodshura.ignitium.venus.function.annotation.MethodVarArgs;
 import com.github.bloodshura.ignitium.venus.value.StringValue;
 import com.github.bloodshura.ignitium.venus.value.Value;
-import com.github.bloodshura.sparkium.desktop.dialogs.XDialogs;
+import com.github.bloodshura.sparkium.desktop.dialogs.Dialogs;
 
 @MethodName("inputDialog")
 @MethodVarArgs
@@ -48,7 +48,7 @@ public class InputDialog extends Method {
 			message.newLine();
 		}
 
-		String input = XDialogs.askInput(title, message);
+		String input = Dialogs.askInput(title, message);
 
 		return new StringValue(input != null ? input : "");
 	}

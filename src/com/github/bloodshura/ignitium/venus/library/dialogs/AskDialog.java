@@ -28,7 +28,7 @@ import com.github.bloodshura.ignitium.venus.function.annotation.MethodName;
 import com.github.bloodshura.ignitium.venus.function.annotation.MethodVarArgs;
 import com.github.bloodshura.ignitium.venus.value.BoolValue;
 import com.github.bloodshura.ignitium.venus.value.Value;
-import com.github.bloodshura.sparkium.desktop.dialogs.XDialogs;
+import com.github.bloodshura.sparkium.desktop.dialogs.Dialogs;
 
 @MethodName("askDialog")
 @MethodVarArgs
@@ -48,6 +48,6 @@ public class AskDialog extends Method {
 			message.newLine();
 		}
 
-		return new BoolValue(XDialogs.ask(title, message));
+		return new BoolValue(Dialogs.ask(title, message));
 	}
 }

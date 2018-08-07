@@ -28,7 +28,7 @@ import com.github.bloodshura.ignitium.venus.function.annotation.MethodName;
 import com.github.bloodshura.ignitium.venus.function.annotation.MethodVarArgs;
 import com.github.bloodshura.ignitium.venus.value.Value;
 import com.github.bloodshura.sparkium.desktop.dialogs.AlertType;
-import com.github.bloodshura.sparkium.desktop.dialogs.XDialogs;
+import com.github.bloodshura.sparkium.desktop.dialogs.Dialogs;
 
 @MethodName("errorDialog")
 @MethodVarArgs
@@ -48,6 +48,6 @@ public class ErrorDialog extends VoidMethod {
 			message.newLine();
 		}
 
-		XDialogs.show(AlertType.ERROR, title, message);
+		Dialogs.show(AlertType.ERROR, title, message);
 	}
 }
