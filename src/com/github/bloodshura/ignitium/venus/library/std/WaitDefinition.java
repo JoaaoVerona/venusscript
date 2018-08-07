@@ -19,7 +19,7 @@
 
 package com.github.bloodshura.ignitium.venus.library.std;
 
-import com.github.bloodshura.ignitium.runnable.XThread;
+import com.github.bloodshura.ignitium.runnable.IgThread;
 import com.github.bloodshura.ignitium.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.ignitium.venus.executor.Context;
 import com.github.bloodshura.ignitium.venus.function.FunctionCallDescriptor;
@@ -36,7 +36,7 @@ public class WaitDefinition extends VoidMethod {
 		VariableRefValue reference = (VariableRefValue) descriptor.get(0);
 
 		while (!context.hasVar(reference.value())) {
-			XThread.stay(50L);
+			IgThread.stay(50L);
 		}
 	}
 }

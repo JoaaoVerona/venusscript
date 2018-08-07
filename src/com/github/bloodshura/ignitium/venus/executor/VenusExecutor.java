@@ -19,6 +19,7 @@
 
 package com.github.bloodshura.ignitium.venus.executor;
 
+import com.github.bloodshura.ignitium.runnable.IgThread;
 import com.github.bloodshura.ignitium.venus.component.AsyncContainer;
 import com.github.bloodshura.ignitium.venus.component.Component;
 import com.github.bloodshura.ignitium.venus.component.Container;
@@ -39,8 +40,6 @@ import com.github.bloodshura.ignitium.activity.logging.XLogger;
 import com.github.bloodshura.ignitium.collection.list.XListIterator;
 import com.github.bloodshura.ignitium.collection.store.impl.XQueue;
 import com.github.bloodshura.ignitium.runnable.ThreadPool;
-import com.github.bloodshura.ignitium.runnable.XThread;
-import com.github.bloodshura.ignitium.venus.component.branch.*;
 
 import java.util.function.Supplier;
 
@@ -89,7 +88,7 @@ public class VenusExecutor {
 			if (component instanceof Container) {
 				if (component instanceof AsyncContainer) {
 					AsyncContainer asyncContainer = (AsyncContainer) component;
-					XThread thread = new XThread("AsyncVenusThread", () -> {
+					IgThread thread = new IgThread("AsyncVenusThread", () -> {
 						VenusExecutor executor = new VenusExecutor();
 
 						try {

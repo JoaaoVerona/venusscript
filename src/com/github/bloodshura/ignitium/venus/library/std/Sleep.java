@@ -19,7 +19,7 @@
 
 package com.github.bloodshura.ignitium.venus.library.std;
 
-import com.github.bloodshura.ignitium.runnable.XThread;
+import com.github.bloodshura.ignitium.runnable.IgThread;
 import com.github.bloodshura.ignitium.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.ignitium.venus.executor.Context;
 import com.github.bloodshura.ignitium.venus.function.FunctionCallDescriptor;
@@ -35,6 +35,6 @@ public class Sleep extends VoidMethod {
 	public void callVoid(Context context, FunctionCallDescriptor descriptor) throws ScriptRuntimeException {
 		IntegerValue timeInMillis = (IntegerValue) descriptor.get(0);
 
-		XThread.stay(timeInMillis.value());
+		IgThread.stay(timeInMillis.value());
 	}
 }
