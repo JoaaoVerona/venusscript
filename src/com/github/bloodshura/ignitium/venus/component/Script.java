@@ -59,7 +59,7 @@ public class Script extends Container {
 				try {
 					return script.findFunction(context, name, argumentTypes);
 				}
-				catch (ScriptRuntimeException exception2) {
+				catch (ScriptRuntimeException ignored) {
 				}
 			}
 

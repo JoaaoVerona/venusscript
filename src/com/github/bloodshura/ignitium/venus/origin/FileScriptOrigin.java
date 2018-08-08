@@ -40,7 +40,7 @@ public class FileScriptOrigin implements ScriptOrigin {
 				return new FileScriptOrigin(file);
 			}
 		}
-		catch (FileException exception) {
+		catch (FileException ignored) {
 		}
 
 		return ScriptOrigin.super.findRelative(includePath);

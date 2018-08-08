@@ -717,7 +717,7 @@ public class VenusParser {
 						continue;
 					}
 				}
-				catch (UnexpectedTokenException exception) {
+				catch (UnexpectedTokenException ignored) {
 				}
 			}
 

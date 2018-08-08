@@ -54,7 +54,7 @@ public class SetTheme extends Method {
 
 				return new BoolValue(true);
 			}
-			catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException exception) {
+			catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ignored) {
 			}
 		}
 

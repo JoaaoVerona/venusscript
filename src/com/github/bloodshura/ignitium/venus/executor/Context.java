@@ -84,7 +84,7 @@ public class Context implements Cloneable {
 			try {
 				return getParent().getVar(name);
 			}
-			catch (UndefinedVariableException exception) {
+			catch (UndefinedVariableException ignored) {
 			}
 		}
 

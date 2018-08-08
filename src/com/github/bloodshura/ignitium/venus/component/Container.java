@@ -78,7 +78,7 @@ public abstract class Container extends Component {
 			try {
 				return getParent().findFunction(context, name, argumentTypes);
 			}
-			catch (UndefinedFunctionException exception) {
+			catch (UndefinedFunctionException ignored) {
 			}
 		}
 
@@ -96,7 +96,7 @@ public abstract class Container extends Component {
 			try {
 				return getParent().findObjectDefinition(context, name);
 			}
-			catch (UndefinedValueTypeException exception) {
+			catch (UndefinedValueTypeException ignored) {
 			}
 		}
 
@@ -114,7 +114,7 @@ public abstract class Container extends Component {
 			try {
 				return getParent().findType(context, name);
 			}
-			catch (UndefinedValueTypeException exception) {
+			catch (UndefinedValueTypeException ignored) {
 			}
 		}
 
