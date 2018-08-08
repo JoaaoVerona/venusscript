@@ -19,8 +19,8 @@
 
 package com.github.bloodshura.ignitium.venus.origin;
 
-import com.github.bloodshura.ignitium.io.exception.FileException;
-import com.github.bloodshura.ignitium.io.file.File;
+import com.github.bloodshura.ignitium.io.FileException;
+import com.github.bloodshura.ignitium.io.File;
 
 import java.io.IOException;
 

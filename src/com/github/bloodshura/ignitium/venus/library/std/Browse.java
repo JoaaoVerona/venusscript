@@ -20,7 +20,7 @@
 package com.github.bloodshura.ignitium.venus.library.std;
 
 import com.github.bloodshura.ignitium.io.Url;
-import com.github.bloodshura.ignitium.io.exception.UrlException;
+import com.github.bloodshura.ignitium.io.UrlException;
 import com.github.bloodshura.ignitium.sys.XSystem;
 import com.github.bloodshura.ignitium.venus.exception.runtime.ScriptRuntimeException;
 import com.github.bloodshura.ignitium.venus.executor.Context;
