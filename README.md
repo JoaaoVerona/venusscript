@@ -2,43 +2,64 @@
 Welcome to the official GitHub repository of the dynamic, injectable, scripting language **VenusScript**.
 See the [examples directory](https://github.com/BloodShura/VenusScript/tree/master/examples) to get a closer look in how the language works.
 
-### Why?
-This is, currently, a module of the [MPS Bot](https://github.com/BloodShura/MPSBot) project, which is being built for the Applications Programming course @ CS, UTFPR.
-After it gets ready and finished for the needs of the project, it will proceed as an independent project. Probably will turn into a JVM bytecode-compiled language in the future.
-
-### Tech
-VenusScript is meant to be used within a Java application, although it's implementation is, since the beginning, already being made targeting different languages in the future.
-It is required Java 8+ and libraries:
-- [ShuraX](todo): core dependency
-- [ShuraX Cryptography](todo): required if enabling CryptoLibrary
-- [ShuraX Dialogs](todo): required if enabling DialogsLibrary
-
-### Version Planning
+## Version Planning
 | Version | State       | Description             |
 | ------- | ----------- | ----------------------- |
-| 0.1     | *done*      | Definitions, methods, function references, standard library, loop containers, branching components, variable references, initial dynamic injection, runtime interpretation, asynchronous features, synchronous features, homogeneous arrays |
-| **0.2** | **current** | Object-oriented features (user-defined object types), Java interoperability, lists, dictionaries, heterogeneous arrays |
-| 0.3     | planned     | Functional features, enumerations, debugging utilities and breakpoints |
-| 0.4     | planned     | Improved performance, own bytecode compiler and interpreter |
+| 0.x     | *done*      | <ul><li>Definitions</li><li>Functions</li><li>Function references</li><li>Standard library</li><li>Loop containers</li><li>Branching components</li><li>Variable references</li><li>Initial dynamic injection</li><li>Runtime interpretation</li><li>Asynchronous features</li><li>Synchronous features</li><li>Homogeneous arrays</li> |
+| **1.x** | **current** | <ul><li>Object-oriented features (classes, attributes, methods, maybe polymorphism, etc)</li><li>Java interoperability</li><li>Lists</li><li>Dictionaries/Maps</li><li>Heterogeneous arrays</li> |
+| 2.x     | planned     | <ul><li>Functional features</li><li>Enumerations</li><li>Debugging utilities and breakpoints</li> |
+| ?     | planned     | <ul><li>Improved performance</li><li>Own bytecode compiler and interpreter |
 
-### Definition
+## How to use
+
+##### With Gradle:
+
+```
+dependencies {
+	compile 'com.github.bloodshura:venusscript:1.2.0'
+}
+```
+
+##### With Maven:
+
+```
+<dependency>
+	<groupId>com.github.bloodshura</groupId>
+	<artifactId>venusscript</artifactId>
+	<version>1.2.0</version>
+</dependency>
+```
+
+##### With other build systems:
+
+If your build system supports fetching dependencies from the Maven central repository, then just include a dependency with group `com.github.bloodshura`, artifact `ignitium-crypto` and version `1.2.0`.
+
+## Tech
+VenusScript is meant to be used within ant Java or JVM-built (Groovy, Kotlin, Scala, etc) application. It is required Java 8+ and the following libraries (already added as a dependency):
+- [Ignitium Core](https://github.com/BloodShura/Ignitium-Core): core dependency
+- [Ignitium Crypto](https://github.com/BloodShura/Ignitium-Core): required by CryptoLibrary, which contains standard cryptographic and hashing functions
+- [Sparkium Desktop](todo): required by DialogsLibrary, which contains standard dialog/modal opening functions
+
+## Definition
 - Highly extensible
 - Dynamic typing
 - Context/scope manipulation
 - No 'null' type/value
 - Simple syntax
-- Runtime injections (of libraries, overriding functions, new functions, ...)
+- Runtime injections (of libraries, function overriding, function definition, etc)
 - Multithreaded
-- Easy to learn
+- Extremely easy syntax
 
-### Already implemented
-- Asynchronous features: async. scopes
-- Synchronous features: monitor locks (produce, consume), value waiting (e.g. ```wait(i == 5)```)
+## Already implemented
+- Asynchronous features: `async` scopes
+- Synchronous features: monitor locks (`produce`, `consume`), value waiting (e.g. ```wait(i == 5)```)
 - Value types
 - Function references
 - Variable references
-- Dynamic 'include' statements
-- Dynamic 'using' statements
+- Top-level functions
+- Higher-order functions
+- Dynamic `include` statements
+- Dynamic `using` statements
 - Exporting variables to global context (so multiple scripts within the same application can access them)
 - While, do-while containers
 - Break, continue statements
@@ -50,14 +71,18 @@ It is required Java 8+ and libraries:
 - Execute other scripts, asynchronously or synchronously (e.g. ```async run("../basic.vs")```)
 - Homogeneous arrays
 
-### To be implemented
-- Object-oriented programming (classes, attributes, methods)
-- Functional programming (lambdas, utility methods)
+## To be implemented
+- Object-oriented programming (classes, attributes, methods, maybe polymorphism, etc)
+- Functional programming (lambdas, data immutability, etc)
 - Collections (heterogeneous arrays, lists, maps, sets)
 - Easier interoperability with Java
-- Enumerations?
 - User-defined value types
 - Debugging features (including, but not limited to, *breakpoints*)
-- More method libraries
+- Expand standard libraries
+- Enumerations
 - Simple exception handling?
 - [... and many more...](https://github.com/BloodShura/VenusScript/issues?q=is%3Aissue+is%3Aopen+-label%3Abug)
+
+## Documentation
+
+*Work in progress.*
