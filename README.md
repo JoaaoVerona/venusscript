@@ -16,7 +16,7 @@ See the [examples directory](https://github.com/BloodShura/VenusScript/tree/mast
 
 ```
 dependencies {
-	compile 'com.github.bloodshura:venusscript:1.2.0'
+	compile 'com.github.bloodshura:venusscript:1.3.0'
 }
 ```
 
@@ -26,7 +26,7 @@ dependencies {
 <dependency>
 	<groupId>com.github.bloodshura</groupId>
 	<artifactId>venusscript</artifactId>
-	<version>1.2.0</version>
+	<version>1.3.0</version>
 </dependency>
 ```
 
