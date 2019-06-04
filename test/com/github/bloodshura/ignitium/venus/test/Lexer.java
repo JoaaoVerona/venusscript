@@ -63,7 +63,7 @@ public class Lexer {
 
 	@Test
 	public void testCharLiterals() throws IOException, UnexpectedInputException {
-		String[] script = { "'\\n'", "'\\\\n'", "'\"'" };
+		String[] script = { "'\\\\n'", "'\\\\\\\\n'", "'\"'" };
 		ScriptOrigin origin = new SimpleScriptOrigin("test.xs", StringWorker.join('\n', script));
 		VenusLexer lexer = new VenusLexer(origin);
 
