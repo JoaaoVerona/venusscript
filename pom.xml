@@ -3,7 +3,7 @@
 
 	<groupId>com.github.bloodshura</groupId>
 	<artifactId>venusscript</artifactId>
-	<version>1.2.0</version>
+	<version>1.3.0</version>
 	<packaging>jar</packaging>
 
 	<name>VenusScript</name>
@@ -51,19 +51,19 @@
 		<dependency>
 			<groupId>com.github.bloodshura</groupId>
 			<artifactId>ignitium-core</artifactId>
-			<version>0.0.1</version>
+			<version>0.1.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.github.bloodshura</groupId>
 			<artifactId>ignitium-crypto</artifactId>
-			<version>0.0.1</version>
+			<version>0.1.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.github.bloodshura</groupId>
 			<artifactId>sparkium-desktop</artifactId>
-			<version>0.0.1</version>
+			<version>0.1.0</version>
 		</dependency>
 
 		<dependency>
