@@ -15,8 +15,7 @@ public interface ScriptOrigin {
 
 		try {
 			lexer = new VenusLexer(this);
-		}
-		catch (IOException exception) {
+		} catch (IOException exception) {
 			throw new ScriptCompileException("Could not read script \"" + getScriptName() + "\": " + exception.getClass().getSimpleName() + ": " + exception.getMessage());
 		}
 

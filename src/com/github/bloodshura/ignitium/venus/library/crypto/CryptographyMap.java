@@ -21,14 +21,12 @@ public class CryptographyMap extends XLinkedMap<String, Object> {
 					Class<?> crypterClass = (Class<?>) objects[i + 1];
 
 					value = crypterClass.newInstance();
-				}
-				else {
+				} else {
 					value = objects[i + 1];
 				}
 
 				set(key.toLowerCase(), value);
-			}
-			catch (IllegalAccessException | InstantiationException | SecurityException exception) {
+			} catch (IllegalAccessException | InstantiationException | SecurityException exception) {
 				throw new IllegalArgumentException("Invalid argument " + i + ':', exception);
 			}
 		}

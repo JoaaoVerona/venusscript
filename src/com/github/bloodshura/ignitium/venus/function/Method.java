@@ -30,8 +30,7 @@ public abstract class Method implements Function {
 			Class<? extends Value>[] args = getClass().getAnnotation(MethodArgs.class).value();
 
 			this.arguments = new XArrayView<>(args).map(PrimitiveType::forType);
-		}
-		else {
+		} else {
 			this.arguments = new XBasicView<>();
 		}
 

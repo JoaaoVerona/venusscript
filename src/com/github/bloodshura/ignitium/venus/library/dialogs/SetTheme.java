@@ -24,8 +24,7 @@ public class SetTheme extends Method {
 
 		if (themeName.equalsIgnoreCase("metal")) {
 			themePath = UIManager.getCrossPlatformLookAndFeelClassName();
-		}
-		else if (themeName.equalsIgnoreCase("system")) {
+		} else if (themeName.equalsIgnoreCase("system")) {
 			themePath = UIManager.getSystemLookAndFeelClassName();
 		}
 
@@ -34,8 +33,7 @@ public class SetTheme extends Method {
 				UIManager.setLookAndFeel(themePath);
 
 				return new BoolValue(true);
-			}
-			catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ignored) {
+			} catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ignored) {
 			}
 		}
 

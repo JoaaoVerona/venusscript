@@ -83,8 +83,7 @@ public class ArrayValue extends IterableValue {
 		for (Value value : array.value()) {
 			if (value instanceof ArrayValue) {
 				builder.append('[' + toString((ArrayValue) value) + ']');
-			}
-			else {
+			} else {
 				builder.append(value);
 			}
 		}

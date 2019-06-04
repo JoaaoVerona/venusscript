@@ -31,8 +31,7 @@ public class InContext implements Expression {
 			ObjectValue object = (ObjectValue) value;
 
 			return getExpression().resolve(object.getContext()); // See issue #24
-		}
-		else {
+		} else {
 			throw new InvalidValueTypeException(context, getName() + " has type " + value.getType() + "; expected to be an object");
 		}
 	}

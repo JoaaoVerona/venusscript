@@ -39,8 +39,7 @@ public class Evaluate extends Method {
 			parser.parse(new VenusLexer(origin), container);
 
 			return appContext.currentExecutor().run(container, ScriptMode.EVALUATION);
-		}
-		catch (IOException | ScriptCompileException exception) {
+		} catch (IOException | ScriptCompileException exception) {
 			throw new ScriptRuntimeException(context, "Failed to compile script", exception);
 		}
 	}

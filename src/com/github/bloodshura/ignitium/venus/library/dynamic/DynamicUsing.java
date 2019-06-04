@@ -24,8 +24,7 @@ public class DynamicUsing extends VoidMethod {
 
 		if (supplier != null && (library = supplier.get()) != null) {
 			script.getLibraryList().add(library);
-		}
-		else {
+		} else {
 			throw new ScriptRuntimeException(context, "Could not find a library named \"" + libraryName + "\"");
 		}
 	}

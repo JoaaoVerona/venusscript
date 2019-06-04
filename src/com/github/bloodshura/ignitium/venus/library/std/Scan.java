@@ -61,8 +61,7 @@ public class Scan extends Method {
 					}
 
 					throw new InvalidValueTypeException(context, "Cannot scan for an input of type " + type);
-				}
-				catch (NumberFormatException ignored) {
+				} catch (NumberFormatException ignored) {
 				}
 			}
 		}

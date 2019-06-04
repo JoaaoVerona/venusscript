@@ -22,8 +22,7 @@ public class DynamicInclude extends VoidMethod {
 
 		try {
 			script.include(includeName.value(), maybe.value());
-		}
-		catch (ScriptCompileException exception) {
+		} catch (ScriptCompileException exception) {
 			throw new ScriptRuntimeException(context, "Could not include script: " + exception.getMessage(), exception.getCause());
 		}
 	}

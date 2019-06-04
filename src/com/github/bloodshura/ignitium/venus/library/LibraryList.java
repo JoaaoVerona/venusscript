@@ -20,8 +20,7 @@ public class LibraryList extends XArrayList<VenusLibrary> {
 						if (foundVarArgs == null) {
 							foundVarArgs = function;
 						}
-					}
-					else {
+					} else {
 						found = function;
 					}
 				}

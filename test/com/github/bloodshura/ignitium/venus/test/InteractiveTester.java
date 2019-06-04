@@ -56,14 +56,12 @@ public class InteractiveTester {
 		if (LIGHTWEIGHT_ERRORS) {
 			try {
 				script = origin.compile(new ApplicationContext());
-			}
-			catch (ScriptCompileException exception) {
+			} catch (ScriptCompileException exception) {
 				XLogger.warnln("COMPILE ERR: " + exception.getMessage());
 
 				return;
 			}
-		}
-		else {
+		} else {
 			script = origin.compile(new ApplicationContext());
 		}
 
@@ -78,14 +76,12 @@ public class InteractiveTester {
 		if (LIGHTWEIGHT_ERRORS) {
 			try {
 				executor.run(script, ScriptMode.NORMAL);
-			}
-			catch (ScriptRuntimeException exception) {
+			} catch (ScriptRuntimeException exception) {
 				XLogger.warnln("RUNTIME ERR: " + exception.getMessage());
 
 				return;
 			}
-		}
-		else {
+		} else {
 			executor.run(script, ScriptMode.NORMAL);
 		}
 

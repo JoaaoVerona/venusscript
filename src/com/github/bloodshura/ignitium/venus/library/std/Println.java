@@ -21,8 +21,7 @@ public class Println extends VoidMethod {
 				for (Value argument : descriptor.getValues()) {
 					reference.output(argument.toString() + '\n');
 				}
-			}
-			else {
+			} else {
 				reference.output("\n");
 			}
 		}

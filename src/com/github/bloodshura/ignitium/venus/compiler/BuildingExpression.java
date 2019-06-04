@@ -34,8 +34,7 @@ public class BuildingExpression {
 				unaryWhenAlready.push((UnaryOperator) op);
 
 				return;
-			}
-			else {
+			} else {
 				parser.bye(owner, "already have an operator \"" + operator + "\"");
 			}
 		}
@@ -59,26 +58,22 @@ public class BuildingExpression {
 				}
 
 				setExpression(new UnaryOperation((UnaryOperator) operator, rslt));
-			}
-			else {
+			} else {
 				setExpression(rslt);
 			}
-		}
-		else if (hasOperator()) {
+		} else if (hasOperator()) {
 			if (operator instanceof BinaryOperator) {
 				while (!unaryWhenAlready.isEmpty()) {
 					rslt = new UnaryOperation(unaryWhenAlready.pop(), rslt);
 				}
 
 				setExpression(new BinaryOperation((BinaryOperator) operator, expression, rslt));
-			}
-			else {
+			} else {
 				parser.bye("Excepted a binary or unary operator, received " + operator.getClass().getSimpleName());
 			}
 
 			this.operator = null;
-		}
-		else {
+		} else {
 			parser.bye(owner, "expected operator, found another expression");
 		}
 	}
@@ -100,8 +95,7 @@ public class BuildingExpression {
 			this.expression = new InContext(inContext, expression);
 
 			this.inContext = null;
-		}
-		else {
+		} else {
 			this.expression = expression;
 		}
 	}

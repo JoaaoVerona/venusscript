@@ -37,8 +37,7 @@ public class Interpret extends VoidMethod {
 		try {
 			parser.parse(new VenusLexer(origin), container);
 			appContext.currentExecutor().run(container, ScriptMode.INTERACTIVE);
-		}
-		catch (IOException | ScriptCompileException exception) {
+		} catch (IOException | ScriptCompileException exception) {
 			throw new ScriptRuntimeException(context, "Failed to compile script", exception);
 		}
 	}

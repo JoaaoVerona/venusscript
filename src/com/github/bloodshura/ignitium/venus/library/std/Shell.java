@@ -25,8 +25,7 @@ public class Shell extends Method {
 			XSystem.getTerminal().runInShell(command.value(), newWindow.value());
 
 			return new BoolValue(true);
-		}
-		catch (IOException exception) {
+		} catch (IOException exception) {
 			return new BoolValue(false);
 		}
 	}

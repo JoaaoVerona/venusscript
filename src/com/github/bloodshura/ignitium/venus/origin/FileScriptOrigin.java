@@ -20,8 +20,7 @@ public class FileScriptOrigin implements ScriptOrigin {
 			if (file.exists()) {
 				return new FileScriptOrigin(file);
 			}
-		}
-		catch (FileException ignored) {
+		} catch (FileException ignored) {
 		}
 
 		return ScriptOrigin.super.findRelative(includePath);

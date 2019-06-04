@@ -7,8 +7,7 @@ public class VenusLibrary extends XArrayList<Function> {
 	public boolean add(Class<? extends Function> object) {
 		try {
 			return add(object.newInstance());
-		}
-		catch (IllegalAccessException | InstantiationException exception) {
+		} catch (IllegalAccessException | InstantiationException exception) {
 			throw new IllegalArgumentException("Could not instantiate method class \"" + object.getName() + "\"");
 		}
 	}

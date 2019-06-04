@@ -39,8 +39,7 @@ public class NewObject implements Expression {
 				Value value = pair.getRight().resolve(context);
 
 				c.setVar(pair.getLeft(), value);
-			}
-			else {
+			} else {
 				throw new UndefinedAttributeException(context, definition, pair.getLeft());
 			}
 		}

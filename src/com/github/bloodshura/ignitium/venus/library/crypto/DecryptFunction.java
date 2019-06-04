@@ -39,8 +39,7 @@ public class DecryptFunction implements Function {
 			context.setVar(reference.value(), new StringValue(result));
 
 			return new BoolValue(true);
-		}
-		catch (CryptoException exception) {
+		} catch (CryptoException exception) {
 			return new BoolValue(false);
 		}
 	}

@@ -24,8 +24,7 @@ public class Browse extends Method {
 			XSystem.getDesktop().browse(new Url(path.value()));
 
 			return new BoolValue(true);
-		}
-		catch (UrlException exception) {
+		} catch (UrlException exception) {
 			return new BoolValue(false);
 		}
 	}

@@ -32,8 +32,7 @@ public class Run extends Method {
 				executor.run(script, ScriptMode.NORMAL);
 
 				return new BoolValue(true);
-			}
-			catch (ScriptCompileException exception) {
+			} catch (ScriptCompileException exception) {
 				throw new ScriptRuntimeException(context, "Failed to compile script", exception);
 			}
 		}

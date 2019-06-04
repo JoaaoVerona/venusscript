@@ -35,8 +35,7 @@ public class HasFunction extends Method {
 				TypeValue typeValue = (TypeValue) value;
 
 				types.add(typeValue.value());
-			}
-			else {
+			} else {
 				throw new InvalidFunctionParameterException(context, "Expected value type, received " + value.getType());
 			}
 		}
@@ -45,8 +44,7 @@ public class HasFunction extends Method {
 			context.getOwner().findFunction(context, name, new XBasicView<>(types));
 
 			return new BoolValue(true);
-		}
-		catch (UndefinedFunctionException exception) {
+		} catch (UndefinedFunctionException exception) {
 			return new BoolValue(false);
 		}
 	}

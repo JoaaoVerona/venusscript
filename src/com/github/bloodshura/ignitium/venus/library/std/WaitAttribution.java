@@ -37,8 +37,7 @@ public class WaitAttribution extends VoidMethod {
 				synchronized (lock) {
 					lock.wait();
 				}
-			}
-			catch (InterruptedException exception) {
+			} catch (InterruptedException exception) {
 				XLogger.warnln("Thread " + Thread.currentThread() + " interrupted while 'wait' was locking.");
 
 				break;
@@ -56,16 +55,13 @@ public class WaitAttribution extends VoidMethod {
 
 			scan(context, operation.getLeft(), list);
 			scan(context, operation.getRight(), list);
-		}
-		else if (expression instanceof FunctionCall) {
+		} else if (expression instanceof FunctionCall) {
 			throw new InvalidFunctionParameterException(context, "Cannot embed a function call on arguments for 'wait' method");
-		}
-		else if (expression instanceof UnaryOperation) {
+		} else if (expression instanceof UnaryOperation) {
 			UnaryOperation operation = (UnaryOperation) expression;
 
 			scan(context, operation.getExpression(), list);
-		}
-		else if (expression instanceof Variable) {
+		} else if (expression instanceof Variable) {
 			list.add((Variable) expression);
 		}
 	}

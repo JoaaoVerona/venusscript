@@ -74,11 +74,9 @@ public class VenusExecutor {
 
 						try {
 							executor.run(asyncContainer, mode, () -> VenusExecutor.this.shouldRun);
-						}
-						catch (ScriptRuntimeException exception) {
+						} catch (ScriptRuntimeException exception) {
 							asyncExceptions.push(exception);
-						}
-						catch (Exception exception) {
+						} catch (Exception exception) {
 							XLogger.println(exception);
 						}
 					});
@@ -86,8 +84,7 @@ public class VenusExecutor {
 					asyncThreads.add(thread);
 					thread.setDaemon(asyncContainer.isDaemon());
 					thread.start();
-				}
-				else if (component instanceof ForEachContainer) {
+				} else if (component instanceof ForEachContainer) {
 					ForEachContainer forContainer = (ForEachContainer) component;
 					Expression expression = forContainer.getIterable();
 					Value value = expression.resolve(context);
@@ -109,12 +106,10 @@ public class VenusExecutor {
 								this.continuing = false;
 							}
 						}
-					}
-					else {
+					} else {
 						throw new InvalidValueTypeException(context, "For value \"" + value + "\" is not iterable");
 					}
-				}
-				else if (component instanceof ForRangeContainer) {
+				} else if (component instanceof ForRangeContainer) {
 					ForRangeContainer forContainer = (ForRangeContainer) component;
 					Value from = forContainer.getFrom().resolve(context);
 					Value to = forContainer.getTo().resolve(context);
@@ -142,16 +137,13 @@ public class VenusExecutor {
 
 								count = forContainer.getAdjustment().resolve(context);
 							}
-						}
-						else {
+						} else {
 							throw new InvalidValueTypeException(context, "For end \"" + to + "\" is not a numeric value");
 						}
-					}
-					else {
+					} else {
 						throw new InvalidValueTypeException(context, "For start \"" + from + "\" is not a numeric value");
 					}
-				}
-				else if (component instanceof WhileContainer) {
+				} else if (component instanceof WhileContainer) {
 					WhileContainer whileContainer = (WhileContainer) component;
 
 					while (true) {
@@ -172,17 +164,14 @@ public class VenusExecutor {
 								if (continuing) {
 									this.continuing = false;
 								}
-							}
-							else {
+							} else {
 								break;
 							}
-						}
-						else {
+						} else {
 							throw new InvalidValueTypeException(context, "Cannot apply while condition in value of type " + value.getType());
 						}
 					}
-				}
-				else if (component instanceof DoWhileContainer) {
+				} else if (component instanceof DoWhileContainer) {
 					DoWhileContainer doWhileContainer = (DoWhileContainer) component;
 
 					while (true) {
@@ -210,13 +199,11 @@ public class VenusExecutor {
 							if (!boolValue.value()) {
 								break;
 							}
-						}
-						else {
+						} else {
 							throw new InvalidValueTypeException(context, "Cannot apply while condition in value of type " + value.getType());
 						}
 					}
-				}
-				else if (component instanceof IfContainer || (component instanceof ElseIfContainer && hadIfAndNotProceed)) {
+				} else if (component instanceof IfContainer || (component instanceof ElseIfContainer && hadIfAndNotProceed)) {
 					IfContainer ifContainer = (IfContainer) component;
 					Value value = ifContainer.getCondition().resolve(context);
 
@@ -225,33 +212,26 @@ public class VenusExecutor {
 
 						if (boolValue.value()) {
 							run(ifContainer, mode, shouldRun);
-						}
-						else {
+						} else {
 							hadIfAndNotProceed = true;
 
 							continue;
 						}
-					}
-					else {
+					} else {
 						throw new InvalidValueTypeException(context, "Cannot apply if condition in value of type " + value.getType());
 					}
-				}
-				else if (component instanceof ElseContainer) {
+				} else if (component instanceof ElseContainer) {
 					if (hadIfAndNotProceed) {
 						run((Container) component, mode, shouldRun);
 					}
-				}
-				else if (!(component instanceof Definition)) {
+				} else if (!(component instanceof Definition)) {
 					run((Container) component, mode, shouldRun);
 				}
-			}
-			else if (component instanceof Break) {
+			} else if (component instanceof Break) {
 				this.breaking = true;
-			}
-			else if (component instanceof Continue) {
+			} else if (component instanceof Continue) {
 				this.continuing = true;
-			}
-			else if (component instanceof Return) {
+			} else if (component instanceof Return) {
 				Return returner = (Return) component;
 				Value value = returner.getExpression().resolve(context);
 
@@ -260,16 +240,14 @@ public class VenusExecutor {
 				}
 
 				break;
-			}
-			else if (component instanceof SimpleComponent) {
+			} else if (component instanceof SimpleComponent) {
 				SimpleComponent simple = (SimpleComponent) component;
 				Value value = simple.getExpression().resolve(context);
 
 				if (value != null) {
 					if (mode == ScriptMode.EVALUATION) {
 						result = value;
-					}
-					else if (mode == ScriptMode.INTERACTIVE) {
+					} else if (mode == ScriptMode.INTERACTIVE) {
 						result = value;
 						XLogger.println(value);
 					}

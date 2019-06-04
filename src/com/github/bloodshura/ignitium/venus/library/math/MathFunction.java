@@ -41,8 +41,7 @@ public class MathFunction implements Function {
 		for (Value argument : descriptor.getValues()) {
 			if (argument instanceof IntegerValue && UtilWorker.fixPrimitiveClass(method.getParameterTypes()[i]) == Integer.class) {
 				values.add(((Long) argument.value()).intValue());
-			}
-			else {
+			} else {
 				values.add(argument.value());
 			}
 
@@ -63,8 +62,7 @@ public class MathFunction implements Function {
 			}
 
 			return value;
-		}
-		catch (IllegalAccessException | InvocationTargetException exception) {
+		} catch (IllegalAccessException | InvocationTargetException exception) {
 			throw new ScriptRuntimeException(context, "Could not call math function \"" + getName() + "\"", exception);
 		}
 	}

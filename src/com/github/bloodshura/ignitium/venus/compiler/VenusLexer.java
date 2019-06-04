@@ -131,8 +131,7 @@ public class VenusLexer {
 							buildingToken.clear();
 
 							continue;
-						}
-						else {
+						} else {
 							bye("Cannot re-define number literal type (already " + numberLiteralType + ')');
 						}
 					}
@@ -144,8 +143,7 @@ public class VenusLexer {
 							buildingToken.clear();
 
 							continue;
-						}
-						else {
+						} else {
 							bye("Cannot re-define number literal type (already " + numberLiteralType + ')');
 						}
 					}
@@ -157,25 +155,21 @@ public class VenusLexer {
 							if (!CharSet.BINARY.contains(ch)) {
 								bye("Invalid binary character \"" + ch + "\"");
 							}
-						}
-						else {
+						} else {
 							condition = !isDigit;
 						}
-					}
-					else if (numberLiteralType == Type.DECIMAL_LITERAL) {
+					} else if (numberLiteralType == Type.DECIMAL_LITERAL) {
 						if (isLetter) {
 							bye("Letter found while parsing a number literal");
 						}
 
 						condition = !isDigit && ch != '.';
-					}
-					else if (numberLiteralType == Type.HEXADECIMAL_LITERAL) {
+					} else if (numberLiteralType == Type.HEXADECIMAL_LITERAL) {
 						if (isLetter) {
 							if (!CharSet.HEXADECIMAL.contains(ch)) {
 								bye("Invalid hexadecimal character \"" + ch + "\"");
 							}
-						}
-						else {
+						} else {
 							condition = !isDigit;
 						}
 					}
@@ -187,8 +181,7 @@ public class VenusLexer {
 
 						return new Token(numberLiteralType, buildingToken.toStringAndClear());
 					}
-				}
-				else if (state != IN_CHAR_LITERAL && state != IN_STRING_LITERAL) {
+				} else if (state != IN_CHAR_LITERAL && state != IN_STRING_LITERAL) {
 					if (ch == ' ' || ch == '\t') {
 						if (state == IN_NAME_DEFINITION) {
 							this.state = null;
@@ -264,8 +257,7 @@ public class VenusLexer {
 					if (isDigit && state != IN_NAME_DEFINITION) {
 						this.numberLiteralType = Type.DECIMAL_LITERAL;
 						this.state = IN_NUMBER_LITERAL;
-					}
-					else if (isLetter && state != IN_NAME_DEFINITION) {
+					} else if (isLetter && state != IN_NAME_DEFINITION) {
 						this.state = IN_NAME_DEFINITION;
 					}
 				}
@@ -273,12 +265,10 @@ public class VenusLexer {
 				if (lastChar == '\\') {
 					buildingToken.append(StringWorker.unescape("\\" + ch));
 					ch = 0;
-				}
-				else if (ch != '\\') {
+				} else if (ch != '\\') {
 					buildingToken.append(ch);
 				}
-			}
-			finally {
+			} finally {
 				this.lastChar = ch;
 			}
 		}

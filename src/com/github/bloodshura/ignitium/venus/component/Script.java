@@ -34,13 +34,11 @@ public class Script extends Container {
 	public Function findFunction(Context context, String name, XView<Type> argumentTypes) throws ScriptRuntimeException {
 		try {
 			return super.findFunction(context, name, argumentTypes);
-		}
-		catch (ScriptRuntimeException exception) {
+		} catch (ScriptRuntimeException exception) {
 			for (Script script : getIncludes()) {
 				try {
 					return script.findFunction(context, name, argumentTypes);
-				}
-				catch (ScriptRuntimeException ignored) {
+				} catch (ScriptRuntimeException ignored) {
 				}
 			}
 
@@ -91,11 +89,9 @@ public class Script extends Container {
 			Script script = origin.compile(getApplicationContext());
 
 			getIncludes().add(script);
-		}
-		else if (maybe) {
+		} else if (maybe) {
 			XLogger.debugln("Not found include script \"" + includePath + "\", but it was marked as maybe.");
-		}
-		else {
+		} else {
 			throw new ScriptCompileException("Could not find script \"" + includePath + "\"");
 		}
 	}

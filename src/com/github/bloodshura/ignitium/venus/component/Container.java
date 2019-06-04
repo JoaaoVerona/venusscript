@@ -44,8 +44,7 @@ public abstract class Container extends Component {
 			if (definition.accepts(name, argumentTypes)) {
 				if (definition.isVarArgs()) {
 					foundVarArgs = definition;
-				}
-				else {
+				} else {
 					return definition;
 				}
 			}
@@ -58,8 +57,7 @@ public abstract class Container extends Component {
 		if (hasParent()) {
 			try {
 				return getParent().findFunction(context, name, argumentTypes);
-			}
-			catch (UndefinedFunctionException ignored) {
+			} catch (UndefinedFunctionException ignored) {
 			}
 		}
 
@@ -76,8 +74,7 @@ public abstract class Container extends Component {
 		if (hasParent()) {
 			try {
 				return getParent().findObjectDefinition(context, name);
-			}
-			catch (UndefinedValueTypeException ignored) {
+			} catch (UndefinedValueTypeException ignored) {
 			}
 		}
 
@@ -94,8 +91,7 @@ public abstract class Container extends Component {
 		if (hasParent()) {
 			try {
 				return getParent().findType(context, name);
-			}
-			catch (UndefinedValueTypeException ignored) {
+			} catch (UndefinedValueTypeException ignored) {
 			}
 		}
 

@@ -29,8 +29,7 @@ public interface Function extends Nameable {
 				}
 
 				return true;
-			}
-			else if (isVarArgs()) {
+			} else if (isVarArgs()) {
 				return true;
 			}
 		}
