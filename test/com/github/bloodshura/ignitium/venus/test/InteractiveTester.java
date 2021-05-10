@@ -20,7 +20,7 @@ import com.github.bloodshura.ignitium.worker.ParseWorker;
 import static com.github.bloodshura.ignitium.sys.XSystem.*;
 
 public class InteractiveTester {
-	public static final Directory DIRECTORY = new Directory("VenusScript/examples");
+	public static final Directory DIRECTORY = new Directory("examples");
 	public static final boolean LIGHTWEIGHT_ERRORS = false;
 
 	public static void main(String[] args) throws Exception {

@@ -1,2 +1,10 @@
+/.idea/dataSources*
+/.idea/dictionaries/
+/.idea/libraries/
+/.idea/sonarlint*
+/.idea/gradle.xml
+/.idea/jarRepositories.xml
+/.idea/sshConfigs.xml
 /.idea/workspace.xml
+
 /target/
