@@ -2,6 +2,29 @@
 Welcome to the official GitHub repository of the dynamic, injectable, scripting language **VenusScript**.
 See the [examples directory](https://github.com/BloodShura/VenusScript/tree/master/examples) to get a closer look in how the language works.
 
+```
+using std
+
+ver = "1.3.0"
+println("Hi from VenusScript! Version = " + ver)
+
+def sum(int a, int b) {
+    return a + b
+}
+
+newestSum = 0
+
+async {
+    for i in (1, 10) {
+        newestSum = sum(i, i)
+        println(newestSum)
+    }
+}
+
+wait(newestSum == 20)
+println("Ok!")
+```
+
 ## Version Planning
 | Version | State       | Description             |
 | ------- | ----------- | ----------------------- |
@@ -32,13 +55,10 @@ dependencies {
 
 ##### With other build systems:
 
-If your build system supports fetching dependencies from the Maven central repository, then just include a dependency with group `com.github.bloodshura`, artifact `ignitium-crypto` and version `1.2.0`.
+If your build system supports fetching dependencies from the Maven central repository, then just include a dependency with group `com.github.bloodshura`, artifact `venusscript` and version `1.3.0`.
 
 ## Tech
-VenusScript is meant to be used within ant Java or JVM-built (Groovy, Kotlin, Scala, etc) application. It is required Java 8+ and the following libraries (already added as a dependency):
-- [Ignitium Core](https://github.com/BloodShura/Ignitium-Core): core dependency
-- [Ignitium Crypto](https://github.com/BloodShura/Ignitium-Core): required by CryptoLibrary, which contains standard cryptographic and hashing functions
-- [Sparkium Desktop](todo): required by DialogsLibrary, which contains standard dialog/modal opening functions
+VenusScript is meant to be used within any Java or JVM-built (Kotlin, Scala, Groovy, etc) application. It is required Java 8+.
 
 ## Definition
 - Highly extensible
