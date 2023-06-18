@@ -8,13 +8,13 @@
 
 	<name>VenusScript</name>
 	<description>A dynamic, easy, highly customizable scripting language.</description>
-	<url>https://github.com/BloodShura/venusscript</url>
+	<url>https://github.com/JoaaoVerona/venusscript</url>
 
 	<developers>
 		<developer>
 			<name>João Vitor Verona Biazibetti</name>
 			<email>joaaoverona@gmail.com</email>
-			<url>https://github.com/BloodShura</url>
+			<url>https://github.com/JoaaoVerona</url>
 		</developer>
 	</developers>
 
@@ -26,9 +26,9 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:git:git://github.com/BloodShura/venusscript.git</connection>
-		<developerConnection>scm:git:ssh://github.com:BloodShura/venusscript.git</developerConnection>
-		<url>https://github.com/BloodShura/venusscript/tree/master</url>
+		<connection>scm:git:git://github.com/JoaaoVerona/venusscript.git</connection>
+		<developerConnection>scm:git:ssh://github.com:JoaaoVerona/venusscript.git</developerConnection>
+		<url>https://github.com/JoaaoVerona/venusscript/tree/master</url>
 	</scm>
 
 	<distributionManagement>
@@ -52,19 +52,19 @@
 		<dependency>
 			<groupId>com.github.bloodshura</groupId>
 			<artifactId>ignitium-core</artifactId>
-			<version>0.2.0</version>
+			<version>0.2.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.github.bloodshura</groupId>
 			<artifactId>ignitium-crypto</artifactId>
-			<version>0.2.0</version>
+			<version>0.2.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.github.bloodshura</groupId>
 			<artifactId>sparkium-desktop</artifactId>
-			<version>0.1.0</version>
+			<version>0.2.0</version>
 		</dependency>
 
 		<dependency>
