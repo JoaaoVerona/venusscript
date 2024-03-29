@@ -1,6 +1,6 @@
 using std
 
-ver = "1.3.0"
+ver = "2.0.0"
 println("Hi from VenusScript! Version = " + ver)
 
 def sum(int a, int b) {

@@ -2,14 +2,14 @@
 
 ---
 
-# VenusScript
+# venusscript
 Welcome to the official GitHub repository of the dynamic, injectable, scripting language **VenusScript**.
 See the [examples directory](https://github.com/BloodShura/VenusScript/tree/master/examples) to get a closer look in how the language works.
 
 ```
 using std
 
-ver = "1.3.0"
+ver = "2.0.0"
 println("Hi from VenusScript! Version = " + ver)
 
 def sum(int a, int b) {
@@ -43,7 +43,7 @@ println("Ok!")
 
 ```
 dependencies {
-	compile 'com.github.bloodshura:venusscript:1.3.0'
+	compile 'com.github.bloodshura:venusscript:2.0.0'
 }
 ```
 
@@ -53,13 +53,13 @@ dependencies {
 <dependency>
 	<groupId>com.github.bloodshura</groupId>
 	<artifactId>venusscript</artifactId>
-	<version>1.3.0</version>
+	<version>2.0.0</version>
 </dependency>
 ```
 
 ##### With other build systems:
 
-If your build system supports fetching dependencies from the Maven central repository, then just include a dependency with group `com.github.bloodshura`, artifact `venusscript` and version `1.3.0`.
+If your build system supports fetching dependencies from the Maven central repository, then just include a dependency with group `com.github.bloodshura`, artifact `venusscript` and version `2.0.0`.
 
 ## Tech
 VenusScript is meant to be used within any Java or JVM-built (Kotlin, Scala, Groovy, etc) application. It is required Java 8+.
