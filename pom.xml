@@ -44,27 +44,29 @@
 	</distributionManagement>
 
 	<properties>
+		<ignitium.version>1.0.0</ignitium.version>
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<sparkium.version>1.0.0</sparkium.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.github.bloodshura</groupId>
 			<artifactId>ignitium-core</artifactId>
-			<version>0.2.1</version>
+			<version>${ignitium.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.github.bloodshura</groupId>
 			<artifactId>ignitium-crypto</artifactId>
-			<version>0.2.1</version>
+			<version>${ignitium.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.github.bloodshura</groupId>
 			<artifactId>sparkium-desktop</artifactId>
-			<version>0.2.0</version>
+			<version>${sparkium.version}</version>
 		</dependency>
 
 		<dependency>
