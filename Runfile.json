@@ -25,7 +25,7 @@
 			"description": "One-time setup: activate the committed git hooks"
 		},
 		"tester": {
-			"commands": "./mvnw -B exec:java -Dexec.mainClass=com.github.bloodshura.ignitium.venus.test.InteractiveTester -Dexec.classpathScope=test",
+			"commands": "./mvnw -B test-compile exec:java -Dexec.mainClass=com.github.bloodshura.ignitium.venus.test.InteractiveTester -Dexec.classpathScope=test",
 			"description": "Run the interactive VenusScript REPL/tester (lives under test/)"
 		}
 	}
