@@ -1,0 +1,32 @@
+{
+	"$schema": "https://github.com/JoaaoVerona/runfile/releases/latest/download/v0.schema.json",
+	"globals": {
+		"prepare": "@setup"
+	},
+	"targets": {
+		"build": {
+			"commands": "./mvnw -B -DskipTests package",
+			"description": "Compile and package the library jar"
+		},
+		"check": {
+			"commands": "./mvnw -B test-compile",
+			"description": "Non-mutating gate: compile all main and test sources (no formatter, no warnings-as-errors, no tests)"
+		},
+		"clean": {
+			"commands": "./mvnw -B clean",
+			"description": "Remove build artifacts"
+		},
+		"install": {
+			"commands": "./mvnw -B -DskipTests install",
+			"description": "Install the library jar into the local Maven repository (so downstream projects can resolve it)"
+		},
+		"setup": {
+			"commands": "git config core.hooksPath .githooks",
+			"description": "One-time setup: activate the committed git hooks"
+		},
+		"tester": {
+			"commands": "./mvnw -B exec:java -Dexec.mainClass=com.github.bloodshura.ignitium.venus.test.InteractiveTester -Dexec.classpathScope=test",
+			"description": "Run the interactive VenusScript REPL/tester (lives under test/)"
+		}
+	}
+}

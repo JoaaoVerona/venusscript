@@ -1,6 +1,9 @@
-/.idea/*
-!/.idea/codeStyles/
-!/.idea/inspectionProfiles/
-!/.idea/runConfigurations/
+# Build output
+target/
 
-/target/
+# Editor / IDE — commit .vscode; ignore .idea
+/.idea/
+
+# OS
+.DS_Store
+Thumbs.db
