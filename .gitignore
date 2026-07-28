@@ -1,7 +1,10 @@
 # Build output
 target/
 
-# Editor / IDE — commit .vscode; ignore .idea
+# Editor / IDE — commit .claude/{agents,skills} and .vscode; ignore the rest, and .idea
+/.claude/*
+!/.claude/agents/
+!/.claude/skills/
 /.idea/
 
 # OS
